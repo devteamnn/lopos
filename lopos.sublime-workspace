@@ -1,0 +1,513 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"da",
+				"dataStorage"
+			],
+			[
+				"bu",
+				"buttonSubmit"
+			],
+			[
+				"hid",
+				"hideAlert"
+			],
+			[
+				"i",
+				"innerHTML"
+			],
+			[
+				"mb",
+				"mb-3"
+			],
+			[
+				"login",
+				"loginValid"
+			],
+			[
+				"e",
+				"errObj"
+			],
+			[
+				"d",
+				"div\tTag"
+			],
+			[
+				"c",
+				"capId"
+			],
+			[
+				"a",
+				"addEventListener"
+			],
+			[
+				"event",
+				"event"
+			],
+			[
+				"data",
+				"dataStorage"
+			],
+			[
+				"set",
+				"setStorage"
+			],
+			[
+				"se",
+				"sessionStorage"
+			],
+			[
+				"v",
+				"value"
+			],
+			[
+				"va",
+				"value"
+			],
+			[
+				"fun",
+				"function"
+			],
+			[
+				"log",
+				"login"
+			],
+			[
+				"l",
+				"loginData"
+			],
+			[
+				"doc",
+				"document"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"last_filter": "Package Control: ",
+		"selected_items":
+		[
+			[
+				"Package Control: ",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Co",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Con",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 444.0
+	},
+	"console":
+	{
+		"height": 178.0,
+		"history":
+		[
+			"clear"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/D/USERS/kds/Documents/DEV/lopos"
+	],
+	"file_history":
+	[
+		"/D/USERS/kds/Documents/DEV/LOPOS-ID/src/js/buttons/reference-points-add.js",
+		"/D/USERS/kds/Documents/DEV/LOPOS-ID/src/js/buttons/reference-keywords-edit.js",
+		"/D/USERS/kds/Documents/DEV/LOPOS-ID/src/js/buttons/reference-keywords-add.js",
+		"/D/USERS/kds/Documents/DEV/LOPOS-ID/src/js/buttons/reference-enterprises-edit.js",
+		"/D/USERS/kds/Documents/DEV/LOPOS-ID/src/js/main.js",
+		"/D/USERS/kds/Documents/DEV/LOPOS-ID/src/js/buttons/reference-enterprises-add.js",
+		"/D/USERS/kds/Documents/DEV/LOPOS-ID/src/js/buttons/reference-contractors-add.js",
+		"/D/USERS/kds/Documents/DEV/LOPOS-ID/src/index.html",
+		"/D/USERS/kds/Documents/DEV/LOPOS-ID/src/js-external/settings.js",
+		"/D/USERS/kds/Documents/DEV/LOPOS-ID/src/js/buttons/reference-points-edit.js",
+		"/D/USERS/kds/Documents/DEV/LOPOS-ID/src/js/tools/storage.js",
+		"/D/USERS/kds/Documents/DEV/LOPOS-ID/src/js/buttons/reference-keywords.js",
+		"/D/USERS/kds/Documents/DEV/LOPOS-ID/src/js/buttons/reference-contractors.js",
+		"/D/USERS/kds/Documents/DEV/LOPOS-ID/passwd",
+		"/D/USERS/kds/Documents/DEV/LOPOS-ID/src/js/buttons/reference-enterprises.js",
+		"/D/USERS/kds/Documents/DEV/LOPOS-ID/src2/index.html",
+		"/D/USERS/kds/Documents/DEV/LOPOS-ID/src2/js/buttons/reference-enterprises-edit.js",
+		"/D/USERS/kds/Documents/DEV/LOPOS-ID/src2/js-external/settings.js",
+		"/D/USERS/kds/Documents/DEV/LOPOS-ID/src/js/login/main_login_window.js",
+		"/D/USERS/kds/Documents/DEV/LOPOS-ID/src/js/login/form_register.js",
+		"/D/USERS/kds/Documents/DEV/LOPOS-ID/src/js/login/forgot.js",
+		"/D/USERS/kds/Documents/DEV/LOPOS-ID/src/js/login/confirm_email.js",
+		"/D/USERS/kds/Documents/DEV/LOPOS-ID/src/js/login/register.js",
+		"/D/USERS/kds/Documents/DEV/LOPOS-ID/src/js/login/login.js",
+		"/D/USERS/kds/Documents/DEV/LOPOS-ID/src/passwd",
+		"/D/USERS/kds/Documents/DEV/LOPOS-ID/src/js/js-external/settings.js",
+		"/D/USERS/kds/Documents/DEV/LOPOS-ID/src/js/login/form_login.js",
+		"/D/USERS/kds/Documents/DEV/LOPOS-ID/src/js/login/form_forgot.js",
+		"/D/USERS/kds/Documents/DEV/LOPOS-ID/src/js/login/form_confirm_email.js",
+		"/D/USERS/kds/Documents/DEV/LOPOS-ID/src/js/tools/captcha.js",
+		"/D/USERS/kds/Documents/DEV/LOPOS-ID/login.txt",
+		"/D/USERS/kds/Documents/DEV/LOPOS-ID/src/settings/settings.js",
+		"/D/USERS/kds/Documents/DEV/LOPOS-ID_START_TEST/js/login.js",
+		"/D/USERS/kds/Desktop/captcha.html",
+		"/D/USERS/kds/Desktop/invcaptcha.html",
+		"/D/USERS/kds/Documents/DEV/LOPOS-ID/src/js/login/reCaptcha.js",
+		"/D/USERS/kds/Documents/DEV/LOPOS-ID_START_TEST/login.html",
+		"/D/USERS/kds/Documents/DEV/LOPOS-ID/build/index.html",
+		"/D/USERS/kds/Documents/DEV/LOPOS-ID/src/js/tools/xhr.js",
+		"/D/USERS/kds/Documents/DEV/LOPOS-ID/src/js/test.js",
+		"/D/USERS/kds/Documents/DEV/LOPOS-ID/src/js/tools/settings.js",
+		"/D/USERS/kds/Documents/DEV/LOPOS-ID/src/js/tools/README.md",
+		"/D/USERS/kds/Documents/DEV/LOPOS-ID/gulpfile.js",
+		"/D/USERS/kds/Documents/DEV/LOPOS-ID/src/js/tools/xch.js",
+		"/D/USERS/kds/Documents/DEV/LOPOS-ID_START_TEST/js/xhr.js",
+		"/D/USERS/kds/Documents/DEV/LOPOS-ID_START_TEST/js/script.js",
+		"/D/USERS/kds/Documents/DEV/LOPOS-ID_START_TEST/build/js/xhr.js",
+		"/D/USERS/kds/Documents/DEV/LOPOS-ID/lopos-id.sublime-project",
+		"/D/USERS/kds/Documents/DEV/LOPOS-ID/src/css/README.md",
+		"/D/USERS/kds/Documents/DEV/LOPOS-ID/src/sass/README.md",
+		"/D/USERS/kds/Documents/DEV/LOPOS-ID/.babelrc",
+		"/D/USERS/kds/Documents/DEV/LOPOS-ID/src/js-external/README.md",
+		"/D/USERS/kds/Documents/DEV/LOPOS-ID/src/js/login/README.md",
+		"/D/USERS/kds/Documents/DEV/LOPOS-ID/src/js/markup/README.md",
+		"/D/USERS/kds/Documents/DEV/LOPOS-ID/src/js/buttons/README.md",
+		"/D/USERS/kds/Documents/DEV/LOPOS-ID/build/README.md",
+		"/E/lopos-full/gulpfile.js",
+		"/E/lopos-full/.babelrc",
+		"/D/USERS/kds/Documents/DEV/LOPOS-ID/DEV/gulpfile.js",
+		"/D/USERS/kds/Documents/DEV/LOPOS-ID/DEV/src/index.html",
+		"/D/USERS/kds/Desktop/lopos-build/gulpfile.js",
+		"/D/USERS/kds/Desktop/lopos-build/package.json",
+		"/D/USERS/kds/Documents/DEV/LOPOS-ID/DEV/.babelrc",
+		"/D/USERS/kds/Documents/DEV/lopos/js/login.js",
+		"/D/USERS/kds/Desktop/lopos-build/.eslintrc.js",
+		"/D/USERS/kds/Desktop/lopos-build/.editorconfig",
+		"/D/USERS/kds/Desktop/lopos-build/.babelrc",
+		"/D/USERS/kds/Desktop/lopos-build/.eslintignore",
+		"/D/USERS/kds/Documents/DEV/lopos/gulpfile.js",
+		"/D/USERS/kds/Documents/DEV/lopos/build/js/login.js",
+		"/D/USERS/kds/Documents/DEV/lopos/js/xhr.js",
+		"/D/USERS/kds/Documents/DEV/lopos/login.html",
+		"/D/USERS/kds/Documents/DEV/lopos/index.html",
+		"/D/USERS/kds/Documents/DEV/lopos/js/script.js",
+		"/D/USERS/kds/Documents/DEV/lopos/build/js/script.js",
+		"/D/USERS/kds/Documents/DEV/lopos/js/redirect.js",
+		"/D/USERS/kds/Desktop/lopos/script.js",
+		"/D/USERS/kds/Desktop/2222.html",
+		"/D/USERS/kds/Desktop/270437-keksobooking-master/js/map.js",
+		"/D/USERS/kds/Desktop/270437-keksobooking-master/index.html",
+		"/D/USERS/kds/Documents/DEV/lopos/js/scripts.js",
+		"/D/USERS/kds/Documents/DEV/lopos/lopos.sublime-project",
+		"/C/Users/kds/AppData/Roaming/Sublime Text 3/Packages/User/ESLint.sublime-settings",
+		"/C/Users/kds/AppData/Roaming/Sublime Text 3/Packages/ESLint/ESLint.sublime-settings",
+		"/C/Users/kds/AppData/Roaming/Sublime Text 3/Packages/User/Default (Windows).sublime-keymap",
+		"/C/Users/kds/AppData/Roaming/Sublime Text 3/Packages/SFTP/SFTP.sublime-settings",
+		"/D/USERS/kds/Documents/HTMLAcademy/270437-keksobooking/.eslintrc",
+		"/D/USERS/kds/Documents/HTMLAcademy/270437-keksobooking/node_modules/eslint-config-htmlacademy/es5.js",
+		"/D/USERS/kds/Documents/HTMLAcademy/270437-keksobooking/node_modules/eslint-config-htmlacademy/index.js",
+		"/D/USERS/kds/Documents/HTMLAcademy/270437-keksobooking/node_modules/eslint-config-htmlacademy/README.md",
+		"/D/USERS/kds/Documents/HTMLAcademy/270437-code-and-magick/.editorconfig",
+		"/D/USERS/kds/Desktop/lopos/index.html",
+		"/D/USERS/kds/Desktop/lopos/.eslintrc.js",
+		"/D/USERS/kds/Documents/DEV/phpToExelTest/phpToExelTest.sublime-project",
+		"/D/USERS/kds/Documents/DEV/phpToExelTest/index.php",
+		"/D/USERS/kds/Desktop/1111.txt",
+		"/D/111.csv",
+		"/D/USERS/kds/Documents/DEV/phpToExelTest/sftp-config.json",
+		"/C/Users/kds/AppData/Roaming/Sublime Text 3/Packages/Xdebug Client/Xdebug.sublime-settings",
+		"/D/USERS/kds/Documents/DEV/google test/index.php",
+		"/D/USERS/kds/Documents/DEV/google test/GoogleDrive.php",
+		"/D/USERS/kds/Documents/DEV/google test/google test.sublime-project",
+		"/D/USERS/kds/Documents/DEV/google test/sftp-config.json",
+		"/D/USERS/kds/Desktop/index.html",
+		"/D/USERS/kds/Desktop/TEST.html",
+		"/D/USERS/kds/Desktop/Расходы.csv",
+		"/D/USERS/kds/Desktop/расходы.csv"
+	],
+	"find":
+	{
+		"height": 41.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"groups",
+			"groups-add",
+			"d",
+			"w",
+			"\\*\\",
+			"*",
+			"/^[\\w]{0,}&/",
+			"^[\\w]{0,}&",
+			"^[]*&",
+			"^[A-Za-zА-Яа-яЁё\\d\\s]*&",
+			"stor",
+			"keywords-card-edit",
+			"keywords-card-ediе",
+			"keywords-card-edit-name",
+			"formEditEnterprise",
+			"keyword-add",
+			"showAlert",
+			"validmessages",
+			"message",
+			"$",
+			"[\\w]+$",
+			"showAlertBorder",
+			"formAddPoint",
+			"points-add",
+			"enterprises-add",
+			"formAddEnterprise",
+			"formAddPoint",
+			" <div class=\"modal fade\"",
+			"enterprisesButtonForm",
+			"enterprises-card-edit",
+			"enterprisesEdit",
+			"enterprises-add-form",
+			"querrySelector",
+			"o",
+			"enterprises-add",
+			"Регистрация",
+			"buttons",
+			"progressBar",
+			"inputFieldsErrors",
+			"inputFields",
+			"inputFieldsErrors",
+			"Progress",
+			"firstScreen",
+			"console",
+			"import",
+			"console",
+			"import",
+			"console",
+			"condole",
+			"\n      ",
+			"console",
+			"window.appSettings.loginValid.password",
+			"window.appSettings.loginValid.email",
+			"window.appSettings.loginValid.id",
+			"form",
+			"registerButtonCancel",
+			"emailConfirmButtonCancel",
+			"setConfirmEmailError",
+			"^[а-яёА-ЯЁA-Za-z\\s]+$",
+			"[а-яёА-ЯЁA-Za-z\\s]+",
+			"[а-яёА-ЯЁA-Za-z\\s]",
+			"dsdsdsds",
+			"[а-яёА-ЯЁA-Za-z\\s]+",
+			"[а-яёА-ЯЁA-Za-z\\s]",
+			"d",
+			"[а-яёА-ЯЁA-Za-z\\s]",
+			"[а-яёА-ЯЁA-Za-z\\s]+",
+			"[а-яёА-ЯЁA-Za-z\\s]",
+			"registerButtonCancel",
+			"regApiSet",
+			"regValSet",
+			"regSet",
+			"window.appSettings.registerValid",
+			"showLoginInputPasswordError",
+			"showLoginInputLoginError",
+			"};\n",
+			"showLoginInputLoginError",
+			"show",
+			"passw",
+			"login",
+			"password",
+			"login",
+			"submitForm",
+			"getRequestDataEmail",
+			"console",
+			"console.log",
+			"show",
+			"handlerInputChange",
+			"handlerLoginFormSubmit",
+			"showError",
+			"[0-9a-z]{9,}",
+			"xhrSettings",
+			"localStorage",
+			"\"",
+			";",
+			"setItem"
+		],
+		"highlight": false,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": true,
+		"replace_history":
+		[
+			"formEditKeywords",
+			"validMessages",
+			"messages",
+			"showAlert",
+			"formEditPoint",
+			"points-edit",
+			"points-add",
+			"formAddPoint",
+			"enterprisesButtonFormAdd",
+			"enterprisesCarEedit",
+			"querySelector",
+			"validPassword",
+			"validEmail",
+			"validId",
+			"regApi",
+			"regVal",
+			"regValSet",
+			"regSet",
+			"setLoginInputPasswordError",
+			"setLoginInputLoginError",
+			"userLogin",
+			"userPassword",
+			"userLogin",
+			"alert",
+			"Settings.xhrSettings",
+			"sessionStorage",
+			"'",
+			",",
+			"getItem"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": false
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 28.0
+	},
+	"input":
+	{
+		"height": 43.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 144.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.sftp":
+	{
+		"height": 119.0
+	},
+	"output.unsaved_changes":
+	{
+		"height": 593.0
+	},
+	"output.xdebug":
+	{
+		"height": 174.0
+	},
+	"pinned_build_system": "",
+	"project": "lopos.sublime-project",
+	"replace":
+	{
+		"height": 74.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+		"xdebug":
+		{
+			"hide_conflict": false
+		}
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 282.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

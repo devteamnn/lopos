@@ -20,8 +20,6 @@ const spinner = form.querySelector('#keywords-add-spinner');
 const buttonSubmit = form.querySelector('#keywords-add-submit');
 const buttonCancel = form.querySelector('#keywords-add-cancel');
 
-// const stor = dataStorage.data;
-
 const showSpinner = () => {
   spinner.classList.remove('invisible');
   buttonSubmit.disabled = true;
@@ -111,21 +109,11 @@ const validateForm = () => {
 };
 
 const submitForm = () => {
-  /*
+  const stor = dataStorage.data;
   let postData = `name=${name.value}&token=${stor.token}`;
   let urlApp = appUrl.replace('{{dir}}', stor.directory);
   urlApp = urlApp.replace('{{oper}}', stor.operatorId);
   urlApp = urlApp.replace('{{busId}}', stor.currentBusiness);
-  console.log(stor);
-  console.log(dataStorage.data);
-  console.log(stor.currentBusiness);
-  console.log(urlApp);
-  */
-  let {token, directory, operatorId, currentBusiness} = dataStorage.data;
-  let postData = `name=${name.value}&token=${token}`;
-  let urlApp = appUrl.replace('{{dir}}', directory);
-  urlApp = urlApp.replace('{{oper}}', operatorId);
-  urlApp = urlApp.replace('{{busId}}', currentBusiness);
 
   let response = {
     url: urlApp,

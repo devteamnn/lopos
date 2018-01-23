@@ -1,0 +1,20 @@
+{
+  "folders":
+  [
+    {
+      "path": "."
+    }
+  ],
+  "SublimeLinter":
+  {
+    "linters":
+            {
+              "eslint": {
+                  "args": [
+                      "--config", "D:/USERS/kds/Documents/DEV/LOPOS-ID/.eslintrc.js"
+                  ]
+              }
+            }
+  }
+}
+

@@ -188,4 +188,32 @@ window.appSettings = {
     }
   },
 
+  // Форма добавления группы товаров
+  'formAddGroups': {
+    'UrlApi': '/lopos_directory/{{dir}}/operator/{{oper}}/business/{{busId}}/group',
+    'validPatterns': {
+      'name': /^[а-яёА-ЯЁA-Za-z\s\d]+$/,
+    },
+    'validMessage': {
+      'name': 'поле минимум 1 буква,<br>не должно содержать спецсимволы',
+    },
+    'messages': {
+      'mes400': 'Некорректный запрос'
+    }
+  },
+
+  // Форма изменения ключевого слова
+  'formEditGroups': {
+    'UrlApi': '/lopos_directory/{{dir}}/operator/{{oper}}/business/{{busId}}/group/{{groupId}}',
+    'validPatterns': {
+      'name': /^[а-яёА-ЯЁA-Za-z\s\d]+$/,
+    },
+    'validMessage': {
+      'name': 'поле минимум 1 буква,<br>не должно содержать спецсимволы',
+    },
+    'messages': {
+      'mes400': 'Некорректный запрос'
+    }
+  },
+
 };
