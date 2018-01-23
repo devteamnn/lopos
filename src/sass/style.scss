@@ -1,0 +1,147 @@
+// Переменные
+@import "src/sass/components/profile.scss";
+@import "src/sass/components/icon.scss";
+@import "src/sass/components/icon-btn.scss";
+@import "src/sass/components/reference-string.scss";
+@import "src/sass/components/reference-header.scss";
+
+.enterprise-card-block {
+  margin-left: 55px;
+  margin-right: 55px;
+  margin-top: 55px;
+}
+
+.reference-string {
+  height: 44px;
+}
+
+.reference-string:hover {
+  background-color: #ccc;
+}
+
+.btn:disabled {
+  opacity: 0.3;
+}
+
+.keywords-card-select-color-container {
+}
+
+#list-contractors-card > h3 {
+  margin-left: 54px;
+}
+
+.keywords-card-select-color-container div {
+  display: flex;
+  justify-content: space-between;
+  margin: 5px;
+}
+
+.keyword-row {
+  border-radius: 8px;
+  margin-right: 10px;
+}
+
+.keywords-card-select-color {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+}
+
+input[name="contact"]:checked + label {
+	border: 1px solid black;
+}
+
+.reference-row-number {
+  display: inline-block;
+  width: 25px;
+  text-align: right;
+  margin-right: 5px;
+  font-weight: bold;
+}
+
+.negative-switch {
+  width: 20px;
+  height: 20px;
+  margin-left: 10px;
+}
+
+.catalog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.catalog-header img {
+  width: 44px;
+  height: 44px;
+}
+
+.catalog-header h2 {
+  margin-left: 5px;
+
+}
+
+.catalog-header-title {
+  display: flex;
+
+}
+
+.catalog-header-buttons {
+  display: flex;
+
+}
+
+.goods-string {
+  display: flex;
+  justify-content: space-between;
+  min-height: 35px;
+  border: 1px solid #ccc;
+  margin-bottom: -1px;
+}
+
+.goods-tile {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.goods-tile-card {
+  width: 8rem;
+  margin: 7px;
+  border: none;
+}
+
+.goods-tile-title {
+  position: absolute;
+  bottom: 3px;
+  right: 5px;
+  padding: 10px;
+  width: 80px;
+  background-color: aliceblue;
+  opacity: 0.7;
+  border-radius: 20px;
+}
+
+
+input[name="express-purchase-radio"],
+input[name="express-sell-radio"] {
+	display: none;
+}
+
+input[name="express-purchase-radio"]:checked + label,
+input[name="express-sell-radio"]:checked + label {
+	background-color: #eee;
+}
+
+
+
+// Серый фон и шрифты
+/*
+@import "src/sass/components/app.scss";
+@import "src/sass/components/font.scss";
+body {
+  font-family: "HelveticaNeue";
+  font-size: 1rem;
+}
+*/
