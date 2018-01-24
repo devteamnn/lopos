@@ -916,7 +916,7 @@
             <div class="form-group">
               <label for="group-goods-contact">Группа</label>
               <input type="text" class="form-control" id="group-goods-group" aria-describedby="group-goods-group" placeholder="Группа">
-              <span id="group-goods-congrouptact-valid" class="badge badge-danger w-100"></span>
+              <span id="group-goods-contact-valid" class="badge badge-danger w-100"></span>
             </div>
 
             <div class="form-group">
@@ -931,8 +931,9 @@
                 <label class="w-100 m-1" for="group-goods-price-extra"><small class="form-text text-muted text-center">Наценка</small></label>
                 <label class="w-100 m-1" for="group-goods-price-sell"><small class="form-text text-muted text-center">Продажи</small></label>
               </div>
-              <span id="group-goods-price-valid" class="badge badge-danger w-100"></span>
             </div>
+
+            <span id="" class="badge badge-danger w-100">3232323</span>
 
             <div class="form-group">
               <label for="group-goods-barcode">Штрихкод</label>
@@ -955,153 +956,151 @@
   </div>
 
   <!-- Справочники / Группы товаров / Карточка товара -->
-  <!--<div class="modal fade" id="goods-card" tabindex="-1" role="dialog" aria-labelledby="goods-card" aria-hidden="true" backdrop="static">-->
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <form id="goods-card-form" name="goods-card">
+  <div class="modal fade" id="goods-card" tabindex="-1" role="dialog" aria-labelledby="goods-card" aria-hidden="true" backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <form id="goods-card-form" name="goods-card">
 
-        <div class="modal-header">
-          <div class="form-group">
-            <input type="text" class="form-control" id="goods-card-name" aria-describedby="goods-card-name" placeholder="Название">
-            <span id="goods-card-name-valid" class="badge badge-danger w-100"></span>
-          </div>
-          <button id="goods-card-close" type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <div class="modal-header">
+            <div class="form-group">
+              <input type="text" class="form-control" id="goods-card-name" aria-describedby="goods-card-name" placeholder="Название">
+              <span id="goods-card-name-valid" class="badge badge-danger w-100"></span>
+            </div>
+            <button id="goods-card-close" type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
-        </div>
-
-        <div class="modal-body">
-          <div class="d-flex">
-            <div>
-              <img src="./img/not-available.png" alt="" width="300px">
-            </div>
-            <div>
-              <div class="form-group">
-                <label for="goods-card-describe">Описание</label>
-                <input type="text" class="form-control" id="goods-card-describe" aria-describedby="goods-card-describe" placeholder="Описание">
-                <span id="goods-card-describe-valid" class="badge badge-danger w-100"></span>
-              </div>
-
-              <div class="form-group">
-                <label for="goods-card-barcode">Штрихкод</label>
-                <input type="text" class="form-control" id="goods-card-barcode" aria-describedby="goods-card-barcode" placeholder="Штрихкод">
-                <span id="goods-card-barcode-valid" class="badge badge-danger w-100"></span>
-              </div>
-
-              <div class="form-group">
-                <label for="goods-card-group">Группа</label>
-                <input type="text" class="form-control" id="goods-card-group" aria-describedby="goods-card-group" placeholder="Группа">
-                <span id="goods-card-congrouptact-valid" class="badge badge-danger w-100"></span>
-              </div>
-            </div>
           </div>
 
-          <div class="d-flex">
-            <div class="form-group row w-50">
-              <label class="col-sm-2 col-form-label" for="goods-card-price-purchase">Цена</label>
-              <div class="col-sm-10">
-                <input type="text" class="form-control m-1" id="goods-card-price-purchase" aria-describedby="goods-card-price" placeholder="Цена">
-              </div>
-              <label class="col-sm-2 col-form-label" for="goods-card-price-extra">Наценка</label>
-              <div class="col-sm-10">
-                <input type="text" class="form-control m-1" id="goods-card-price-extra" aria-describedby="goods-card-price" placeholder="Наценка">
-              </div>
-              <label class="col-sm-2 col-form-label" for="goods-card-price-sell">Продажи</label>
-              <div class="col-sm-10">
-                <input type="text" class="form-control m-1" id="goods-card-price-sell" aria-describedby="goods-card-price" placeholder="Цена">
-              </div>
-              <span id="goods-card-price-valid" class="badge badge-danger w-100"></span>
-            </div>
-            <div class="ml-3">
-
+          <div class="modal-body">
+            <div class="d-flex">
               <div>
-                <h4>Экспресс-операции</h4>
+                <img src="./img/not-available.png" alt="" width="300px">
               </div>
-              <div id="express-purchase">
-                <span>Покупка</span>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="express-purchase-radio" id="express-purchase-5" value="option1">
-                  <label class="form-check-label" for="express-purchase-5">5 шт.</label>
+              <div>
+                <div class="form-group">
+                  <label for="goods-card-describe">Описание</label>
+                  <input type="text" class="form-control" id="goods-card-describe" aria-describedby="goods-card-describe" placeholder="Описание">
+                  <span id="goods-card-describe-valid" class="badge badge-danger w-100"></span>
                 </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="express-purchase-radio" id="express-purchase-10" value="option2">
-                  <label class="form-check-label" for="express-purchase-10">10 шт.</label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="express-purchase-radio" id="express-purchase-15" value="option3">
-                  <label class="form-check-label" for="express-purchase-15">15 шт.</label>
-                </div>
-                <button type="button" class="btn btn-danger">...</button>
-              </div>
 
-              <div id="express-sell">
-                <span>Продажа</span>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="express-sell-radio" id="express-sell-5" value="option1">
-                  <label class="form-check-label" for="express-sell-5">5 шт.</label>
+                <div class="form-group">
+                  <label for="goods-card-barcode">Штрихкод</label>
+                  <input type="text" class="form-control" id="goods-card-barcode" aria-describedby="goods-card-barcode" placeholder="Штрихкод">
+                  <span id="goods-card-barcode-valid" class="badge badge-danger w-100"></span>
                 </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="express-sell-radio" id="express-sell-10" value="option2">
-                  <label class="form-check-label" for="express-sell-10">10 шт.</label>
+
+                <div class="form-group">
+                  <label for="goods-card-group">Группа</label>
+                  <select id="goods-card-group" class="custom-select">
+                    <option selected>Выберите группу</option>
+                  </select>
+                  <!--<input type="text" class="form-control" aria-describedby="goods-card-group" placeholder="Группа">-->
+                  <span id="goods-card-group-valid" class="badge badge-danger w-100"></span>
                 </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="express-sell-radio" id="express-sell-15" value="option3">
-                  <label class="form-check-label" for="express-sell-15">15 шт.</label>
+              </div>
+            </div>
+
+            <div class="d-flex">
+              <div class="form-group row w-50">
+                <label class="col-sm-2 col-form-label" for="goods-card-price-purchase">Цена</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control m-1" id="goods-card-price-purchase" aria-describedby="goods-card-price" placeholder="Цена">
                 </div>
-                <button type="button" class="btn btn-danger">...</button>
+                <label class="col-sm-2 col-form-label" for="goods-card-price-extra">Наценка</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control m-1" id="goods-card-price-extra" aria-describedby="goods-card-price" placeholder="Наценка">
+                </div>
+                <label class="col-sm-2 col-form-label" for="goods-card-price-sell">Продажи</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control m-1" id="goods-card-price-sell" aria-describedby="goods-card-price" placeholder="Цена">
+                </div>
+                <span id="goods-card-price-valid" class="badge badge-danger w-100"></span>
+              </div>
+              <div class="ml-3">
+
+                <div>
+                  <h4>Экспресс-операции</h4>
+                </div>
+                <div id="express-purchase">
+                  <span>Покупка</span>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="express-purchase-radio" id="express-purchase-5" value="option1">
+                    <label class="form-check-label" for="express-purchase-5">5 шт.</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="express-purchase-radio" id="express-purchase-10" value="option2">
+                    <label class="form-check-label" for="express-purchase-10">10 шт.</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="express-purchase-radio" id="express-purchase-15" value="option3">
+                    <label class="form-check-label" for="express-purchase-15">15 шт.</label>
+                  </div>
+                  <button type="button" class="btn btn-danger">...</button>
+                </div>
+
+                <div id="express-sell">
+                  <span>Продажа</span>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="express-sell-radio" id="express-sell-5" value="option1">
+                    <label class="form-check-label" for="express-sell-5">5 шт.</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="express-sell-radio" id="express-sell-10" value="option2">
+                    <label class="form-check-label" for="express-sell-10">10 шт.</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="express-sell-radio" id="express-sell-15" value="option3">
+                    <label class="form-check-label" for="express-sell-15">15 шт.</label>
+                  </div>
+                  <button type="button" class="btn btn-danger">...</button>
+                </div>
+
+              </div>
+            </div>
+            <div id="goods-stock">
+              <div class="row">
+                <div class="col-8 d-flex">
+                  <h4>Остатки</h4>
+                  <button type="button" class="btn btn-warning p-0 icon-btn icon-btn__edit"></button>
+                </div>
+                <div class="col-4 d-flex justify-content-between">
+                  <div class="w-100 text-center">
+                    <button type="button" class="btn btn-success p-0 icon icon__truck"></button>
+                  </div>
+                  <div class="w-100 text-center">
+                    <button type="button" class="btn btn-success p-0 icon icon__box"></button>
+                  </div>
+                  <div class="w-100 text-center">
+                    <button type="button" class="btn btn-success p-0 icon icon__male"></button>
+                  </div>
+                </div>
               </div>
 
             </div>
-          </div>
-          <div>
-            <div class="row">
-              <div class="col-8 d-flex">
-                <h4>Остатки</h4>
+
+            <div class="catalog-header">
+              <div class="catalog-header-title">
+                <h4>Ключевые слова</h4>
                 <button type="button" class="btn btn-warning p-0 icon-btn icon-btn__edit" data-toggle="modal" data-target="#enterprises-add"></button>
               </div>
-              <div class="col-4 d-flex justify-content-between">
-                <div class="w-100 text-center">
-                  <button type="button" class="btn btn-success p-0 icon-btn icon-btn__add" data-toggle="modal" data-target="#enterprises-add"></button>
-                </div>
-                <div class="w-100 text-center">
-                  <button type="button" class="btn btn-success p-0 icon-btn icon-btn__add" data-toggle="modal" data-target="#enterprises-add"></button>
-                </div>
-                <div class="w-100 text-center">
-                  <button type="button" class="btn btn-success p-0 icon-btn icon-btn__add" data-toggle="modal" data-target="#enterprises-add"></button>
-                </div>
+              <div class="catalog-header-buttons">
               </div>
             </div>
-            <div class="row border">
-              <div class="col-8 border">11</div>
-              <div class="col-4 d-flex justify-content-between border">
-                <div class="w-100 text-center border">22</div>
-                <div class="w-100 text-center border">33</div>
-                <div class="w-100 text-center border">44</div>
-              </div>
+            <div id="goods-keywords"></div>
+
+
+
+            <div id="goods-card-spinner" class="progress text-white mb-3 invisible">
+              <div class="progress-bar progress-bar-striped progress-bar-animated text-white font-weight-bold text-uppercase" style="width: 100%" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
+
+            <button id="goods-card-submit" type="submit" class="btn btn-primary w-100" disabled>Изменить</button>
+            <button id="goods-card-cancel" type="button" class="btn btn-danger w-100 mt-3" data-dismiss="modal">Отменить</button>
           </div>
-
-          <div class="catalog-header">
-            <div class="catalog-header-title">
-              <h4>Ключевые слова</h4>
-              <button type="button" class="btn btn-warning p-0 icon-btn icon-btn__edit" data-toggle="modal" data-target="#enterprises-add"></button>
-            </div>
-            <div class="catalog-header-buttons">
-            </div>
-          </div>
-
-
-          <div id="goods-card-spinner" class="progress text-white mb-3 invisible">
-            <div class="progress-bar progress-bar-striped progress-bar-animated text-white font-weight-bold text-uppercase" style="width: 100%" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-          </div>
-
-          <button id="goods-card-submit" type="submit" class="btn btn-primary w-100" disabled>Изменить</button>
-          <button id="goods-card-cancel" type="button" class="btn btn-danger w-100 mt-3" data-dismiss="modal">Отменить</button>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   </div>
-  <!--</div>-->
 
   <!-- МОДАЛЬНЫЕ ОКНА ДЛЯ ВЫВОДА УВЕДОМЛЕНИЙ И ПОДТВЕРЖДЕНИЯ ДЕЙСТВИЙ -->
 

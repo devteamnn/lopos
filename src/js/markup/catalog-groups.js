@@ -30,7 +30,7 @@ export default {
     // ${currentEnterpriseFlag}
 
     return `
-    <div class="goods-string">
+    <div class="goods-string" data-good-id="${item.id}">
       <div>
         <span class="reference-row-number">${index + 1}</span> <span>${item.name}</span>
       </div>
@@ -46,7 +46,7 @@ export default {
     // ${currentEnterpriseFlag}
 
     return `
-    <div class="card goods-tile-card">
+    <div class="card goods-tile-card" data-good-id="${item.id}">
       <img class="card-img-top" src="./img/st_fon_selected.png" alt="${item.name}" title="${item.name}">
       <div class="card-body goods-tile-title">
         <p class="card-text">${item.count}</p>

@@ -2,6 +2,7 @@ import xhr from '../tools/xhr.js';
 import auth from '../tools/storage.js';
 import groupsMarkup from '../markup/catalog-groups.js';
 import toolsMarkup from '../markup/tools.js';
+import goodsCard from './catalog-groups-goods.js';
 
 const listGroups = document.querySelector('#list-groups-list');
 // const listGroupsCardAddBtn = document.querySelector('#list-groups-card-add-btn');
@@ -22,6 +23,8 @@ const goodsSortAbcUpBtn = document.querySelector('#group-goods-sort-abc-up');
 const goodsSortAbcDownBtn = document.querySelector('#group-goods-sort-abc-down');
 const goodsSortTailingsUpBtn = document.querySelector('#group-goods-sort-tailings-up');
 const goodsSortTailingsDownBtn = document.querySelector('#group-goods-sort-tailings-down');
+
+const groupGoodsCardBody = document.querySelector('#group-goods-card-body');
 
 const SELECT_DELAY = 2000;
 
@@ -71,6 +74,9 @@ const onListGroupsCardBodyClickEdit = (evt) => {
   }
   $(groupsEditForm).modal('show');
   groupsEditName.value = loadedData.data[currentStringElement.dataset.groupIndex].name;
+
+  auth.currentGroupId = loadedData.data[currentStringElement.dataset.groupIndex].id;
+  auth.currentGroupName = loadedData.data[currentStringElement.dataset.groupIndex].name;
 };
 
 const onListGroupsCardBodyClickRemove = (evt, clickedAction) => {
@@ -218,6 +224,16 @@ goodsSortTailingsDownBtn.addEventListener('click', function () {
   drawGoods();
   $(goodsSortModal).modal('hide');
 });
+
+const onGroupGoodsCardBodyClick = (evt) => {
+  let currentStringElement = evt.target;
+  while (!currentStringElement.dataset.goodId) {
+    currentStringElement = currentStringElement.parentNode;
+  }
+  goodsCard.fill(currentStringElement.dataset.goodId);
+};
+
+groupGoodsCardBody.addEventListener('click', onGroupGoodsCardBodyClick);
 
 export default {
 

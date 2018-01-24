@@ -1,26 +1,31 @@
 import xhr from './../tools/xhr.js';
 import dataStorage from './../tools/storage.js';
 import markup from './../markup/tools.js';
-import keywordsButton from './reference-keywords.js';
+import catalogGroupsGoods from './catalog-groups-goods.js';
 
-const appUrl = window.appSettings.formAddKeywords.UrlApi;
-const validPattern = window.appSettings.formAddKeywords.validPatterns;
-const validMessage = window.appSettings.formAddKeywords.validMessage;
-const messages = window.appSettings.formAddKeywords.messages;
+const appUrl = window.appSettings.formAddGoods.UrlApi;
+const messages = window.appSettings.formAddGoods.message;
+
+const validPattern = window.appSettings.formAddGoods.validPatterns;
+const validMessage = window.appSettings.formAddGoods.validMessage;
 
 
 const body = document.querySelector('body');
-const enterprisesAdd = body.querySelector('#keywords-add');
-const form = enterprisesAdd.querySelector('#keywords-add-form');
+const groupGoodsAdd = body.querySelector('#group-goods-add');
+const form = groupGoodsAdd.querySelector('#group-goods-add-form');
 
-const name = form.querySelector('#keywords-add-name');
+const name = form.querySelector('#group-goods-name');
+const describe = form.querySelector('#group-goods-describe');
+const group = form.querySelector('#group-goods-group');
+const purchase = form.querySelector('#group-goods-price-purchase');
+const extra = form.querySelector('#group-goods-price-extra');
+const sell = form.querySelector('#group-goods-price-sell');
+const barcode = form.querySelector('#group-goods-barcode');
 
-const spinner = form.querySelector('#keywords-add-spinner');
+const spinner = form.querySelector('#group-goods-add-spinner');
 
-const buttonSubmit = form.querySelector('#keywords-add-submit');
-const buttonCancel = form.querySelector('#keywords-add-cancel');
-
-// const stor = dataStorage.data;
+const buttonSubmit = form.querySelector('#group-goods-add-submit');
+const buttonCancel = form.querySelector('#group-goods-add-cancel');
 
 const showSpinner = () => {
   spinner.classList.remove('invisible');
@@ -65,11 +70,11 @@ const callbackXhrSuccess = (response) => {
 
   hideSpinner();
   formReset();
-  $('#keywords-add').modal('hide');
+  $('#group-goods-add').modal('hide');
 
   switch (response.status) {
   case 200:
-    keywordsButton.update();
+    catalogGroupsGoods.redraw();
     break;
   case 400:
     markup.informationtModal = {
@@ -86,12 +91,10 @@ const callbackXhrSuccess = (response) => {
   }
 };
 
-
 const callbackXhrError = () => {
-
   hideSpinner();
   formReset();
-  $('#keywords-add').modal('hide');
+  $('#enterprises-card-edit').modal('hide');
 
   markup.informationtModal = {
     'title': 'Error',
@@ -107,25 +110,41 @@ const validateForm = () => {
     showAlert(name);
   }
 
+  if (!validPattern.description.test(describe.value)) {
+    valid = false;
+    showAlert(describe);
+  }
+
+  if (!validPattern.group.test(group.value)) {
+    valid = false;
+    showAlert(group);
+  }
+  if (!validPattern.purchasePrice.test(purchase.value)) {
+    valid = false;
+    showAlert(purchase);
+  }
+  if (!validPattern.extra.test(extra.value)) {
+    valid = false;
+    showAlert(extra);
+  }
+  if (!validPattern.sellingPrice.test(sell.value)) {
+    valid = false;
+    showAlert(sell);
+  }
+  if (!validPattern.barcode.test(barcode.value)) {
+    valid = false;
+    showAlert(barcode);
+  }
   return valid;
 };
 
 const submitForm = () => {
-  /*
+  const stor = dataStorage.data;
+
   let postData = `name=${name.value}&token=${stor.token}`;
   let urlApp = appUrl.replace('{{dir}}', stor.directory);
   urlApp = urlApp.replace('{{oper}}', stor.operatorId);
   urlApp = urlApp.replace('{{busId}}', stor.currentBusiness);
-  console.log(stor);
-  console.log(dataStorage.data);
-  console.log(stor.currentBusiness);
-  console.log(urlApp);
-  */
-  let {token, directory, operatorId, currentBusiness} = dataStorage.data;
-  let postData = `name=${name.value}&token=${token}`;
-  let urlApp = appUrl.replace('{{dir}}', directory);
-  urlApp = urlApp.replace('{{oper}}', operatorId);
-  urlApp = urlApp.replace('{{busId}}', currentBusiness);
 
   let response = {
     url: urlApp,
@@ -149,11 +168,11 @@ const formSubmitHandler = (evt) => {
 
 const addHandlers = () => {
 
-  $('#keywords-add').on('hidden.bs.modal', () => {
+  $('#group-goods-add').on('hidden.bs.modal', () => {
     formReset();
   });
 
-  $('#keywords-add').on('shown.bs.modal', () => {
+  $('#group-goods-add').on('shown.bs.modal', () => {
     window.appFormCurrValue = {
       'name': name.value,
     };
@@ -169,5 +188,4 @@ const addHandlers = () => {
 
 export default {
   start: addHandlers
-
 };

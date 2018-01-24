@@ -216,4 +216,24 @@ window.appSettings = {
     }
   },
 
+   // Форма изменения ключевого слова
+  'formAddGoods': {
+    'UrlApi': '/lopos_directory/{{dir}}/operator/{{oper}}/business/{{busId}}/group/{{groupId}}',
+    'validPatterns': {
+      'name': /^[а-яёА-ЯЁA-Za-z\s\d]+$/,
+      'description': /^[а-яёА-ЯЁA-Za-z\s\d]+$/,
+      'group': /^[а-яёА-ЯЁA-Za-z\s\d]+$/,
+      'purchasePrice:': /^[а-яёА-ЯЁA-Za-z\s\d]+$/,
+      'extra': /\d/,
+      'sellingPrice:': /^[а-яёА-ЯЁA-Za-z\s\d]+$/,
+      'barcode:': /^[а-яёА-ЯЁA-Za-z\s\d]+$/,
+    },
+    'validMessage': {
+      'name': 'поле минимум 1 буква,<br>не должно содержать спецсимволы',
+    },
+    'messages': {
+      'mes400': 'Некорректный запрос'
+    }
+  },
+
 };

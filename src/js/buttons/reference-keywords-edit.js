@@ -21,6 +21,8 @@ const spinner = form.querySelector('#keywords-card-edit-spinner');
 const buttonSubmit = form.querySelector('#keywords-card-edit-submit');
 const buttonCancel = form.querySelector('#keywords-card-edit-cancel');
 
+const stor = dataStorage.data;
+
 const showSpinner = () => {
   spinner.classList.remove('invisible');
   buttonSubmit.disabled = true;
@@ -114,7 +116,6 @@ const validateForm = () => {
 };
 
 const submitForm = () => {
-  const stor = dataStorage.data;
   let postData = `name=${name.value}&token=${stor.token}`;
   let urlApp = appUrl.replace('{{dir}}', stor.directory);
   urlApp = urlApp.replace('{{oper}}', stor.operatorId);

@@ -17,8 +17,8 @@ import groupsButton from './buttons/catalog-groups.js';
 import groupsButtonFormAdd from './buttons/catalog-groups-add.js';
 import groupsButtonFormEdit from './buttons/catalog-groups-edit.js';
 
-console.log('ver: 3D1');
-console.log('ver: 2A5');
+console.log('ver: 2D9');
+console.log('ver: 3A1');
 
 const exit = document.querySelector('#profile-exit');
 const app = document.querySelector('#app');

@@ -87,6 +87,23 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "src/js/buttons/reference-contractors-add.js",
+			"settings":
+			{
+				"buffer_size": 5681,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/D/USERS/kds/Desktop/lopos-master/src/js/main.js",
+			"settings":
+			{
+				"buffer_size": 3386,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -133,7 +150,10 @@
 	},
 	"expanded_folders":
 	[
-		"/D/USERS/kds/Documents/DEV/lopos"
+		"/D/USERS/kds/Documents/DEV/lopos",
+		"/D/USERS/kds/Documents/DEV/lopos/src",
+		"/D/USERS/kds/Documents/DEV/lopos/src/js",
+		"/D/USERS/kds/Documents/DEV/lopos/src/js/buttons"
 	],
 	"file_history":
 	[
@@ -403,8 +423,81 @@
 	"groups":
 	[
 		{
+			"selected": 1,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "src/js/buttons/reference-contractors-add.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5681,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"editorconfig": true,
+							"ensure_newline_at_eof_on_save": true,
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/JavaScriptNext - ES6 Syntax/JavaScriptNext.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true,
+							"trim_trailing_white_space_on_save": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 60.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/D/USERS/kds/Desktop/lopos-master/src/js/main.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3386,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"editorconfig": true,
+							"ensure_newline_at_eof_on_save": true,
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/JavaScriptNext - ES6 Syntax/JavaScriptNext.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true,
+							"trim_trailing_white_space_on_save": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
 			]
 		}
 	],
