@@ -130,11 +130,32 @@ input[name="express-sell-radio"] {
 }
 
 input[name="express-purchase-radio"]:checked + label,
+input[name="stock"]:checked + label,
 input[name="express-sell-radio"]:checked + label {
 	background-color: #eee;
 }
 
+.express-container {
 
+}
+
+.express-container.express-container__muted {
+  opacity: 0.3;
+}
+
+.goods-card-img {
+  display: block;
+  border: 1px solid black;
+  width: 310px;
+  height: 300px;
+  margin-right: 15px;
+  padding: 2px;
+}
+
+.goods-card-img img {
+  display: block;
+  width: 300px;
+}
 
 // Серый фон и шрифты
 /*
