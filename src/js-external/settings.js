@@ -36,10 +36,10 @@
     <meta content="https://avatars0.githubusercontent.com/u/35724834?s=400&amp;v=4" property="og:image" /><meta content="GitHub" property="og:site_name" /><meta content="object" property="og:type" /><meta content="devteamnn/lopos" property="og:title" /><meta content="https://github.com/devteamnn/lopos" property="og:url" /><meta content="Contribute to lopos development by creating an account on GitHub." property="og:description" />
 
   <link rel="assets" href="https://assets-cdn.github.com/">
-  <link rel="web-socket" href="wss://live.github.com/_sockets/VjI6MjIyOTcxNjc4Ojk3YWRlZWY2MjNhMjA1NGFiZmQ3ZTIzMDJiNzAxZDQ0NGU5ZmU4YTI3ZWFiNmRhNDI3YWYxOGI4MTUwODdkMDc=--b86ff67e726e6c68bd35a180e96303e08e43a055">
+  <link rel="web-socket" href="wss://live.github.com/_sockets/VjI6MjIyOTcxNjc4OjU2NTM5MTEzYTY5ZWIyNzQzMmRhMjM5ZDZjMjZlZmYzNDA3MGUwM2E5YjE0MGJhODFjYjdjMmU2NGI0OTY3NWY=--aee9200abf1337d27f520f658cd8c4c22aec4536">
   <meta name="pjax-timeout" content="1000">
   <link rel="sudo-modal" href="/sessions/sudo_modal">
-  <meta name="request-id" content="D305:21AB:19B4B68:33404F6:5A6A154F" data-pjax-transient>
+  <meta name="request-id" content="D351:21AA:26BECBD:3F3967A:5A6A169E" data-pjax-transient>
   
 
   <meta name="selected-link" value="repo_source" data-pjax-transient>
@@ -49,7 +49,7 @@
   <meta name="google-site-verification" content="GXs5KoUUkNCoaAZn7wPN-t01Pywp9M3sEjnt_3_ZWPc">
     <meta name="google-analytics" content="UA-3769691-2">
 
-<meta content="collector.githubapp.com" name="octolytics-host" /><meta content="github" name="octolytics-app-id" /><meta content="https://collector.githubapp.com/github-external/browser_event" name="octolytics-event-url" /><meta content="D305:21AB:19B4B68:33404F6:5A6A154F" name="octolytics-dimension-request_id" /><meta content="iad" name="octolytics-dimension-region_edge" /><meta content="iad" name="octolytics-dimension-region_render" /><meta content="19558362" name="octolytics-actor-id" /><meta content="bolshovalexandr" name="octolytics-actor-login" /><meta content="974a3a062e37e767706281e1f909acf8cad3279a76ce481f1e3e13d779cc1cc7" name="octolytics-actor-hash" />
+<meta content="collector.githubapp.com" name="octolytics-host" /><meta content="github" name="octolytics-app-id" /><meta content="https://collector.githubapp.com/github-external/browser_event" name="octolytics-event-url" /><meta content="D351:21AA:26BECBD:3F3967A:5A6A169E" name="octolytics-dimension-request_id" /><meta content="iad" name="octolytics-dimension-region_edge" /><meta content="iad" name="octolytics-dimension-region_render" /><meta content="19558362" name="octolytics-actor-id" /><meta content="bolshovalexandr" name="octolytics-actor-login" /><meta content="974a3a062e37e767706281e1f909acf8cad3279a76ce481f1e3e13d779cc1cc7" name="octolytics-actor-hash" />
 <meta content="https://github.com/hydro_browser_events" name="hydro-events-url" />
 <meta content="/&lt;user-name&gt;/&lt;repo-name&gt;/blob/show" data-pjax-transient="true" name="analytics-location" />
 
@@ -65,7 +65,7 @@
   <meta name="user-login" content="bolshovalexandr">
 
       <meta name="expected-hostname" content="github.com">
-    <meta name="js-proxy-site-detection-payload" content="ZWZkNzFiOWZkNDU0MWY1OGQxMzZlNGNjMzFkZGU5MzVmYmIwYTllZWJlYWUwMzQ0ZDdhMTQzNzk3MWEwMGFlZHx7InJlbW90ZV9hZGRyZXNzIjoiODIuMjA4LjEyNy45NyIsInJlcXVlc3RfaWQiOiJEMzA1OjIxQUI6MTlCNEI2ODozMzQwNEY2OjVBNkExNTRGIiwidGltZXN0YW1wIjoxNTE2OTAxNzE0LCJob3N0IjoiZ2l0aHViLmNvbSJ9">
+    <meta name="js-proxy-site-detection-payload" content="NDAyOGUzZDAyMjhlMTkwOGZiM2U2OTkyZWNjYjE5NGFkZDBmMDRmZWFjZDFlYmU4MGY4NGFlOTBiZjJkZWEzMnx7InJlbW90ZV9hZGRyZXNzIjoiODIuMjA4LjEyNy45NyIsInJlcXVlc3RfaWQiOiJEMzUxOjIxQUE6MjZCRUNCRDozRjM5NjdBOjVBNkExNjlFIiwidGltZXN0YW1wIjoxNTE2OTAyMDUxLCJob3N0IjoiZ2l0aHViLmNvbSJ9">
 
     <meta name="enabled-features" content="UNIVERSE_BANNER,FREE_TRIALS,CONTRIBUTOR_FLAGGED_CONTENT">
 
@@ -252,7 +252,7 @@
           Settings
         </a></li>
 
-        <li><!-- '"` --><!-- </textarea></xmp> --></option></form><form accept-charset="UTF-8" action="/logout" class="logout-form" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="t+90hgqkhnft212YLD2tAKPtNOnWhIQezdr0oDXOnzxUooUeGJybNttWFKWf30RIqGNcLbN4N0Q9mrCMiJKPtg==" /></div>
+        <li><!-- '"` --><!-- </textarea></xmp> --></option></form><form accept-charset="UTF-8" action="/logout" class="logout-form" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="2WuBuPP3E4hhhl3zbNIvQ4XW6/mQssRaj8E2RgyXrNU6JnAg4c8OyVcLFM7fMMYLjliDPfVOdwB/gXJqscu8Xw==" /></div>
           <button type="submit" class="dropdown-item dropdown-signout" data-ga-click="Header, sign out, icon:logout">
             Sign out
           </button>
@@ -263,7 +263,7 @@
 </ul>
 
 
-        <!-- '"` --><!-- </textarea></xmp> --></option></form><form accept-charset="UTF-8" action="/logout" class="sr-only right-0" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="OVINOuhL3I3dX/xMMxxewVXMomMfl1Hu7IHGk03DN1HaH/yi+nPBzOvStXGA/reJXkLKp3pr4rQcwYK/8J8n2w==" /></div>
+        <!-- '"` --><!-- </textarea></xmp> --></option></form><form accept-charset="UTF-8" action="/logout" class="sr-only right-0" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="xC2FzGqTvLOx09xi0FwYF7GCwylzGcSv86Z5xefWNKsnYHRUeKuh8odelV9jvvFfugyr7Rbld/UD5j3pWookIQ==" /></div>
           <button type="submit" class="dropdown-item dropdown-signout" data-ga-click="Header, sign out, icon:logout">
             Sign out
           </button>
@@ -298,7 +298,7 @@
 
       <ul class="pagehead-actions">
   <li>
-        <!-- '"` --><!-- </textarea></xmp> --></option></form><form accept-charset="UTF-8" action="/notifications/subscribe" class="js-social-container" data-autosubmit="true" data-remote="true" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="ic/EiQh294I8zbTveB3HZQOR79gew794TLJidwO/q8yVaagc80ZrvW741R43X1szd/PrpUNceVcPuC7GOCe66Q==" /></div>      <input class="form-control" id="repository_id" name="repository_id" type="hidden" value="118608153" />
+        <!-- '"` --><!-- </textarea></xmp> --></option></form><form accept-charset="UTF-8" action="/notifications/subscribe" class="js-social-container" data-autosubmit="true" data-remote="true" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="JYO2ONWI8HEbIYXop4uvAItMJd2tQRpacIV9U0nKh2Y5JdqtLrhsTkkU5BnoyTNW/y4hoPDe3HUzjzHiclKWQw==" /></div>      <input class="form-control" id="repository_id" name="repository_id" type="hidden" value="118608153" />
 
         <div class="select-menu js-menu-container js-select-menu">
           <a href="/devteamnn/lopos/subscription"
@@ -378,7 +378,7 @@
   <li>
     
   <div class="js-toggler-container js-social-container starring-container ">
-    <!-- '"` --><!-- </textarea></xmp> --></option></form><form accept-charset="UTF-8" action="/devteamnn/lopos/unstar" class="starred js-social-form" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="GJB0lr7Li6me7pSbUoLL0HvOcV10qbeH4rXwH99oTMl+SntZZ27R70mL4FsIyYZIZN5la9v4opc1mTdrkatQ7g==" /></div>
+    <!-- '"` --><!-- </textarea></xmp> --></option></form><form accept-charset="UTF-8" action="/devteamnn/lopos/unstar" class="starred js-social-form" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="FE1Zxy24reUlXrHy8iK+/BG+JNEMjlmKPci3x0LC7WVyl1YI9B33o/I7xTKoafNkDq4w56PfTJrq5HCzDAHxQg==" /></div>
       <input type="hidden" name="context" value="repository"></input>
       <button
         type="submit"
@@ -393,7 +393,7 @@
           0
         </a>
 </form>
-    <!-- '"` --><!-- </textarea></xmp> --></option></form><form accept-charset="UTF-8" action="/devteamnn/lopos/star" class="unstarred js-social-form" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="BRJW+gXjDTrFnVfGAxBUaptmEYaa95lPE24EAGKcCbBraYLGJIhYd71eedny1rRHNJSWIV2sjNuve9DYy1kXiA==" /></div>
+    <!-- '"` --><!-- </textarea></xmp> --></option></form><form accept-charset="UTF-8" action="/devteamnn/lopos/star" class="unstarred js-social-form" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="GMiZmoxdqQ3/8wv1nTS/mlWnDV+0tA+v/SoV+xf/LmF2s02mrTb8QIcwJeps8l+3+lWK+HPvGjtBP8EjvjowWQ==" /></div>
       <input type="hidden" name="context" value="repository"></input>
       <button
         type="submit"
@@ -412,7 +412,7 @@
   </li>
 
   <li>
-          <!-- '"` --><!-- </textarea></xmp> --></option></form><form accept-charset="UTF-8" action="/devteamnn/lopos/fork" class="btn-with-count" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="Pm+fsWiDP7eQgfLij+Q/EH3QURN4nj9d7Fxw+W9QmnD0Ab3Ojv12GVyhyOlVpf2hrwfU5hEPTjJgu+4fp1Wplw==" /></div>
+          <!-- '"` --><!-- </textarea></xmp> --></option></form><form accept-charset="UTF-8" action="/devteamnn/lopos/fork" class="btn-with-count" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="aakYTfI6HEAlHmOblZBbPq+9JHpCSgu8fRVMXEYzVw2jxzoyFERV7uk+WZBP0ZmPfWqhjyvbetPx8tK6jjZk6g==" /></div>
             <button
                 type="submit"
                 class="btn btn-sm btn-with-count"
@@ -599,16 +599,39 @@
   </div>
 
 
-  <include-fragment class="commit-tease" src="/devteamnn/lopos/contributors/master/src/js-external/settings.js">
-    <div>
-      Fetching contributors&hellip;
-    </div>
+  
+  <div class="commit-tease">
+      <span class="float-right">
+        <a class="commit-tease-sha" href="/devteamnn/lopos/commit/4fd3c32494af82b0ffae4346b17c444e70b8986c" data-pjax>
+          4fd3c32
+        </a>
+        <relative-time datetime="2018-01-25T06:46:38Z">Jan 25, 2018</relative-time>
+      </span>
+      <div>
+        <img alt="@KononovDmitriy" class="avatar" height="20" src="https://avatars0.githubusercontent.com/u/25413560?s=40&amp;v=4" width="20" />
+        <a href="/KononovDmitriy" class="user-mention" rel="contributor">KononovDmitriy</a>
+          <a href="/devteamnn/lopos/commit/4fd3c32494af82b0ffae4346b17c444e70b8986c" class="message" data-pjax="true" title="3D1 Доделал добавление товара">3D1 Доделал добавление товара</a>
+      </div>
 
     <div class="commit-tease-contributors">
-      <img alt="" class="loader-loading float-left" height="16" src="https://assets-cdn.github.com/images/spinners/octocat-spinner-32-EAF2F5.gif" width="16" />
-      <span class="loader-error">Cannot retrieve contributors at this time</span>
+      <button type="button" class="btn-link muted-link contributors-toggle" data-facebox="#blob_contributors_box">
+        <strong>1</strong>
+         contributor
+      </button>
+      
     </div>
-</include-fragment>
+
+    <div id="blob_contributors_box" style="display:none">
+      <h2 class="facebox-header" data-facebox-id="facebox-header">Users who have contributed to this file</h2>
+      <ul class="facebox-user-list" data-facebox-id="facebox-description">
+          <li class="facebox-user-list-item">
+            <img alt="@KononovDmitriy" height="24" src="https://avatars1.githubusercontent.com/u/25413560?s=48&amp;v=4" width="24" />
+            <a href="/KononovDmitriy">KononovDmitriy</a>
+          </li>
+      </ul>
+    </div>
+  </div>
+
 
   <div class="file">
     <div class="file-header">
@@ -627,13 +650,13 @@
             <svg aria-hidden="true" class="octicon octicon-device-desktop" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M15 2H1c-.55 0-1 .45-1 1v9c0 .55.45 1 1 1h5.34c-.25.61-.86 1.39-2.34 2h8c-1.48-.61-2.09-1.39-2.34-2H15c.55 0 1-.45 1-1V3c0-.55-.45-1-1-1zm0 9H1V3h14v8z"/></svg>
         </a>
 
-          <!-- '"` --><!-- </textarea></xmp> --></option></form><form accept-charset="UTF-8" action="/devteamnn/lopos/edit/master/src/js-external/settings.js" class="inline-form js-update-url-with-hash" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="oVkPHTGEBM0m1yyTTVpD1f8YXLRdVajZtwzMJUBM5g+J3e4e7yeTJYOkxnMiau71hGJA/Fq8FRHPTChKn1mZxA==" /></div>
+          <!-- '"` --><!-- </textarea></xmp> --></option></form><form accept-charset="UTF-8" action="/devteamnn/lopos/edit/master/src/js-external/settings.js" class="inline-form js-update-url-with-hash" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="tNNv7QtSNQRbr7N+QEwv2P0e2Q8EwDyaVfZdqhvfHRmcV47u1fGi7P7cWZ4vfIL4hmTFRwMpgVIttrnFxMpi0g==" /></div>
             <button class="btn-octicon tooltipped tooltipped-nw" type="submit"
               aria-label="Fork this project and edit the file" data-hotkey="e" data-disable-with>
               <svg aria-hidden="true" class="octicon octicon-pencil" height="16" version="1.1" viewBox="0 0 14 16" width="14"><path fill-rule="evenodd" d="M0 12v3h3l8-8-3-3-8 8zm3 2H1v-2h1v1h1v1zm10.3-9.3L12 6 9 3l1.3-1.3a.996.996 0 0 1 1.41 0l1.59 1.59c.39.39.39 1.02 0 1.41z"/></svg>
             </button>
 </form>
-        <!-- '"` --><!-- </textarea></xmp> --></option></form><form accept-charset="UTF-8" action="/devteamnn/lopos/delete/master/src/js-external/settings.js" class="inline-form" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="etcYut1DL7gzoiDJOFuf8ggL+ROq23po07vUe/kSDiTnwgkzp/vNd088JcRZD4Z9pQKvXIxrOSCQ/eRQuj7q4g==" /></div>
+        <!-- '"` --><!-- </textarea></xmp> --></option></form><form accept-charset="UTF-8" action="/devteamnn/lopos/delete/master/src/js-external/settings.js" class="inline-form" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="FE/Eg10Y2P2NjdSZHwjJT1uCxkXc7oilpEdTPtfaomqJWtUKJ6A6MvET0ZR+XNDA9ouQCvpey+3nAWMVlPZGrA==" /></div>
           <button class="btn-octicon btn-octicon-danger tooltipped tooltipped-nw" type="submit"
             aria-label="Fork this project and delete the file" data-disable-with>
             <svg aria-hidden="true" class="octicon octicon-trashcan" height="16" version="1.1" viewBox="0 0 12 16" width="12"><path fill-rule="evenodd" d="M11 2H9c0-.55-.45-1-1-1H5c-.55 0-1 .45-1 1H2c-.55 0-1 .45-1 1v1c0 .55.45 1 1 1v9c0 .55.45 1 1 1h7c.55 0 1-.45 1-1V5c.55 0 1-.45 1-1V3c0-.55-.45-1-1-1zm-1 12H3V5h1v8h1V5h1v8h1V5h1v8h1V5h1v9zm1-10H2V3h9v1z"/></svg>
@@ -1669,7 +1692,7 @@
 <div class="footer container-lg px-3" role="contentinfo">
   <div class="position-relative d-flex flex-justify-between py-6 mt-6 f6 text-gray border-top border-gray-light ">
     <ul class="list-style-none d-flex flex-wrap ">
-      <li class="mr-3">&copy; 2018 <span title="0.18042s from unicorn-1981001111-b1txz">GitHub</span>, Inc.</li>
+      <li class="mr-3">&copy; 2018 <span title="0.24989s from unicorn-4070682007-jxhg3">GitHub</span>, Inc.</li>
         <li class="mr-3"><a href="https://github.com/site/terms" data-ga-click="Footer, go to terms, text:terms">Terms</a></li>
         <li class="mr-3"><a href="https://github.com/site/privacy" data-ga-click="Footer, go to privacy, text:privacy">Privacy</a></li>
         <li class="mr-3"><a href="https://github.com/security" data-ga-click="Footer, go to security, text:security">Security</a></li>
