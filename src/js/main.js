@@ -14,8 +14,11 @@ import keywordsButton from './buttons/reference-keywords.js';
 import keywordsButtonAdd from './buttons/reference-keywords-add.js';
 import keywordsButtonEdit from './buttons/reference-keywords-edit.js';
 import groupsButton from './buttons/catalog-groups.js';
+import groupsButtonFormAdd from './buttons/catalog-groups-add.js';
+import groupsButtonFormEdit from './buttons/catalog-groups-edit.js';
+import goodsButtonFormEdit from './buttons/catalog-groups-goods-add.js';
 
-console.log('ver: 2D9');
+console.log('ver: 3D1');
 console.log('ver: 3A2');
 
 const exit = document.querySelector('#profile-exit');
@@ -74,6 +77,9 @@ const start = () => {
     contractorsButtonFormAdd.start();
     keywordsButtonAdd.start();
     keywordsButtonEdit.start();
+    groupsButtonFormAdd.start();
+    groupsButtonFormEdit.start();
+    goodsButtonFormEdit.start();
   } else {
     showLoginHideApp();
     mainWindow.init();
