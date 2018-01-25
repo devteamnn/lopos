@@ -230,6 +230,7 @@ const onGroupGoodsCardBodyClick = (evt) => {
   while (!currentStringElement.dataset.goodId) {
     currentStringElement = currentStringElement.parentNode;
   }
+  auth.currentGoodId = currentStringElement.dataset.goodId;
   goodsCard.fill(currentStringElement.dataset.goodId);
 };
 
