@@ -88,18 +88,54 @@
 	"buffers":
 	[
 		{
-			"file": "src/js/buttons/reference-contractors-add.js",
+			"file": "src/js/main.js",
 			"settings":
 			{
-				"buffer_size": 5681,
+				"buffer_size": 3589,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "group-goods-add\n",
+			"settings":
+			{
+				"buffer_size": 16,
+				"line_ending": "Windows",
+				"name": "group-goods-add"
+			}
+		},
+		{
+			"file": "src/js/buttons/catalog-groups-goods-add.js",
+			"settings":
+			{
+				"buffer_size": 4580,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/index.html",
+			"settings":
+			{
+				"buffer_size": 64801,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "group-goods-add\ngroup-goods-name\ngroup-goods-describe\n\ngroup-goods-group\ngroup-goods-add-form\n\ngroup-goods-name\ngroup-goods-describe\ngroup-goods-group\n\ngroup-goods-price-purchase\ngroup-goods-price-extra\ngroup-goods-price-sell\n\ngroup-goods-price-valid\n\ngroup-goods-barcode\ngroup-goods-barcode-valid\n\ngroup-goods-add-spinner\n\ngroup-goods-add-submit\ngroup-goods-add-cancel\n\ngroup-goods-add-bill",
+			"settings":
+			{
+				"buffer_size": 391,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "/D/USERS/kds/Desktop/lopos-master/src/js/main.js",
+			"file": "src/js-external/settings.js",
 			"settings":
 			{
-				"buffer_size": 3386,
+				"buffer_size": 6841,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -153,10 +189,14 @@
 		"/D/USERS/kds/Documents/DEV/lopos",
 		"/D/USERS/kds/Documents/DEV/lopos/src",
 		"/D/USERS/kds/Documents/DEV/lopos/src/js",
-		"/D/USERS/kds/Documents/DEV/lopos/src/js/buttons"
+		"/D/USERS/kds/Documents/DEV/lopos/src/js/buttons",
+		"/D/USERS/kds/Documents/DEV/lopos/src/js-external"
 	],
 	"file_history":
 	[
+		"/D/USERS/kds/Documents/DEV/lopos/src/js/buttons/reference-contractors-add.js",
+		"/D/USERS/kds/Documents/DEV/lopos/src/js-external/settings.js",
+		"/D/USERS/kds/Desktop/lopos-master/src/js/main.js",
 		"/D/USERS/kds/Documents/DEV/LOPOS-ID/src/js/buttons/reference-points-add.js",
 		"/D/USERS/kds/Documents/DEV/LOPOS-ID/src/js/buttons/reference-keywords-edit.js",
 		"/D/USERS/kds/Documents/DEV/LOPOS-ID/src/js/buttons/reference-keywords-add.js",
@@ -281,6 +321,11 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"group-goods-add",
+			"enterprisesAdd",
+			"groups-add",
+			"formAddGroups",
+			"group-goods-add",
 			"groups",
 			"groups-add",
 			"d",
@@ -384,6 +429,9 @@
 		"regex": true,
 		"replace_history":
 		[
+			"groupGoodsAdd",
+			"group-goods-add",
+			"formAddGoods",
 			"formEditKeywords",
 			"validMessages",
 			"messages",
@@ -423,24 +471,24 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 2,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "src/js/buttons/reference-contractors-add.js",
+					"file": "src/js/main.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5681,
+						"buffer_size": 3589,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								1210,
+								1210
 							]
 						],
 						"settings":
@@ -448,54 +496,186 @@
 							"editorconfig": true,
 							"ensure_newline_at_eof_on_save": true,
 							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": false,
 							"syntax": "Packages/JavaScriptNext - ES6 Syntax/JavaScriptNext.tmLanguage",
 							"tab_size": 2,
 							"translate_tabs_to_spaces": true,
 							"trim_trailing_white_space_on_save": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 60.0,
+						"translation.y": 400.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 5,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "/D/USERS/kds/Desktop/lopos-master/src/js/main.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3386,
+						"buffer_size": 16,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								16,
+								16
 							]
 						],
 						"settings":
 						{
-							"editorconfig": true,
-							"ensure_newline_at_eof_on_save": true,
+							"auto_name": "group-goods-add",
 							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": false,
-							"syntax": "Packages/JavaScriptNext - ES6 Syntax/JavaScriptNext.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true,
-							"trim_trailing_white_space_on_save": true
+							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "src/js/buttons/catalog-groups-goods-add.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4580,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4127,
+								4127
+							]
+						],
+						"settings":
+						{
+							"editorconfig": true,
+							"ensure_newline_at_eof_on_save": true,
+							"incomplete_sync": null,
+							"syntax": "Packages/JavaScriptNext - ES6 Syntax/JavaScriptNext.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true,
+							"trim_trailing_white_space_on_save": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2979.0,
+						"zoom_level": 1.0
+					},
 					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "src/index.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 64801,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								53175,
+								53194
+							]
+						],
+						"settings":
+						{
+							"editorconfig": true,
+							"ensure_newline_at_eof_on_save": true,
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true,
+							"trim_trailing_white_space_on_save": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 24518.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 4,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 391,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								225,
+								221
+							]
+						],
+						"settings":
+						{
+							"auto_name": "",
+							"incomplete_sync": null,
+							"syntax": "Packages/Regular Expressions/RegExp.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "src/js-external/settings.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 6841,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								6622,
+								6629
+							]
+						],
+						"settings":
+						{
+							"editorconfig": true,
+							"ensure_newline_at_eof_on_save": true,
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/JavaScriptNext - ES6 Syntax/JavaScriptNext.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true,
+							"trim_trailing_white_space_on_save": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 3890.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
 					"type": "text"
 				}
 			]
@@ -518,11 +698,18 @@
 				0,
 				1,
 				1
+			],
+			[
+				1,
+				0,
+				2,
+				1
 			]
 		],
 		"cols":
 		[
 			0.0,
+			0.587563451777,
 			1.0
 		],
 		"rows":

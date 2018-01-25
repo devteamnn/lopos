@@ -88,7 +88,7 @@ const callbackXhrSuccess = (response) => {
 const callbackXhrError = () => {
   hideSpinner();
   formReset();
-  $('#enterprises-card-edit').modal('hide');
+  $('#groups-add').modal('hide');
 
   markup.informationtModal = {
     'title': 'Error',

@@ -202,7 +202,7 @@ window.appSettings = {
     }
   },
 
-  // Форма изменения ключевого слова
+  // Форма редактирования группы товара
   'formEditGroups': {
     'UrlApi': '/lopos_directory/{{dir}}/operator/{{oper}}/business/{{busId}}/group/{{groupId}}',
     'validPatterns': {
@@ -216,17 +216,17 @@ window.appSettings = {
     }
   },
 
-   // Форма изменения ключевого слова
+   // Форма добавления товара
   'formAddGoods': {
-    'UrlApi': '/lopos_directory/{{dir}}/operator/{{oper}}/business/{{busId}}/group/{{groupId}}',
+    'UrlApi': '/lopos_directory/{{dir}}/operator/{{oper}}/business/{{busId}}/good',
     'validPatterns': {
       'name': /^[а-яёА-ЯЁA-Za-z\s\d]+$/,
       'description': /^[а-яёА-ЯЁA-Za-z\s\d]+$/,
       'group': /^[а-яёА-ЯЁA-Za-z\s\d]+$/,
-      'purchasePrice:': /^[а-яёА-ЯЁA-Za-z\s\d]+$/,
+      'purchasePrice': /^[а-яёА-ЯЁA-Za-z\s\d]+$/,
       'extra': /\d/,
-      'sellingPrice:': /^[а-яёА-ЯЁA-Za-z\s\d]+$/,
-      'barcode:': /^[а-яёА-ЯЁA-Za-z\s\d]+$/,
+      'sellingPrice': /^[а-яёА-ЯЁA-Za-z\s\d]+$/,
+      'barcode': /^[а-яёА-ЯЁA-Za-z\s\d]+$/,
     },
     'validMessage': {
       'name': 'поле минимум 1 буква,<br>не должно содержать спецсимволы',

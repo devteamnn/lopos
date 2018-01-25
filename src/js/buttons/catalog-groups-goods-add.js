@@ -23,6 +23,7 @@ const sell = form.querySelector('#group-goods-price-sell');
 const barcode = form.querySelector('#group-goods-barcode');
 
 const spinner = form.querySelector('#group-goods-add-spinner');
+const priceValid = form.querySelector('#group-goods-price-valid');
 
 const buttonSubmit = form.querySelector('#group-goods-add-submit');
 const buttonCancel = form.querySelector('#group-goods-add-cancel');
@@ -49,9 +50,15 @@ const showAlert = (input) => {
 
 const hideAlert = (input) => {
   if (input.type === 'text') {
+    switch (input.id) {
+    case 'group-goods-price-purchase': priceValid.innerHTML = ''; break;
+    case 'group-goods-price-extra': priceValid.innerHTML = ''; break;
+    case 'group-goods-price-sell': priceValid.innerHTML = ''; break;
+    default: input.nextElementSibling.innerHTML = ''; break;
+    }
+
     input.classList.remove('border');
     input.classList.remove('border-danger');
-    input.nextElementSibling.innerHTML = '';
   }
 };
 
@@ -94,7 +101,7 @@ const callbackXhrSuccess = (response) => {
 const callbackXhrError = () => {
   hideSpinner();
   formReset();
-  $('#enterprises-card-edit').modal('hide');
+  $('#group-goods-add').modal('hide');
 
   markup.informationtModal = {
     'title': 'Error',
@@ -121,15 +128,15 @@ const validateForm = () => {
   }
   if (!validPattern.purchasePrice.test(purchase.value)) {
     valid = false;
-    showAlert(purchase);
+    priceValid.innerHTML = '!!';
   }
   if (!validPattern.extra.test(extra.value)) {
     valid = false;
-    showAlert(extra);
+    priceValid.innerHTML = '!!';
   }
   if (!validPattern.sellingPrice.test(sell.value)) {
     valid = false;
-    showAlert(sell);
+    priceValid.innerHTML = '!!';
   }
   if (!validPattern.barcode.test(barcode.value)) {
     valid = false;
@@ -140,8 +147,9 @@ const validateForm = () => {
 
 const submitForm = () => {
   const stor = dataStorage.data;
+  const groupId = dataStorage.currentGroupId;
 
-  let postData = `name=${name.value}&token=${stor.token}`;
+  let postData = `token=${stor.token}&name=${name.value}&description=${describe.value}&purchase_price=${purchase.value}&selling_price=${sell.value}&group=${groupId}&barcode=${barcode.value}`;
   let urlApp = appUrl.replace('{{dir}}', stor.directory);
   urlApp = urlApp.replace('{{oper}}', stor.operatorId);
   urlApp = urlApp.replace('{{busId}}', stor.currentBusiness);
@@ -173,9 +181,7 @@ const addHandlers = () => {
   });
 
   $('#group-goods-add').on('shown.bs.modal', () => {
-    window.appFormCurrValue = {
-      'name': name.value,
-    };
+    group.value = dataStorage.currentGroupName;
   });
 
   form.addEventListener('input', (evt) => {
