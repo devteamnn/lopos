@@ -182,7 +182,7 @@ const calcExtra = () => {
 };
 
 const calcPercent = () => {
-  extra.value = (sell.value - purchase.value) * 100 / purchase.value;
+  extra.value = ((sell.value - purchase.value) * 100 / purchase.value).toFixed(2);
 };
 
 const validateExtra = () => {
