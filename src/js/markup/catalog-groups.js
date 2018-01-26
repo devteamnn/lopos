@@ -13,7 +13,7 @@ export default {
     // ${currentEnterpriseFlag}
 
     return `
-    <div class="d-flex justify-content-between align-items-center reference-string" data-group-id="${item.id}" data-group-index="${index}">
+    <div class="d-flex justify-content-between align-items-center reference-string" data-group-id="${item.id}" data-group-index="${index}" data-group-level="${item.level}">
       <div style="padding-left: 34px;">
         <span class="reference-row-number">${index + 1}</span> ||
         <span>${item.name}</span> ||
@@ -47,7 +47,7 @@ export default {
 
     return `
     <div class="card goods-tile-card" data-good-id="${item.id}">
-      <img class="card-img-top" src="./img/st_fon_selected.png" alt="${item.name}" title="${item.name}">
+      <img class="card-img-top" src="https://lopos.bidone.ru/users/600a5357/images/${(item.img_url) ? item.img_url + '_preview150.jpg' : ''}" alt="${item.name}" title="${item.name}">
       <div class="card-body goods-tile-title">
         <p class="card-text">${item.count}</p>
       </div>
@@ -66,12 +66,21 @@ export default {
     console.log(goodsData);
     console.log(typeof goodsData);
     groupGoodsBody.innerHTML = '';
-    goodsData.forEach((item, index) => groupGoodsBody.insertAdjacentHTML('beforeend', this.getGoodString(item, index)));
+    if (goodsData) {
+      goodsData.forEach((item, index) => groupGoodsBody.insertAdjacentHTML('beforeend', this.getGoodString(item, index)));
+    } else {
+      groupGoodsBody.innerHTML = 'Пусто';
+
+    }
   },
 
   drawGoodsMetro(goodsData) {
-    groupGoodsBody.innerHTML = '<div class="goods-tile"></div>';
-    goodsData.forEach((item, index) => groupGoodsBody.firstChild.insertAdjacentHTML('beforeend', this.getGoodTile(item, index)));
+    if (goodsData) {
+      groupGoodsBody.innerHTML = '<div class="goods-tile"></div>';
+      goodsData.forEach((item, index) => groupGoodsBody.firstChild.insertAdjacentHTML('beforeend', this.getGoodTile(item, index)));
+    } else {
+      groupGoodsBody.innerHTML = 'Пусто';
+    }
   }
 
 };

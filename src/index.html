@@ -198,7 +198,7 @@
             <a class="nav-link dropdown-toggle" id="list-catalog-list" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" aria-controls="catalog">Каталог</a>
 
             <div class="dropdown-menu">
-              <a class="dropdown-item" id="list-showcase-list" data-toggle="list" href="#list-showcase" role="tab" aria-controls="showcase">Витрина товаров</a>
+              <a class="dropdown-item" id="list-search-list" data-toggle="list" href="#list-search" role="tab" aria-controls="search">Поиск</a>
               <a class="dropdown-item" id="list-groups-list" data-toggle="list" href="#list-groups" role="tab" aria-controls="groups">Группы товаров</a>
               <a class="dropdown-item" id="list-cards-list" data-toggle="list" href="#list-cards" role="tab" aria-controls="cards">Производственные карточки</a>
             </div>
@@ -277,8 +277,8 @@
         <!-- ==================== КОНТЕЙНЕРЫ / Каталог ==================== -->
 
         <!-- =========== КОНТЕЙНЕРЫ / Каталог / Витрина товаров =========== -->
-        <div class="tab-pane fade" id="list-showcase" role="tabpanel" aria-labelledby="list-showcase-list">
-          <p>ВИТРИНА ТОВАРОВ (UNDER CONSTRUCTION)</p>
+        <div class="tab-pane fade" id="list-search" role="tabpanel" aria-labelledby="list-search-list">
+          <p>ПОИСК (UNDER CONSTRUCTION)</p>
         </div>
 
         <!-- =========== КОНТЕЙНЕРЫ / Справочники / Группы товаров =========== -->
@@ -298,6 +298,9 @@
                 <button id="list-groups-card-delete-btn" type="button" class="btn btn-danger p-0 icon-btn icon-btn__delete"></button>
               </div>
             </div>
+            <div id="list-groups-search" class="catalog-header">
+              <input id="list-groups-search-input" type="text" placeholder="поискъ">
+            </div>
             <div id="list-groups-card-body" class="groups-card-block"></div>
           </div>
 
@@ -307,6 +310,7 @@
                 <button id="group-goods-return-btn" type="button" class="btn btn-success p-0 icon-btn icon-btn__return"></button>
                 <h2 id="group-name"></h2>
               </div>
+              <div id="list-groups-goods-header-check-message"></div>
               <div class="catalog-header-buttons">
                 <button id="group-goods-add-btn" type="button" class="btn btn-success p-0 icon-btn icon-btn__add" data-toggle="modal" data-target="#group-goods-add"></button>
                 <button id="group-goods-copy-btn" type="button" class="btn btn-success p-0 icon-btn icon-btn__copy" data-toggle="modal" data-target="#"></button>
@@ -323,7 +327,62 @@
 
         <!-- =========== КОНТЕЙНЕРЫ / Справочники / Группы товаров =========== -->
         <div class="tab-pane fade" id="list-cards" role="tabpanel" aria-labelledby="list-cards-list">
-          <p>ПРОИЗВОДСТВЕННЫЕ КАРТОЧКИ (UNDER CONSTRUCTION)</p>
+          <div id="list-cards-card">
+
+            <div id="list-cards-header" class="catalog-header">
+              <div class="catalog-header-title">
+                <img src="img/ic_my_nomenclature.png" alt="">
+                <h2>ПРОИЗВОДСТВЕННЫЕ КАРТОЧКИ</h2>
+              </div>
+              <div class="catalog-header-buttons">
+                <button id="list-cards-card-add-btn" type="button" class="btn btn-success p-0 icon-btn icon-btn__add" data-toggle="modal" data-target="#cards-add"></button>
+              </div>
+            </div>
+            <div id="list-cards-card-body" class="groups-card-block"></div>
+          </div>
+
+
+          <div id="card-resources" class="d-none">
+            <div id="card-resources-header" class="catalog-header">
+              <div class="catalog-header-title">
+                <button id="card-resources-return-btn" type="button" class="btn btn-success p-0 icon-btn icon-btn__return"></button>
+                <h2 id="card-resources-name"></h2>
+              </div>
+              <div class="catalog-header-buttons">
+                <button id="card-resources-edit-btn" type="button" class="btn btn-warning p-0 icon-btn icon-btn__edit"></button>
+                <button id="card-resources-delete-btn" type="button" class="btn btn-danger p-0 icon-btn icon-btn__delete"></button>
+              </div>
+            </div>
+            <div id="card-resources-body" class="catalog-header-title">
+
+              <div class="w-100 border">
+                <div class="catalog-header">
+                  <div class="catalog-header-title">
+                    <h2>Ресуры</h2>
+                    <div class="catalog-header-buttons">
+                      <button id="resources-add-btn" type="button" class="btn btn-success p-0 icon-btn icon-btn__add" data-toggle="modal" data-target="#cards-add"></button>
+                    </div>
+                  </div>
+                  <div id="card-resources-old-cost"></div>
+                </div>
+                <div id="card-resources-body-resources"></div>
+              </div>
+
+              <div class="w-100 ml-4 border">
+                <div class="catalog-header">
+                  <div class="catalog-header-title">
+                    <h2>Продукт</h2>
+                    <div class="catalog-header-buttons">
+                      <button id="product-add-btn" type="button" class="btn btn-success p-0 icon-btn icon-btn__add" data-toggle="modal" data-target="#cards-add"></button>
+                    </div>
+                  </div>
+                  <div id="card-resources-new-price"></div>
+                </div>
+                <div id="card-resources-body-product"></div>
+              </div>
+            </div>
+          </div>
+
         </div>
 
         <!-- ==================== КОНТЕЙНЕРЫ / Учет ==================== -->
@@ -1007,10 +1066,7 @@
 
             <div class="d-flex">
               <div class="form-group row w-50">
-                <label class="col-sm-2 col-form-label" for="goods-card-price-purchase">Цена</label>
-                <div class="col-sm-10">
-                  <input type="text" class="form-control m-1" id="goods-card-price-total" aria-describedby="goods-card-price" disabled>
-                </div>
+                <div class="col-sm-10" id="goods-card-price-total"><span class="text-danger">Здесь будет вычисленная цена %%</span></div>
                 <input type="text" class="form-control m-1" id="goods-card-price-purchase" aria-describedby="goods-card-price" placeholder="Наценка">
                 <input type="text" class="form-control m-1" id="goods-card-price-sell" aria-describedby="goods-card-price" placeholder="Цена">
 
@@ -1054,7 +1110,7 @@
               <div class="row">
                 <div class="col-8 d-flex">
                   <h4>Остатки</h4>
-                  <button type="button" class="btn btn-warning p-0 icon-btn icon-btn__edit"  data-toggle="modal" data-target="#set-stock-modal"></button>
+                  <button type="button" class="btn btn-warning p-0 icon-btn icon-btn__edit" data-toggle="modal" data-target="#set-stock-modal"></button>
                 </div>
                 <div class="col-4 d-flex justify-content-between">
                   <div class="w-100 text-center">
@@ -1174,6 +1230,25 @@
         <div id="goods-card-keywords-body"></div>
         <div class="modal-footer">
           <button id="goods-card-keywords-submit" type="button" class="btn btn-danger" data-dismiss="modal">Завершить</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Справочники / Группы товаров / Карточка товара -->
+  <div id="card-resources-group" class="modal" tabindex="-1" role="dialog" aria-labelledby="card-resources-group" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 class="modal-title">Выбор товара (выбор группы)</h5>
+          <button id="card-resources-group-close" type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div id="card-resources-groups-body"></div>
+        <div class="modal-footer">
+          <button id="card-resources-group-submit" type="button" class="btn btn-danger" data-dismiss="modal">Завершить</button>
         </div>
       </div>
     </div>

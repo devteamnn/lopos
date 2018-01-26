@@ -78,11 +78,18 @@ const onSuccessGroupsLoad = (loadedGood) => {
   if (allStocks.length) {
     allStocks.forEach((stockItem) => {
       stockItem.values = [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0]];
-      currentValue.map((valueItem) => (valueItem.stock_id === stockItem.id) ? (stockItem.values[valueItem.type] = [valueItem.value, valueItem.type]) : '');
+      if (currentValue.length) {
+        currentValue.map((valueItem) => (valueItem.stock_id === stockItem.id) ? (stockItem.values[valueItem.type] = [valueItem.value, valueItem.type]) : '');
+      }
     });
     goodsStock.insertAdjacentHTML('beforeend', allStocks.map((item) => {
       totalCount += +item.values[4][0] + +item.values[2][0] + +item.values[3][0];
-      checkedStock = (item.id === auth.data.currentStock) ? item.id : checkedStock;
+      if (!auth.currentStockId) {
+        checkedStock = (item.id === auth.data.currentStock) ? item.id : checkedStock;
+      } else {
+        checkedStock = auth.currentStockId;
+      }
+      console.log('draw stocks');
       return `
       <input type="radio" id="stock-${item.id}" name="stock" value="email" class="d-none">
       <label style="padding-left: 34px;" for="stock-${item.id}"  class="d-flex justify-content-between align-items-center reference-string" data-stock-id="${item.id}" data-stock-name="${item.name}" data-stock-t2="${item.values[2][0]}">
@@ -114,7 +121,7 @@ const onSuccessGroupsLoad = (loadedGood) => {
     goodsStock.querySelector(`#stock-${checkedStock}`).checked = true;
     auth.currentStockId = checkedStock;
     auth.currentStockName = goodsStock.querySelector(`#stock-${checkedStock}`).nextElementSibling.dataset.stockName;
-  } else {
+  } else if (goodsStock.firstChild.id) {
     goodsStock.firstChild.checked = true;
     auth.currentStockId = goodsStock.firstChild.id.split('-')[1];
     auth.currentStockName = goodsStock.children[1].dataset.stockName;
@@ -138,13 +145,15 @@ let currentExpressBtn = '';
 
 const onSuccessExpressExecute = (answer) => {
   console.log(answer);
+  currentExpressBtn.removeAttribute('disabled');
   $(currentExpressBtn).popover({
     content: answer.message,
     placement: 'top'
   }).popover('show');
+  getGood();
   window.setTimeout(function () {
     $(currentExpressBtn).popover('dispose');
-  }, 2000);
+  }, 1000);
 };
 
 const onExpressContainerClick = (evt) => {
@@ -164,6 +173,7 @@ const onExpressContainerClick = (evt) => {
     console.log(`value=${value}&price=${price}&token=${auth.data.token}`);
 
     if (currentBtnId.indexOf('operation') !== -1) {
+      currentExpressBtn.setAttribute('disabled', 'disabled');
       xhr.request = {
         metod: 'POST',
         url: `lopos_directory/${auth.data.directory}/operator/1/business/${auth.data.currentBusiness}/good/${auth.currentGoodId}/stock/${auth.currentStockId}/express`,
@@ -172,13 +182,14 @@ const onExpressContainerClick = (evt) => {
       };
     } else if (currentBtnId.indexOf('custom') !== -1) {
       // $(goodsCard).modal('hide');
-      $(expressModal).modal('toggle');
+      $(expressModal).modal('show');
       $(goodsCard).modal('toggle');
 
       expressModalLabel.innerHTML = (currentBtnId.indexOf('purchase') !== -1) ? 'Экспресс-закупка' : 'Экспресс-продажа';
       expressModalStock.innerHTML = auth.currentStockName;
       expressModalPrice.value = (currentBtnId.indexOf('purchase') !== -1) ? goodsCardPurchase.value : goodsCardSell.value;
       expressModalQuantity.focus();
+      auth.expressOperationType = multiplier;
     }
 
   }
@@ -192,9 +203,11 @@ $(expressModal).on('hidden.bs.modal', () => {
   // $(goodsCard).modal('show');
 });
 
-const getGood = () => {
-  $(goodsCard).modal('show');
-  goodsStock.innerHTML = '';
+const getGood = (getGoodForCopyCb) => {
+  if (!getGoodForCopyCb) {
+    $(goodsCard).modal('show');
+    goodsStock.innerHTML = '';
+  }
 
   console.log(`lopos_directory/${auth.data.directory}/operator/1/business/${auth.data.currentBusiness}/good/${auth.currentGoodId}/card_info`);
 
@@ -202,7 +215,7 @@ const getGood = () => {
     metod: 'POST',
     url: `lopos_directory/${auth.data.directory}/operator/1/business/${auth.data.currentBusiness}/good/${auth.currentGoodId}/card_info`,
     data: `view_last=0&token=${auth.data.token}`,
-    callbackSuccess: onSuccessGroupsLoad,
+    callbackSuccess: getGoodForCopyCb || onSuccessGroupsLoad,
   };
 };
 
@@ -217,7 +230,7 @@ const onSuccessKeywordsLoad = (loadedKeywords) => {
 
   if (loadedKeywords.status === 200 && loadedKeywords.data) {
     loadedKeywords.data.forEach((item) => {
-      goodsCardKeywordsBody.insertAdjacentHTML('beforeend', `<h3 style="display: inline-block;"><span class="badge keyword-row" style="background-color: #${item.hex_color}; cursor: pointer; color: #fff; ${(goodTags.every((tagItem) => (tagItem.id !== item.id))) ? 'opacity: 0.4;' : ''}" data-keyword-Id=${item.id}>#${item.name}</span></h3>`);
+      goodsCardKeywordsBody.insertAdjacentHTML('beforeend', `<h3 style="display: inline-block;"><span class="badge keyword-row" style="background-color: #${item.color}; cursor: pointer; color: #fff; ${(goodTags.every((tagItem) => (tagItem.id !== item.id))) ? 'opacity: 0.4;' : ''}" data-keyword-Id=${item.id}>#${item.name}</span></h3>`);
 
 
       goodsCardKeywordsBody.lastChild.addEventListener('click', function (evt) {

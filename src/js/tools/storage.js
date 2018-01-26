@@ -142,6 +142,14 @@ export default {
     return sessionStorage.getItem('goodsViewMode');
   },
 
+  set goodsSortMode(mode) {
+    sessionStorage.setItem('goodsSortMode', mode);
+  },
+
+  get goodsSortMode() {
+    return sessionStorage.getItem('goodsSortMode');
+  },
+
   set currentGroupId(id) {
     sessionStorage.setItem('currentGroupId', id);
   },
@@ -172,6 +180,30 @@ export default {
 
   get currentStockQuantityT2() {
     return sessionStorage.getItem('currentStockQuantityT2');
+  },
+
+  set expressOperationType(type) {
+    sessionStorage.setItem('expressOperationType', type);
+  },
+
+  get expressOperationType() {
+    return sessionStorage.getItem('expressOperationType');
+  },
+
+  set currentCardId(id) {
+    sessionStorage.setItem('currentCardId', id);
+  },
+
+  get currentCardId() {
+    return sessionStorage.getItem('currentCardId');
+  },
+
+  set currentCardName(name) {
+    sessionStorage.setItem('currentCardName', name);
+  },
+
+  get currentCardName() {
+    return sessionStorage.getItem('currentCardName');
   },
 
 };

@@ -13,7 +13,7 @@ export default {
   getElement(item) {
 
     return `
-      <h3 style="display: inline-block;"><span class="badge keyword-row" style="background-color: #${item.hex_color}; cursor: pointer; color: #fff">#${item.name}</span></h3>`;
+      <h3 style="display: inline-block;"><span class="badge keyword-row" style="background-color: #${item.color}; cursor: pointer; color: #fff">#${item.name}</span></h3>`;
   },
 
   drawDataInContainer(keywordsData) {
@@ -25,7 +25,7 @@ export default {
         listKeywordsHeader.classList.remove('d-flex');
         listKeywordsBody.classList.add('d-none');
         listKeywordsCard.classList.remove('d-none');
-        listKeywordsCardEdit.innerHTML = `<div class="text-center"><button type="button" class="btn btn-lg text-white" style="background-color: #${item.hex_color}"><h3>#${item.name}</h3></button></div>`;
+        listKeywordsCardEdit.innerHTML = `<div class="text-center"><button type="button" class="btn btn-lg text-white" style="background-color: #${item.color}"><h3>#${item.name}</h3></button></div>`;
         console.log(item.id);
         auth.currentKeywordId = item.id;
         auth.currentKeywordName = item.name;
