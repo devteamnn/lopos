@@ -82,7 +82,7 @@ window.appSettings = {
     'UrlApi': 'lopos_directory/{{dir}}/operator/{{oper}}/business',
     'validPatterns': {
       'name': /^[а-яёА-ЯЁA-Za-z\s\d]+$/,
-      'balance': /(^\d+$)|(^\d+\.\d{2}$)/
+      'balance': /(^\d+$)|(^\d+[.,]\d{2}$)/
     },
     'validMessage': {
       'name': 'поле минимум 1 буква,<br>не должно содержать спецсимволы',
@@ -202,6 +202,7 @@ window.appSettings = {
     }
   },
 
+
   // Форма редактирования группы товара
   'formEditGroups': {
     'UrlApi': '/lopos_directory/{{dir}}/operator/{{oper}}/business/{{busId}}/group/{{groupId}}',
@@ -216,17 +217,18 @@ window.appSettings = {
     }
   },
 
+
    // Форма добавления товара
   'formAddGoods': {
     'UrlApi': '/lopos_directory/{{dir}}/operator/{{oper}}/business/{{busId}}/good',
     'validPatterns': {
       'name': /^[а-яёА-ЯЁA-Za-z\s\d]+$/,
-      'description': /^[а-яёА-ЯЁA-Za-z\s\d]+$/,
+      'description': /^[а-яёА-ЯЁA-Za-z\s\d]*$/,
       'group': /^[а-яёА-ЯЁA-Za-z\s\d]+$/,
-      'purchasePrice': /^[а-яёА-ЯЁA-Za-z\s\d]+$/,
-      'extra': /\d/,
-      'sellingPrice': /^[а-яёА-ЯЁA-Za-z\s\d]+$/,
-      'barcode': /^[а-яёА-ЯЁA-Za-z\s\d]+$/,
+      'purchasePrice': /(^$)|(^\d+$)|(^\d+[.,]\d{2}$)/,
+      'extra': /\d*/,
+      'sellingPrice': /(^$)|(^\d+$)|(^\d+[.,]\d{2}$)/,
+      'barcode': /^[а-яёА-ЯЁA-Za-z\s\d]*$/,
     },
     'validMessage': {
       'name': 'поле минимум 1 буква,<br>не должно содержать спецсимволы',

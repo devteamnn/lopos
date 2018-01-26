@@ -19,7 +19,7 @@ import groupsButtonFormEdit from './buttons/catalog-groups-edit.js';
 import goodsButtonFormEdit from './buttons/catalog-groups-goods-add.js';
 
 console.log('ver: 3D1');
-console.log('ver: 3A1');
+console.log('ver: 3A2');
 
 const exit = document.querySelector('#profile-exit');
 const app = document.querySelector('#app');

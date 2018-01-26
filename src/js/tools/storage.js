@@ -166,4 +166,12 @@ export default {
     return sessionStorage.getItem('currentGoodId');
   },
 
+  set currentStockQuantityT2(quantity) {
+    sessionStorage.setItem('currentStockQuantityT2', quantity);
+  },
+
+  get currentStockQuantityT2() {
+    return sessionStorage.getItem('currentStockQuantityT2');
+  },
+
 };
