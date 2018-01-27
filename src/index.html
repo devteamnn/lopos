@@ -899,54 +899,54 @@
         </button>
         </div>
         <div class="modal-body">
-          <form id="group-goods-add-form" name="group-goods-add">
+          <form id="group-goods-add-form" name="group-goods-add" data-formName="groupGoodsAddForm">
 
             <div class="form-group">
               <label for="group-goods-name">Название</label>
-              <input type="text" class="form-control" id="group-goods-name" aria-describedby="group-goods-name" placeholder="Название">
-              <span id="group-goods-name-valid" class="badge badge-danger w-100"></span>
+              <input type="text" class="form-control" id="group-goods-name" aria-describedby="group-goods-name" placeholder="Название" data-valid="name" data-validLabelName="name">
+              <span id="group-goods-name-valid" class="badge badge-danger w-100" data-validLabel="name"></span>
             </div>
 
             <div class="form-group">
               <label for="group-goods-describe">Описание</label>
-              <input type="text" class="form-control" id="group-goods-describe" aria-describedby="group-goods-describe" placeholder="Описание">
-              <span id="group-goods-describe-valid" class="badge badge-danger w-100"></span>
+              <input type="text" class="form-control" id="group-goods-describe" aria-describedby="group-goods-describe" placeholder="Описание" data-valid="describe" data-validLabelName="describe">
+              <span id="group-goods-describe-valid" class="badge badge-danger w-100" data-validLabel="describe"></span>
             </div>
 
             <div class="form-group">
               <label for="group-goods-contact">Группа</label>
-              <input type="text" class="form-control" id="group-goods-group" aria-describedby="group-goods-group" placeholder="Группа">
-              <span id="group-goods-contact-valid" class="badge badge-danger w-100"></span>
+              <input type="text" class="form-control" id="group-goods-group" aria-describedby="group-goods-group" placeholder="Группа" data-valid="group" data-validLabelName="group">
+              <span id="group-goods-contact-valid" class="badge badge-danger w-100" data-validLabel="group"></span>
             </div>
 
             <div class="form-group">
               <label for="group-goods-price">Цена</label>
               <div class="d-flex">
-                <input type="text" class="form-control m-1" id="group-goods-price-purchase" aria-describedby="group-goods-price" placeholder="Цена">
-                <input type="text" class="form-control m-1" id="group-goods-price-extra" aria-describedby="group-goods-price" placeholder="Наценка">
-                <input type="text" class="form-control m-1" id="group-goods-price-sell" aria-describedby="group-goods-price" placeholder="Цена">
+                <input type="text" class="form-control m-1" id="group-goods-price-purchase" aria-describedby="group-goods-price" placeholder="Цена" data-valid="purchase" data-validLabelName="goodsPrice">
+                <input type="text" class="form-control m-1" id="group-goods-price-extra" aria-describedby="group-goods-price" placeholder="Наценка" data-valid="percent" data-validLabelName="goodsPrice">
+                <input type="text" class="form-control m-1" id="group-goods-price-sell" aria-describedby="group-goods-price" placeholder="Цена" data-valid="price" data-validLabelName="goodsPrice">
               </div>
               <div class="d-flex">
                 <label class="w-100 m-1" for="group-goods-price-purchase"><small class="form-text text-muted text-center">Закупки</small></label>
                 <label class="w-100 m-1" for="group-goods-price-extra"><small class="form-text text-muted text-center">Наценка</small></label>
                 <label class="w-100 m-1" for="group-goods-price-sell"><small class="form-text text-muted text-center">Продажи</small></label>
               </div>
-              <span id="group-goods-price-valid" class="badge badge-danger w-100"></span>
+              <span id="group-goods-price-valid" class="badge badge-danger w-100" data-validLabel="goodsPrice"></span>
             </div>
 
             <div class="form-group">
               <label for="group-goods-barcode">Штрихкод</label>
-              <input type="text" class="form-control" id="group-goods-barcode" aria-describedby="group-goods-barcode" placeholder="Штрихкод">
-              <span id="group-goods-barcode-valid" class="badge badge-danger w-100"></span>
+              <input type="text" class="form-control" id="group-goods-barcode" aria-describedby="group-goods-barcode" placeholder="Штрихкод" data-valid="barcode" data-validLabelName="barcode">
+              <span id="group-goods-barcode-valid" class="badge badge-danger w-100" data-validLabel="barcode"></span>
             </div>
 
-            <div id="group-goods-add-spinner" class="progress text-white mb-3 invisible">
+            <div id="group-goods-add-spinner" class="progress text-white mb-3 invisible" data-spinner>
               <div class="progress-bar progress-bar-striped progress-bar-animated text-white font-weight-bold text-uppercase" style="width: 100%" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
 
-            <button id="group-goods-add-submit" type="submit" class="btn btn-primary w-100" disabled>Создание</button>
+            <button id="group-goods-add-submit" type="submit" class="btn btn-primary w-100" disabled>Создание</button data-butSub>
 
-            <button id="group-goods-add-cancel" type="button" class="btn btn-danger w-100 mt-3" data-dismiss="modal">Отменить</button>
+            <button id="group-goods-add-cancel" type="button" class="btn btn-danger w-100 mt-3" data-dismiss="modal" data-butCancel>Отменить</button>
             <button id="group-goods-add-bill" type="button" class="btn btn-info w-100 mt-3 d-none" data-dismiss="modal">Последние накладные</button>
           </form>
         </div>
