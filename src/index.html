@@ -812,20 +812,20 @@
         </button>
         </div>
         <div class="modal-body">
-          <form id="groups-add-form" name="groups-add">
+          <form id="groups-add-form" name="groups-add" data-formName="formAddGroup">
             <div class="form-group">
               <label for="groups-add-name">Новое название</label>
-              <input type="text" class="form-control" id="groups-add-name" aria-describedby="groups-add-name" placeholder="Название">
-              <span id="groups-add-valid" class="badge badge-danger w-100"></span>
+              <input type="text" class="form-control" id="groups-add-name" aria-describedby="groups-add-name" placeholder="Название" data-valid="name" data-validLabelName="name">
+              <span id="groups-add-valid" class="badge badge-danger w-100" data-validLabel="name"></span>
             </div>
 
-            <div id="groups-add-spinner" class="progress text-white mb-3 invisible">
+            <div id="groups-add-spinner" class="progress text-white mb-3 invisible" data-spinner>
               <div class="progress-bar progress-bar-striped progress-bar-animated text-white font-weight-bold text-uppercase" style="width: 100%" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
 
-            <button id="groups-add-submit" type="submit" class="btn btn-primary w-100">Создать</button>
+            <button id="groups-add-submit" type="submit" class="btn btn-primary w-100" disabled>Создать</button>
 
-            <button id="groups-add-cancel" type="button" class="btn btn-danger w-100 mt-3" data-dismiss="modal">Отменить</button>
+            <button id="groups-add-cancel" type="button" class="btn btn-danger w-100 mt-3" data-dismiss="modal" data-butCancel>Отменить</button>
           </form>
         </div>
       </div>
@@ -844,20 +844,20 @@
         </button>
         </div>
         <div class="modal-body">
-          <form id="groups-edit-form" name="groups-edit">
+          <form id="groups-edit-form" name="groups-edit" data-formName="formEditGroups">
             <div class="form-group">
               <label for="groups-edit-name">Новое название</label>
-              <input type="text" class="form-control" id="groups-edit-name" aria-describedby="groups-edit-name" placeholder="Название">
-              <span id="groups-edit-valid" class="badge badge-danger w-100"></span>
+              <input type="text" class="form-control" id="groups-edit-name" aria-describedby="groups-edit-name" placeholder="Название" data-valid="name" data-validLabelName="name">
+              <span id="groups-edit-valid" class="badge badge-danger w-100" data-validLabel="name" data-validLabel="name"></span>
             </div>
 
-            <div id="groups-edit-spinner" class="progress text-white mb-3 invisible">
+            <div id="groups-edit-spinner" class="progress text-white mb-3 invisible" data-spinner>
               <div class="progress-bar progress-bar-striped progress-bar-animated text-white font-weight-bold text-uppercase" style="width: 100%" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
 
-            <button id="groups-edit-submit" type="submit" class="btn btn-primary w-100">Изменить</button>
+            <button id="groups-edit-submit" type="submit" class="btn btn-primary w-100" disabled>Изменить</button>
 
-            <button id="groups-edit-cancel" type="button" class="btn btn-danger w-100 mt-3" data-dismiss="modal">Отменить</button>
+            <button id="groups-edit-cancel" type="button" class="btn btn-danger w-100 mt-3" data-dismiss="modal" data-butCancel>Отменить</button>
           </form>
         </div>
       </div>
@@ -899,7 +899,7 @@
         </button>
         </div>
         <div class="modal-body">
-          <form id="group-goods-add-form" name="group-goods-add" data-formName="groupGoodsAddForm">
+          <form id="group-goods-add-form" name="group-goods-add" data-formName="formAddGoods">
 
             <div class="form-group">
               <label for="group-goods-name">Название</label>
@@ -915,13 +915,12 @@
 
             <div class="form-group">
               <label for="group-goods-contact">Группа</label>
-              <input type="text" class="form-control" id="group-goods-group" aria-describedby="group-goods-group" placeholder="Группа" data-valid="group" data-validLabelName="group">
-              <span id="group-goods-contact-valid" class="badge badge-danger w-100" data-validLabel="group"></span>
+              <input type="text" class="form-control" id="group-goods-group" aria-describedby="group-goods-group" placeholder="Группа" readonly>
             </div>
 
             <div class="form-group">
               <label for="group-goods-price">Цена</label>
-              <div class="d-flex">
+              <div class="d-flex" id="group-goods-price">
                 <input type="text" class="form-control m-1" id="group-goods-price-purchase" aria-describedby="group-goods-price" placeholder="Цена" data-valid="purchase" data-validLabelName="goodsPrice">
                 <input type="text" class="form-control m-1" id="group-goods-price-extra" aria-describedby="group-goods-price" placeholder="Наценка" data-valid="percent" data-validLabelName="goodsPrice">
                 <input type="text" class="form-control m-1" id="group-goods-price-sell" aria-describedby="group-goods-price" placeholder="Цена" data-valid="price" data-validLabelName="goodsPrice">
@@ -944,7 +943,7 @@
               <div class="progress-bar progress-bar-striped progress-bar-animated text-white font-weight-bold text-uppercase" style="width: 100%" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
 
-            <button id="group-goods-add-submit" type="submit" class="btn btn-primary w-100" disabled>Создание</button data-butSub>
+            <button id="group-goods-add-submit" type="submit" class="btn btn-primary w-100" disabled>Создание</button>
 
             <button id="group-goods-add-cancel" type="button" class="btn btn-danger w-100 mt-3" data-dismiss="modal" data-butCancel>Отменить</button>
             <button id="group-goods-add-bill" type="button" class="btn btn-info w-100 mt-3 d-none" data-dismiss="modal">Последние накладные</button>
