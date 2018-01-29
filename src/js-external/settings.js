@@ -189,7 +189,7 @@ window.appSettings = {
   },
 
   // Форма добавления группы товаров
-  'formAddGroups': {
+  'formAddGroup': {
     'UrlApi': '/lopos_directory/{{dir}}/operator/{{oper}}/business/{{busId}}/group',
     'validPatterns': {
       'name': /^[а-яёА-ЯЁA-Za-z\s\d]+$/,
@@ -221,15 +221,44 @@ window.appSettings = {
     'UrlApi': '/lopos_directory/{{dir}}/operator/{{oper}}/business/{{busId}}/good',
     'validPatterns': {
       'name': /^[а-яёА-ЯЁA-Za-z\s\d]+$/,
-      'description': /^[а-яёА-ЯЁA-Za-z\s\d]+$/,
-      'group': /^[а-яёА-ЯЁA-Za-z\s\d]+$/,
-      'purchasePrice': /^[а-яёА-ЯЁA-Za-z\s\d]+$/,
-      'extra': /\d/,
-      'sellingPrice': /^[а-яёА-ЯЁA-Za-z\s\d]+$/,
-      'barcode': /^[а-яёА-ЯЁA-Za-z\s\d]+$/,
+      'describe': /^[а-яёА-ЯЁA-Za-z\s\d]*$/,
+      'purchase': /(^$)|(^\d+$)|(^\d+[.,]\d{2}$)/,
+      'percent': /(^\d*$)|(^\d*\.\d*$)/,
+      'price': /(^$)|(^\d+$)|(^\d+[.,]\d{2}$)/,
+      'barcode': /^[а-яёА-ЯЁA-Za-z\s\d]*$/,
     },
     'validMessage': {
       'name': 'поле минимум 1 буква,<br>не должно содержать спецсимволы',
+      'describe': 'Поле не может содержать спецсимволы',
+      'purchase': 'денежный формат<br>( 000, 000.00 )',
+      'percent': 'Процент может быть числом',
+      'price': 'денежный формат<br>( 000, 000.00 )',
+      'barcode': 'Поле не может содержать спецсимволы'
+    },
+    'messages': {
+      'mes400': 'Некорректный запрос'
+    }
+  },
+
+  // Форма редактирования товара
+  'formEditGoods': {
+    'UrlApi1': '/lopos_directory/{{dir}}/operator/{{oper}}/business/{{busId}}/good/{{goodId}}',
+    'UrlApi2': '/lopos_directory/{{dir}}/operator/{{oper}}/business/{{busId}}/good/{{goodId}}/price',
+    'validPatterns': {
+      'name': /^[а-яёА-ЯЁA-Za-z\s\d]+$/,
+      'describe': /^[а-яёА-ЯЁA-Za-z\s\d]*$/,
+      'purchase': /(^$)|(^\d+$)|(^\d+[.,]\d{2}$)/,
+      'percent': /(^\d*$)|(^\d*\.\d*$)/,
+      'price': /(^$)|(^\d+$)|(^\d+[.,]\d{2}$)/,
+      'barcode': /^[а-яёА-ЯЁA-Za-z\s\d]*$/,
+    },
+    'validMessage': {
+      'name': 'поле минимум 1 буква,<br>не должно содержать спецсимволы',
+      'describe': 'Поле не может содержать спецсимволы',
+      'purchase': 'денежный формат<br>( 000, 000.00 )',
+      'percent': 'Процент может быть числом',
+      'price': 'денежный формат<br>( 000, 000.00 )',
+      'barcode': 'Поле не может содержать спецсимволы'
     },
     'messages': {
       'mes400': 'Некорректный запрос'
