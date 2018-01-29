@@ -1,7 +1,7 @@
 import xhr from './../tools/xhr.js';
 import dataStorage from './../tools/storage.js';
 import markup from './../markup/tools.js';
-import catalogGroupsGoods from './catalog-groups-goods.js';
+import catalogGroups from './catalog-groups.js';
 
 const appUrl = window.appSettings.formAddGoods.UrlApi;
 const messages = window.appSettings.formAddGoods.message;
@@ -75,16 +75,13 @@ const formReset = () => {
 
 const callbackXhrSuccess = (response) => {
 
-  console.log('!!!!!');
-  console.dir(response);
-
   hideSpinner();
   formReset();
   $('#group-goods-add').modal('hide');
 
   switch (response.status) {
   case 200:
-    catalogGroupsGoods.redraw();
+    catalogGroups.redrawGoods();
     break;
   case 400:
     markup.informationtModal = {
@@ -177,38 +174,6 @@ const formSubmitHandler = (evt) => {
   }
 };
 
-const calcExtra = () => {
-  sell.value = Number(purchase.value) + (purchase.value / 100 * extra.value);
-};
-
-const calcPercent = () => {
-  extra.value = ((sell.value - purchase.value) * 100 / purchase.value).toFixed(2);
-};
-
-const validateExtra = () => {
-  if (validPattern.purchasePrice.test(purchase.value) && validPattern.extra.test(extra.value)) {
-    return true;
-  }
-  priceValid.innerHTML = '!!';
-  return false;
-};
-
-const validatePurchase = () => {
-  if (validPattern.purchasePrice.test(purchase.value)) {
-    return true;
-  }
-  priceValid.innerHTML = '!!';
-  return false;
-};
-
-const validateSell = () => {
-  if (validPattern.purchasePrice.test(purchase.value) && validPattern.sellingPrice.test(extra.value)) {
-    return true;
-  }
-  priceValid.innerHTML = '!!';
-  return false;
-};
-
 const addHandlers = () => {
 
   $('#group-goods-add').on('hidden.bs.modal', () => {
@@ -225,26 +190,6 @@ const addHandlers = () => {
   });
 
   form.addEventListener('submit', formSubmitHandler);
-
-  extra.addEventListener('change', () => {
-    if (validateExtra()) {
-      calcExtra();
-    }
-  });
-
-  purchase.addEventListener('change', () => {
-    if (validatePurchase()) {
-      calcExtra();
-    }
-  });
-
-  sell.addEventListener('change', () => {
-    if (validateSell()) {
-      calcPercent();
-    }
-  });
-
-
 };
 
 export default {

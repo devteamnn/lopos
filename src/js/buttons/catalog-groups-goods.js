@@ -1,6 +1,7 @@
 import xhr from '../tools/xhr.js';
 import auth from '../tools/storage.js';
-import toolsMarkup from '../markup/tools.js';
+import keywordsUniversal from './universal-keywords.js';
+import referenceKeywords from './reference-keywords.js';
 
 const goodsCard = document.querySelector('#goods-card');
 
@@ -11,12 +12,12 @@ const goodsCardGroup = document.querySelector('#goods-card-group');
 
 const goodsCardPurchase = document.querySelector('#goods-card-price-purchase');
 const goodsCardImage = document.querySelector('#goods-card-image');
-// const goodsCardPriceExtra = document.querySelector('#goods-card-price-extra');
 const goodsCardSell = document.querySelector('#goods-card-price-sell');
 const goodsStock = document.querySelector('#goods-stock-body');
 const goodsKeywords = document.querySelector('#goods-keywords');
 const goodsCardKeywordsModal = document.querySelector('#goods-card-keywords');
 const goodsCardKeywordsBody = document.querySelector('#goods-card-keywords-body');
+
 const expressContainer = document.querySelector('#express-container');
 const expressModal = document.querySelector('#express-modal');
 const expressModalLabel = document.querySelector('#express-modal-label');
@@ -26,16 +27,10 @@ const expressModalQuantity = document.querySelector('#express-modal-quantity');
 const stockModal = document.querySelector('#set-stock-modal');
 const stockModalName = document.querySelector('#set-stock-modal-stock');
 const stockModalQuantity = document.querySelector('#set-stock-modal-quantity');
-// const expressPurchase = document.querySelector('#express-purchase');
-// const expressSell = document.querySelector('#express-sell');
-// import keywordsMarkup from '../markup/reference-keywords.js';
 
-const loaderSpinnerId = 'loader-goods';
-const loaderSpinnerMessage = 'Загрузка';
-const loaderSpinnerMarkup = toolsMarkup.getLoadSpinner(loaderSpinnerId, loaderSpinnerMessage);
 let goodTags = [];
 
-const onSuccessGroupsLoad = (loadedGood) => {
+const onSuccessGoodsLoad = (loadedGood) => {
   console.log(loadedGood);
   let {
     name,
@@ -56,18 +51,9 @@ const onSuccessGroupsLoad = (loadedGood) => {
   goodsCardPurchase.value = purchasePrice;
   goodsCardSell.value = sellingPrice;
   goodTags = (tags) ? tags : [];
-  /*
-  goodsCardGroup.innerHTML = '<option selected>Выберите группу</option>';
-  goodsCardGroup.insertAdjacentHTML('beforeend', allGroups.map((item) => `<option value="${item.id}">${item.name}</option>`).join(''));
-  */
+
   goodsCardGroup.innerHTML = allGroups.map((item) => `<option value="${item.id}" ${(item.id === groupId ? 'selected' : '')}>${item.name}</option>`).join('');
-  /*
-  goodsCardGroup.innerHTML = allGroups.map((item) => {
-    if
-    return `<option value="${item.id}">${item.name}</option>`;
-  }.join('');
-  */
-  console.log(goodsCardImage);
+
   goodsCardImage.title = name;
   goodsCardImage.alt = name;
   goodsCardImage.src = imgUrl ? `https://lopos.bidone.ru/users/600a5357/images/${imgUrl}.jpg` : './img/not-available.png';
@@ -78,11 +64,18 @@ const onSuccessGroupsLoad = (loadedGood) => {
   if (allStocks.length) {
     allStocks.forEach((stockItem) => {
       stockItem.values = [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0]];
-      currentValue.map((valueItem) => (valueItem.stock_id === stockItem.id) ? (stockItem.values[valueItem.type] = [valueItem.value, valueItem.type]) : '');
+      if (currentValue.length) {
+        currentValue.map((valueItem) => (valueItem.stock_id === stockItem.id) ? (stockItem.values[valueItem.type] = [valueItem.value, valueItem.type]) : '');
+      }
     });
     goodsStock.insertAdjacentHTML('beforeend', allStocks.map((item) => {
       totalCount += +item.values[4][0] + +item.values[2][0] + +item.values[3][0];
-      checkedStock = (item.id === auth.data.currentStock) ? item.id : checkedStock;
+      if (!auth.currentStockId) {
+        checkedStock = (item.id === auth.data.currentStock) ? item.id : checkedStock;
+      } else {
+        checkedStock = auth.currentStockId;
+      }
+      console.log('draw stocks');
       return `
       <input type="radio" id="stock-${item.id}" name="stock" value="email" class="d-none">
       <label style="padding-left: 34px;" for="stock-${item.id}"  class="d-flex justify-content-between align-items-center reference-string" data-stock-id="${item.id}" data-stock-name="${item.name}" data-stock-t2="${item.values[2][0]}">
@@ -114,21 +107,71 @@ const onSuccessGroupsLoad = (loadedGood) => {
     goodsStock.querySelector(`#stock-${checkedStock}`).checked = true;
     auth.currentStockId = checkedStock;
     auth.currentStockName = goodsStock.querySelector(`#stock-${checkedStock}`).nextElementSibling.dataset.stockName;
-  } else {
+    auth.currentStockQuantityT2 = goodsStock.children[1].dataset.stockT2;
+  } else if (goodsStock.firstChild.id) {
     goodsStock.firstChild.checked = true;
     auth.currentStockId = goodsStock.firstChild.id.split('-')[1];
     auth.currentStockName = goodsStock.children[1].dataset.stockName;
     auth.currentStockQuantityT2 = goodsStock.children[1].dataset.stockT2;
   }
-  // goodsCardPurchase.value = purchasePrice;
-  // goodsCardSell.value = sellingPrice;
+
+  keywordsUniversal.getKeywords(goodsCardKeywordsBody, onKeywordClick, keywordModificator);
+
+  const onGoodKeywordClick = (evt) => {
+    const returnHandler = (e) => {
+      // $('#list-keywords-list').tab('hide');
+      getGood();
+      $('#list-groups-list').tab('show');
+      $('#goods-card').modal('show');
+      e.target.removeEventListener('click', returnHandler);
+
+    };
+    referenceKeywords.showKeywordEdit(evt, returnHandler);
+    $('#goods-card').modal('hide');
+    $('#list-keywords-list').tab('show');
+  };
+
   goodsKeywords.innerHTML = '';
-  goodsKeywords.insertAdjacentHTML('beforeend', tags.length ? tags.map((item) => `<h3 style="display: inline-block;"><span class="badge keyword-row" style="background-color: #${item.color}; cursor: pointer; color: #fff">#${item.name}</span></h3>`).join('') : 'Ключевых слов нет');
+  if (goodTags.length) {
+    goodTags.forEach((item) => keywordsUniversal.drawKeywordsToContainerExternalData(goodsKeywords, onGoodKeywordClick, item));
+  } else {
+    goodsKeywords.innerHTML = 'Ключевых слов нет';
+  }
+  // goodsKeywords.insertAdjacentHTML('beforeend', goodTags.length ? goodTags.map((item) => keywordsUniversal.getKeywordMarkup(item)).join('') : 'Ключевых слов нет');
+
 };
 
+// обработчик клика по ключевому слову (пока внутри карточки связей "товар-слово")
+const onKeywordClick = (evt) => {
+  let clickedKeywordNode = evt.target;
+  const onSuccessKeywordsCompare = (keywordNode) => clickedKeywordNode.classList.toggle('keyword__mute');
+  let xhrType = (goodTags.every((tagItem) => (tagItem.id !== clickedKeywordNode.dataset.keywordId))) ? 'POST' : 'DELETE';
+  xhr.request = {
+    metod: xhrType,
+    url: `lopos_directory/${auth.data.directory}/operator/1/business/${auth.data.currentBusiness}/tag/${clickedKeywordNode.dataset.keywordId}/compare_meta`,
+    data: `good=${auth.currentGoodId}&token=${auth.data.token}`,
+    callbackSuccess: onSuccessKeywordsCompare,
+  };
+};
+
+// установка прозрачности
+const keywordModificator = (keywordId, keywordNode) => {
+  if (goodTags.every((tagItem) => (tagItem.id !== keywordId))) {
+    keywordNode.classList.add('keyword__mute');
+  }
+};
+
+
+$(goodsCardKeywordsModal).on('shown.bs.modal', () => {
+  keywordsUniversal.getKeywords(goodsCardKeywordsBody, onKeywordClick, keywordModificator);
+  $(goodsCard).modal('hide');
+});
+
+$(goodsCardKeywordsModal).on('hidden.bs.modal', () => {
+  getGood();
+});
+
 goodsStock.addEventListener('change', (evt) => {
-  console.log(evt);
-  console.log(evt.target.labels[0].innerText);
   auth.currentStockId = Number(evt.target.id.split('-')[1]);
   auth.currentStockName = evt.target.labels[0].dataset.stockName;
   auth.currentStockQuantityT2 = evt.target.labels[0].dataset.stockT2;
@@ -138,13 +181,15 @@ let currentExpressBtn = '';
 
 const onSuccessExpressExecute = (answer) => {
   console.log(answer);
+  currentExpressBtn.removeAttribute('disabled');
   $(currentExpressBtn).popover({
     content: answer.message,
     placement: 'top'
   }).popover('show');
+  getGood();
   window.setTimeout(function () {
     $(currentExpressBtn).popover('dispose');
-  }, 2000);
+  }, 1000);
 };
 
 const onExpressContainerClick = (evt) => {
@@ -164,6 +209,7 @@ const onExpressContainerClick = (evt) => {
     console.log(`value=${value}&price=${price}&token=${auth.data.token}`);
 
     if (currentBtnId.indexOf('operation') !== -1) {
+      currentExpressBtn.setAttribute('disabled', 'disabled');
       xhr.request = {
         metod: 'POST',
         url: `lopos_directory/${auth.data.directory}/operator/1/business/${auth.data.currentBusiness}/good/${auth.currentGoodId}/stock/${auth.currentStockId}/express`,
@@ -172,13 +218,14 @@ const onExpressContainerClick = (evt) => {
       };
     } else if (currentBtnId.indexOf('custom') !== -1) {
       // $(goodsCard).modal('hide');
-      $(expressModal).modal('toggle');
+      $(expressModal).modal('show');
       $(goodsCard).modal('toggle');
 
       expressModalLabel.innerHTML = (currentBtnId.indexOf('purchase') !== -1) ? 'Экспресс-закупка' : 'Экспресс-продажа';
       expressModalStock.innerHTML = auth.currentStockName;
       expressModalPrice.value = (currentBtnId.indexOf('purchase') !== -1) ? goodsCardPurchase.value : goodsCardSell.value;
       expressModalQuantity.focus();
+      auth.expressOperationType = multiplier;
     }
 
   }
@@ -186,76 +233,23 @@ const onExpressContainerClick = (evt) => {
 
 expressContainer.addEventListener('click', onExpressContainerClick);
 
-// $(expressModal).on('hide.bs.modal', () => $(goodsCard).modal({focus: true}));
 $(expressModal).on('hidden.bs.modal', () => {
   $(goodsCard).modal('toggle');
-  // $(goodsCard).modal('show');
 });
 
-const getGood = () => {
-  $(goodsCard).modal('show');
-  goodsStock.innerHTML = '';
-
-  console.log(`lopos_directory/${auth.data.directory}/operator/1/business/${auth.data.currentBusiness}/good/${auth.currentGoodId}/card_info`);
+const getGood = (getGoodForCopyCb) => {
+  if (!getGoodForCopyCb) {
+    $(goodsCard).modal('show');
+    goodsStock.innerHTML = '';
+  }
 
   xhr.request = {
     metod: 'POST',
     url: `lopos_directory/${auth.data.directory}/operator/1/business/${auth.data.currentBusiness}/good/${auth.currentGoodId}/card_info`,
     data: `view_last=0&token=${auth.data.token}`,
-    callbackSuccess: onSuccessGroupsLoad,
+    callbackSuccess: getGoodForCopyCb || onSuccessGoodsLoad,
   };
 };
-
-const onSuccessKeywordsLoad = (loadedKeywords) => {
-
-  document.querySelector(`#${loaderSpinnerId}`).remove();
-  console.log(loadedKeywords);
-
-  const onSuccessKeywordsCompare = (keywordNode, opacity) => {
-    keywordNode.style.opacity = opacity;
-  };
-
-  if (loadedKeywords.status === 200 && loadedKeywords.data) {
-    loadedKeywords.data.forEach((item) => {
-      goodsCardKeywordsBody.insertAdjacentHTML('beforeend', `<h3 style="display: inline-block;"><span class="badge keyword-row" style="background-color: #${item.hex_color}; cursor: pointer; color: #fff; ${(goodTags.every((tagItem) => (tagItem.id !== item.id))) ? 'opacity: 0.4;' : ''}" data-keyword-Id=${item.id}>#${item.name}</span></h3>`);
-
-
-      goodsCardKeywordsBody.lastChild.addEventListener('click', function (evt) {
-        let xhrType = (goodTags.every((tagItem) => (tagItem.id !== item.id))) ? 'POST' : 'DELETE';
-        xhr.request = {
-          metod: xhrType,
-          url: `lopos_directory/${auth.data.directory}/operator/1/business/${auth.data.currentBusiness}/tag/${item.id}/compare_meta`,
-          data: `good=${auth.currentGoodId}&token=${auth.data.token}`,
-          callbackSuccess: onSuccessKeywordsCompare.bind(null, evt.target, (goodTags.every((tagItem) => (tagItem.id !== item.id))) ? '1' : '0.4'),
-        };
-      });
-
-
-    });
-  } else if (loadedKeywords.status === 200 && !loadedKeywords.data) {
-    goodsCardKeywordsBody.innerHTML = `<p>${loadedKeywords.message || 'Что-то в поле message пусто и в data лежит false'}</p>`;
-  }
-};
-
-const getKeywords = () => {
-  goodsCardKeywordsBody.innerHTML = loaderSpinnerMarkup;
-
-  xhr.request = {
-    metod: 'POST',
-    url: `lopos_directory/${auth.data.directory}/operator/1/business/${auth.data.currentBusiness}/tag`,
-    data: `view_last=0&token=${auth.data.token}`,
-    callbackSuccess: onSuccessKeywordsLoad,
-  };
-};
-
-$(goodsCardKeywordsModal).on('shown.bs.modal', () => {
-  getKeywords();
-  $(goodsCard).modal('hide');
-});
-
-$(goodsCardKeywordsModal).on('hidden.bs.modal', () => {
-  getGood();
-});
 
 $(stockModal).on('hidden.bs.modal', () => {
   getGood();
