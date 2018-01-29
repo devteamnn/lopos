@@ -17,9 +17,16 @@ import groupsButton from './buttons/catalog-groups.js';
 import groupsButtonFormAdd from './buttons/catalog-groups-add.js';
 import groupsButtonFormEdit from './buttons/catalog-groups-edit.js';
 import goodsButtonFormEdit from './buttons/catalog-groups-goods-add.js';
+import cardsButton from './buttons/catalog-groups-cards.js';
+import searchButton from './buttons/catalog-search.js';
+// Отправка без валидации
+import goodsButtonExpress from './buttons/catalog-groups-goods-express.js';
+import goodsButtonStock from './buttons/catalog-groups-goods-stock.js';
+import cardsResourcesButton from './buttons/catalog-groups-cards-resource-add.js';
+
 
 console.log('ver: 3D1');
-console.log('ver: 3A2');
+console.log('ver: 3A4');
 
 const exit = document.querySelector('#profile-exit');
 const app = document.querySelector('#app');
@@ -61,6 +68,11 @@ const mainMenuButtons = [
   contractorsButton,
   keywordsButton,
   groupsButton,
+  goodsButtonExpress,
+  goodsButtonStock,
+  cardsButton,
+  cardsResourcesButton,
+  searchButton
 ];
 
 // ========== ОБНОВЛЕНИЕ/ОТКРЫТИЕ СТРАНИЦЫ ==========
