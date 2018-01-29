@@ -7,6 +7,13 @@ const modalInformation = document.querySelector('#modal-information');
 const modalInformationTitle = modalInformation.querySelector('#modal-information-title');
 const modalInformationMessage = modalInformation.querySelector('#modal-information-message');
 
+const modalUniversalAdd = document.querySelector('#universal-add');
+const modalUniversalAddLabel = document.querySelector('#universal-add-label');
+const modalUniversalAddForm = document.querySelector('#universal-add-form');
+const modalUniversalAddName = document.querySelector('#universal-add-name');
+const modalUniversalAddNameLabel = document.querySelector('#universal-add-name-label');
+const modalUniversalAddSubmit = document.querySelector('#universal-add-submit');
+
 export default {
 
   getWaitSpinner(id, message) {
@@ -46,5 +53,27 @@ export default {
     modalInformationTitle.innerHTML = setup.title;
     modalInformationMessage.innerHTML = setup.message;
   },
+
+  set informationModalLight(setup) {
+
+  },
+
+  set runUniversalAdd(setup) {
+    const requestHandler = (evt) => {
+      evt.preventDefault();
+      setup.submitCallback(modalUniversalAddName.value);
+      modalUniversalAddForm.removeEventListener('submit', requestHandler);
+      $(modalUniversalAdd).modal('hide');
+    };
+
+    $(modalUniversalAdd).modal('show');
+    modalUniversalAddLabel.innerHTML = setup.title;
+    modalUniversalAddNameLabel.innerHTML = setup.inputLabel;
+    modalUniversalAddName.setAttribute('placeholder', setup.inputPlaceholder);
+    modalUniversalAddName.value = (setup.inputValue) ? setup.inputValue : '';
+    modalUniversalAddSubmit.innerHTML = setup.submitBtnName;
+    modalUniversalAddForm.addEventListener('submit', requestHandler);
+
+  }
 
 };

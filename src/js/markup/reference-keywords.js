@@ -6,8 +6,9 @@ import auth from '../tools/storage.js';
 
 export default {
 
-  cleanContainer() {
-    listKeywordsBody.innerHTML = '';
+  cleanContainer(container) {
+    container = container || listKeywordsBody;
+    container.innerHTML = '';
   },
 
   getElement(item) {
@@ -16,11 +17,14 @@ export default {
       <h3 style="display: inline-block;"><span class="badge keyword-row" style="background-color: #${item.color}; cursor: pointer; color: #fff">#${item.name}</span></h3>`;
   },
 
-  drawDataInContainer(keywordsData) {
+  drawDataInContainer(keywordsData, container) {
     keywordsData.forEach((item) => {
-      listKeywordsBody.insertAdjacentHTML('beforeend', this.getElement(item));
 
-      listKeywordsBody.lastChild.addEventListener('click', function () {
+      container = container || listKeywordsBody;
+
+      container.insertAdjacentHTML('beforeend', this.getElement(item));
+
+      container.lastChild.addEventListener('click', function () {
         listKeywordsHeader.classList.add('d-none');
         listKeywordsHeader.classList.remove('d-flex');
         listKeywordsBody.classList.add('d-none');

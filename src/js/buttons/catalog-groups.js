@@ -51,7 +51,7 @@ listGroupSearchInput.addEventListener('input', (evt) => {
   console.log(evt);
   let selectedData = [];
   loadedData.data.forEach((item) => {
-    if (item.name.indexOf(listGroupSearchInput.value) !== -1) {
+    if (item.name.toLowerCase().indexOf(listGroupSearchInput.value.toLowerCase()) !== -1) {
       selectedData.push(item);
     }
   });

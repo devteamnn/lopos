@@ -11,7 +11,7 @@ export default {
   getElement(item, index) {
     // const currentEnterpriseFlag = (item.b_id === auth.data['currentBusiness']) ? '<div class="p-0 bg-white icon icon__check"></div>' : '';
     // ${currentEnterpriseFlag}
-
+    console.log(item, index);
     return `
     <div class="d-flex justify-content-between align-items-center reference-string" data-group-id="${item.id}" data-group-index="${index}" data-group-level="${item.level}">
       <div style="padding-left: 34px;">
@@ -35,7 +35,7 @@ export default {
         <span class="reference-row-number">${index + 1}</span> <span>${item.name}</span>
       </div>
       <div>
-        ${item.count}
+        ${(item.count) ? item.count : ''}
         <button type="button" class="btn p-0 bg-white icon-btn icon-btn__go"></button>
       </div>
     </div>`;
@@ -45,9 +45,17 @@ export default {
     // const currentEnterpriseFlag = (item.b_id === auth.data['currentBusiness']) ? '<div class="p-0 bg-white icon icon__check"></div>' : '';
     // ${currentEnterpriseFlag}
 
+    const getImg = (imgUrl) => {
+      if (imgUrl) {
+        return `https://lopos.bidone.ru/users/600a5357/images/${imgUrl}_preview150.jpg`;
+      } else {
+        return '../img/not-available.png';
+      }
+    };
+
     return `
     <div class="card goods-tile-card" data-good-id="${item.id}">
-      <img class="card-img-top" src="https://lopos.bidone.ru/users/600a5357/images/${(item.img_url) ? item.img_url + '_preview150.jpg' : ''}" alt="${item.name}" title="${item.name}">
+      <img class="card-img-top" src="${getImg(item.img_url)}" alt="${item.name}" title="${item.name}">
       <div class="card-body goods-tile-title">
         <p class="card-text">${item.count}</p>
       </div>

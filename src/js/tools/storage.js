@@ -206,4 +206,12 @@ export default {
     return sessionStorage.getItem('currentCardName');
   },
 
+  set currentCardOperation(type) {
+    sessionStorage.setItem('currentCardOperation', type);
+  },
+
+  get currentCardOperation() {
+    return sessionStorage.getItem('currentCardOperation');
+  },
+
 };

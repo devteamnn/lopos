@@ -4,6 +4,7 @@
 @import "src/sass/components/icon-btn.scss";
 @import "src/sass/components/reference-string.scss";
 @import "src/sass/components/reference-header.scss";
+@import "src/sass/components/keyword.scss";
 
 .enterprise-card-block {
   margin-left: 55px;
@@ -23,28 +24,8 @@
   opacity: 0.3;
 }
 
-.keywords-card-select-color-container {
-}
-
 #list-contractors-card > h3 {
   margin-left: 54px;
-}
-
-.keywords-card-select-color-container div {
-  display: flex;
-  justify-content: space-between;
-  margin: 5px;
-}
-
-.keyword-row {
-  border-radius: 8px;
-  margin-right: 10px;
-}
-
-.keywords-card-select-color {
-  width: 40px;
-  height: 40px;
-  border-radius: 8px;
 }
 
 input[name="contact"]:checked + label {
@@ -157,6 +138,30 @@ input[name="express-sell-radio"]:checked + label {
 .goods-card-img img {
   display: block;
   width: 300px;
+}
+
+.informaion-light {
+  display: flex;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
+  top: 20px;
+  left: 20px;
+  width: 360px;
+  height: 50px;
+  z-index: 9999;
+}
+.informaion-light p {
+  margin: 0;
+}
+
+.informaion-light button {
+  display: block;
+  position: absolute;
+  top: 0px;
+  right: 5px;
+  z-index: 9999;
 }
 
 // Серый фон и шрифты
