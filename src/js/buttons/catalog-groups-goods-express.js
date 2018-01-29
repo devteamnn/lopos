@@ -1,41 +1,70 @@
-// Экспресс-операция БЕЗ ВАЛИДАЦИИ
+import dataStorage from './../tools/storage.js';
+import markup from './../markup/tools.js';
+import catalogGroupsGoods from './catalog-groups-goods.js';
+import formTools from './../tools/form-tools.js';
 
-import xhr from '../tools/xhr.js';
-import auth from '../tools/storage.js';
-import goodsButton from './catalog-groups-goods.js';
+const appUrl = window.appSettings.formExpressOperation.UrlApi;
+const messages = window.appSettings.formExpressOperation.message;
 
-const expressModal = document.querySelector('#express-modal');
-const expressModalPrice = document.querySelector('#express-modal-price');
-const expressModalQuantity = document.querySelector('#express-modal-quantity');
-const expressModalSubmit = document.querySelector('#express-modal-submit');
-const expressModalForm = document.querySelector('#express-modal-form');
+const form = document.querySelector('#express-modal-form');
 
-const onSuccessExpressExecute = (answer) => {
-  $(expressModal).modal('hide');
-  goodsButton.fill();
+const price = form.querySelector('#express-modal-price');
+const amount = form.querySelector('#express-modal-quantity');
+
+const callbackXhrSuccess = (response) => {
+
+  formTools.reset();
+  $('#express-modal').modal('hide');
+
+  switch (response.status) {
+  case 200:
+    catalogGroupsGoods.fill();
+    break;
+  case 400:
+    markup.informationtModal = {
+      'title': 'Error',
+      'messages': messages.mes400
+    };
+    break;
+  case 271:
+    markup.informationtModal = {
+      'title': 'Error',
+      'messages': response.messages
+    };
+    break;
+  }
 };
 
-const onExpressModalSubmit = (evt) => {
-  evt.preventDefault();
-  xhr.request = {
+const submitForm = () => {
+  const stor = dataStorage.data;
+  let value = amount.value * Number(dataStorage.expressOperationType);
+
+  let postData = `token=${stor.token}&value=${value}&price=${price.value}`;
+  let urlApp = appUrl.replace('{{dir}}', stor.directory);
+  urlApp = urlApp.replace('{{oper}}', stor.operatorId);
+  urlApp = urlApp.replace('{{busId}}', stor.currentBusiness);
+  urlApp = urlApp.replace('{{goodId}}', dataStorage.currentGoodId);
+  urlApp = urlApp.replace('{{stockId}}', dataStorage.currentStockId);
+
+  formTools.submit({
+    url: urlApp,
     metod: 'POST',
-    url: `lopos_directory/${auth.data.directory}/operator/1/business/${auth.data.currentBusiness}/good/${auth.currentGoodId}/stock/${auth.currentStockId}/express`,
-    data: `value=${expressModalQuantity.value * +auth.expressOperationType}&price=${expressModalPrice.value}&token=${auth.data.token}`,
-    callbackSuccess: onSuccessExpressExecute,
-  };
+    data: postData,
+    callbackSuccess: callbackXhrSuccess
+  });
 };
 
-const start = () => {
-  expressModalSubmit.removeAttribute('disabled');
-  expressModalForm.addEventListener('submit', onExpressModalSubmit);
-};
+const addHandlers = () => {
+  $('#express-modal').on('hidden.bs.modal', () => {
+    formTools.reset();
+  });
 
-const stop = () => {
-  expressModalSubmit.addAttribute('disabled', 'disabled');
-  expressModalForm.addEventListener('submit', onExpressModalSubmit);
+  $('#express-modal').on('shown.bs.modal', () => {
+    formTools.work(form, submitForm);
+  });
+
 };
 
 export default {
-  start,
-  stop
+  start: addHandlers
 };

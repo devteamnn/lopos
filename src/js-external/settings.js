@@ -265,4 +265,19 @@ window.appSettings = {
     }
   },
 
+  'formExpressOperation': {
+    'UrlApi': '/lopos_directory/{{dir}}/operator/{{oper}}/business/{{busId}}/good/{{goodId}}/stock/{{stockId}}/express',
+    'validPatterns': {
+      'price': /(^$)|(^\d+$)|(^\d+[.]\d{1,3}$)/,
+      'amount': /(^\d+$)|(^\d+[.]\d+$)/,
+    },
+    'validMessage': {
+      'amount': 'поле минимум 1 цифра',
+      'price': 'денежный формат<br>( 000, 000.000 )'
+    },
+    'messages': {
+      'mes400': 'Некорректный запрос'
+    }
+  },
+
 };

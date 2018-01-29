@@ -6,49 +6,24 @@ import formTools from './../tools/form-tools.js';
 const appUrl = window.appSettings.formAddGoods.UrlApi;
 const messages = window.appSettings.formAddGoods.message;
 
-const form = document.querySelector('#goods-card-form');
+const form = document.querySelector('#group-goods-add-form');
 
-const name = form.querySelector('#goods-card-name');
-const describe = form.querySelector('#goods-card-describe');
-// const priceGroup = form.querySelector('#group-goods-price');
-const purchase = form.querySelector('#goods-card-price-purchase');
-const extra = form.querySelector('#goods-card-price-total');
-const sell = form.querySelector('#goods-card-price-sell');
-const barcode = form.querySelector('#goods-card-barcode');
-const group = form.querySelector('#goods-card-group');
+const name = form.querySelector('#group-goods-name');
+const describe = form.querySelector('#group-goods-describe');
+const priceGroup = form.querySelector('#group-goods-price');
+const purchase = form.querySelector('#group-goods-price-purchase');
+const extra = form.querySelector('#group-goods-price-extra');
+const sell = form.querySelector('#group-goods-price-sell');
+const barcode = form.querySelector('#group-goods-barcode');
 
-const callbackXhrSuccess1 = (response) => {
-  formTools.reset();
-
-  $('#group-goods-add').modal('hide');
-
-  switch (response.status) {
-  case 200:
-    catalogGroups.redrawGoods();
-    break;
-  case 400:
-    markup.informationtModal = {
-      'title': 'Error',
-      'messages': messages.mes400
-    };
-    break;
-  case 271:
-    markup.informationtModal = {
-      'title': 'Error',
-      'messages': response.messages
-    };
-    break;
-  }
-};
-
-const callbackXhrSuccess2 = (response) => {
+const callbackXhrSuccess = (response) => {
 
   formTools.reset();
   $('#group-goods-add').modal('hide');
 
   switch (response.status) {
   case 200:
-    catalogGroupsGoods.redraw();
+    catalogGroupsGoods.fill();
     break;
   case 400:
     markup.informationtModal = {
@@ -118,11 +93,11 @@ const addHandlers = () => {
   });
 
   $('#group-goods-add').on('shown.bs.modal', () => {
+    document.querySelector('#group-goods-group').value = dataStorage.currentGroupName;
     formTools.work(form, submitForm);
   });
 
   priceGroup.addEventListener('change', priceChangeHandler);
-
 };
 
 export default {
