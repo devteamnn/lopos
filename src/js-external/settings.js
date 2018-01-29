@@ -242,4 +242,29 @@ window.appSettings = {
     }
   },
 
+  // Форма редактирования товара
+  'formEditGoods': {
+    'UrlApi1': '/lopos_directory/{{dir}}/operator/{{oper}}/business/{{busId}}/good/{{goodId}}',
+    'UrlApi2': '/lopos_directory/{{dir}}/operator/{{oper}}/business/{{busId}}/good/{{goodId}}/price',
+    'validPatterns': {
+      'name': /^[а-яёА-ЯЁA-Za-z\s\d]+$/,
+      'describe': /^[а-яёА-ЯЁA-Za-z\s\d]*$/,
+      'purchase': /(^$)|(^\d+$)|(^\d+[.,]\d{2}$)/,
+      'percent': /(^\d*$)|(^\d*\.\d*$)/,
+      'price': /(^$)|(^\d+$)|(^\d+[.,]\d{2}$)/,
+      'barcode': /^[а-яёА-ЯЁA-Za-z\s\d]*$/,
+    },
+    'validMessage': {
+      'name': 'поле минимум 1 буква,<br>не должно содержать спецсимволы',
+      'describe': 'Поле не может содержать спецсимволы',
+      'purchase': 'денежный формат<br>( 000, 000.00 )',
+      'percent': 'Процент может быть числом',
+      'price': 'денежный формат<br>( 000, 000.00 )',
+      'barcode': 'Поле не может содержать спецсимволы'
+    },
+    'messages': {
+      'mes400': 'Некорректный запрос'
+    }
+  },
+
 };

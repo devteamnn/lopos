@@ -13,16 +13,20 @@
 
 
 // Параметры work:
+// -----------------------------------------------------------------------------
 //   remoteForm - форма
-//   remoteSubmitCallback - функция должн возвращать объект:
+// -----------------------------------------------------------------------------
+//   remoteSubmitCallback - массив функций должны возвращать объект:
 //     {
 //       url: ссылка на апи,
 //       metod: метод http,
 //       data: строка data,
 //     }
+//   Массив нужен для отправок отправок разных полей по разным адресам
+// -----------------------------------------------------------------------------
 //   remoteXhrCallbackSuccess - функция, в которую передается управление при
 //      успешном запросе
-//
+// -----------------------------------------------------------------------------
 //   remoteValidCallback - параметр validCallback передается для дополнительной
 //      проверки
 //     (когда недостаточно проверить текстовые поля по шаблонам).
@@ -31,8 +35,11 @@
 
 import xhr from './xhr.js';
 
+let butSubmit;
+let butCancel;
+let spinner;
+
 let form;
-let userXhrCallbackSuccess;
 let pattern;
 let message;
 let submitCallback;
@@ -58,15 +65,15 @@ const hideAlert = (el) => {
 };
 
 const showSpinner = () => {
-  form.querySelector('*[data-spinner]').classList.remove('invisible');
-  form.querySelector('button[type="submit"]').disabled = true;
-  form.querySelector('*[data-butCancel]').disabled = true;
+  spinner.classList.remove('invisible');
+  butSubmit.disabled = true;
+  butCancel.disabled = true;
 };
 
 const hideSpinner = () => {
-  form.querySelector('*[data-spinner]').classList.add('invisible');
-  form.querySelector('button[type="submit"]').disabled = false;
-  form.querySelector('*[data-butCancel]').disabled = false;
+  spinner.classList.add('invisible');
+  butSubmit.disabled = false;
+  butCancel.disabled = false;
 };
 
 const delHandlers = () => {
@@ -82,13 +89,8 @@ const formReset = () => {
   });
 
   hideSpinner();
-  form.querySelector('button[type="submit"]').disabled = true;
+  butSubmit.disabled = true;
   delHandlers();
-};
-
-const xhrCallbackSuccess = (responce) => {
-  hideSpinner();
-  userXhrCallbackSuccess(responce);
 };
 
 const validateForm = () => {
@@ -123,32 +125,36 @@ const formSubmitHandler = (evt) => {
   evt.preventDefault();
 
   if (validateForm()) {
-
     showSpinner();
-    let respData = submitCallback();
-    respData.callbackSuccess = xhrCallbackSuccess;
-    xhr.request = respData;
+    submitCallback();
   }
+};
+
+const submitForm = (data) => {
+  xhr.request = data;
 };
 
 const formInputHandler = (evt) => {
   hideAlert(evt.target);
 
   if (formIsChange()) {
-    form.querySelector('button[type="submit"]').disabled = false;
+    butSubmit.disabled = false;
   } else {
-    form.querySelector('button[type="submit"]').disabled = true;
+    butSubmit.disabled = true;
   }
 };
 
-const addHandlersFunc = (remoteForm, remoteSubmitCallback, remoteXhrCallbackSuccess, remoteValidCallback) => {
+const addHandlersFunc = (remoteForm, remoteSubmitCallback, remoteValidCallback) => {
 
   form = remoteForm;
-  userXhrCallbackSuccess = remoteXhrCallbackSuccess;
   submitCallback = remoteSubmitCallback;
   validCallback = remoteValidCallback;
   pattern = window.appSettings[form.dataset.formname].validPatterns;
   message = window.appSettings[form.dataset.formname].validMessage;
+
+  butSubmit = form.querySelector('button[type="submit"]');
+  butCancel = form.querySelector('*[data-butCancel]');
+  spinner = form.querySelector('*[data-spinner]');
 
   elSaveValues = [];
 
@@ -174,5 +180,6 @@ export default {
 
   work: addHandlersFunc,
   reset: formReset,
-  validElement: valEl
+  validElement: valEl,
+  submit: submitForm
 };

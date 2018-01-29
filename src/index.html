@@ -957,12 +957,12 @@
   <div class="modal fade" id="goods-card" tabindex="-1" role="dialog" aria-labelledby="goods-card" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
-        <form id="goods-card-form" name="goods-card">
+        <form id="goods-card-form" name="goods-card" data-formName="formEditGoods">
 
           <div class="modal-header">
             <div class="form-group">
-              <input type="text" class="form-control" id="goods-card-name" aria-describedby="goods-card-name" placeholder="Название">
-              <span id="goods-card-name-valid" class="badge badge-danger w-100"></span>
+              <input type="text" class="form-control" id="goods-card-name" aria-describedby="goods-card-name" placeholder="Название" data-valid="name" data-validLabelName="name">
+              <span id="goods-card-name-valid" class="badge badge-danger w-100" data-validLabel="name"></span>
             </div>
             <button id="goods-card-close" type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
@@ -983,14 +983,14 @@
               <div>
                 <div class="form-group">
                   <label for="goods-card-describe">Описание</label>
-                  <textarea type="text" class="form-control" id="goods-card-describe" aria-describedby="goods-card-describe" placeholder="Описание"></textarea>
-                  <span id="goods-card-describe-valid" class="badge badge-danger w-100"></span>
+                  <textarea type="text" class="form-control" id="goods-card-describe" aria-describedby="goods-card-describe" placeholder="Описание" data-valid="describe" data-validLabelName="describe"></textarea>
+                  <span id="goods-card-describe-valid" class="badge badge-danger w-100"  data-validLabel="describe"></span>
                 </div>
 
                 <div class="form-group">
                   <label for="goods-card-barcode">Штрихкод</label>
-                  <input type="text" class="form-control" id="goods-card-barcode" aria-describedby="goods-card-barcode" placeholder="Штрихкод">
-                  <span id="goods-card-barcode-valid" class="badge badge-danger w-100"></span>
+                  <input type="text" class="form-control" id="goods-card-barcode" aria-describedby="goods-card-barcode" placeholder="Штрихкод" data-valid="barcode" data-validLabelName="barcode">
+                  <span id="goods-card-barcode-valid" class="badge badge-danger w-100" data-validLabel="barcode"></span>
                 </div>
 
                 <div class="form-group">
@@ -999,7 +999,7 @@
                     <option selected>Выберите группу</option>
                   </select>
                   <!--<input type="text" class="form-control" aria-describedby="goods-card-group" placeholder="Группа">-->
-                  <span id="goods-card-group-valid" class="badge badge-danger w-100"></span>
+                  <!-- <span id="goods-card-group-valid" class="badge badge-danger w-100"></span> -->
                 </div>
               </div>
             </div>
@@ -1008,12 +1008,12 @@
               <div class="form-group row w-50">
                 <label class="col-sm-2 col-form-label" for="goods-card-price-purchase">Цена</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control m-1" id="goods-card-price-total" aria-describedby="goods-card-price" disabled>
+                  <input type="text" class="form-control m-1" id="goods-card-price-total" aria-describedby="goods-card-price" disabled data-valid="purchase" data-validLabelName="data-validLabelName">
                 </div>
-                <input type="text" class="form-control m-1" id="goods-card-price-purchase" aria-describedby="goods-card-price" placeholder="Наценка">
-                <input type="text" class="form-control m-1" id="goods-card-price-sell" aria-describedby="goods-card-price" placeholder="Цена">
+                <input type="text" class="form-control m-1" id="goods-card-price-purchase" aria-describedby="goods-card-price" placeholder="Наценка" data-valid="percent" data-validLabelName="data-validLabelName">
+                <input type="text" class="form-control m-1" id="goods-card-price-sell" aria-describedby="goods-card-price" placeholder="Цена" data-valid="price" data-validLabelName="data-validLabelName">
 
-                <span id="goods-card-price-valid" class="badge badge-danger w-100"></span>
+                <span id="goods-card-price-valid" class="badge badge-danger w-100" data-validLabel="goodPrice"></span>
               </div>
               <div id="express-container" class="express-container ml-3">
 
@@ -1072,12 +1072,12 @@
 
 
 
-            <div id="goods-card-spinner" class="progress text-white mb-3 invisible">
+            <div id="goods-card-spinner" class="progress text-white mb-3 invisible" data-spinner>
               <div class="progress-bar progress-bar-striped progress-bar-animated text-white font-weight-bold text-uppercase" style="width: 100%" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
 
             <button id="goods-card-submit" type="submit" class="btn btn-primary w-100" disabled>Изменить</button>
-            <button id="goods-card-cancel" type="button" class="btn btn-danger w-100 mt-3" data-dismiss="modal">Отменить</button>
+            <button id="goods-card-cancel" type="button" class="btn btn-danger w-100 mt-3" data-dismiss="modal" data-butCancel>Отменить</button>
           </div>
         </form>
       </div>

@@ -42,11 +42,12 @@ const submitForm = () => {
   urlApp = urlApp.replace('{{busId}}', stor.currentBusiness);
   urlApp = urlApp.replace('{{groupId}}', dataStorage.currentGroupId);
 
-  return {
+  formTools.submit({
     url: urlApp,
     metod: 'PUT',
     data: postData,
-  };
+    callbackSuccess: callbackXhrSuccess
+  });
 };
 
 const addHandlers = () => {
@@ -55,7 +56,7 @@ const addHandlers = () => {
     formTools.reset();
   });
   $('#groups-edit').on('shown.bs.modal', () => {
-    formTools.work(form, submitForm, callbackXhrSuccess);
+    formTools.work(form, submitForm);
   });
 };
 

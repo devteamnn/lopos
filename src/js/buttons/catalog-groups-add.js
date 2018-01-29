@@ -43,13 +43,12 @@ const submitForm = () => {
   urlApp = urlApp.replace('{{oper}}', stor.operatorId);
   urlApp = urlApp.replace('{{busId}}', stor.currentBusiness);
 
-  return {
+  formTools.submit({
     url: urlApp,
     metod: 'POST',
     data: postData,
-  };
-
-
+    callbackSuccess: callbackXhrSuccess
+  });
 };
 
 const addHandlers = () => {
@@ -57,7 +56,7 @@ const addHandlers = () => {
     formTools.reset();
   });
   $('#groups-add').on('shown.bs.modal', () => {
-    formTools.work(form, submitForm, callbackXhrSuccess);
+    formTools.work(form, submitForm);
   });
 };
 
