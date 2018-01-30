@@ -12,6 +12,7 @@ const goodsCardGroup = document.querySelector('#goods-card-group');
 
 const goodsCardPurchase = document.querySelector('#goods-card-price-purchase');
 const goodsCardImage = document.querySelector('#goods-card-image');
+const goodsCardImageUpload = document.querySelector('#goods-card-image-upload');
 const goodsCardSell = document.querySelector('#goods-card-price-sell');
 const goodsStock = document.querySelector('#goods-stock-body');
 const goodsKeywords = document.querySelector('#goods-keywords');
@@ -236,6 +237,7 @@ const onExpressContainerClick = (evt) => {
 expressContainer.addEventListener('click', onExpressContainerClick);
 
 $(expressModal).on('hidden.bs.modal', () => {
+  getGood();
   $(goodsCard).modal('toggle');
 });
 
@@ -262,6 +264,35 @@ $(stockModal).on('shown.bs.modal', () => {
   stockModalName.innerHTML = auth.currentStockName;
   stockModalQuantity.value = auth.currentStockQuantityT2;
 });
+
+
+const showPreview = (file) => {
+  let fileName = file.name.toLowerCase();
+  let fileSize = (file.size / 1024 / 1024).toFixed(2);
+
+  if (fileName.endsWith('jpg') && fileSize < 2) {
+    let reader = new FileReader();
+
+    reader.addEventListener('load', function () {
+      goodsCardImage.src = reader.result;
+    });
+    reader.readAsDataURL(file);
+  } else if (!fileName.endsWith('jpg')) {
+    goodsCardImage.src = '';
+    goodsCardImageUpload.value = '';
+    goodsCardImage.alt = `Формат ${fileName.slice(-3)} не катит, только jpg`;
+  } else if (fileSize > 2) {
+    goodsCardImage.src = '';
+    goodsCardImageUpload.value = '';
+    goodsCardImage.alt = `Размер ${fileSize}Mb слишком велик`;
+  }
+};
+
+goodsCardImageUpload.addEventListener('change', function () {
+  showPreview(goodsCardImageUpload.files[0]);
+});
+
+// ================= превью картинки =================
 
 export default {
 
