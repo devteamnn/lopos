@@ -189,7 +189,7 @@ window.appSettings = {
   },
 
   // Форма добавления группы товаров
-  'formAddGroup': {
+  'formAddGroups': {
     'UrlApi': '/lopos_directory/{{dir}}/operator/{{oper}}/business/{{busId}}/group',
     'validPatterns': {
       'name': /^[а-яёА-ЯЁA-Za-z\s\d]+$/,

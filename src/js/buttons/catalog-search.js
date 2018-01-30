@@ -26,34 +26,6 @@ const loaderSpinnerMessage = 'Загрузка';
 const loaderSpinnerMarkup = toolsMarkup.getLoadSpinner(loaderSpinnerId, loaderSpinnerMessage);
 
 
-/*
-const onSuccessSearchLoad = (searchLoad) => {
-  document.querySelector(`#${loaderSpinnerId}`).remove();
-  console.log(searchLoad);
-  // cardData = loadedCards;
-  if (searchLoad.status === 271) {
-    listSearchBody.innerHTML = searchLoad.message;
-  } else {
-    searchLoad.data.forEach((item, index) => listSearchBody.insertAdjacentHTML('beforeend', groupsMarkup.getGoodString(item, index)));
-  }
-};
-*/
-
-/*
-const getSearch = (evt) => {
-  evt.preventDefault();
-  listSearchBody.innerHTML = loaderSpinnerMarkup;
-  console.log(listSearchInput);
-
-  xhr.request = {
-    metod: 'POST',
-    url: `lopos_directory/${auth.data.directory}/operator/1/business/${auth.data.currentBusiness}/good_search`,
-    data: `token=${auth.data.token}&name=${listSearchInput.value}`,
-    callbackSuccess: onSuccessSearchLoad,
-  };
-};
-*/
-
 let fullSearch = [];
 
 const drawResult = (selectedData) => {
@@ -131,7 +103,7 @@ const keywordModificator = (keywordId, keywordNode) => {
 };
 
 listSearchKeywordsBtn.addEventListener('click', () => {
-  keywordsUniversal.getKeywords(listSearchKeywordsModalBody, onKeywordClick, keywordModificator);
+  keywordsUniversal.downloadAndDraw(listSearchKeywordsModalBody, onKeywordClick, keywordModificator);
   $(listSearchKeywordsModal).modal('show');
   listSearchKeywordsResetBtn.removeAttribute('disabled');
   // keywordsUniversal.draw(listSearchBody);
@@ -179,6 +151,20 @@ listSearchBarcodeBtn.addEventListener('click', function () {
     submitCallback: setRequestToFindBarcode
   };
 });
+
+const onListSearchBodyClick = (evt) => {
+
+  let currentStringElement = evt.target;
+  while (!currentStringElement.dataset.goodId) {
+    currentStringElement = currentStringElement.parentNode;
+  }
+
+  auth.currentGoodId = currentStringElement.dataset.goodId;
+  goodsCard.fill();
+};
+
+listSearchBody.addEventListener('click', onListSearchBodyClick);
+
 
 export default {
 
