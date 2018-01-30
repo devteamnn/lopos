@@ -2,6 +2,7 @@ import dataStorage from './../tools/storage.js';
 import markup from './../markup/tools.js';
 import catalogGroups from './catalog-groups.js';
 import formTools from './../tools/form-tools.js';
+import tools from './../tools/tools.js';
 
 const appUrl = window.appSettings.formAddGoods.UrlApi;
 const messages = window.appSettings.formAddGoods.message;
@@ -12,8 +13,8 @@ const name = form.querySelector('#group-goods-name');
 const describe = form.querySelector('#group-goods-describe');
 const priceGroup = form.querySelector('#group-goods-price');
 const purchase = form.querySelector('#group-goods-price-purchase');
-const extra = form.querySelector('#group-goods-price-extra');
-const sell = form.querySelector('#group-goods-price-sell');
+const precent = form.querySelector('#group-goods-price-extra');
+const price = form.querySelector('#group-goods-price-sell');
 const barcode = form.querySelector('#group-goods-barcode');
 
 const callbackXhrSuccess = (response) => {
@@ -44,7 +45,7 @@ const submitForm = () => {
   const stor = dataStorage.data;
   const groupId = dataStorage.currentGroupId;
 
-  let postData = `token=${stor.token}&name=${name.value}&description=${describe.value}&purchase_price=${purchase.value}&selling_price=${sell.value}&group=${groupId}&barcode=${barcode.value}`;
+  let postData = `token=${stor.token}&name=${name.value}&description=${describe.value}&purchase_price=${purchase.value}&selling_price=${price.value}&group=${groupId}&barcode=${barcode.value}`;
   let urlApp = appUrl.replace('{{dir}}', stor.directory);
   urlApp = urlApp.replace('{{oper}}', stor.operatorId);
   urlApp = urlApp.replace('{{busId}}', stor.currentBusiness);
@@ -57,14 +58,6 @@ const submitForm = () => {
   });
 };
 
-const calcExtra = () => {
-  sell.value = (Number(purchase.value) + (purchase.value / 100 * extra.value)).toFixed(2);
-};
-
-const calcPercent = () => {
-  extra.value = ((sell.value - purchase.value) * 100 / purchase.value).toFixed(2);
-};
-
 const priceChangeHandler = (evt) => {
   if (!evt.target.type === 'text') {
     return false;
@@ -74,13 +67,13 @@ const priceChangeHandler = (evt) => {
 
     switch (evt.target.id) {
     case 'group-goods-price-purchase':
-      calcExtra(); break;
+      price.value = tools.calcPrice(purchase.value, precent.value); break;
 
     case 'group-goods-price-extra':
-      calcExtra(); break;
+      price.value = tools.calcPrice(purchase.value, precent.value); break;
 
     case 'group-goods-price-sell':
-      calcPercent(); break;
+      precent.value = tools.calcPercent(purchase.value, price.value); break;
     }
   }
 
