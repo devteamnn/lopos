@@ -48,20 +48,20 @@ let validCallback;
 let elSaveValues;
 
 const showAlert = (el) => {
-  // if (el.type === 'text') {
-  el.classList.add('border');
-  el.classList.add('border-danger');
-  form.querySelector(`*[data-validLabel="${el.dataset.validlabelname}"]`).innerHTML =
-    message[el.dataset.valid];
-  // }
+  if (el.type === 'text') {
+    el.classList.add('border');
+    el.classList.add('border-danger');
+    form.querySelector(`*[data-validLabel="${el.dataset.validlabelname}"]`).innerHTML =
+      message[el.dataset.valid];
+  }
 };
 
 const hideAlert = (el) => {
-  // if (el.type === 'text') {
-  el.classList.remove('border');
-  el.classList.remove('border-danger');
-  form.querySelector(`*[data-validLabel="${el.dataset.validlabelname}"]`).innerHTML = '';
-  // }
+  if (el.type === 'text') {
+    el.classList.remove('border');
+    el.classList.remove('border-danger');
+    form.querySelector(`*[data-validLabel="${el.dataset.validlabelname}"]`).innerHTML = '';
+  }
 };
 
 const showSpinner = () => {

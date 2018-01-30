@@ -12,6 +12,7 @@ const listGroupGoodsAddModal = document.querySelector('#group-goods-add');
 const listGroupGoodsAddModalName = document.querySelector('#group-goods-name');
 const listGroupGoodsAddModalDescribe = document.querySelector('#group-goods-describe');
 const listGroupGoodsAddModalPurchase = document.querySelector('#group-goods-price-purchase');
+const listGroupGoodsAddModalExtra = document.querySelector('#group-goods-price-extra');
 const listGroupGoodsAddModalSell = document.querySelector('#group-goods-price-sell');
 const listGroupGoodsAddModalBarcode = document.querySelector('#group-goods-barcode');
 const listGroupGoodsCardCopyBtn = document.querySelector('#group-goods-copy-btn');
@@ -191,6 +192,7 @@ const fillCopyCard = (loadedGoodData) => {
   listGroupGoodsAddModalDescribe.value = description;
   listGroupGoodsAddModalPurchase.value = +purchasePrice;
   listGroupGoodsAddModalSell.value = +sellingPrice;
+  listGroupGoodsAddModalExtra.value = (+sellingPrice - +purchasePrice) * +purchasePrice / 100;
   listGroupGoodsAddModalBarcode.value = barcode;
 };
 
