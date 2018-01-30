@@ -79,12 +79,12 @@ const onSuccessGoodsLoad = (loadedGood) => {
       return `
       <input type="radio" id="stock-${item.id}" name="stock" value="email" class="d-none">
       <label style="padding-left: 34px;" for="stock-${item.id}"  class="d-flex justify-content-between align-items-center reference-string" data-stock-id="${item.id}" data-stock-name="${item.name}" data-stock-t2="${item.values[2][0]}">
-        <div class="row w-100">
-          <div class="col-8">${item.id} - ${item.name}</div>
-          <div class="col-4 d-flex justify-content-between border">
-            <div class="w-100 text-center border">${item.values[3][0]}</div>
-            <div class="w-100 text-center border">${item.values[2][0]}</div>
-            <div class="w-100 text-center border">${item.values[4][0]}</div>
+        <div class="row w-100 h-100">
+          <div class="col-8">${item.name}</div>
+          <div class="col-4 d-flex justify-content-between">
+            <div class="w-100 text-center">${item.values[3][0]}</div>
+            <div class="w-100 text-center">${item.values[2][0]}</div>
+            <div class="w-100 text-center">${item.values[4][0]}</div>
           </div>
           </div>
         </label>`;
@@ -115,7 +115,7 @@ const onSuccessGoodsLoad = (loadedGood) => {
     auth.currentStockQuantityT2 = goodsStock.children[1].dataset.stockT2;
   }
 
-  keywordsUniversal.getKeywords(goodsCardKeywordsBody, onKeywordClick, keywordModificator);
+  keywordsUniversal.downloadAndDraw(goodsCardKeywordsBody, onKeywordClick, keywordModificator);
 
   const onGoodKeywordClick = (evt) => {
     const returnHandler = (e) => {
@@ -133,11 +133,10 @@ const onSuccessGoodsLoad = (loadedGood) => {
 
   goodsKeywords.innerHTML = '';
   if (goodTags.length) {
-    goodTags.forEach((item) => keywordsUniversal.drawKeywordsToContainerExternalData(goodsKeywords, onGoodKeywordClick, item));
+    goodTags.forEach((item) => keywordsUniversal.getDataAndDraw(goodsKeywords, onGoodKeywordClick, item));
   } else {
     goodsKeywords.innerHTML = 'Ключевых слов нет';
   }
-  // goodsKeywords.insertAdjacentHTML('beforeend', goodTags.length ? goodTags.map((item) => keywordsUniversal.getKeywordMarkup(item)).join('') : 'Ключевых слов нет');
 
 };
 
@@ -163,7 +162,7 @@ const keywordModificator = (keywordId, keywordNode) => {
 
 
 $(goodsCardKeywordsModal).on('shown.bs.modal', () => {
-  keywordsUniversal.getKeywords(goodsCardKeywordsBody, onKeywordClick, keywordModificator);
+  keywordsUniversal.downloadAndDraw(goodsCardKeywordsBody, onKeywordClick, keywordModificator);
   $(goodsCard).modal('hide');
 });
 

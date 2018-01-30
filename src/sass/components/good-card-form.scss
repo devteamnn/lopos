@@ -1,0 +1,70 @@
+.goods-card-form {
+
+}
+
+.goods-card-name {
+  width: 100%;
+}
+
+.goods-card-first-string {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.goods-card-second-row {
+  width: 100%;
+}
+.goods-card-second-row textarea {
+  height: 100px;
+  resize: none;
+}
+
+.goods-card-img {
+  position: relative;
+  border: 1px solid black;
+  width: 310px;
+  height: 300px;
+  margin-right: 15px;
+  padding: 2px;
+}
+
+.goods-card-img img {
+  display: block;
+  width: 300px;
+}
+
+.goods-card-img label {
+  display: block;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  margin: 0;
+}
+
+.goods-card-btns-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.goods-card-btns-container > button{
+  width: 200px;
+}
+
+input[name="express-purchase-radio"],
+input[name="express-sell-radio"] {
+	display: none;
+}
+
+input[name="express-purchase-radio"]:checked + label,
+input[name="stock"]:checked + label,
+input[name="express-sell-radio"]:checked + label {
+	background-color: #eee;
+}
+
+.express-container {
+
+}
+
+.express-container.express-container__muted {
+  opacity: 0.3;
+}
