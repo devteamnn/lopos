@@ -1050,7 +1050,7 @@
           </div>
 
           <div class="modal-body">
-            <div class="goods-card-first-string">
+            <div class="goods-card-string">
 
               <div class="goods-card-first-row">
                 <div class="goods-card-img" width="300" height="300">
@@ -1084,55 +1084,50 @@
               </div>
             </div>
 
-            <div class="d-flex">
-              <div class="form-group row w-50">
-                <div class="col-sm-10" id="goods-card-price-total"><span class="text-danger">Здесь будет вычисленная цена %%</span></div>
-                <input type="text" class="form-control m-1" id="goods-card-price-purchase" aria-describedby="goods-card-price" placeholder="Наценка" data-valid="purchase" data-validLabelName="goodPrice">
-                <input type="text" class="form-control m-1" id="goods-card-price-sell" aria-describedby="goods-card-price" placeholder="Цена" data-valid="price" data-validLabelName="goodPrice">
-
+            <div class="goods-card-string">
+              <div class="goods-card-first-row">
+                <h4 id="goods-card-price-total" class="text-danger">Здесь будет цена %%</h4>
+                <input type="text" class="form-control" id="goods-card-price-purchase" aria-describedby="goods-card-price" placeholder="Наценка" data-valid="purchase" data-validLabelName="goodPrice">
+                <input type="text" class="form-control" id="goods-card-price-sell" aria-describedby="goods-card-price" placeholder="Цена" data-valid="price" data-validLabelName="goodPrice">
                 <span id="goods-card-price-valid" class="badge badge-danger w-100"></span>
               </div>
-              <div id="express-container" class="express-container ml-3">
 
-                <div>
-                  <h4>Экспресс-операции</h4>
-                </div>
+              <div id="express-container" class="express-container goods-card-second-row">
+                <h4>Экспресс-операции</h4>
                 <div id="express-purchase">
                   <span>Покупка</span>
-                  <button id="express-operation-purchase-5" type="button" class="btn btn-danger mt-3">5 шт.</button>
-                  <button id="express-operation-purchase-10" type="button" class="btn btn-danger mt-3">10 шт.</button>
-                  <button id="express-operation-purchase-15" type="button" class="btn btn-danger mt-3">15 шт.</button>
-                  <button id="express-purchase-custom" type="button" class="btn btn-danger mt-3">...</button>
+                  <button id="express-operation-purchase-5" type="button" class="btn btn-danger">5 шт.</button>
+                  <button id="express-operation-purchase-10" type="button" class="btn btn-danger">10 шт.</button>
+                  <button id="express-operation-purchase-15" type="button" class="btn btn-danger">15 шт.</button>
+                  <button id="express-purchase-custom" type="button" class="btn btn-danger">...</button>
                 </div>
 
                 <div id="express-sell">
                   <span>Продажа</span>
-                  <button id="express-operation-sell-5-minus" type="button" class="btn btn-success mt-3">5 шт.</button>
-                  <button id="express-operation-sell-10-minus" type="button" class="btn btn-success mt-3">10 шт.</button>
-                  <button id="express-operation-sell-15-minus" type="button" class="btn btn-success mt-3">15 шт.</button>
-                  <button id="express-sell-custom-minus" type="button" class="btn btn-success mt-3">...</button>
+                  <button id="express-operation-sell-5-minus" type="button" class="btn btn-success">5 шт.</button>
+                  <button id="express-operation-sell-10-minus" type="button" class="btn btn-success">10 шт.</button>
+                  <button id="express-operation-sell-15-minus" type="button" class="btn btn-success">15 шт.</button>
+                  <button id="express-sell-custom-minus" type="button" class="btn btn-success">...</button>
                 </div>
 
               </div>
             </div>
 
 
-            <div id="goods-stock-header" class="mt-5">
-              <div class="row">
-                <div class="col-8 d-flex">
-                  <h4>Остатки</h4>
-                  <button type="button" class="btn btn-warning p-0 icon-btn icon-btn__edit" data-toggle="modal" data-target="#set-stock-modal"></button>
+            <div id="goods-stock-header" class="goods-card-string">
+              <div class="col-8 d-flex">
+                <h4>Остатки</h4>
+                <button type="button" class="btn btn-warning p-0 icon-btn icon-btn__edit" data-toggle="modal" data-target="#set-stock-modal"></button>
+              </div>
+              <div class="col-4 d-flex justify-content-between">
+                <div class="w-100 text-center">
+                  <span class="icon icon__truck"></span>
                 </div>
-                <div class="col-4 d-flex justify-content-between">
-                  <div class="w-100 text-center">
-                    <span class="icon icon__truck"></span>
-                  </div>
-                  <div class="w-100 text-center">
-                    <span class="icon icon__box"></span>
-                  </div>
-                  <div class="w-100 text-center">
-                    <span class="icon icon__male"></span>
-                  </div>
+                <div class="w-100 text-center">
+                  <span class="icon icon__box"></span>
+                </div>
+                <div class="w-100 text-center">
+                  <span class="icon icon__male"></span>
                 </div>
               </div>
             </div>

@@ -6,8 +6,8 @@ yarn-debug.log*
 yarn-error.log*
 
 pass.js
-lopos-id.sublime-project
-lopos-id.sublime-workspace
+*lopos-id.sublime-project
+*lopos-id.sublime-workspace
 login.txt
 src/passwd
 passwd
