@@ -895,7 +895,7 @@
           <form id="groups-add-form" name="groups-add" data-formName="formAddGroup">
             <div class="form-group">
               <label for="groups-add-name">Новое название</label>
-              <input type="text" class="form-control" id="groups-add-name" aria-describedby="groups-add-name" placeholder="Название">
+              <input type="text" class="form-control" id="groups-add-name" aria-describedby="groups-add-name" placeholder="Название" data-valid="name" data-validLabelName="name">
               <span id="groups-add-valid" class="badge badge-danger w-100" data-validLabel="name"></span>
             </div>
 
@@ -927,7 +927,7 @@
           <form id="groups-edit-form" name="groups-edit" data-formName="formEditGroups">
             <div class="form-group">
               <label for="groups-edit-name">Новое название</label>
-              <input type="text" class="form-control" id="groups-edit-name" aria-describedby="groups-edit-name" placeholder="Название">
+              <input type="text" class="form-control" id="groups-edit-name" aria-describedby="groups-edit-name" placeholder="Название" data-valid="name" data-validLabelName="name">
               <span id="groups-edit-valid" class="badge badge-danger w-100" data-validLabel="name" data-validLabel="name"></span>
             </div>
 
@@ -983,13 +983,13 @@
 
             <div class="form-group">
               <label for="group-goods-name">Название</label>
-              <input type="text" class="form-control" id="group-goods-name" aria-describedby="group-goods-name" placeholder="Название">
+              <input type="text" class="form-control" id="group-goods-name" aria-describedby="group-goods-name" placeholder="Название" data-valid="name" data-validLabelName="name">
               <span id="group-goods-name-valid" class="badge badge-danger w-100" data-validLabel="name"></span>
             </div>
 
             <div class="form-group">
               <label for="group-goods-describe">Описание</label>
-              <input type="text" class="form-control" id="group-goods-describe" aria-describedby="group-goods-describe" placeholder="Описание">
+              <input type="text" class="form-control" id="group-goods-describe" aria-describedby="group-goods-describe" placeholder="Описание" data-valid="describe" data-validLabelName="describe">
               <span id="group-goods-describe-valid" class="badge badge-danger w-100" data-validLabel="describe"></span>
             </div>
 
@@ -1015,7 +1015,7 @@
 
             <div class="form-group">
               <label for="group-goods-barcode">Штрихкод</label>
-              <input type="text" class="form-control" id="group-goods-barcode" aria-describedby="group-goods-barcode" placeholder="Штрихкод">
+              <input type="text" class="form-control" id="group-goods-barcode" aria-describedby="group-goods-barcode" placeholder="Штрихкод" data-valid="barcode" data-validLabelName="barcode">
               <span id="group-goods-barcode-valid" class="badge badge-danger w-100" data-validLabel="barcode"></span>
             </div>
 
@@ -1087,8 +1087,8 @@
             <div class="d-flex">
               <div class="form-group row w-50">
                 <div class="col-sm-10" id="goods-card-price-total"><span class="text-danger">Здесь будет вычисленная цена %%</span></div>
-                <input type="text" class="form-control m-1" id="goods-card-price-purchase" aria-describedby="goods-card-price" placeholder="Наценка">
-                <input type="text" class="form-control m-1" id="goods-card-price-sell" aria-describedby="goods-card-price" placeholder="Цена">
+                <input type="text" class="form-control m-1" id="goods-card-price-purchase" aria-describedby="goods-card-price" placeholder="Наценка" data-valid="purchase" data-validLabelName="goodPrice">
+                <input type="text" class="form-control m-1" id="goods-card-price-sell" aria-describedby="goods-card-price" placeholder="Цена" data-valid="price" data-validLabelName="goodPrice">
 
                 <span id="goods-card-price-valid" class="badge badge-danger w-100"></span>
               </div>
@@ -1178,7 +1178,7 @@
               <h5 class="modal-title" id="express-modal-stock"></h5>
               <label class="col-sm-2 col-form-label" for="express-modal-price">Цена</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control m-1" id="express-modal-price" aria-describedby="express-modal-price" placeholder="Цена">
+                <input type="text" class="form-control m-1" id="express-modal-price" aria-describedby="express-modal-price" placeholder="Цена" data-valid="price" data-validLabelName="price">
               </div>
               <span id="express-modal-price-valid" class="badge badge-danger w-100" data-validLabel="price"></span>
               <label class="col-sm-2 col-form-label" for="express-modal-quantity">Количество</label>
