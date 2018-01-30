@@ -1,6 +1,7 @@
 import xhr from '../tools/xhr.js';
 import auth from '../tools/storage.js';
 import toolsMarkup from '../markup/tools.js';
+import keywordsUniversal from './universal-keywords.js';
 
 const listKeywords = document.querySelector('#list-keywords-list');
 const listKeywordsReturnBtn = document.querySelector('#list-keywords-card-return-btn');
@@ -14,14 +15,6 @@ const listKeywordsHeader = document.querySelector('#list-keywords-header');
 const listKeywordsBody = document.querySelector('#list-keywords-body');
 const listKeywordsCard = document.querySelector('#list-keywords-card');
 const listKeywordsCardEdit = document.querySelector('#list-keywords-card-edit');
-
-import keywordsUniversal from './universal-keywords.js';
-
-// ================== вытащили из модуля с разметкой ============================
-const cleanContainer = (container) => {
-  container = container || listKeywordsBody;
-  container.innerHTML = '';
-};
 
 // функция прячет страницу "справочники -> ключевые слова"
 const hideReferenceKeywordsMain = () => {
@@ -37,12 +30,10 @@ const showReferenceKeywordsMain = () => {
 };
 
 // функция показывает карточку редактирования ключевого слова
-const showEditKeywordCard = (keyword) => {
+const showEditKeywordCard = () => {
+  listKeywordsCardEdit.innerHTML = '';
   listKeywordsCard.classList.remove('d-none');
-  listKeywordsCardEdit.innerHTML = `<div class="text-center">
-    <button type="button" class="btn btn-lg text-white" style="background-color: #${auth.currentKeywordRgb}">
-      <h3>#${auth.currentKeywordName}</h3>
-    </button></div>`;
+  keywordsUniversal.getDataAndDraw(listKeywordsCardEdit, null, {color: auth.currentKeywordRgb, name: auth.currentKeywordName});
 };
 
 // обработчик
@@ -87,23 +78,18 @@ listKeywordsCardEditBtn.addEventListener('click', function () {
   listKeywordsCardEditName.value = auth.currentKeywordName;
 });
 
-const onSuccessKeywordColorUpdate = () => {
-  redrawCard();
-};
-
 const onListKeywordsCardEditRGBFormSubmit = (evt) => {
   evt.preventDefault();
   let newRGB = listKeywordsCardEditRGBForm.querySelector('input:checked').value;
   auth.currentKeywordRgb = newRGB;
-  console.log(document.querySelector('#list-keywords-card-edit > div > button'));
-  document.querySelector('#list-keywords-card-edit > div > button').style.backgroundColor = '#' + auth.currentKeywordRgb;
+  document.querySelector('#list-keywords-card-edit > h3').style.backgroundColor = '#' + auth.currentKeywordRgb;
   $('#keywords-card-edit-rgb').modal('hide');
 
   xhr.request = {
     metod: 'PUT',
     url: `lopos_directory/${auth.data.directory}/operator/1/business/${auth.data.currentBusiness}/tag/${auth.currentKeywordId}`,
     data: `color=${auth.currentKeywordRgb}&token=${auth.data.token}`,
-    callbackSuccess: onSuccessKeywordColorUpdate,
+    callbackSuccess: showEditKeywordCard,
   };
 
 };
@@ -113,15 +99,11 @@ listKeywordsReturnBtn.addEventListener('click', getKeywords);
 
 
 const getKeywords = () => {
-  keywordsUniversal.getKeywords(listKeywordsBody, onKeywordClick);
+  keywordsUniversal.downloadAndDraw(listKeywordsBody, onKeywordClick);
   showReferenceKeywordsMain();
 
   listKeywordsCard.classList.add('d-none');
   listKeywordsReturnBtn.addEventListener('click', getKeywords);
-};
-
-const redrawCard = () => {
-  listKeywordsCardEdit.innerHTML = `<div class="text-center"><button type="button" class="btn btn-lg text-white" style="background-color: #${auth.currentKeywordRgb}"><h3>#${auth.currentKeywordName}</h3></button></div>`;
 };
 
 // функция для перехода из других модулей, меняет обработчик возврата
@@ -137,12 +119,12 @@ export default {
     listKeywords.addEventListener('click', getKeywords);
   },
 
-  redraw: redrawCard,
+  redraw: showEditKeywordCard,
   update: getKeywords,
   showKeywordEdit,
 
   stop() {
-    cleanContainer();
+    listKeywordsBody.innerHTML = '';
     listKeywords.removeEventListener('click', getKeywords);
   }
 };

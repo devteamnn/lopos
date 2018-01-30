@@ -5,6 +5,8 @@
 @import "src/sass/components/reference-string.scss";
 @import "src/sass/components/reference-header.scss";
 @import "src/sass/components/keyword.scss";
+@import "src/sass/components/good-card-form.scss";
+@import "src/sass/components/good-tile.scss";
 
 .enterprise-card-block {
   margin-left: 55px;
@@ -81,65 +83,6 @@ input[name="contact"]:checked + label {
   margin-bottom: -1px;
 }
 
-.goods-tile {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-
-.goods-tile-card {
-  width: 150px;
-  height: 150px;
-  margin: 10px;
-  border: 1px solid gray;
-  border-radius: 20px;
-}
-
-.goods-tile-title {
-  position: absolute;
-  bottom: 3px;
-  right: 5px;
-  padding: 10px;
-  width: 80px;
-  background-color: aliceblue;
-  opacity: 0.7;
-  border-radius: 20px;
-}
-
-
-input[name="express-purchase-radio"],
-input[name="express-sell-radio"] {
-	display: none;
-}
-
-input[name="express-purchase-radio"]:checked + label,
-input[name="stock"]:checked + label,
-input[name="express-sell-radio"]:checked + label {
-	background-color: #eee;
-}
-
-.express-container {
-
-}
-
-.express-container.express-container__muted {
-  opacity: 0.3;
-}
-
-.goods-card-img {
-  display: block;
-  border: 1px solid black;
-  width: 310px;
-  height: 300px;
-  margin-right: 15px;
-  padding: 2px;
-}
-
-.goods-card-img img {
-  display: block;
-  width: 300px;
-}
-
 .informaion-light {
   display: flex;
   position: absolute;
@@ -152,6 +95,7 @@ input[name="express-sell-radio"]:checked + label {
   height: 50px;
   z-index: 9999;
 }
+
 .informaion-light p {
   margin: 0;
 }
