@@ -29,6 +29,7 @@ const loaderSpinnerMarkup = toolsMarkup.getLoadSpinner(loaderSpinnerId, loaderSp
 let fullSearch = [];
 
 const drawResult = (selectedData) => {
+  listSearchBody.innerHTML = '';
   if (selectedData.length) {
     selectedData.forEach((item, index) => listSearchBody.insertAdjacentHTML('beforeend', groupsMarkup.getGoodString(item, index)));
   } else {
