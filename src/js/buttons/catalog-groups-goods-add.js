@@ -1,6 +1,6 @@
 import dataStorage from './../tools/storage.js';
 import markup from './../markup/tools.js';
-import catalogGroupsGoods from './catalog-groups-goods.js';
+import catalogGroups from './catalog-groups.js';
 import formTools from './../tools/form-tools.js';
 
 const appUrl = window.appSettings.formAddGoods.UrlApi;
@@ -23,7 +23,7 @@ const callbackXhrSuccess = (response) => {
 
   switch (response.status) {
   case 200:
-    catalogGroupsGoods.fill();
+    catalogGroups.redrawGoods();
     break;
   case 400:
     markup.informationtModal = {
