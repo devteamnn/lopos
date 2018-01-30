@@ -185,6 +185,8 @@ const fillCopyCard = (loadedGoodData) => {
     purchase_price: purchasePrice,
     selling_price: sellingPrice,
   } = loadedGoodData.data;
+  purchasePrice = Number(purchasePrice).toFixed(2);
+  sellingPrice = Number(sellingPrice).toFixed(2);
   listGroupGoodsAddModalName.value = name;
   listGroupGoodsAddModalDescribe.value = description;
   listGroupGoodsAddModalPurchase.value = +purchasePrice;

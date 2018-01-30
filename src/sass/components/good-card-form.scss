@@ -6,17 +6,30 @@
   width: 100%;
 }
 
-.goods-card-first-string {
+.goods-card-string {
   display: flex;
+  justify-content: space-between;
   margin-bottom: 20px;
 }
 
+.goods-card-first-row {
+  width: 40%;
+}
+
+.goods-card-first-row input {
+  margin-bottom: 2px;
+}
+
 .goods-card-second-row {
-  width: 100%;
+  width: 55%;
 }
 .goods-card-second-row textarea {
   height: 100px;
   resize: none;
+}
+.goods-card-second-row select {
+  display: block;
+  width: 100%;
 }
 
 .goods-card-img {
@@ -61,8 +74,17 @@ input[name="express-sell-radio"]:checked + label {
 	background-color: #eee;
 }
 
-.express-container {
+.express-container button {
+  margin: 0;
+}
 
+.express-container span {
+  display: inline-block;
+  width: 80px;
+}
+
+.express-container div {
+  margin-bottom: 5px;
 }
 
 .express-container.express-container__muted {

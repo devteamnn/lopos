@@ -3,11 +3,11 @@ import dataStorage from './../tools/storage.js';
 import markup from './../markup/tools.js';
 import catalogGroups from './catalog-groups.js';
 
-const appUrl = window.appSettings.formAddGroups.UrlApi;
-const messages = window.appSettings.formAddGroups.message;
+const appUrl = window.appSettings.formAddGroup.UrlApi;
+const messages = window.appSettings.formAddGroup.message;
 
-const validPattern = window.appSettings.formAddGroups.validPatterns;
-const validMessage = window.appSettings.formAddGroups.validMessage;
+const validPattern = window.appSettings.formAddGroup.validPatterns;
+const validMessage = window.appSettings.formAddGroup.validMessage;
 
 
 const body = document.querySelector('body');

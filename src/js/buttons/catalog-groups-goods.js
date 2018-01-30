@@ -45,11 +45,14 @@ const onSuccessGoodsLoad = (loadedGood) => {
     img_url: imgUrl,
     group_id: groupId
   } = loadedGood.data;
+  purchasePrice = Number(purchasePrice).toFixed(2);
+  sellingPrice = Number(sellingPrice).toFixed(2);
   goodsCardName.value = name;
   goodsCardDescribe.value = description;
   goodsCardBarcode.value = barcode;
   goodsCardPurchase.value = purchasePrice;
   goodsCardSell.value = sellingPrice;
+
   goodTags = (tags) ? tags : [];
 
   goodsCardGroup.innerHTML = allGroups.map((item) => `<option value="${item.id}" ${(item.id === groupId ? 'selected' : '')}>${item.name}</option>`).join('');
