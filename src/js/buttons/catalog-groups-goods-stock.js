@@ -2,8 +2,8 @@ import dataStorage from './../tools/storage.js';
 import markup from './../markup/tools.js';
 import formTools from './../tools/form-tools.js';
 
-let appUrl = window.appSettings.formExpressOperation.UrlApi;
-let messages = window.appSettings.formExpressOperation.message;
+let appUrl;
+let messages;
 
 let form;
 let amount;
