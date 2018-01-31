@@ -56,6 +56,40 @@ const submitForm = () => {
   });
 };
 
+const calcPr = () => {
+  return tools.calcPercent(purchase.value, sell.value) + '%';
+};
+
+const calcPrice = (evt) => {
+  if (!evt.target.type === 'text') {
+    return false;
+  }
+  if (formTools.validElement(evt.target)) {
+    precent.innerHTML = calcPr();
+  }
+  return true;
+};
+
+const imgChangeHandler = (evt) => {
+  const stor = dataStorage.data;
+
+  // let postData = `token=${stor.token}&good=16&file=${img.files[0]}`;
+  let postData = new FormData();
+  postData.append('token', stor.token);
+  postData.append('good', dataStorage.currentGoodId);
+  postData.append('file', img.files[0]);
+  let urlApp = appUrl3.replace('{{dir}}', stor.directory);
+
+  let data = {
+    url: urlApp,
+    metod: 'POST',
+    data: postData,
+    callbackSuccess: callbackXhrImgLoadSuccess
+  };
+
+  console.dir(data);
+  formTools.submit(data);
+};
 
 const addHandlers = () => {
   $('#goods-card').on('hidden.bs.modal', () => {

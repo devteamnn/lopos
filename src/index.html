@@ -1213,22 +1213,22 @@
         </div>
         <div class="modal-body">
 
-          <form id="set-stock-modal-form" name="set-stock-modal">
+          <form id="set-stock-modal-form" name="set-stock-modal" data-formName="goodsCardStockModal">
             <div class="form-group row w-50">
               <h5 class="modal-title" id="set-stock-modal-stock"></h5>
               <label class="col-sm-2 col-form-label" for="set-stock-modal-quantity">Количество</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control m-1" id="set-stock-modal-quantity" aria-describedby="set-stock-modal-quantity" placeholder="Количество">
+                <input type="text" class="form-control m-1" id="set-stock-modal-quantity" aria-describedby="set-stock-modal-quantity" placeholder="Количество" data-valid="amount" data-validLabelName="amount">
               </div>
-              <span id="set-stock-modal-quantity-valid" class="badge badge-danger w-100"></span>
+              <span id="set-stock-modal-quantity-valid" class="badge badge-danger w-100" data-validLabel="amount"></span>
             </div>
 
-            <div id="set-stock-modal-spinner" class="progress text-white mb-3 invisible">
+            <div id="set-stock-modal-spinner" class="progress text-white mb-3 invisible" data-spinner>
               <div class="progress-bar progress-bar-striped progress-bar-animated text-white font-weight-bold text-uppercase" style="width: 100%" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
 
             <button id="set-stock-modal-submit" type="submit" class="btn btn-primary w-100" disabled>Выполнить</button>
-            <button id="set-stock-modal-cancel" type="button" class="btn btn-danger w-100 mt-3" data-dismiss="modal">Отменить</button>
+            <button id="set-stock-modal-cancel" type="button" class="btn btn-danger w-100 mt-3" data-dismiss="modal" data-butCancel>Отменить</button>
           </form>
 
         </div>
