@@ -68,12 +68,10 @@ const mainMenuButtons = [
   contractorsButton,
   keywordsButton,
   groupsButton,
-<<<<<<< HEAD
-  goodsButtonStock,
-=======
+
   // goodsButtonExpress,
   // goodsButtonStock,
->>>>>>> work
+
   cardsButton,
   cardsResourcesButton,
   searchButton
