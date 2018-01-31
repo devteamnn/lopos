@@ -25,87 +25,58 @@ const productAddBtn = document.querySelector('#product-add-btn');
 const cardResourcesGroupModal = document.querySelector('#card-resources-group');
 const cardResourcesGroupModalTitle = document.querySelector('#card-resources-title');
 const cardResourcesGroupModalBody = document.querySelector('#card-resources-groups-body');
+const cardResourcesGroupModalReturnBtn = document.querySelector('#card-resources-modal-return-btn');
 
 const addResourcesModal = document.querySelector('#add-resources-modal');
 const addResourcesModalLabel = document.querySelector('#add-resources-modal-label');
 
 let loadedGoods = [];
+let loadedGroups = [];
 
 // поиск по товару внутри группы
 const cardResourcesSearchInput = document.querySelector('#card-resources-search-input');
-cardResourcesSearchInput.addEventListener('input', (evt) => {
-  console.log(evt);
-  console.log(loadedGoods);
-  let selectedData = [];
-  loadedGoods.data.forEach((item) => {
-    if (item.name.toLowerCase().indexOf(cardResourcesSearchInput.value.toLowerCase()) !== -1) {
-      selectedData.push(item);
-    }
-  });
-  console.log(selectedData);
-  drawGoods(selectedData);
-});
-
 
 const drawGoods = (data) => {
+  cardResourcesGroupModalReturnBtn.classList.remove('invisible');
+  cardResourcesSearchInput.addEventListener('input', onGoodsSearch);
+  cardResourcesSearchInput.removeEventListener('input', onGroupsSearch);
   cardResourcesGroupModalBody.innerHTML = '';
   data.forEach((item, index) => {
     cardResourcesGroupModalBody.insertAdjacentHTML('beforeend', groupsMarkup.getGoodString(item, index));
 
     cardResourcesGroupModalBody.lastChild.addEventListener('click', (evt) => {
-      console.log(evt);
 
       let currentStringElement = evt.target;
       while (!currentStringElement.dataset.goodId) {
         currentStringElement = currentStringElement.parentNode;
       }
-
       $(cardResourcesGroupModal).modal('hide');
       $(addResourcesModal).modal('show');
       addResourcesModalLabel.innerHTML = item.name;
-      // groupName.innerHTML = currentGroupName;
-
       auth.currentGoodId = currentStringElement.dataset.goodId;
-      // auth.currentGroupName = currentGroupName;
-
     });
 
   });
 };
 
-const onSuccessGroupGood = (goodsData) => {
-  console.log(goodsData);
-  loadedGoods = goodsData;
-  cardResourcesGroupModalTitle.innerHTML = `Выберите товар в группе "${auth.currentGroupName}"`;
-  cardResourcesGroupModalBody.innerHTML = `
-    <div class="catalog-header-title">
-      <button id="group-goods-return-btn" type="button" class="btn btn-success p-0 icon-btn icon-btn__return"></button>
-      <h2 id="group-name"></h2>
-    </div>`;
-  cardResourcesGroupModalBody.lastChild.addEventListener('click', getGroups);
-  drawGoods(goodsData.data);
-};
-
-$(addResourcesModal).on('hidden.bs.modal', function () {
-  $(cardResourcesGroupModal).modal('show');
-});
-
-const onSuccessGroupsLoad = (loadedGroups) => {
-
+const drawGroups = (groupsData) => {
+  console.log(groupsData);
+  cardResourcesGroupModalReturnBtn.classList.add('invisible');
+  cardResourcesSearchInput.removeEventListener('input', onGoodsSearch);
+  cardResourcesSearchInput.addEventListener('input', onGroupsSearch);
   cardResourcesGroupModalBody.innerHTML = '';
-  cardResourcesGroupModalTitle.innerHTML = 'Выберите группу';
-  loadedGroups.data.forEach((item, index) => {
+  groupsData.forEach((item, index) => {
     cardResourcesGroupModalBody.insertAdjacentHTML('beforeend', groupsMarkup.getElement(item, index));
     cardResourcesGroupModalBody.lastChild.addEventListener('click', (evt) => {
 
       let currentStringElement = evt.target;
+      cardResourcesSearchInput.value = '';
+      cardResourcesSearchInput.focus();
       while (!currentStringElement.dataset.groupId) {
         currentStringElement = currentStringElement.parentNode;
       }
 
       let currentGroupName = loadedGroups.data[currentStringElement.dataset.groupIndex].name;
-      // groupName.innerHTML = currentGroupName;
-
       auth.currentGroupId = currentStringElement.dataset.groupId;
       auth.currentGroupName = currentGroupName;
 
@@ -117,15 +88,55 @@ const onSuccessGroupsLoad = (loadedGroups) => {
       };
     });
   });
-  // cardResourcesGroupModalBody.insertAdjacentHTML('beforeend', loadedGroups.data.forEach((item, index) => groupsMarkup.getElement(item, index)));
+};
+
+const onGoodsSearch = (evt) => {
+  let selectedData = [];
+  loadedGoods.data.forEach((item) => {
+    if (item.name.toLowerCase().indexOf(cardResourcesSearchInput.value.toLowerCase()) !== -1) {
+      selectedData.push(item);
+    }
+  });
+  drawGoods(selectedData);
+};
+
+const onGroupsSearch = (evt) => {
+  let selectedData = [];
+  loadedGroups.data.forEach((item) => {
+    if (item.name.toLowerCase().indexOf(cardResourcesSearchInput.value.toLowerCase()) !== -1) {
+      selectedData.push(item);
+    }
+  });
+  drawGroups(selectedData);
+};
+
+// cardResourcesSearchInput.addEventListener('input', onGoodsSearch);
+
+const onSuccessGroupGood = (goodsData) => {
+  loadedGoods = goodsData;
+  cardResourcesGroupModalTitle.innerHTML = `Выберите товар в группе "${auth.currentGroupName}"`;
+  cardResourcesGroupModalReturnBtn.addEventListener('click', getGroups);
+  drawGoods(goodsData.data);
+};
+
+$(addResourcesModal).on('hidden.bs.modal', function () {
+  $(cardResourcesGroupModal).modal('show');
+});
+
+const onSuccessGroupsLoad = (groupsData) => {
+  loadedGroups = groupsData;
+  cardResourcesGroupModalBody.innerHTML = '';
+  cardResourcesGroupModalTitle.innerHTML = 'Выберите группу';
+  cardResourcesSearchInput.focus();
+  drawGroups(groupsData.data);
 };
 
 const getGroups = () => {
-  // groupsMarkup.cleanContainer();
-  // groupsMarkup.drawMarkupInContainer(loaderSpinnerMarkup);
+  console.log('hi');
+  groupsMarkup.cleanContainer();
   auth.currentGroupId = false;
+  cardResourcesSearchInput.value = '';
   $(cardResourcesGroupModal).modal('show');
-
 
   xhr.request = {
     metod: 'POST',
@@ -138,6 +149,7 @@ const getGroups = () => {
 
 const onResourcesAddBtn = () => {
   auth.currentCardOperation = -1;
+
   getGroups();
 };
 
@@ -197,7 +209,6 @@ const onListCardBodyClick = (evt) => {
     while (!currentStringElement.dataset.cardId) {
       currentStringElement = currentStringElement.parentNode;
     }
-
 
     let currentCardName = cardData.data[currentStringElement.dataset.cardIndex].name;
     cardName.innerHTML = currentCardName;

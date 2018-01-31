@@ -2,7 +2,7 @@ import xhr from '../tools/xhr.js';
 import auth from '../tools/storage.js';
 import keywordsUniversal from './universal-keywords.js';
 import referenceKeywords from './reference-keywords.js';
-import goodsExpress from './catalog-groups-goods-express.js';
+import goodsExpressValidityAndSend from './catalog-groups-goods-express.js';
 import stockForm from './catalog-groups-goods-stock.js';
 
 const goodsCard = document.querySelector('#goods-card');
@@ -225,16 +225,16 @@ const onExpressContainerClick = (evt) => {
       };
     } else if (currentBtnId.indexOf('custom') !== -1) {
       // $(goodsCard).modal('hide');
-      $(goodsCard).modal('toggle');
       $(expressModal).modal('show');
+      $(goodsCard).modal('toggle');
 
       expressModalLabel.innerHTML = (currentBtnId.indexOf('purchase') !== -1) ? 'Экспресс-закупка' : 'Экспресс-продажа';
       expressModalStock.innerHTML = auth.currentStockName;
       expressModalPrice.value = (currentBtnId.indexOf('purchase') !== -1) ? goodsCardPurchase.value : goodsCardSell.value;
+      expressModalQuantity.value = '';
       expressModalQuantity.focus();
       auth.expressOperationType = multiplier;
-
-      goodsExpress.start(expressModal);
+      goodsExpressValidityAndSend.start(expressModal);
     }
 
   }
@@ -245,7 +245,8 @@ expressContainer.addEventListener('click', onExpressContainerClick);
 $(expressModal).on('hidden.bs.modal', () => {
   getGood();
   $(goodsCard).modal('toggle');
-  goodsExpress.stop();
+  goodsExpressValidityAndSend.stop();
+
 });
 
 const getGood = (getGoodForCopyCb) => {
@@ -263,15 +264,14 @@ const getGood = (getGoodForCopyCb) => {
 };
 
 $(stockModal).on('hidden.bs.modal', () => {
-  stockForm.stop();
   getGood();
+  stockForm.stop();
 });
 
 $(stockModal).on('shown.bs.modal', () => {
   $(goodsCard).modal('hide');
   stockModalName.innerHTML = auth.currentStockName;
   stockModalQuantity.value = auth.currentStockQuantityT2;
-
   stockForm.start(stockModal);
 });
 
