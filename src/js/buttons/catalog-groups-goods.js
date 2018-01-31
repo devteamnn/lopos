@@ -2,6 +2,7 @@ import xhr from '../tools/xhr.js';
 import auth from '../tools/storage.js';
 import keywordsUniversal from './universal-keywords.js';
 import referenceKeywords from './reference-keywords.js';
+import goodsExpress from './catalog-groups-goods-express.js';
 
 const goodsCard = document.querySelector('#goods-card');
 
@@ -221,14 +222,16 @@ const onExpressContainerClick = (evt) => {
       };
     } else if (currentBtnId.indexOf('custom') !== -1) {
       // $(goodsCard).modal('hide');
-      $(expressModal).modal('show');
       $(goodsCard).modal('toggle');
+      $(expressModal).modal('show');
 
       expressModalLabel.innerHTML = (currentBtnId.indexOf('purchase') !== -1) ? 'Экспресс-закупка' : 'Экспресс-продажа';
       expressModalStock.innerHTML = auth.currentStockName;
       expressModalPrice.value = (currentBtnId.indexOf('purchase') !== -1) ? goodsCardPurchase.value : goodsCardSell.value;
       expressModalQuantity.focus();
       auth.expressOperationType = multiplier;
+
+      // goodsExpress.start(expressModal);
     }
 
   }
@@ -239,6 +242,7 @@ expressContainer.addEventListener('click', onExpressContainerClick);
 $(expressModal).on('hidden.bs.modal', () => {
   getGood();
   $(goodsCard).modal('toggle');
+  goodsExpress.stop();
 });
 
 const getGood = (getGoodForCopyCb) => {

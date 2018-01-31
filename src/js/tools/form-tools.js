@@ -48,7 +48,7 @@ let validCallback;
 let elSaveValues;
 
 const showAlert = (el) => {
-  if (el.type === 'text') {
+  if (el.dataset.valid) {
     el.classList.add('border');
     el.classList.add('border-danger');
     form.querySelector(`*[data-validLabel="${el.dataset.validlabelname}"]`).innerHTML =
@@ -57,7 +57,7 @@ const showAlert = (el) => {
 };
 
 const hideAlert = (el) => {
-  if (el.type === 'text') {
+  if (el.dataset.valid) {
     el.classList.remove('border');
     el.classList.remove('border-danger');
     form.querySelector(`*[data-validLabel="${el.dataset.validlabelname}"]`).innerHTML = '';

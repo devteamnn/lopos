@@ -144,7 +144,11 @@ const calcPrice = (evt) => {
 const imgChangeHandler = (evt) => {
   const stor = dataStorage.data;
 
-  let postData = `token=${stor.token}&good=16&file=${img.value}`;
+  // let postData = `token=${stor.token}&good=16&file=${img.files[0]}`;
+  let postData = new FormData();
+  postData.append('token', stor.token);
+  postData.append('good', dataStorage.currentGoodId);
+  postData.append('file', img.files[0]);
   let urlApp = appUrl3.replace('{{dir}}', stor.directory);
 
   let data = {
