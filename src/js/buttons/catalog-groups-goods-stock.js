@@ -1,38 +1,65 @@
-// Экспресс-операция БЕЗ ВАЛИДАЦИИ
+import dataStorage from './../tools/storage.js';
+import markup from './../markup/tools.js';
+import formTools from './../tools/form-tools.js';
 
-import xhr from '../tools/xhr.js';
-import auth from '../tools/storage.js';
+let appUrl = window.appSettings.formExpressOperation.UrlApi;
+let messages = window.appSettings.formExpressOperation.message;
 
-const setStockModal = document.querySelector('#set-stock-modal');
-const setStockModalQuantity = document.querySelector('#set-stock-modal-quantity');
-const setStockModalSubmit = document.querySelector('#set-stock-modal-submit');
-const setStockModalForm = document.querySelector('#set-stock-modal-form');
+let form;
+let amount;
+let modal;
 
-const onSuccessSetStockExecute = (answer) => {
-  $(setStockModal).modal('hide');
+const callbackXhrSuccess = (response) => {
+  switch (response.status) {
+  case 200:
+    $(modal).modal('hide');
+    break;
+  case 400:
+    markup.informationtModal = {
+      'title': 'Error',
+      'messages': messages.mes400
+    };
+    break;
+  case 271:
+    markup.informationtModal = {
+      'title': 'Error',
+      'messages': response.messages
+    };
+    break;
+  }
 };
 
-const onStockModalSubmit = (evt) => {
-  evt.preventDefault();
-  xhr.request = {
+const submitForm = () => {
+  const stor = dataStorage.data;
+  let value = amount.value * Number(dataStorage.expressOperationType);
+
+  let postData = `token=${stor.token}&value=${value}`;
+  let urlApp = appUrl.replace('{{dir}}', stor.directory);
+  urlApp = urlApp.replace('{{oper}}', stor.operatorId);
+  urlApp = urlApp.replace('{{busId}}', stor.currentBusiness);
+  urlApp = urlApp.replace('{{goodId}}', dataStorage.currentGoodId);
+  urlApp = urlApp.replace('{{stockId}}', dataStorage.currentStockId);
+
+  formTools.submit({
+    url: urlApp,
     metod: 'POST',
-    url: `lopos_directory/${auth.data.directory}/operator/1/business/${auth.data.currentBusiness}/good/${auth.currentGoodId}/stock/${auth.currentStockId}/current_count`,
-    data: `value=${setStockModalQuantity.value}&token=${auth.data.token}`,
-    callbackSuccess: onSuccessSetStockExecute,
-  };
-};
-
-const start = () => {
-  setStockModalSubmit.removeAttribute('disabled');
-  setStockModalForm.addEventListener('submit', onStockModalSubmit);
-};
-
-const stop = () => {
-  setStockModalSubmit.addAttribute('disabled', 'disabled');
-  setStockModalForm.addEventListener('submit', onStockModalSubmit);
+    data: postData,
+    callbackSuccess: callbackXhrSuccess
+  });
 };
 
 export default {
-  start,
-  stop
+  start(remModal) {
+    modal = remModal;
+    form = modal.querySelector('*[data-formName]');
+    amount = form.querySelector('*[data-valid="amount"]');
+
+    appUrl = window.appSettings[form.dataset.formname].UrlApi;
+    messages = window.appSettings[form.dataset.formname].message;
+
+    formTools.work(form, submitForm);
+  },
+  stop() {
+    formTools.reset();
+  }
 };

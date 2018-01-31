@@ -281,4 +281,16 @@ window.appSettings = {
     }
   },
 
+  'goodsCardStockModal': {
+    'UrlApi': '/lopos_directory/{{dir}}/operator/{{oper}}/business/{{busId}}/good/{{goodId}}/stock/{{stockId}}/current_count',
+    'validPatterns': {
+      'amount': /^\d+$/,
+    },
+    'validMessage': {
+      'amount': 'поле минимум 1 цифра',
+    },
+    'messages': {
+      'mes400': 'Некорректный запрос'
+    }
+  }
 };

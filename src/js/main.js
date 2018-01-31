@@ -22,7 +22,7 @@ import cardsButton from './buttons/catalog-groups-cards.js';
 import searchButton from './buttons/catalog-search.js';
 // import goodsButtonExpress from './buttons/catalog-groups-goods-express.js';
 // Отправка без валидации
-import goodsButtonStock from './buttons/catalog-groups-goods-stock.js';
+// import goodsButtonStock from './buttons/catalog-groups-goods-stock.js';
 import cardsResourcesButton from './buttons/catalog-groups-cards-resource-add.js';
 
 
@@ -70,7 +70,7 @@ const mainMenuButtons = [
   keywordsButton,
   groupsButton,
   // goodsButtonExpress,
-  goodsButtonStock,
+  // goodsButtonStock,
   cardsButton,
   cardsResourcesButton,
   searchButton

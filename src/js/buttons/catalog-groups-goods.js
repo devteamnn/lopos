@@ -3,6 +3,8 @@ import auth from '../tools/storage.js';
 import keywordsUniversal from './universal-keywords.js';
 import referenceKeywords from './reference-keywords.js';
 import goodsExpress from './catalog-groups-goods-express.js';
+import stockForm from './catalog-groups-goods-stock.js';
+
 
 const goodsCard = document.querySelector('#goods-card');
 
@@ -231,7 +233,7 @@ const onExpressContainerClick = (evt) => {
       expressModalQuantity.focus();
       auth.expressOperationType = multiplier;
 
-      // goodsExpress.start(expressModal);
+      goodsExpress.start(expressModal);
     }
 
   }
@@ -260,6 +262,7 @@ const getGood = (getGoodForCopyCb) => {
 };
 
 $(stockModal).on('hidden.bs.modal', () => {
+  stockForm.stop();
   getGood();
 });
 
@@ -267,6 +270,7 @@ $(stockModal).on('shown.bs.modal', () => {
   $(goodsCard).modal('hide');
   stockModalName.innerHTML = auth.currentStockName;
   stockModalQuantity.value = auth.currentStockQuantityT2;
+  stockForm.start(stockModal);
 });
 
 
