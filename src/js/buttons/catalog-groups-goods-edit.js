@@ -17,7 +17,7 @@ const groupId = form.querySelector('#goods-card-group');
 
 const img = form.querySelector('#goods-card-image-upload');
 
-const PriceBlock = form.querySelector('#goods-card-price-block');
+const priceBlock = form.querySelector('#goods-card-price-block');
 const purchase = form.querySelector('#goods-card-price-purchase');
 const sell = form.querySelector('#goods-card-price-sell');
 const percent = form.querySelector('#goods-card-price-extra');
@@ -172,10 +172,21 @@ const addHandlers = () => {
     percent.innerHTML = calcPr();
   });
 
-  PriceBlock.addEventListener('change', calcPrice);
+  priceBlock.addEventListener('change', calcPrice);
   img.addEventListener('change', imgChangeHandler);
 };
 
 export default {
   start: addHandlers
+  // start() {
+  //   percent.innerHTML = calcPr();
+  //   formTools.work(form, submitForm);
+
+  //   priceBlock.addEventListener('change', calcPrice);
+  //   img.addEventListener('change', imgChangeHandler);
+  // },
+
+  // stop() {
+  //   formTools.reset();
+  // }
 };
