@@ -29,18 +29,27 @@ const cardResourcesGroupModalBody = document.querySelector('#card-resources-grou
 const addResourcesModal = document.querySelector('#add-resources-modal');
 const addResourcesModalLabel = document.querySelector('#add-resources-modal-label');
 
+let loadedGoods = [];
 
-const onSuccessGroupGood = (goodsData) => {
-  console.log(goodsData);
-  cardResourcesGroupModalTitle.innerHTML = `Выберите товар в группе "${auth.currentGroupName}"`;
-  cardResourcesGroupModalBody.innerHTML = `
-    <div class="catalog-header-title">
-      <button id="group-goods-return-btn" type="button" class="btn btn-success p-0 icon-btn icon-btn__return"></button>
-        <h2 id="group-name"></h2>
-      </div>`;
-  cardResourcesGroupModalBody.lastChild.addEventListener('click', getGroups);
+// поиск по товару внутри группы
+const cardResourcesSearchInput = document.querySelector('#card-resources-search-input');
+cardResourcesSearchInput.addEventListener('input', (evt) => {
+  console.log(evt);
+  console.log(loadedGoods);
+  let selectedData = [];
+  loadedGoods.data.forEach((item) => {
+    if (item.name.toLowerCase().indexOf(cardResourcesSearchInput.value.toLowerCase()) !== -1) {
+      selectedData.push(item);
+    }
+  });
+  console.log(selectedData);
+  drawGoods(selectedData);
+});
 
-  goodsData.data.forEach((item, index) => {
+
+const drawGoods = (data) => {
+  cardResourcesGroupModalBody.innerHTML = '';
+  data.forEach((item, index) => {
     cardResourcesGroupModalBody.insertAdjacentHTML('beforeend', groupsMarkup.getGoodString(item, index));
 
     cardResourcesGroupModalBody.lastChild.addEventListener('click', (evt) => {
@@ -62,7 +71,19 @@ const onSuccessGroupGood = (goodsData) => {
     });
 
   });
+};
 
+const onSuccessGroupGood = (goodsData) => {
+  console.log(goodsData);
+  loadedGoods = goodsData;
+  cardResourcesGroupModalTitle.innerHTML = `Выберите товар в группе "${auth.currentGroupName}"`;
+  cardResourcesGroupModalBody.innerHTML = `
+    <div class="catalog-header-title">
+      <button id="group-goods-return-btn" type="button" class="btn btn-success p-0 icon-btn icon-btn__return"></button>
+      <h2 id="group-name"></h2>
+    </div>`;
+  cardResourcesGroupModalBody.lastChild.addEventListener('click', getGroups);
+  drawGoods(goodsData.data);
 };
 
 $(addResourcesModal).on('hidden.bs.modal', function () {

@@ -77,6 +77,18 @@ const getFullSearch = () => {
   };
 };
 
+const onSuccessKeywordSearch = (keywordSearchData) => {
+  console.log(keywordSearchData);
+  if (keywordSearchData.status === 271) {
+    listSearchBody.innerHTML = 'Ключевые слова: ' + keywordSearchData.message;
+    getFullSearch();
+  } else {
+    listSearchBody.innerHTML = '';
+    drawResult(keywordSearchData.data);
+    fullSearch = keywordSearchData;
+    listSearchInput.value = '';
+  }
+};
 
 let selectedKeywords = [];
 
@@ -89,7 +101,7 @@ listSearchKeywordsModalSubmit.addEventListener('click', () => {
     metod: 'POST',
     url: `lopos_directory/${auth.data.directory}/operator/1/business/${auth.data.currentBusiness}/good_search`,
     data: `token=${auth.data.token}&tags=[${selectedKeywords}]`,
-    callbackSuccess: onSuccessFullSearchLoad,
+    callbackSuccess: onSuccessKeywordSearch,
   };
 });
 

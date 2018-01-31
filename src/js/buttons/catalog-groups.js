@@ -48,6 +48,27 @@ let loadedData = [];
 let loadedGoods = [];
 let currentGroupName = '';
 
+
+const goodsCardSearch = document.querySelector('#list-groups-goods-search-input');
+goodsCardSearch.addEventListener('input', (evt) => {
+  console.log(evt);
+  console.log(loadedGoods);
+  let loadedGoodsBackup = loadedGoods.data.slice(0);
+  let selectedData = [];
+  loadedGoods.data.forEach((item) => {
+    if (item.name.toLowerCase().indexOf(goodsCardSearch.value.toLowerCase()) !== -1) {
+      selectedData.push(item);
+    }
+  });
+  loadedGoods.data = selectedData;
+  console.log(loadedGoods);
+  drawGoods();
+  loadedGoods.data = loadedGoodsBackup;
+  // groupsMarkup.cleanContainer();
+  // groupsMarkup.drawDataInContainer(selectedData);
+
+});
+
 listGroupSearchInput.addEventListener('input', (evt) => {
   console.log(evt);
   let selectedData = [];
@@ -192,7 +213,7 @@ const fillCopyCard = (loadedGoodData) => {
   listGroupGoodsAddModalDescribe.value = description;
   listGroupGoodsAddModalPurchase.value = +purchasePrice;
   listGroupGoodsAddModalSell.value = +sellingPrice;
-  listGroupGoodsAddModalExtra.value = (+sellingPrice - +purchasePrice) * +purchasePrice / 100;
+  listGroupGoodsAddModalExtra.value = ((+sellingPrice - +purchasePrice) / (+purchasePrice / 100)).toFixed(2);
   listGroupGoodsAddModalBarcode.value = barcode;
 };
 
@@ -230,8 +251,10 @@ listGroupGoodsCardCopyBtn.addEventListener('click', onListGroupGoodsCardCopyBtn)
 const drawGoods = () => {
   if (auth.goodsViewMode === 'string') {
     groupsMarkup.drawGoodsTable(loadedGoods.data);
+    groupGoodsViewBtn.classList.remove('icon-btn__view-tiles');
   } else if (auth.goodsViewMode === 'metro') {
     groupsMarkup.drawGoodsMetro(loadedGoods.data);
+    groupGoodsViewBtn.classList.add('icon-btn__view-tiles');
   }
 };
 
@@ -281,9 +304,12 @@ const onGroupGoodsViewBtnClick = () => {
   if (auth.goodsViewMode === 'string') {
     groupsMarkup.drawGoodsMetro(loadedGoods.data);
     auth.goodsViewMode = 'metro';
+    groupGoodsViewBtn.classList.add('icon-btn__view-tiles');
+
   } else if (auth.goodsViewMode === 'metro') {
     groupsMarkup.drawGoodsTable(loadedGoods.data);
     auth.goodsViewMode = 'string';
+    groupGoodsViewBtn.classList.remove('icon-btn__view-tiles');
   }
 };
 

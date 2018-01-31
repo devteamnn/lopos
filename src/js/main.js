@@ -16,11 +16,10 @@ import keywordsButtonEdit from './buttons/reference-keywords-edit.js';
 import groupsButton from './buttons/catalog-groups.js';
 import groupsButtonFormAdd from './buttons/catalog-groups-add.js';
 import groupsButtonFormEdit from './buttons/catalog-groups-edit.js';
-import goodsButtonFormAdd from './buttons/catalog-groups-goods-add.js';
-import goodsButtonFormEdit from './buttons/catalog-groups-goods-edit.js';
+import goodsButtonFormEdit from './buttons/catalog-groups-goods-add.js';
 import cardsButton from './buttons/catalog-groups-cards.js';
 import searchButton from './buttons/catalog-search.js';
-import goodsButtonExpress from './buttons/catalog-groups-goods-express.js';
+// import goodsButtonExpress from './buttons/catalog-groups-goods-express.js';
 // Отправка без валидации
 import goodsButtonStock from './buttons/catalog-groups-goods-stock.js';
 import cardsResourcesButton from './buttons/catalog-groups-cards-resource-add.js';
@@ -69,7 +68,6 @@ const mainMenuButtons = [
   contractorsButton,
   keywordsButton,
   groupsButton,
-  goodsButtonExpress,
   goodsButtonStock,
   cardsButton,
   cardsResourcesButton,
@@ -91,9 +89,7 @@ const start = () => {
     keywordsButtonAdd.start();
     keywordsButtonEdit.start();
     groupsButtonFormAdd.start();
-    groupsButtonFormAdd.start();
     groupsButtonFormEdit.start();
-    goodsButtonFormAdd.start();
     goodsButtonFormEdit.start();
   } else {
     showLoginHideApp();

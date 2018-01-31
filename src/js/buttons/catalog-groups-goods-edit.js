@@ -2,86 +2,29 @@ import dataStorage from './../tools/storage.js';
 import markup from './../markup/tools.js';
 import catalogGroupsGoods from './catalog-groups-goods.js';
 import formTools from './../tools/form-tools.js';
-import tools from './../tools/tools.js';
 
-const appUrl1 = window.appSettings.formEditGoods.UrlApi1;
-const appUrl2 = window.appSettings.formEditGoods.UrlApi2;
-const appUrl3 = window.appSettings.formEditGoods.UrlApi3;
-const messages = window.appSettings.formEditGoods.message;
+const appUrl = window.appSettings.formAddGoods.UrlApi;
+const messages = window.appSettings.formAddGoods.message;
 
-const form = document.querySelector('#goods-card-form');
+const form = document.querySelector('#group-goods-add-form');
 
-const name = form.querySelector('#goods-card-name');
-const describe = form.querySelector('#goods-card-describe');
-const groupId = form.querySelector('#goods-card-group');
-
-const img = form.querySelector('#goods-card-image-upload');
-
-const PriceBlock = form.querySelector('#goods-card-price-block');
-const purchase = form.querySelector('#goods-card-price-purchase');
-const sell = form.querySelector('#goods-card-price-sell');
-const precent = form.querySelector('#goods-card-price-total');
-
-const barcode = form.querySelector('#goods-card-barcode');
+const name = form.querySelector('#group-goods-name');
+const describe = form.querySelector('#group-goods-describe');
+// const priceGroup = form.querySelector('#group-goods-price');
+const purchase = form.querySelector('#group-goods-price-purchase');
+// const extra = form.querySelector('#group-goods-price-extra');
+const sell = form.querySelector('#group-goods-price-sell');
+const barcode = form.querySelector('#group-goods-barcode');
 
 const callbackXhrSuccess = (response) => {
-  console.log('callbackXhr1');
-  console.dir(response);
 
   formTools.reset();
-  $('#goods-card').modal('hide');
+  // $('#group-goods-add').modal('hide');
 
   switch (response.status) {
   case 200:
-    catalogGroupsGoods.fill();
+    catalogGroupsGoods.redraw();
     break;
-  case 400:
-    markup.informationtModal = {
-      'title': 'Error',
-      'messages': messages.mes400
-    };
-    break;
-  case 271:
-    markup.informationtModal = {
-      'title': 'Error',
-      'messages': response.messages
-    };
-    break;
-  }
-};
-
-const callbackXhrSuccess2 = (response) => {
-  console.log('callbackXhr2');
-  console.dir(response);
-
-  formTools.reset();
-  $('#goods-card').modal('hide');
-
-  switch (response.status) {
-  case 200:
-    catalogGroupsGoods.fill();
-    break;
-  case 400:
-    markup.informationtModal = {
-      'title': 'Error',
-      'messages': messages.mes400
-    };
-    break;
-  case 271:
-    markup.informationtModal = {
-      'title': 'Error',
-      'messages': response.messages
-    };
-    break;
-  }
-};
-
-const callbackXhrImgLoadSuccess = (response) => {
-  console.log('callbackXhr2');
-  console.dir(response);
-
-  switch (response.status) {
-  case 200:console.log('img load - ok'); break;
   case 400:
     markup.informationtModal = {
       'title': 'Error',
@@ -99,64 +42,20 @@ const callbackXhrImgLoadSuccess = (response) => {
 
 const submitForm = () => {
   const stor = dataStorage.data;
+  const groupId = dataStorage.currentGroupId;
 
-  let postData = `token=${stor.token}&name=${name.value}&description=${describe.value}&group=${groupId.value}&barcode=${barcode.value}`;
-  let urlApp = appUrl1.replace('{{dir}}', stor.directory);
+  let postData = `token=${stor.token}&name=${name.value}&description=${describe.value}&purchase_price=${purchase.value}&selling_price=${sell.value}&group=${groupId}&barcode=${barcode.value}`;
+  let urlApp = appUrl.replace('{{dir}}', stor.directory);
   urlApp = urlApp.replace('{{oper}}', stor.operatorId);
   urlApp = urlApp.replace('{{busId}}', stor.currentBusiness);
-  urlApp = urlApp.replace('{{goodId}}', dataStorage.currentGoodId);
-
-  formTools.submit({
-    url: urlApp,
-    metod: 'PUT',
-    data: postData,
-    callbackSuccess: callbackXhrSuccess
-  });
-
-  postData = `token=${stor.token}&purchase_price=${purchase.value}&selling_price=${sell.value}`;
-  urlApp = appUrl2.replace('{{dir}}', stor.directory);
-  urlApp = urlApp.replace('{{oper}}', stor.operatorId);
-  urlApp = urlApp.replace('{{busId}}', stor.currentBusiness);
-  urlApp = urlApp.replace('{{goodId}}', dataStorage.currentGoodId);
 
   formTools.submit({
     url: urlApp,
     metod: 'POST',
     data: postData,
-    callbackSuccess: callbackXhrSuccess2
   });
 };
 
-const calcPr = () => {
-  return tools.calcPercent(purchase.value, sell.value) + '%';
-};
-
-const calcPrice = (evt) => {
-  if (!evt.target.type === 'text') {
-    return false;
-  }
-  if (formTools.validElement(evt.target)) {
-    precent.innerHTML = calcPr();
-  }
-  return true;
-};
-
-const imgChangeHandler = (evt) => {
-  const stor = dataStorage.data;
-
-  let postData = `token=${stor.token}&good=16&file=${img.value}`;
-  let urlApp = appUrl3.replace('{{dir}}', stor.directory);
-
-  let data = {
-    url: urlApp,
-    metod: 'POST',
-    data: postData,
-    callbackSuccess: callbackXhrImgLoadSuccess
-  };
-
-  console.dir(data);
-  formTools.submit(data);
-};
 
 const addHandlers = () => {
   $('#goods-card').on('hidden.bs.modal', () => {
@@ -164,12 +63,8 @@ const addHandlers = () => {
   });
 
   $('#goods-card').on('shown.bs.modal', () => {
-    formTools.work(form, submitForm);
-    precent.innerHTML = calcPr();
+    formTools.work(form, submitForm, callbackXhrSuccess);
   });
-
-  PriceBlock.addEventListener('change', calcPrice);
-  img.addEventListener('change', imgChangeHandler);
 };
 
 export default {

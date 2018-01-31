@@ -320,7 +320,7 @@
               </div>
             </div>
             <div id="list-groups-search" class="catalog-header">
-              <input id="list-groups-search-input" type="text" placeholder="поискъ">
+              <input id="list-groups-search-input" type="text" placeholder="поиск в группах">
             </div>
             <div id="list-groups-card-body" class="groups-card-block"></div>
           </div>
@@ -339,6 +339,9 @@
                 <button id="group-goods-sort-btn" type="button" class="btn btn-success p-0 icon-btn icon-btn__sort" data-toggle="modal" data-target="#group-goods-sort"></button>
 
               </div>
+            </div>
+            <div id="list-groups-goods-search" class="catalog-header">
+              <input id="list-groups-goods-search-input" type="text" placeholder="поиск в товарах">
             </div>
             <div id="group-goods-card-body"></div>
           </div>
@@ -1041,7 +1044,7 @@
 
           <div class="modal-header">
             <div class="form-group goods-card-name">
-              <input type="text" class="form-control" id="goods-card-name" aria-describedby="goods-card-name" placeholder="Название" data-valid="name" data-validLabelName="name">
+              <input type="text" class="form-control" id="goods-card-name" aria-describedby="goods-card-name" placeholder="Название">
               <span id="goods-card-name-valid" class="badge badge-danger w-100" data-validLabel="name"></span>
             </div>
             <button id="goods-card-close" type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -1085,11 +1088,14 @@
             </div>
 
             <div class="goods-card-string">
-              <div class="goods-card-first-row" id="goods-card-price-block">
-                <h4 id="goods-card-price-total" class="text-danger">Здесь будет цена %%</h4>
+              <div class="goods-card-first-row">
+                <div class="price-total">
+                  <h4>Цена</h4>
+                  <h4 id="goods-card-price-extra" class="text-danger"></h4>
+                </div>
                 <input type="text" class="form-control" id="goods-card-price-purchase" aria-describedby="goods-card-price" placeholder="Наценка" data-valid="purchase" data-validLabelName="goodPrice">
                 <input type="text" class="form-control" id="goods-card-price-sell" aria-describedby="goods-card-price" placeholder="Цена" data-valid="price" data-validLabelName="goodPrice">
-                <span id="goods-card-price-valid" class="badge badge-danger w-100" data-validLabel="goodPrice"></span>
+                <span id="goods-card-price-valid" class="badge badge-danger w-100"></span>
               </div>
 
               <div id="express-container" class="express-container goods-card-second-row">
@@ -1148,7 +1154,7 @@
 
             <div class="goods-card-btns-container">
               <button id="goods-card-submit" type="submit" class="btn btn-primary" disabled>Изменить</button>
-              <button id="goods-card-cancel" type="button" class="btn btn-danger" data-dismiss="modal" data-butCancel>Отменить</button>
+              <button id="goods-card-cancel" type="button" class="btn btn-danger" data-dismiss="modal">Отменить</button>
             </div>
           </div>
         </form>
@@ -1312,6 +1318,9 @@
           <button id="card-resources-group-close" type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
+        </div>
+        <div id="card-resources-search">
+          <input id="card-resources-search-input" type="text" placeholder="поиск в ресурсах">
         </div>
         <div id="card-resources-groups-body"></div>
         <div class="modal-footer">

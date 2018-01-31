@@ -1,24 +1,19 @@
 import dataStorage from './../tools/storage.js';
 import markup from './../markup/tools.js';
-import catalogGroupsGoods from './catalog-groups-goods.js';
 import formTools from './../tools/form-tools.js';
 
 const appUrl = window.appSettings.formExpressOperation.UrlApi;
 const messages = window.appSettings.formExpressOperation.message;
 
-const form = document.querySelector('#express-modal-form');
-
-const price = form.querySelector('#express-modal-price');
-const amount = form.querySelector('#express-modal-quantity');
+let form;
+let price;
+let amount;
+let modal;
 
 const callbackXhrSuccess = (response) => {
-
-  formTools.reset();
-  $('#express-modal').modal('hide');
-
   switch (response.status) {
-  case 200:
-    catalogGroupsGoods.fill();
+  case 270:
+    $(modal).modal('hide');
     break;
   case 400:
     markup.informationtModal = {
@@ -54,17 +49,16 @@ const submitForm = () => {
   });
 };
 
-const addHandlers = () => {
-  $('#express-modal').on('hidden.bs.modal', () => {
-    formTools.reset();
-  });
-
-  $('#express-modal').on('shown.bs.modal', () => {
-    formTools.work(form, submitForm);
-  });
-
-};
-
 export default {
-  start: addHandlers
+  start(remModal) {
+    modal = remModal;
+    form = modal.querySelector('*[data-formName]');
+    price = form.querySelector('*[data-valid="price"]');
+    amount = form.querySelector('*[data-valid="amount"]');
+
+    formTools.work(form, submitForm);
+  },
+  stop() {
+    formTools.reset();
+  }
 };

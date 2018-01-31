@@ -244,7 +244,6 @@ window.appSettings = {
   'formEditGoods': {
     'UrlApi1': '/lopos_directory/{{dir}}/operator/{{oper}}/business/{{busId}}/good/{{goodId}}',
     'UrlApi2': '/lopos_directory/{{dir}}/operator/{{oper}}/business/{{busId}}/good/{{goodId}}/price',
-    'UrlApi3': '/lopos_directory/{{dir}}/upload_img/',
     'validPatterns': {
       'name': /^[а-яёА-ЯЁA-Za-z\s\d]+$/,
       'describe': /^[а-яёА-ЯЁA-Za-z\s\d]*$/,
