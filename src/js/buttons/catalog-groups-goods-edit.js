@@ -162,31 +162,33 @@ const imgChangeHandler = (evt) => {
   formTools.submit(data);
 };
 
-const addHandlers = () => {
-  $('#goods-card').on('hidden.bs.modal', () => {
-    formTools.reset();
-  });
+// const addHandlers = () => {
+//   $('#goods-card').on('hidden.bs.modal', () => {
+//     formTools.reset();
+//   });
 
-  $('#goods-card').on('shown.bs.modal', () => {
-    formTools.work(form, submitForm);
-    percent.innerHTML = calcPr();
-  });
+//   $('#goods-card').on('shown.bs.modal', () => {
+//     formTools.work(form, submitForm);
+//     percent.innerHTML = calcPr();
+//   });
 
-  priceBlock.addEventListener('change', calcPrice);
-  img.addEventListener('change', imgChangeHandler);
-};
+//   priceBlock.addEventListener('change', calcPrice);
+//   img.addEventListener('change', imgChangeHandler);
+// };
 
 export default {
-  start: addHandlers
-  // start() {
-  //   percent.innerHTML = calcPr();
-  //   formTools.work(form, submitForm);
+  // start: addHandlers
+  start() {
+    percent.innerHTML = calcPr();
+    formTools.work(form, submitForm);
 
-  //   priceBlock.addEventListener('change', calcPrice);
-  //   img.addEventListener('change', imgChangeHandler);
-  // },
+    priceBlock.addEventListener('change', calcPrice);
+    img.addEventListener('change', imgChangeHandler);
+  },
 
-  // stop() {
-  //   formTools.reset();
-  // }
+  stop() {
+    formTools.reset();
+  },
+
+  removeHandlers: formTools.removeHandlers
 };

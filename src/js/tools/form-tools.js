@@ -180,6 +180,7 @@ export default {
 
   work: addHandlersFunc,
   reset: formReset,
+  removeHandlers: delHandlers,
   validElement: valEl,
   submit: submitForm
 };

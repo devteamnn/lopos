@@ -4,6 +4,7 @@ import keywordsUniversal from './universal-keywords.js';
 import referenceKeywords from './reference-keywords.js';
 import goodsExpressValidityAndSend from './catalog-groups-goods-express.js';
 import stockForm from './catalog-groups-goods-stock.js';
+import goodFormEdit from './catalog-groups-goods-edit.js';
 
 const goodsCard = document.querySelector('#goods-card');
 
@@ -172,6 +173,7 @@ const keywordModificator = (keywordId, keywordNode) => {
 $(goodsCardKeywordsModal).on('shown.bs.modal', () => {
   keywordsUniversal.downloadAndDraw(goodsCardKeywordsBody, onKeywordClick, keywordModificator);
   $(goodsCard).modal('hide');
+  goodFormEdit.removeHandlers();
 });
 
 $(goodsCardKeywordsModal).on('hidden.bs.modal', () => {
@@ -228,6 +230,8 @@ const onExpressContainerClick = (evt) => {
       $(expressModal).modal('show');
       $(goodsCard).modal('toggle');
 
+      goodFormEdit.removeHandlers();
+
       expressModalLabel.innerHTML = (currentBtnId.indexOf('purchase') !== -1) ? 'Экспресс-закупка' : 'Экспресс-продажа';
       expressModalStock.innerHTML = auth.currentStockName;
       expressModalPrice.value = (currentBtnId.indexOf('purchase') !== -1) ? goodsCardPurchase.value : goodsCardSell.value;
@@ -246,6 +250,7 @@ $(expressModal).on('hidden.bs.modal', () => {
   getGood();
   $(goodsCard).modal('toggle');
   goodsExpressValidityAndSend.stop();
+  goodFormEdit.start();
 
 });
 
@@ -253,6 +258,7 @@ const getGood = (getGoodForCopyCb) => {
   if (!getGoodForCopyCb) {
     $(goodsCard).modal('show');
     goodsStock.innerHTML = '';
+    goodFormEdit.start();
   }
 
   xhr.request = {
@@ -270,6 +276,9 @@ $(stockModal).on('hidden.bs.modal', () => {
 
 $(stockModal).on('shown.bs.modal', () => {
   $(goodsCard).modal('hide');
+
+  goodFormEdit.removeHandlers();
+
   stockModalName.innerHTML = auth.currentStockName;
   stockModalQuantity.value = auth.currentStockQuantityT2;
 
