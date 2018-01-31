@@ -264,14 +264,15 @@ const getGood = (getGoodForCopyCb) => {
 };
 
 $(stockModal).on('hidden.bs.modal', () => {
-  getGood();
   stockForm.stop();
+  getGood();
 });
 
 $(stockModal).on('shown.bs.modal', () => {
   $(goodsCard).modal('hide');
   stockModalName.innerHTML = auth.currentStockName;
   stockModalQuantity.value = auth.currentStockQuantityT2;
+
   stockForm.start(stockModal);
 });
 
