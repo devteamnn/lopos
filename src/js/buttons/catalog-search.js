@@ -82,6 +82,7 @@ const onSuccessKeywordSearch = (keywordSearchData) => {
   if (keywordSearchData.status === 271) {
     listSearchBody.innerHTML = 'Ключевые слова: ' + keywordSearchData.message;
     getFullSearch();
+    listSearchInput.value = '';
   } else {
     listSearchBody.innerHTML = '';
     drawResult(keywordSearchData.data);

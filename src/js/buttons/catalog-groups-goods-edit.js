@@ -20,7 +20,7 @@ const img = form.querySelector('#goods-card-image-upload');
 const PriceBlock = form.querySelector('#goods-card-price-block');
 const purchase = form.querySelector('#goods-card-price-purchase');
 const sell = form.querySelector('#goods-card-price-sell');
-const precent = form.querySelector('#goods-card-price-total');
+const percent = form.querySelector('#goods-card-price-extra');
 
 const barcode = form.querySelector('#goods-card-barcode');
 
@@ -136,7 +136,7 @@ const calcPrice = (evt) => {
     return false;
   }
   if (formTools.validElement(evt.target)) {
-    precent.innerHTML = calcPr();
+    percent.innerHTML = calcPr();
   }
   return true;
 };
@@ -169,7 +169,7 @@ const addHandlers = () => {
 
   $('#goods-card').on('shown.bs.modal', () => {
     formTools.work(form, submitForm);
-    precent.innerHTML = calcPr();
+    percent.innerHTML = calcPr();
   });
 
   PriceBlock.addEventListener('change', calcPrice);

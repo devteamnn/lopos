@@ -31,7 +31,7 @@ const callbackXhrSuccess = (response) => {
 
 const submitForm = () => {
   const stor = dataStorage.data;
-  let value = amount.value * Number(dataStorage.expressOperationType);
+  let value = amount.value;
 
   let postData = `token=${stor.token}&value=${value}`;
   let urlApp = appUrl.replace('{{dir}}', stor.directory);
