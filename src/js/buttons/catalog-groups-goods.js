@@ -2,6 +2,7 @@ import xhr from '../tools/xhr.js';
 import auth from '../tools/storage.js';
 import keywordsUniversal from './universal-keywords.js';
 import referenceKeywords from './reference-keywords.js';
+import goodsExpress from './catalog-groups-goods-express.js';
 
 const goodsCard = document.querySelector('#goods-card');
 
@@ -10,10 +11,11 @@ const goodsCardDescribe = document.querySelector('#goods-card-describe');
 const goodsCardBarcode = document.querySelector('#goods-card-barcode');
 const goodsCardGroup = document.querySelector('#goods-card-group');
 
-const goodsCardPurchase = document.querySelector('#goods-card-price-purchase');
 const goodsCardImage = document.querySelector('#goods-card-image');
 const goodsCardImageUpload = document.querySelector('#goods-card-image-upload');
+const goodsCardPurchase = document.querySelector('#goods-card-price-purchase');
 const goodsCardSell = document.querySelector('#goods-card-price-sell');
+const goodsCardExtra = document.querySelector('#goods-card-price-extra');
 const goodsStock = document.querySelector('#goods-stock-body');
 const goodsKeywords = document.querySelector('#goods-keywords');
 const goodsCardKeywordsModal = document.querySelector('#goods-card-keywords');
@@ -53,6 +55,7 @@ const onSuccessGoodsLoad = (loadedGood) => {
   goodsCardBarcode.value = barcode;
   goodsCardPurchase.value = purchasePrice;
   goodsCardSell.value = sellingPrice;
+  goodsCardExtra.innerHTML = ((+sellingPrice - +purchasePrice) / (+purchasePrice / 100)).toFixed(2) + '%';
 
   goodTags = (tags) ? tags : [];
 
@@ -229,6 +232,7 @@ const onExpressContainerClick = (evt) => {
       expressModalPrice.value = (currentBtnId.indexOf('purchase') !== -1) ? goodsCardPurchase.value : goodsCardSell.value;
       expressModalQuantity.focus();
       auth.expressOperationType = multiplier;
+      goodsExpress.start(expressModal);
     }
 
   }

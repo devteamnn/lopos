@@ -44,6 +44,10 @@
   line-height: 300px;
   text-align: center;
 }
+.price-total {
+  display: flex;
+  justify-content: space-between;
+}
 
 .goods-card-img img {
   // display: block;
