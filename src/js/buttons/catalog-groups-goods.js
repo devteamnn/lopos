@@ -2,10 +2,11 @@ import xhr from '../tools/xhr.js';
 import auth from '../tools/storage.js';
 import keywordsUniversal from './universal-keywords.js';
 import referenceKeywords from './reference-keywords.js';
-import goodsExpressValidityAndSend from './catalog-groups-goods-express.js';
-import stockForm from './catalog-groups-goods-stock.js';
+// import goodsExpressValidityAndSend from './catalog-groups-goods-express.js';
+// import stockForm from './catalog-groups-goods-stock.js';
 
 const goodsCard = document.querySelector('#goods-card');
+// const goodsCardForm = document.querySelector('#goods-card-form');
 
 const goodsCardName = document.querySelector('#goods-card-name');
 const goodsCardDescribe = document.querySelector('#goods-card-describe');
@@ -33,6 +34,25 @@ const stockModalName = document.querySelector('#set-stock-modal-stock');
 const stockModalQuantity = document.querySelector('#set-stock-modal-quantity');
 
 let goodTags = [];
+let formSave = {};
+
+const saveForm = () => {
+  formSave = {
+    name: goodsCardName.value,
+    describe: goodsCardDescribe.value,
+    barcode: goodsCardBarcode.value,
+    group: goodsCardGroup.value,
+  };
+};
+
+const restoreForm = () => {
+  if (formSave.name) {
+    goodsCardName.value = formSave.name;
+    goodsCardDescribe.value = formSave.describe;
+    goodsCardBarcode.value = formSave.barcode;
+    goodsCardGroup.value = formSave.group;
+  }
+};
 
 const onSuccessGoodsLoad = (loadedGood) => {
   console.log(loadedGood);
@@ -83,7 +103,6 @@ const onSuccessGoodsLoad = (loadedGood) => {
       } else {
         checkedStock = auth.currentStockId;
       }
-      console.log('draw stocks');
       return `
       <input type="radio" id="stock-${item.id}" name="stock" value="email" class="d-none">
       <label style="padding-left: 34px;" for="stock-${item.id}"  class="d-flex justify-content-between align-items-center reference-string" data-stock-id="${item.id}" data-stock-name="${item.name}" data-stock-t2="${item.values[2][0]}">
@@ -126,6 +145,8 @@ const onSuccessGoodsLoad = (loadedGood) => {
   keywordsUniversal.downloadAndDraw(goodsCardKeywordsBody, onKeywordClick, keywordModificator);
 
   const onGoodKeywordClick = (evt) => {
+    auth.isGoodCardEdit = true;
+    saveForm();
     const returnHandler = (e) => {
       // $('#list-keywords-list').tab('hide');
       getGood();
@@ -145,6 +166,11 @@ const onSuccessGoodsLoad = (loadedGood) => {
   } else {
     goodsKeywords.innerHTML = 'Ключевых слов нет';
   }
+  console.log('fillForm');
+  if (auth.isGoodCardEdit === 'true') {
+    restoreForm();
+  }
+  auth.isGoodCardEdit = false;
 
 };
 
@@ -170,6 +196,8 @@ const keywordModificator = (keywordId, keywordNode) => {
 
 
 $(goodsCardKeywordsModal).on('shown.bs.modal', () => {
+  auth.isGoodCardEdit = true;
+  saveForm();
   keywordsUniversal.downloadAndDraw(goodsCardKeywordsBody, onKeywordClick, keywordModificator);
   $(goodsCard).modal('hide');
 });
@@ -188,7 +216,6 @@ let currentExpressBtn = '';
 
 const onSuccessExpressExecute = (answer) => {
   console.log(answer);
-  currentExpressBtn.removeAttribute('disabled');
   $(currentExpressBtn).popover({
     content: answer.message,
     placement: 'top'
@@ -196,9 +223,9 @@ const onSuccessExpressExecute = (answer) => {
   getGood();
   window.setTimeout(function () {
     $(currentExpressBtn).popover('dispose');
+    expressContainer.querySelectorAll('BUTTON').forEach((btn) => btn.removeAttribute('disabled', 'disabled'));
   }, 1000);
 };
-
 const onExpressContainerClick = (evt) => {
   let multiplier = null;
   let value = null;
@@ -212,11 +239,8 @@ const onExpressContainerClick = (evt) => {
     value = (currentBtnId.indexOf('express-operation') !== -1) ? Number(currentBtnId.split('-')[3]) * multiplier : '';
     currentExpressBtn = evt.target;
 
-    console.log(`lopos_directory/${auth.data.directory}/operator/1/business/${auth.data.currentBusiness}/good/${auth.currentGoodId}/stock/${auth.currentStockId}/express`);
-    console.log(`value=${value}&price=${price}&token=${auth.data.token}`);
-
     if (currentBtnId.indexOf('operation') !== -1) {
-      currentExpressBtn.setAttribute('disabled', 'disabled');
+      expressContainer.querySelectorAll('BUTTON').forEach((btn) => btn.setAttribute('disabled', 'disabled'));
       xhr.request = {
         metod: 'POST',
         url: `lopos_directory/${auth.data.directory}/operator/1/business/${auth.data.currentBusiness}/good/${auth.currentGoodId}/stock/${auth.currentStockId}/express`,
@@ -226,7 +250,11 @@ const onExpressContainerClick = (evt) => {
     } else if (currentBtnId.indexOf('custom') !== -1) {
       // $(goodsCard).modal('hide');
       $(expressModal).modal('show');
+
+
+      console.log(formSave);
       $(goodsCard).modal('toggle');
+
 
       expressModalLabel.innerHTML = (currentBtnId.indexOf('purchase') !== -1) ? 'Экспресс-закупка' : 'Экспресс-продажа';
       expressModalStock.innerHTML = auth.currentStockName;
@@ -234,8 +262,10 @@ const onExpressContainerClick = (evt) => {
       expressModalQuantity.value = '';
       expressModalQuantity.focus();
       auth.expressOperationType = multiplier;
-      goodsExpressValidityAndSend.start(expressModal);
+      // goodsExpressValidityAndSend.start(expressModal);
     }
+    auth.isGoodCardEdit = true;
+    saveForm();
 
   }
 };
@@ -243,28 +273,28 @@ const onExpressContainerClick = (evt) => {
 expressContainer.addEventListener('click', onExpressContainerClick);
 
 $(expressModal).on('hidden.bs.modal', () => {
+  console.log(formSave);
   getGood();
   $(goodsCard).modal('toggle');
-  goodsExpressValidityAndSend.stop();
+
+  // goodsExpressValidityAndSend.stop();
 
 });
 
-const getGood = (getGoodForCopyCb) => {
-  if (!getGoodForCopyCb) {
-    $(goodsCard).modal('show');
-    goodsStock.innerHTML = '';
-  }
+const getGood = () => {
+  $(goodsCard).modal('show');
+  goodsStock.innerHTML = '';
 
   xhr.request = {
     metod: 'POST',
     url: `lopos_directory/${auth.data.directory}/operator/1/business/${auth.data.currentBusiness}/good/${auth.currentGoodId}/card_info`,
     data: `view_last=0&token=${auth.data.token}`,
-    callbackSuccess: getGoodForCopyCb || onSuccessGoodsLoad,
+    callbackSuccess: onSuccessGoodsLoad,
   };
 };
 
 $(stockModal).on('hidden.bs.modal', () => {
-  stockForm.stop();
+  // stockForm.stop();
   getGood();
 });
 
@@ -272,8 +302,10 @@ $(stockModal).on('shown.bs.modal', () => {
   $(goodsCard).modal('hide');
   stockModalName.innerHTML = auth.currentStockName;
   stockModalQuantity.value = auth.currentStockQuantityT2;
+  auth.isGoodCardEdit = true;
+  saveForm();
 
-  stockForm.start(stockModal);
+  // stockForm.start(stockModal);
 });
 
 

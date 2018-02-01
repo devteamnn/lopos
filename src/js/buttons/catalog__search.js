@@ -120,7 +120,6 @@ listSearchKeywordsBtn.addEventListener('click', () => {
   keywordsUniversal.downloadAndDraw(listSearchKeywordsModalBody, onKeywordClick, keywordModificator);
   $(listSearchKeywordsModal).modal('show');
   listSearchKeywordsResetBtn.removeAttribute('disabled');
-  // keywordsUniversal.draw(listSearchBody);
 });
 
 listSearchKeywordsResetBtn.addEventListener('click', () => {

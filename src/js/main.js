@@ -18,10 +18,10 @@ import groupsButtonFormAdd from './buttons/catalog-groups-add.js';
 import groupsButtonFormEdit from './buttons/catalog-groups-edit.js';
 import goodsButtonFormAdd from './buttons/catalog-groups-goods-add.js';
 import goodsButtonFormEdit from './buttons/catalog-groups-goods-edit.js';
-import cardsButton from './buttons/catalog-groups-cards.js';
-import searchButton from './buttons/catalog-search.js';
+import cardsButton from './buttons/catalog__cards.js';
+import searchButton from './buttons/catalog__search.js';
 // Отправка без валидации
-import cardsResourcesButton from './buttons/catalog-groups-cards-resource-add.js';
+import cardsResourcesButton from './buttons/catalog__cards--add-resource.js';
 
 console.log('ver: 3D1');
 console.log('ver: 3A4');

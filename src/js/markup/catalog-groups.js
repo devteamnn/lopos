@@ -13,7 +13,7 @@ export default {
     // ${currentEnterpriseFlag}
     console.log(item, index);
     return `
-    <div class="d-flex justify-content-between align-items-center reference-string" data-group-id="${item.id}" data-group-index="${index}" data-group-level="${item.level}">
+    <div class="d-flex justify-content-between align-items-center reference-string" data-group-id="${item.id}" data-group-index="${index}" data-group-level="${item.level}" data-group-name="${item.name}">
       <div style="padding-left: 34px;">
         <span class="reference-row-number">${index + 1}</span> ||
         <span>${item.name}</span> ||

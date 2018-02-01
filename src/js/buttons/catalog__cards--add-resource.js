@@ -2,7 +2,7 @@
 
 import xhr from '../tools/xhr.js';
 import auth from '../tools/storage.js';
-import cardsButton from './catalog-groups-cards.js';
+import cardsButton from './catalog__cards.js';
 
 const addResourcesModal = document.querySelector('#add-resources-modal');
 const addResourcesModalForm = document.querySelector('#add-resources-modal-form');
