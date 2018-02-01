@@ -214,4 +214,12 @@ export default {
     return sessionStorage.getItem('currentCardOperation');
   },
 
+  set isGoodCardEdit(flag) {
+    sessionStorage.setItem('isGoodCardEdit', flag);
+  },
+
+  get isGoodCardEdit() {
+    return sessionStorage.getItem('isGoodCardEdit');
+  },
+
 };

@@ -2,6 +2,8 @@ import xhr from '../tools/xhr.js';
 import auth from '../tools/storage.js';
 import groupsMarkup from '../markup/catalog-groups.js';
 import toolsMarkup from '../markup/tools.js';
+import groupsDelete from './catalog-groups--delete.js';
+import groupsEdit from './catalog-groups--edit.js';
 import goodsCard from './catalog-groups-goods.js';
 
 const listGroups = document.querySelector('#list-groups-list');
@@ -20,8 +22,6 @@ const listGroupsCard = document.querySelector('#list-groups-card');
 const listGroupsCardBody = document.querySelector('#list-groups-card-body');
 const listGroupsCardCheckMessage = document.querySelector('#list-groups-header-check-message');
 const listGroupsGoodsCardCheckMessage = document.querySelector('#list-groups-goods-header-check-message');
-const groupsEditForm = document.querySelector('#groups-edit');
-const groupsEditName = document.querySelector('#groups-edit-name');
 const groupGoodsCard = document.querySelector('#group-goods-card');
 const groupGoodsReturnBtn = document.querySelector('#group-goods-return-btn');
 const groupGoodsViewBtn = document.querySelector('#group-goods-view-btn');
@@ -34,10 +34,8 @@ const goodsSortAbcUpBtn = document.querySelector('#group-goods-sort-abc-up');
 const goodsSortAbcDownBtn = document.querySelector('#group-goods-sort-abc-down');
 const goodsSortTailingsUpBtn = document.querySelector('#group-goods-sort-tailings-up');
 const goodsSortTailingsDownBtn = document.querySelector('#group-goods-sort-tailings-down');
-
 const groupGoodsCardBody = document.querySelector('#group-goods-card-body');
 
-const listGroupSearchInput = document.querySelector('#list-groups-search-input');
 
 const SELECT_DELAY = 2000;
 
@@ -48,29 +46,9 @@ let loadedData = [];
 let loadedGoods = [];
 let currentGroupName = '';
 
-
-const goodsCardSearch = document.querySelector('#list-groups-goods-search-input');
-goodsCardSearch.addEventListener('input', (evt) => {
-  console.log(evt);
-  console.log(loadedGoods);
-  let loadedGoodsBackup = loadedGoods.data.slice(0);
-  let selectedData = [];
-  loadedGoods.data.forEach((item) => {
-    if (item.name.toLowerCase().indexOf(goodsCardSearch.value.toLowerCase()) !== -1) {
-      selectedData.push(item);
-    }
-  });
-  loadedGoods.data = selectedData;
-  console.log(loadedGoods);
-  drawGoods();
-  loadedGoods.data = loadedGoodsBackup;
-  // groupsMarkup.cleanContainer();
-  // groupsMarkup.drawDataInContainer(selectedData);
-
-});
-
+// поиск по группам
+const listGroupSearchInput = document.querySelector('#list-groups-search-input');
 listGroupSearchInput.addEventListener('input', (evt) => {
-  console.log(evt);
   let selectedData = [];
   loadedData.data.forEach((item) => {
     if (item.name.toLowerCase().indexOf(listGroupSearchInput.value.toLowerCase()) !== -1) {
@@ -79,126 +57,45 @@ listGroupSearchInput.addEventListener('input', (evt) => {
   });
   groupsMarkup.cleanContainer();
   groupsMarkup.drawDataInContainer(selectedData);
-
 });
 
-const onSuccessGroupDelete = (answer) => {
+// поиск по товарам
+const goodsCardSearch = document.querySelector('#list-groups-goods-search-input');
+goodsCardSearch.addEventListener('input', (evt) => {
+  let loadedGoodsBackup = loadedGoods.data.slice(0);
+  let selectedData = [];
+  loadedGoods.data.forEach((item) => {
+    if (item.name.toLowerCase().indexOf(goodsCardSearch.value.toLowerCase()) !== -1) {
+      selectedData.push(item);
+    }
+  });
+  loadedGoods.data = selectedData;
+  drawGoods();
+  loadedGoods.data = loadedGoodsBackup;
+});
 
-  // onListEnterprisesCardReturnBtn();
-  console.log(answer);
-  let message = '';
+// обработчики кликов редактирования/удаления
+const onEditDeleteClick = (evt) => {
+  let currentHandler = (evt.target === listGroupsCardEditBtn) ? groupsEdit.handler : groupsDelete.handler;
 
-  if (answer.status === 271) {
-    message = answer.message + ', удалить никак невозможно-с';
-  } else {
-    message = 'Группа успешно удалена';
-    getGroups();
-  }
-
-  toolsMarkup.informationtModal = {
-    title: 'Уведомление',
-    message
-  };
-
-};
-
-const setRequestToDeleteGroup = (groupNumber) => {
-  console.log(`lopos_directory/${auth.data.directory}/operator/1/business/${auth.data.currentBusiness}/group/${groupNumber}`);
-  xhr.request = {
-    metod: 'DELETE',
-    url: `lopos_directory/${auth.data.directory}/operator/1/business/${auth.data.currentBusiness}/group/${groupNumber}`,
-    data: `token=${auth.data.token}`,
-    callbackSuccess: onSuccessGroupDelete,
-  };
-};
-
-
-const onListGroupsCardBodyClickEdit = (evt) => {
-  console.log(evt.target);
-  let currentStringElement = evt.target;
-  while (!currentStringElement.dataset.groupIndex) {
-    currentStringElement = currentStringElement.parentNode;
-  }
-  $(groupsEditForm).modal('show');
-  groupsEditName.value = loadedData.data[currentStringElement.dataset.groupIndex].name;
-
-  auth.currentGroupId = loadedData.data[currentStringElement.dataset.groupIndex].id;
-  auth.currentGroupName = loadedData.data[currentStringElement.dataset.groupIndex].name;
-};
-
-const onListGroupsCardBodyClickRemove = (evt, clickedAction) => {
-  console.log(evt.target);
-  let currentStringElement = evt.target;
-  while (!currentStringElement.dataset.groupIndex) {
-    currentStringElement = currentStringElement.parentNode;
-  }
-  console.log(currentStringElement.dataset.groupIndex);
-  console.log(currentStringElement.dataset.groupLevel);
-  auth.currentGroupId = loadedData.data[currentStringElement.dataset.groupIndex].id;
-
-  if (+currentStringElement.dataset.groupLevel >= 9000) {
-    toolsMarkup.informationtModal = {
-      title: 'Уведомление',
-      message: '<b>NO! IT\'S OVER NINE THOUSAAAAAND!!!</b>'
-    };
-  } else {
-    toolsMarkup.actionRequestModal = {
-      title: 'Удаление',
-      message: `Вы точно хотите удалить группу <b>${loadedData.data[currentStringElement.dataset.groupIndex].name}</b>?`,
-      submitCallback: setRequestToDeleteGroup.bind(null, currentStringElement.dataset.groupId)
-    };
-  }
-
-  groupsEditName.value = loadedData.data[currentStringElement.dataset.groupIndex].name;
-};
-
-
-const onSuccessGroupsLoad = (loadedGroups) => {
-  console.log(loadedGroups);
-  loadedData = loadedGroups;
-  document.querySelector(`#${loaderSpinnerId}`).remove();
-  groupsMarkup.drawDataInContainer(loadedGroups.data);
-};
-
-const getGroups = () => {
-  groupsMarkup.cleanContainer();
-  groupsMarkup.drawMarkupInContainer(loaderSpinnerMarkup);
-  auth.currentGroupId = false;
-
-
-  xhr.request = {
-    metod: 'POST',
-    url: `lopos_directory/${auth.data.directory}/operator/1/business/${auth.data.currentBusiness}/group`,
-    data: `view_last=0&token=${auth.data.token}`,
-    callbackSuccess: onSuccessGroupsLoad,
-  };
-};
-
-const onListGroupsCardEditBtnClick = (evt) => {
   listGroupsCardCheckMessage.innerHTML = 'Выберите группу';
   listGroupsCardBody.removeEventListener('click', onListGroupsCardBodyClick);
-  listGroupsCardBody.addEventListener('click', onListGroupsCardBodyClickEdit);
-  window.setTimeout(function () {
-    listGroupsCardCheckMessage.innerHTML = '';
-    listGroupsCardBody.addEventListener('click', onListGroupsCardBodyClick);
-    listGroupsCardBody.removeEventListener('click', onListGroupsCardBodyClickEdit);
-  }, SELECT_DELAY);
-};
-
-const onListGroupsCardDeleteBtnClick = (evt) => {
-
-  listGroupsCardBody.removeEventListener('click', onListGroupsCardBodyClick);
-  listGroupsCardCheckMessage.innerHTML = 'Выберите группу';
-  listGroupsCardBody.addEventListener('click', onListGroupsCardBodyClickRemove);
+  listGroupsCardBody.addEventListener('click', currentHandler);
 
   window.setTimeout(function () {
     listGroupsCardCheckMessage.innerHTML = '';
     listGroupsCardBody.addEventListener('click', onListGroupsCardBodyClick);
-    listGroupsCardBody.removeEventListener('click', onListGroupsCardBodyClickRemove);
+    listGroupsCardBody.removeEventListener('click', currentHandler);
 
   }, SELECT_DELAY);
 };
+listGroupsCardEditBtn.addEventListener('click', onEditDeleteClick);
+listGroupsCardDeleteBtn.addEventListener('click', onEditDeleteClick);
 
+
+// РАБОТА С ТОВАРАМИ
+
+// заполнение карточки копирования товара
 const fillCopyCard = (loadedGoodData) => {
   let {
     name,
@@ -224,7 +121,13 @@ const onListGroupGoodsCardCopy = (evt) => {
     currentStringElement = currentStringElement.parentNode;
   }
   auth.currentGoodId = currentStringElement.dataset.goodId;
-  goodsCard.fill(fillCopyCard);
+
+  xhr.request = {
+    metod: 'POST',
+    url: `lopos_directory/${auth.data.directory}/operator/1/business/${auth.data.currentBusiness}/good/${auth.currentGoodId}/card_info`,
+    data: `view_last=0&token=${auth.data.token}`,
+    callbackSuccess: fillCopyCard,
+  };
 };
 
 const onListGroupGoodsCardCopyBtn = (evt) => {
@@ -240,14 +143,16 @@ const onListGroupGoodsCardCopyBtn = (evt) => {
     groupGoodsCardBody.removeEventListener('click', onListGroupGoodsCardCopy);
   }, SELECT_DELAY);
 };
+
 listGroupsCardAddBtn.addEventListener('click', () => {
   groupGoodsAddSubmitBtn.innerHTML = 'Создание';
   groupGoodsAddLabel.innerHTML = 'Создание товара';
 });
-listGroupsCardEditBtn.addEventListener('click', onListGroupsCardEditBtnClick);
-listGroupsCardDeleteBtn.addEventListener('click', onListGroupsCardDeleteBtnClick);
+
+
 listGroupGoodsCardCopyBtn.addEventListener('click', onListGroupGoodsCardCopyBtn);
 
+// отрисовка товаров (данные через замыкание)
 const drawGoods = () => {
   if (auth.goodsViewMode === 'string') {
     groupsMarkup.drawGoodsTable(loadedGoods.data);
@@ -258,8 +163,22 @@ const drawGoods = () => {
   }
 };
 
+// переключение режимов отрисовки товаров
+const onGroupGoodsViewBtnClick = () => {
+  if (auth.goodsViewMode === 'string') {
+    groupsMarkup.drawGoodsMetro(loadedGoods.data);
+    auth.goodsViewMode = 'metro';
+    groupGoodsViewBtn.classList.add('icon-btn__view-tiles');
+
+  } else if (auth.goodsViewMode === 'metro') {
+    groupsMarkup.drawGoodsTable(loadedGoods.data);
+    auth.goodsViewMode = 'string';
+    groupGoodsViewBtn.classList.remove('icon-btn__view-tiles');
+  }
+};
+groupGoodsViewBtn.addEventListener('click', onGroupGoodsViewBtnClick);
+
 const onSuccessGroupGood = (goodsData) => {
-  console.log(goodsData);
   loadedGoods = goodsData;
   if (auth.goodsSortMode && loadedGoods.data) {
     goodsSortMode[auth.goodsSortMode]();
@@ -300,24 +219,11 @@ const onGroupGoodsReturnBtnClick = () => {
   listGroupsCard.classList.remove('d-none');
 };
 
-const onGroupGoodsViewBtnClick = () => {
-  if (auth.goodsViewMode === 'string') {
-    groupsMarkup.drawGoodsMetro(loadedGoods.data);
-    auth.goodsViewMode = 'metro';
-    groupGoodsViewBtn.classList.add('icon-btn__view-tiles');
-
-  } else if (auth.goodsViewMode === 'metro') {
-    groupsMarkup.drawGoodsTable(loadedGoods.data);
-    auth.goodsViewMode = 'string';
-    groupGoodsViewBtn.classList.remove('icon-btn__view-tiles');
-  }
-};
-
 listGroupsCardBody.addEventListener('click', onListGroupsCardBodyClick);
 groupGoodsReturnBtn.addEventListener('click', onGroupGoodsReturnBtnClick);
 
-groupGoodsViewBtn.addEventListener('click', onGroupGoodsViewBtnClick);
 
+// сортировка товаров
 const onGoodsSortAbcUpBtn = () => {
   loadedGoods.data.sort((a, b) => (a.name > b.name) ? 1 : -1);
   drawGoods();
@@ -346,7 +252,6 @@ const onGoodsSortTailingsDownBtn = () => {
   auth.goodsSortMode = 'sortTailingsDown';
 };
 
-
 goodsSortAbcUpBtn.addEventListener('click', onGoodsSortAbcUpBtn);
 goodsSortAbcDownBtn.addEventListener('click', onGoodsSortAbcDownBtn);
 goodsSortTailingsUpBtn.addEventListener('click', onGoodsSortTailingsUpBtn);
@@ -366,6 +271,28 @@ const onGroupGoodsCardBodyClick = (evt) => {
   }
   auth.currentGoodId = currentStringElement.dataset.goodId;
   goodsCard.fill();
+};
+
+
+// РАБОТА С ГРУППАМИ
+const onSuccessGroupsLoad = (loadedGroups) => {
+  loadedData = loadedGroups;
+  document.querySelector(`#${loaderSpinnerId}`).remove();
+  groupsMarkup.drawDataInContainer(loadedGroups.data);
+};
+
+const getGroups = () => {
+  groupsMarkup.cleanContainer();
+  groupsMarkup.drawMarkupInContainer(loaderSpinnerMarkup);
+  auth.currentGroupId = false;
+
+
+  xhr.request = {
+    metod: 'POST',
+    url: `lopos_directory/${auth.data.directory}/operator/1/business/${auth.data.currentBusiness}/group`,
+    data: `view_last=0&token=${auth.data.token}`,
+    callbackSuccess: onSuccessGroupsLoad,
+  };
 };
 
 groupGoodsCardBody.addEventListener('click', onGroupGoodsCardBodyClick);
