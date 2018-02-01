@@ -16,10 +16,6 @@ let keywordHandler = null;
 // модификатор отображения при отрисовке ключевого слова
 let keywordModificator = null;
 
-// теги, которые приходят с каждым товаром, с ними мы сравниваем весь список клюслов
-// let goodTags = [];
-
-
 // установка прозрачности
 const setKeywordModificator = (keywordId, keywordNode) => {
   if (keywordModificator) {
@@ -60,7 +56,6 @@ const onSuccessKeywordsLoad = (loadedKeywords) => {
 const getKeywords = (containerToDraw, handler, modificator) => {
 
   container = containerToDraw;
-  console.log(container);
   keywordHandler = handler;
   keywordModificator = modificator;
   container.innerHTML = loaderSpinnerMarkup;

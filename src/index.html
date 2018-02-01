@@ -288,6 +288,7 @@
               </div>
               <div>
                 <form id="list-search-form" action="">
+                  <button id="list-search-card-barcode-btn" type="button" class="btn btn-danger m-2 p-2">|||</button>
                   <input id="list-search-input" type="text" placeholder="">
                   <button id="list-search-btn" type="submit" class="btn btn-success">Искать</button>
                 </form>
@@ -295,7 +296,6 @@
               <div class="catalog-header-buttons">
                 <button id="list-search-keywords-btn" type="button" class="btn btn-danger m-2 p-2">Ключевое слово</button>
                 <button id="list-search-card-reset-btn" type="button" class="btn btn-danger m-2 p-2" disabled> Х </button>
-                <button id="list-search-card-barcode-btn" type="button" class="btn btn-danger m-2 p-2">|||</button>
               </div>
             </div>
             <div id="list-search-card-body" class="groups-card-block"></div>
@@ -1388,7 +1388,7 @@
           <form id="universal-add-form" name="universal-add">
             <div class="form-group">
               <label id="universal-add-name-label" for="universal-add-name"></label>
-              <input type="text" class="form-control" id="universal-add-name" aria-describedby="universal-add-name" placeholder="">
+              <input type="text" class="form-control" id="universal-add-name" aria-describedby="universal-add-name" placeholder="" autofocus>
               <span id="universal-add-valid" class="badge badge-danger w-100"></span>
             </div>
 

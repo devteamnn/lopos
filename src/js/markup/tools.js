@@ -67,6 +67,9 @@ export default {
     };
 
     $(modalUniversalAdd).modal('show');
+    $(modalUniversalAdd).on('shown.bs.modal', function () {
+      $('#universal-add-name').trigger('focus');
+    });
     modalUniversalAddLabel.innerHTML = setup.title;
     modalUniversalAddNameLabel.innerHTML = setup.inputLabel;
     modalUniversalAddName.setAttribute('placeholder', setup.inputPlaceholder);

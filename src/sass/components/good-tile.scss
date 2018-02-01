@@ -5,16 +5,19 @@
 }
 
 .goods-tile-card {
-  width: 160px;
-  height: 160px;
+  width: 150px;
+  height: 150px;
   margin: 10px;
-  border: none;
   border: 1px solid gray;
   border-radius: 20px;
 }
 
 .goods-tile-card img {
   border-radius: 20px;
+  object-fit: cover;
+  margin: 0;
+  width: 148px;
+  height: 148px;
 }
 
 .goods-tile-title {
