@@ -267,7 +267,7 @@ const onExpressContainerClick = (evt) => {
       expressModalQuantity.value = '';
       expressModalQuantity.focus();
       auth.expressOperationType = multiplier;
-      // goodsExpressValidityAndSend.start(expressModal);
+      goodsExpressValidityAndSend.start(expressModal);
     }
     auth.isGoodCardEdit = true;
     saveForm();
@@ -284,7 +284,7 @@ $(expressModal).on('hidden.bs.modal', () => {
   $(goodsCard).modal('toggle');
   goodFormEdit.start(goodsCard);
 
-  // goodsExpressValidityAndSend.stop();
+  goodsExpressValidityAndSend.stop();
 
 });
 
@@ -302,7 +302,7 @@ const getGood = () => {
 };
 
 $(stockModal).on('hidden.bs.modal', () => {
-  // stockForm.stop();
+  stockForm.stop();
   getGood();
 });
 
@@ -316,7 +316,7 @@ $(stockModal).on('shown.bs.modal', () => {
   auth.isGoodCardEdit = true;
   saveForm();
 
-  // stockForm.start(stockModal);
+  stockForm.start(stockModal);
 });
 
 
