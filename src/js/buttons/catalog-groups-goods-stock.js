@@ -9,6 +9,16 @@ let form;
 let amount;
 let modal;
 
+const initVar = (remModal) => {
+  modal = remModal;
+  form = modal.querySelector('*[data-formName]');
+  amount = form.querySelector('*[data-valid="amount"]');
+
+  appUrl = window.appSettings[form.dataset.formname].UrlApi;
+  messages = window.appSettings[form.dataset.formname].message;
+
+};
+
 const callbackXhrSuccess = (response) => {
   switch (response.status) {
   case 200:
@@ -50,14 +60,9 @@ const submitForm = () => {
 
 export default {
   start(remModal) {
-    modal = remModal;
-    form = modal.querySelector('*[data-formName]');
-    amount = form.querySelector('*[data-valid="amount"]');
+    initVar(remModal);
 
-    appUrl = window.appSettings[form.dataset.formname].UrlApi;
-    messages = window.appSettings[form.dataset.formname].message;
-
-    formTools.work(form, submitForm);
+    formTools.work(modal, submitForm);
   },
   stop() {
     formTools.reset();

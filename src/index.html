@@ -1044,10 +1044,10 @@
 
           <div class="modal-header">
             <div class="form-group goods-card-name">
-              <input type="text" class="form-control" id="goods-card-name" aria-describedby="goods-card-name" placeholder="Название">
+              <input type="text" class="form-control" id="goods-card-name" aria-describedby="goods-card-name" placeholder="Название" data-valid="name" data-validLabelName="name">
               <span id="goods-card-name-valid" class="badge badge-danger w-100" data-validLabel="name"></span>
             </div>
-            <button id="goods-card-close" type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button id="goods-card-close" type="button" class="close" data-dismiss="modal" aria-label="Close" data-cancel>
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -1095,7 +1095,7 @@
                 </div>
                 <input type="text" class="form-control" id="goods-card-price-purchase" aria-describedby="goods-card-price" placeholder="Наценка" data-valid="purchase" data-validLabelName="goodPrice">
                 <input type="text" class="form-control" id="goods-card-price-sell" aria-describedby="goods-card-price" placeholder="Цена" data-valid="price" data-validLabelName="goodPrice">
-                <span id="goods-card-price-valid" class="badge badge-danger w-100"></span>
+                <span id="goods-card-price-valid" class="badge badge-danger w-100" data-validLabel="goodPrice"></span>
               </div>
 
               <div id="express-container" class="express-container goods-card-second-row">
@@ -1154,7 +1154,7 @@
 
             <div class="goods-card-btns-container">
               <button id="goods-card-submit" type="submit" class="btn btn-primary" disabled>Изменить</button>
-              <button id="goods-card-cancel" type="button" class="btn btn-danger" data-dismiss="modal" data-butCancel>Отменить</button>
+              <button id="goods-card-cancel" type="button" class="btn btn-danger" data-dismiss="modal" data-butCancel data-cancel>Отменить</button>
             </div>
           </div>
         </form>
@@ -1166,15 +1166,14 @@
   <div class="modal" id="express-modal" tabindex="-1" role="dialog" aria-labelledby="express-modal" aria-hidden="true">
     <div class="modal-dialog" style="width: 300px;" role="document">
       <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="express-modal-label"></h5>
-          <button id="express-modal-close" type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        </div>
-        <div class="modal-body">
-
-          <form id="express-modal-form" name="express-modal" data-formName="formExpressOperation">
+        <form id="express-modal-form" name="express-modal" data-formName="formExpressOperation">
+          <div class="modal-header">
+            <h5 class="modal-title" id="express-modal-label"></h5>
+            <button id="express-modal-close" type="button" class="close" data-dismiss="modal" aria-label="Close" data-cancel>
+            <span aria-hidden="true">&times;</span>
+          </button>
+          </div>
+          <div class="modal-body">
             <div class="form-group row w-50">
               <h5 class="modal-title" id="express-modal-stock"></h5>
               <label class="col-sm-2 col-form-label" for="express-modal-price">Цена</label>
@@ -1194,7 +1193,7 @@
             </div>
 
             <button id="express-modal-submit" type="submit" class="btn btn-primary w-100" disabled>Выполнить</button>
-            <button id="express-modal-cancel" type="button" class="btn btn-danger w-100 mt-3" data-dismiss="modal" data-butCancel>Отменить</button>
+            <button id="express-modal-cancel" type="button" class="btn btn-danger w-100 mt-3" data-dismiss="modal" data-butCancel data-cancel>Отменить</button>
           </form>
 
         </div>

@@ -2,13 +2,24 @@ import dataStorage from './../tools/storage.js';
 import markup from './../markup/tools.js';
 import formTools from './../tools/form-tools.js';
 
-const appUrl = window.appSettings.formExpressOperation.UrlApi;
-const messages = window.appSettings.formExpressOperation.message;
+let appUrl;
+let messages;
 
 let form;
 let price;
 let amount;
 let modal;
+
+const initVar = (remModal) => {
+  modal = remModal;
+  form = modal.querySelector('*[data-formName]');
+  price = form.querySelector('*[data-valid="price"]');
+  amount = form.querySelector('*[data-valid="amount"]');
+
+  appUrl = window.appSettings[form.dataset.formname].UrlApi;
+  messages = window.appSettings[form.dataset.formname].message;
+
+};
 
 const callbackXhrSuccess = (response) => {
   switch (response.status) {
@@ -51,12 +62,8 @@ const submitForm = () => {
 
 export default {
   start(remModal) {
-    modal = remModal;
-    form = modal.querySelector('*[data-formName]');
-    price = form.querySelector('*[data-valid="price"]');
-    amount = form.querySelector('*[data-valid="amount"]');
-
-    formTools.work(form, submitForm);
+    initVar(remModal);
+    formTools.work(modal, submitForm);
   },
   stop() {
     formTools.reset();

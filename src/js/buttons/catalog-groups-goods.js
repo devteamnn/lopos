@@ -2,8 +2,11 @@ import xhr from '../tools/xhr.js';
 import auth from '../tools/storage.js';
 import keywordsUniversal from './universal-keywords.js';
 import referenceKeywords from './reference-keywords.js';
-// import goodsExpressValidityAndSend from './catalog-groups-goods-express.js';
-// import stockForm from './catalog-groups-goods-stock.js';
+
+import goodsExpressValidityAndSend from './catalog-groups-goods-express.js';
+import stockForm from './catalog-groups-goods-stock.js';
+import goodFormEdit from './catalog-groups-goods-edit.js';
+
 
 const goodsCard = document.querySelector('#goods-card');
 // const goodsCardForm = document.querySelector('#goods-card-form');
@@ -200,6 +203,7 @@ $(goodsCardKeywordsModal).on('shown.bs.modal', () => {
   saveForm();
   keywordsUniversal.downloadAndDraw(goodsCardKeywordsBody, onKeywordClick, keywordModificator);
   $(goodsCard).modal('hide');
+  goodFormEdit.removeHandlers();
 });
 
 $(goodsCardKeywordsModal).on('hidden.bs.modal', () => {
@@ -255,6 +259,7 @@ const onExpressContainerClick = (evt) => {
       console.log(formSave);
       $(goodsCard).modal('toggle');
 
+      goodFormEdit.removeHandlers();
 
       expressModalLabel.innerHTML = (currentBtnId.indexOf('purchase') !== -1) ? 'Экспресс-закупка' : 'Экспресс-продажа';
       expressModalStock.innerHTML = auth.currentStockName;
@@ -274,8 +279,10 @@ expressContainer.addEventListener('click', onExpressContainerClick);
 
 $(expressModal).on('hidden.bs.modal', () => {
   console.log(formSave);
+  goodsExpressValidityAndSend.stop();
   getGood();
   $(goodsCard).modal('toggle');
+  goodFormEdit.start(goodsCard);
 
   // goodsExpressValidityAndSend.stop();
 
@@ -284,6 +291,7 @@ $(expressModal).on('hidden.bs.modal', () => {
 const getGood = () => {
   $(goodsCard).modal('show');
   goodsStock.innerHTML = '';
+  goodFormEdit.start(goodsCard);
 
   xhr.request = {
     metod: 'POST',
@@ -300,6 +308,9 @@ $(stockModal).on('hidden.bs.modal', () => {
 
 $(stockModal).on('shown.bs.modal', () => {
   $(goodsCard).modal('hide');
+
+  goodFormEdit.removeHandlers();
+
   stockModalName.innerHTML = auth.currentStockName;
   stockModalQuantity.value = auth.currentStockQuantityT2;
   auth.isGoodCardEdit = true;

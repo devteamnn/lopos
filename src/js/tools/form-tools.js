@@ -39,6 +39,7 @@ let butSubmit;
 let butCancel;
 let spinner;
 
+let modal;
 let form;
 let pattern;
 let message;
@@ -77,8 +78,14 @@ const hideSpinner = () => {
 };
 
 const delHandlers = () => {
+  console.log('FORM ID = ' + form.id);
+  console.log('DEL HANDLERS');
+  modal.removeEventListener('click', modalClickHandler);
   form.removeEventListener('submit', formSubmitHandler);
   form.removeEventListener('input', formInputHandler);
+  form.querySelectorAll('*[data-cancel]').forEach((el) => {
+    el.removeEventListener('click', modalClickHandler);
+  });
 };
 
 const formReset = () => {
@@ -144,9 +151,19 @@ const formInputHandler = (evt) => {
   }
 };
 
-const addHandlersFunc = (remoteForm, remoteSubmitCallback, remoteValidCallback) => {
+const cancelClickHandler = (evt) => {
+  formReset();
+};
 
-  form = remoteForm;
+const modalClickHandler = (evt) => {
+  if (evt.target === modal) {
+    formReset();
+  }
+};
+
+const addHandlersFunc = (remoteModal, remoteSubmitCallback, remoteValidCallback) => {
+  modal = remoteModal;
+  form = modal.querySelector('*[data-formName]');
   submitCallback = remoteSubmitCallback;
   validCallback = remoteValidCallback;
   pattern = window.appSettings[form.dataset.formname].validPatterns;
@@ -164,7 +181,13 @@ const addHandlersFunc = (remoteForm, remoteSubmitCallback, remoteValidCallback) 
 
   form.addEventListener('submit', formSubmitHandler);
   form.addEventListener('input', formInputHandler);
+  form.querySelectorAll('*[data-cancel]').forEach((el) => {
+    el.addEventListener('click', cancelClickHandler);
+  });
+  modal.addEventListener('click', modalClickHandler);
 
+  console.log('FORM ID = ' + form.id);
+  console.log('ADD HANDLERS');
 };
 
 const valEl = (el) => {
@@ -180,6 +203,7 @@ export default {
 
   work: addHandlersFunc,
   reset: formReset,
+  removeHandlers: delHandlers,
   validElement: valEl,
   submit: submitForm
 };
