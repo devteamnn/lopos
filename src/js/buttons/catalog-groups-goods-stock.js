@@ -62,7 +62,7 @@ export default {
   start(remModal) {
     initVar(remModal);
 
-    formTools.work(form, submitForm);
+    formTools.work(modal, submitForm);
   },
   stop() {
     formTools.reset();

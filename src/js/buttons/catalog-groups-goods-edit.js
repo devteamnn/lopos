@@ -160,7 +160,6 @@ const calcPrice = (evt) => {
 const imgChangeHandler = (evt) => {
   const stor = dataStorage.data;
 
-  // let postData = `token=${stor.token}&good=16&file=${img.files[0]}`;
   let postData = new FormData();
   postData.append('token', stor.token);
   postData.append('good', dataStorage.currentGoodId);
@@ -178,27 +177,13 @@ const imgChangeHandler = (evt) => {
   formTools.submit(data);
 };
 
-// const addHandlers = () => {
-//   $('#goods-card').on('hidden.bs.modal', () => {
-//     formTools.reset();
-//   });
-
-//   $('#goods-card').on('shown.bs.modal', () => {
-//     formTools.work(form, submitForm);
-//     percent.innerHTML = calcPr();
-//   });
-
-//   priceBlock.addEventListener('change', calcPrice);
-//   img.addEventListener('change', imgChangeHandler);
-// };
-
 export default {
-  // start: addHandlers
+
   start(remModal) {
     console.log('Card-Edit-START!');
     initVar(remModal);
     percent.innerHTML = calcPr();
-    formTools.work(form, submitForm);
+    formTools.work(modal, submitForm);
 
     priceBlock.addEventListener('change', calcPrice);
     img.addEventListener('change', imgChangeHandler);
