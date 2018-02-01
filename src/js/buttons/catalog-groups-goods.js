@@ -247,10 +247,10 @@ const onExpressContainerClick = (evt) => {
 expressContainer.addEventListener('click', onExpressContainerClick);
 
 $(expressModal).on('hidden.bs.modal', () => {
+  goodsExpressValidityAndSend.stop();
   getGood();
   $(goodsCard).modal('toggle');
-  goodsExpressValidityAndSend.stop();
-  goodFormEdit.start();
+  goodFormEdit.start(goodsCard);
 
 });
 
@@ -258,7 +258,7 @@ const getGood = (getGoodForCopyCb) => {
   if (!getGoodForCopyCb) {
     $(goodsCard).modal('show');
     goodsStock.innerHTML = '';
-    goodFormEdit.start();
+    goodFormEdit.start(goodsCard);
   }
 
   xhr.request = {

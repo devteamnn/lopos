@@ -4,25 +4,41 @@ import catalogGroupsGoods from './catalog-groups-goods.js';
 import formTools from './../tools/form-tools.js';
 import tools from './../tools/tools.js';
 
-const appUrl1 = window.appSettings.formEditGoods.UrlApi1;
-const appUrl2 = window.appSettings.formEditGoods.UrlApi2;
-const appUrl3 = window.appSettings.formEditGoods.UrlApi3;
-const messages = window.appSettings.formEditGoods.message;
+let modal;
+let appUrl1;
+let appUrl2;
+let appUrl3;
+let messages;
+let form;
+let name;
+let describe;
+let groupId;
+let img;
+let purchase;
+let sell;
+let percent;
+let barcode;
+let priceBlock;
 
-const form = document.querySelector('#goods-card-form');
 
-const name = form.querySelector('#goods-card-name');
-const describe = form.querySelector('#goods-card-describe');
-const groupId = form.querySelector('#goods-card-group');
+const initVar = (remModal) => {
+  modal = remModal;
+  form = modal.querySelector('#goods-card-form');
+  name = form.querySelector('#goods-card-name');
+  describe = form.querySelector('#goods-card-describe');
+  groupId = form.querySelector('#goods-card-group');
+  img = form.querySelector('#goods-card-image-upload');
+  priceBlock = form.querySelector('#goods-card-price-block');
+  purchase = form.querySelector('#goods-card-price-purchase');
+  sell = form.querySelector('#goods-card-price-sell');
+  percent = form.querySelector('#goods-card-price-extra');
+  barcode = form.querySelector('#goods-card-barcode');
 
-const img = form.querySelector('#goods-card-image-upload');
-
-const priceBlock = form.querySelector('#goods-card-price-block');
-const purchase = form.querySelector('#goods-card-price-purchase');
-const sell = form.querySelector('#goods-card-price-sell');
-const percent = form.querySelector('#goods-card-price-extra');
-
-const barcode = form.querySelector('#goods-card-barcode');
+  appUrl1 = window.appSettings[form.dataset.formname].UrlApi1;
+  appUrl2 = window.appSettings[form.dataset.formname].UrlApi2;
+  appUrl3 = window.appSettings[form.dataset.formname].UrlApi3;
+  messages = window.appSettings[form.dataset.formname].message;
+};
 
 const callbackXhrSuccess = (response) => {
   console.log('callbackXhr1');
@@ -55,7 +71,7 @@ const callbackXhrSuccess2 = (response) => {
   console.dir(response);
 
   formTools.reset();
-  $('#goods-card').modal('hide');
+  $(modal).modal('hide');
 
   switch (response.status) {
   case 200:
@@ -178,7 +194,9 @@ const imgChangeHandler = (evt) => {
 
 export default {
   // start: addHandlers
-  start() {
+  start(remModal) {
+    console.log('Card-Edit-START!');
+    initVar(remModal);
     percent.innerHTML = calcPr();
     formTools.work(form, submitForm);
 
