@@ -175,6 +175,7 @@ const onSuccessGoodsLoad = (loadedGood) => {
   }
   auth.isGoodCardEdit = false;
 
+  goodFormEdit.start(goodsCard);
 };
 
 // обработчик клика по ключевому слову (пока внутри карточки связей "товар-слово")
@@ -287,7 +288,6 @@ $(expressModal).on('hidden.bs.modal', () => {
 const getGood = () => {
   $(goodsCard).modal('show');
   goodsStock.innerHTML = '';
-  goodFormEdit.start(goodsCard);
 
   xhr.request = {
     metod: 'POST',
