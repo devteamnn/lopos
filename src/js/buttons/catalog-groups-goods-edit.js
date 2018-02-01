@@ -3,6 +3,7 @@ import markup from './../markup/tools.js';
 import catalogGroupsGoods from './catalog-groups-goods.js';
 import formTools from './../tools/form-tools.js';
 import tools from './../tools/tools.js';
+import catalogGroups from './catalog-groups.js';
 
 let modal;
 let appUrl1;
@@ -49,7 +50,7 @@ const callbackXhrSuccess = (response) => {
 
   switch (response.status) {
   case 200:
-    catalogGroupsGoods.fill();
+    catalogGroups.redrawGoods();
     break;
   case 400:
     markup.informationtModal = {
@@ -75,7 +76,7 @@ const callbackXhrSuccess2 = (response) => {
 
   switch (response.status) {
   case 200:
-    catalogGroupsGoods.fill();
+    catalogGroups.redrawGoods();
     break;
   case 400:
     markup.informationtModal = {

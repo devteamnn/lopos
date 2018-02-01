@@ -282,10 +282,6 @@ $(expressModal).on('hidden.bs.modal', () => {
   goodsExpressValidityAndSend.stop();
   getGood();
   $(goodsCard).modal('toggle');
-  goodFormEdit.start(goodsCard);
-
-  goodsExpressValidityAndSend.stop();
-
 });
 
 const getGood = () => {
