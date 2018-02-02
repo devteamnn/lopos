@@ -14,9 +14,7 @@ import keywordsButton from './buttons/reference-keywords.js';
 import keywordsButtonAdd from './buttons/reference-keywords-add.js';
 import keywordsButtonEdit from './buttons/reference-keywords-edit.js';
 import groupsButton from './buttons/catalog-groups.js';
-import groupsButtonFormAdd from './buttons/catalog-groups-add.js';
-import groupsButtonFormEdit from './buttons/catalog-groups-edit.js';
-import goodsButtonFormAdd from './buttons/catalog-groups-goods-add.js';
+
 
 // import goodsButtonFormEdit from './buttons/catalog-groups-goods-edit.js';
 import cardsButton from './buttons/catalog__cards.js';
@@ -87,10 +85,7 @@ const start = () => {
     contractorsButtonFormAdd.start();
     keywordsButtonAdd.start();
     keywordsButtonEdit.start();
-    groupsButtonFormAdd.start();
-    groupsButtonFormEdit.start();
-    goodsButtonFormAdd.start();
-    // goodsButtonFormEdit.start();
+
   } else {
     showLoginHideApp();
     mainWindow.init();

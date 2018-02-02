@@ -163,6 +163,12 @@ const modalClickHandler = (evt) => {
   }
 };
 
+const modalKeyDownHandler = (evt) => {
+  if (evt.keyCode === 27) {
+    formReset();
+  }
+};
+
 const addHandlersFunc = (remoteModal, remoteSubmitCallback, remoteValidCallback) => {
   modal = remoteModal;
   form = modal.querySelector('*[data-formName]');
@@ -187,6 +193,8 @@ const addHandlersFunc = (remoteModal, remoteSubmitCallback, remoteValidCallback)
     el.addEventListener('click', cancelClickHandler);
   });
   modal.addEventListener('click', modalClickHandler);
+  modal.addEventListener('keydown', modalKeyDownHandler);
+
 
   console.log('FORM ID = ' + form.id);
   console.log('ADD HANDLERS');

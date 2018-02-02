@@ -1,20 +1,30 @@
 import dataStorage from './../tools/storage.js';
 import markup from './../markup/tools.js';
-import catalogGroups from './catalog-groups.js';
 import formTools from './../tools/form-tools.js';
+import catalogGroups from './catalog-groups.js';
 
-const appUrl = window.appSettings.formEditGroups.UrlApi;
-const messages = window.appSettings.formEditGroups.messages;
-const form = document.querySelector('#groups-edit-form');
-const name = form.querySelector('#groups-edit-name');
+let appUrl;
+let messages;
+
+let form;
+let name;
+let modal;
+
+const initVar = (remModal) => {
+  modal = remModal;
+  form = modal.querySelector('*[data-formName]');
+  name = form.querySelector('*[data-valid="name"]');
+
+  appUrl = window.appSettings[form.dataset.formname].UrlApi;
+  messages = window.appSettings[form.dataset.formname].message;
+
+};
 
 const callbackXhrSuccess = (response) => {
-
-  formTools.reset();
-  $('#groups-edit').modal('hide');
-
   switch (response.status) {
   case 200:
+    $(modal).modal('hide');
+    formTools.reset();
     catalogGroups.redraw();
     break;
   case 400:
@@ -30,7 +40,6 @@ const callbackXhrSuccess = (response) => {
     };
     break;
   }
-
 };
 
 const submitForm = () => {
@@ -50,16 +59,12 @@ const submitForm = () => {
   });
 };
 
-const addHandlers = () => {
-
-  $('#groups-edit').on('hidden.bs.modal', () => {
-    formTools.reset();
-  });
-  $('#groups-edit').on('shown.bs.modal', () => {
-    formTools.work(form, submitForm);
-  });
-};
-
 export default {
-  start: addHandlers
+  start(remModal) {
+    initVar(remModal);
+    formTools.work(modal, submitForm);
+  },
+  stop() {
+    formTools.reset();
+  }
 };
