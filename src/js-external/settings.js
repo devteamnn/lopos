@@ -294,5 +294,31 @@ window.appSettings = {
     'messages': {
       'mes400': 'Некорректный запрос'
     }
-  }
+  },
+  'universalAdd': {
+    'UrlApiAdd': '/lopos_directory/{{dir}}/operator/{{oper}}/business/{{busId}}/nomenclature_card',
+    'UrlApiEdit': '/lopos_directory/{{dir}}/operator/{{oper}}/business/{{busId}}/nomenclature_card/{{NCid}}',
+    'validPatterns': {
+      'name': /^[а-яёА-ЯЁA-Za-z\s\d]+$/,
+    },
+    'validMessage': {
+      'name': 'поле минимум 1 буква,<br>не должно содержать спецсимволы',
+    },
+    'messages': {
+      'mes400': 'Некорректный запрос'
+    }
+  },
+
+  'addResource': {
+    'UrlApi': '/lopos_directory/{{dir}}/operator/{{oper}}/business/{{busId}}/nomenclature_card/{{NCid}}/compare',
+    'validPatterns': {
+      'quantity': /^\d+$/,
+    },
+    'validMessage': {
+      'quantity': 'минимум 1 цифра',
+    },
+    'messages': {
+      'mes400': 'Некорректный запрос'
+    }
+  },
 };
