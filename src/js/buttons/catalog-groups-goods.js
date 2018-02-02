@@ -36,7 +36,6 @@ const stockModal = document.querySelector('#set-stock-modal');
 const stockModalName = document.querySelector('#set-stock-modal-stock');
 const stockModalQuantity = document.querySelector('#set-stock-modal-quantity');
 
-let goodTags = [];
 let formSave = {};
 
 const saveForm = () => {
@@ -49,16 +48,20 @@ const saveForm = () => {
 };
 
 const restoreForm = () => {
-  if (formSave.name) {
+  if (auth.isGoodCardEdit === 'true') {
     goodsCardName.value = formSave.name;
     goodsCardDescribe.value = formSave.describe;
     goodsCardBarcode.value = formSave.barcode;
     goodsCardGroup.value = formSave.group;
   }
+  auth.isGoodCardEdit = false;
 };
 
+let goodTags = [];
 const onSuccessGoodsLoad = (loadedGood) => {
   console.log(loadedGood);
+
+  // разбираем данные
   let {
     name,
     description,
@@ -74,21 +77,20 @@ const onSuccessGoodsLoad = (loadedGood) => {
   } = loadedGood.data;
   purchasePrice = Number(purchasePrice).toFixed(2);
   sellingPrice = Number(sellingPrice).toFixed(2);
+
+  // заполняем форму - сведения о товаре
   goodsCardName.value = name;
   goodsCardDescribe.value = description;
   goodsCardBarcode.value = barcode;
   goodsCardPurchase.value = purchasePrice;
   goodsCardSell.value = sellingPrice;
   goodsCardExtra.innerHTML = ((+sellingPrice - +purchasePrice) / (+purchasePrice / 100)).toFixed(2) + '%';
-
-  goodTags = (tags) ? tags : [];
-
   goodsCardGroup.innerHTML = allGroups.map((item) => `<option value="${item.id}" ${(item.id === groupId ? 'selected' : '')}>${item.name}</option>`).join('');
-
   goodsCardImage.title = name;
   goodsCardImage.alt = name;
   goodsCardImage.src = imgUrl ? `https://lopos.bidone.ru/users/600a5357/images/${imgUrl}.jpg` : './img/not-available.png';
 
+  // заполняем форму - остатки
   let totalCount = 0;
   let checkedStock = false;
 
@@ -103,6 +105,7 @@ const onSuccessGoodsLoad = (loadedGood) => {
       totalCount += +item.values[4][0] + +item.values[2][0] + +item.values[3][0];
       if (!auth.currentStockId) {
         checkedStock = (item.id === auth.data.currentStock) ? item.id : checkedStock;
+        // auth.currentStockId = checkedStock;
       } else {
         checkedStock = auth.currentStockId;
       }
@@ -132,12 +135,12 @@ const onSuccessGoodsLoad = (loadedGood) => {
       </div>`);
   }
 
-  console.log(checkedStock);
+  // переписать на storage
   if (checkedStock) {
     goodsStock.querySelector(`#stock-${checkedStock}`).checked = true;
     auth.currentStockId = checkedStock;
     auth.currentStockName = goodsStock.querySelector(`#stock-${checkedStock}`).nextElementSibling.dataset.stockName;
-    auth.currentStockQuantityT2 = goodsStock.children[1].dataset.stockT2;
+    auth.currentStockQuantityT2 = goodsStock.querySelector(`#stock-${checkedStock}`).nextElementSibling.dataset.stockT2;
   } else if (goodsStock.firstChild.id) {
     goodsStock.firstChild.checked = true;
     auth.currentStockId = goodsStock.firstChild.id.split('-')[1];
@@ -145,23 +148,8 @@ const onSuccessGoodsLoad = (loadedGood) => {
     auth.currentStockQuantityT2 = goodsStock.children[1].dataset.stockT2;
   }
 
-  keywordsUniversal.downloadAndDraw(goodsCardKeywordsBody, onKeywordClick, keywordModificator);
-
-  const onGoodKeywordClick = (evt) => {
-    auth.isGoodCardEdit = true;
-    saveForm();
-    const returnHandler = (e) => {
-      // $('#list-keywords-list').tab('hide');
-      getGood();
-      $('#list-groups-list').tab('show');
-      $('#goods-card').modal('show');
-      e.target.removeEventListener('click', returnHandler);
-
-    };
-    referenceKeywords.showKeywordEdit(evt, returnHandler);
-    $('#goods-card').modal('hide');
-    $('#list-keywords-list').tab('show');
-  };
+  // заполняем форму - ключевые слова и работа с ними
+  goodTags = (tags) ? tags : [];
 
   goodsKeywords.innerHTML = '';
   if (goodTags.length) {
@@ -175,7 +163,27 @@ const onSuccessGoodsLoad = (loadedGood) => {
   }
   auth.isGoodCardEdit = false;
 
+
   goodFormEdit.start(goodsCard);
+
+  // восстановление состояния формы
+  restoreForm();
+};
+
+const onGoodKeywordClick = (evt) => {
+  auth.isGoodCardEdit = true;
+  saveForm();
+  const returnHandler = (e) => {
+    getGood();
+    $('#list-groups-list').tab('show');
+    $('#goods-card').modal('show');
+    e.target.removeEventListener('click', returnHandler);
+
+  };
+  referenceKeywords.showKeywordEdit(evt, returnHandler);
+  $('#goods-card').modal('hide');
+  $('#list-keywords-list').tab('show');
+
 };
 
 // обработчик клика по ключевому слову (пока внутри карточки связей "товар-слово")
@@ -253,7 +261,6 @@ const onExpressContainerClick = (evt) => {
         callbackSuccess: onSuccessExpressExecute,
       };
     } else if (currentBtnId.indexOf('custom') !== -1) {
-      // $(goodsCard).modal('hide');
       $(expressModal).modal('show');
 
 
@@ -268,7 +275,7 @@ const onExpressContainerClick = (evt) => {
       expressModalQuantity.value = '';
       expressModalQuantity.focus();
       auth.expressOperationType = multiplier;
-      goodsExpressValidityAndSend.start(expressModal);
+      // goodsExpressValidityAndSend.start(expressModal);
     }
     auth.isGoodCardEdit = true;
     saveForm();
@@ -311,8 +318,8 @@ $(stockModal).on('shown.bs.modal', () => {
   stockModalQuantity.value = auth.currentStockQuantityT2;
   auth.isGoodCardEdit = true;
   saveForm();
-
   stockForm.start(stockModal);
+
 });
 
 

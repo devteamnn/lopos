@@ -1,6 +1,6 @@
 import dataStorage from './../tools/storage.js';
 import markup from './../markup/tools.js';
-import catalogGroupsGoods from './catalog-groups-goods.js';
+// import catalogGroupsGoods from './catalog-groups-goods.js';
 import formTools from './../tools/form-tools.js';
 import tools from './../tools/tools.js';
 import catalogGroups from './catalog-groups.js';

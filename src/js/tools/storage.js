@@ -179,7 +179,7 @@ export default {
   },
 
   get currentStockQuantityT2() {
-    return sessionStorage.getItem('currentStockQuantityT2');
+    return Number(sessionStorage.getItem('currentStockQuantityT2')).toFixed(2);
   },
 
   set expressOperationType(type) {
