@@ -1238,25 +1238,25 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="add-resources-modal-label"></h5>
-          <button id="add-resources-modal-close" type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <button id="add-resources-modal-close" type="button" class="close" data-dismiss="modal" aria-label="Close" data-cancel>
           <span aria-hidden="true">&times;</span>
         </button>
         </div>
         <div class="modal-body">
 
-          <form id="add-resources-modal-form" name="add-resources-modal-form">
+          <form id="add-resources-modal-form" name="add-resources-modal-form" data-formName="addResource">
             <div class="form-group">
-              <label for="add-resources-modal-quantity">Количество (БЕЗ ВАЛИДАЦИИ)</label>
-              <input type="text" class="form-control" id="add-resources-modal-quantity" aria-describedby="add-resources-modal-quantity" placeholder="Количество">
-              <span id="add-resources-modal-quantity-valid" class="badge badge-danger w-100"></span>
+              <label for="add-resources-modal-quantity">Количество</label>
+              <input type="text" class="form-control" id="add-resources-modal-quantity" aria-describedby="add-resources-modal-quantity" placeholder="Количество" data-valid="quantity" data-validLabelName="quantity">
+              <span id="add-resources-modal-quantity-valid" class="badge badge-danger w-100" data-validLabel="quantity"></span>
             </div>
 
-            <div id="add-resources-modal-spinner" class="progress text-white mb-3 invisible">
+            <div id="add-resources-modal-spinner" class="progress text-white mb-3 invisible" data-spinner>
               <div class="progress-bar progress-bar-striped progress-bar-animated text-white font-weight-bold text-uppercase" style="width: 100%" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
 
             <button id="add-resources-modal-submit" type="submit" class="btn btn-primary w-100" disabled>Добавить</button>
-            <button id="add-resources-modal-cancel" type="button" class="btn btn-danger w-100 mt-3" data-dismiss="modal">Отменить</button>
+            <button id="add-resources-modal-cancel" type="button" class="btn btn-danger w-100 mt-3" data-dismiss="modal" data-butCancel data-cancel>Отменить</button>
           </form>
 
         </div>
@@ -1377,24 +1377,24 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="universal-add-label"></h5>
-          <button id="universal-add-close" type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <button id="universal-add-close" type="button" class="close" data-dismiss="modal" aria-label="Close" data-cancel>
           <span aria-hidden="true">&times;</span>
         </button>
         </div>
         <div class="modal-body">
-          <form id="universal-add-form" name="universal-add">
+          <form id="universal-add-form" name="universal-add" data-formName="universalAdd">
             <div class="form-group">
               <label id="universal-add-name-label" for="universal-add-name"></label>
-              <input type="text" class="form-control" id="universal-add-name" aria-describedby="universal-add-name" placeholder="">
-              <span id="universal-add-valid" class="badge badge-danger w-100"></span>
+              <input type="text" class="form-control" id="universal-add-name" aria-describedby="universal-add-name" placeholder="" data-valid="name" data-validLabelName="name">
+              <span id="universal-add-valid" class="badge badge-danger w-100" data-validLabel="name"></span>
             </div>
 
-            <div id="universal-add-spinner" class="progress text-white mb-3 invisible">
+            <div id="universal-add-spinner" class="progress text-white mb-3 invisible" data-spinner>
               <div class="progress-bar progress-bar-striped progress-bar-animated text-white font-weight-bold text-uppercase" style="width: 100%" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
 
-            <button id="universal-add-submit" type="submit" class="btn btn-primary w-100">Создать</button>
-            <button id="universal-add-cancel" type="button" class="btn btn-danger w-100 mt-3" data-dismiss="modal">Отменить</button>
+            <button id="universal-add-submit" type="submit" class="btn btn-primary w-100" disabled>Создать</button>
+            <button id="universal-add-cancel" type="button" class="btn btn-danger w-100 mt-3" data-dismiss="modal" data-butCancel>Отменить</button>
           </form>
         </div>
       </div>

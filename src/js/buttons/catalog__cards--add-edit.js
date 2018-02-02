@@ -3,20 +3,23 @@ import markup from './../markup/tools.js';
 import formTools from './../tools/form-tools.js';
 import catalogCard from './catalog__cards.js';
 
-let appUrl;
+let appUrlAdd;
+let appUrlEdit;
 let messages;
 
 let form;
-let quantity;
+let name;
 let modal;
 
 const initVar = (remModal) => {
   modal = remModal;
   form = modal.querySelector('*[data-formName]');
-  quantity = form.querySelector('*[data-valid="quantity"]');
+  name = form.querySelector('*[data-valid="name"]');
 
-  appUrl = window.appSettings[form.dataset.formname].UrlApi;
+  appUrlAdd = window.appSettings[form.dataset.formname].UrlApiAdd;
+  appUrlEdit = window.appSettings[form.dataset.formname].UrlApiEdit;
   messages = window.appSettings[form.dataset.formname].message;
+
 };
 
 const callbackXhrSuccess = (response) => {
@@ -41,11 +44,27 @@ const callbackXhrSuccess = (response) => {
   }
 };
 
-const submitForm = () => {
+const submitFormAdd = () => {
   const stor = dataStorage.data;
 
-  let postData = `good=${dataStorage.currentGoodId}&value=${quantity.value * +dataStorage.currentCardOperation}&token=${stor.token}`;
-  let urlApp = appUrl.replace('{{dir}}', stor.directory);
+  let postData = `name=${name.value}&token=${stor.token}`;
+  let urlApp = appUrlAdd.replace('{{dir}}', stor.directory);
+  urlApp = urlApp.replace('{{oper}}', stor.operatorId);
+  urlApp = urlApp.replace('{{busId}}', stor.currentBusiness);
+
+  formTools.submit({
+    url: urlApp,
+    metod: 'POST',
+    data: postData,
+    callbackSuccess: callbackXhrSuccess
+  });
+};
+
+const submitFormEdit = () => {
+  const stor = dataStorage.data;
+
+  let postData = `name=${name.value}&token=${stor.token}`;
+  let urlApp = appUrlEdit.replace('{{dir}}', stor.directory);
   urlApp = urlApp.replace('{{oper}}', stor.operatorId);
   urlApp = urlApp.replace('{{busId}}', stor.currentBusiness);
   urlApp = urlApp.replace('{{NCid}}', dataStorage.currentCardId);
@@ -61,7 +80,12 @@ const submitForm = () => {
 export default {
   start(remModal) {
     initVar(remModal);
-    formTools.work(modal, submitForm);
+
+    if (name.value === '') {
+      formTools.work(modal, submitFormAdd);
+    } else {
+      formTools.work(modal, submitFormEdit);
+    }
   },
   stop() {
     formTools.reset();

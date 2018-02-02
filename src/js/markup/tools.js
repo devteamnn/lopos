@@ -75,7 +75,7 @@ export default {
     modalUniversalAddName.setAttribute('placeholder', setup.inputPlaceholder);
     modalUniversalAddName.value = (setup.inputValue) ? setup.inputValue : '';
     modalUniversalAddSubmit.innerHTML = setup.submitBtnName;
-    modalUniversalAddForm.addEventListener('submit', requestHandler);
+    // modalUniversalAddForm.addEventListener('submit', requestHandler);
 
   }
 

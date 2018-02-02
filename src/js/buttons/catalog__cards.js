@@ -3,6 +3,8 @@ import auth from '../tools/storage.js';
 import cardsMarkup from '../markup/catalog-cards.js';
 import groupsMarkup from '../markup/catalog-groups.js';
 import toolsMarkup from '../markup/tools.js';
+import cardAdd from './catalog__cards--add-edit.js';
+import resourceAdd from './catalog__cards--add-resource.js';
 
 const listCards = document.querySelector('#list-cards-list');
 const listCardsCard = document.querySelector('#list-cards-card');
@@ -30,6 +32,8 @@ const cardResourcesGroupModalReturnBtn = document.querySelector('#card-resources
 const addResourcesModal = document.querySelector('#add-resources-modal');
 const addResourcesModalLabel = document.querySelector('#add-resources-modal-label');
 
+const universalAdd = document.querySelector('#universal-add');
+
 let loadedGoods = [];
 let loadedGroups = [];
 
@@ -54,6 +58,8 @@ const drawGoods = (data) => {
       $(addResourcesModal).modal('show');
       addResourcesModalLabel.innerHTML = item.name;
       auth.currentGoodId = currentStringElement.dataset.goodId;
+
+      resourceAdd.start(addResourcesModal);
     });
 
   });
@@ -279,14 +285,14 @@ const onCardResourcesDeleteBtnClick = (evt) => {
 
 cardResourcesDeleteBtn.addEventListener('click', onCardResourcesDeleteBtnClick);
 
-const setRequestToAddCard = (name) => {
-  xhr.request = {
-    metod: 'POST',
-    url: `lopos_directory/${auth.data.directory}/operator/1/business/${auth.data.currentBusiness}/nomenclature_card`,
-    data: `name=${name}&token=${auth.data.token}`,
-    callbackSuccess: getCards,
-  };
-};
+// const setRequestToAddCard = (name) => {
+//   xhr.request = {
+//     metod: 'POST',
+//     url: `lopos_directory/${auth.data.directory}/operator/1/business/${auth.data.currentBusiness}/nomenclature_card`,
+//     data: `name=${name}&token=${auth.data.token}`,
+//     callbackSuccess: getCards,
+//   };
+// };
 
 const setupUniversalAdd = () => {
   toolsMarkup.runUniversalAdd = {
@@ -294,21 +300,22 @@ const setupUniversalAdd = () => {
     inputLabel: 'Название',
     inputPlaceholder: 'введите название',
     submitBtnName: 'Создать',
-    submitCallback: setRequestToAddCard
+    // submitCallback: setRequestToAddCard
   };
+  cardAdd.start(universalAdd);
 };
 
-const setRequestToAddEditCard = (name) => {
-  xhr.request = {
-    metod: 'PUT',
-    url: `lopos_directory/${auth.data.directory}/operator/1/business/${auth.data.currentBusiness}/nomenclature_card/${auth.currentCardId}`,
-    data: `name=${name}&token=${auth.data.token}`,
-    callbackSuccess: () => {
-      cardName.innerHTML = name;
-      auth.currentCardName = name;
-    },
-  };
-};
+// const setRequestToAddEditCard = (name) => {
+//   xhr.request = {
+//     metod: 'PUT',
+//     url: `lopos_directory/${auth.data.directory}/operator/1/business/${auth.data.currentBusiness}/nomenclature_card/${auth.currentCardId}`,
+//     data: `name=${name}&token=${auth.data.token}`,
+//     callbackSuccess: () => {
+//       cardName.innerHTML = name;
+//       auth.currentCardName = name;
+//     },
+//   };
+// };
 
 const setupUniversalAddEdit = () => {
   toolsMarkup.runUniversalAdd = {
@@ -317,8 +324,9 @@ const setupUniversalAddEdit = () => {
     inputPlaceholder: 'введите название',
     inputValue: auth.currentCardName,
     submitBtnName: 'Изменить',
-    submitCallback: setRequestToAddEditCard
+    // submitCallback: setRequestToAddEditCard
   };
+  cardAdd.start(universalAdd);
 };
 
 listCardAddBtn.addEventListener('click', setupUniversalAdd);
