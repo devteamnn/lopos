@@ -1,0 +1,39 @@
+
+.keywords-card-select-color-container div {
+  display: flex;
+  justify-content: space-between;
+  margin: 5px;
+}
+
+.keywords-card-select-color {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+}
+
+.keywords-card-select-color-container {
+}
+
+.keyword {
+  display: inline-block;
+  border-radius: 8px;
+  margin: 5px;
+  padding: 5px;
+  cursor: pointer;
+  color: #fff;
+  opacity: 1;
+}
+
+.keyword__mute {
+  opacity: 0.4;
+}
+
+.keyword__small {
+  font-size: 12px;
+  cursor: default;
+}
+
+#list-search-card-body-checked-keywords {
+  margin: 20px 60px;
+  padding: 10px;
+}
