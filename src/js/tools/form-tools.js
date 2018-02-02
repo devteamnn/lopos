@@ -183,7 +183,7 @@ const addHandlersFunc = (remoteModal, remoteSubmitCallback, remoteValidCallback)
 
   form.addEventListener('submit', formSubmitHandler);
   form.addEventListener('input', formInputHandler);
-  form.querySelectorAll('*[data-cancel]').forEach((el) => {
+  modal.querySelectorAll('*[data-cancel]').forEach((el) => {
     el.addEventListener('click', cancelClickHandler);
   });
   modal.addEventListener('click', modalClickHandler);
