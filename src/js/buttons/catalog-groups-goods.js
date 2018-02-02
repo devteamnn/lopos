@@ -275,7 +275,7 @@ const onExpressContainerClick = (evt) => {
       expressModalQuantity.value = '';
       expressModalQuantity.focus();
       auth.expressOperationType = multiplier;
-      // goodsExpressValidityAndSend.start(expressModal);
+      goodsExpressValidityAndSend.start(expressModal);
     }
     auth.isGoodCardEdit = true;
     saveForm();

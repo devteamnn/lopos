@@ -1,37 +1,53 @@
 import dataStorage from './../tools/storage.js';
 import markup from './../markup/tools.js';
-import catalogGroups from './catalog-groups.js';
 import formTools from './../tools/form-tools.js';
+import catalogGroups from './catalog-groups.js';
 
-const appUrl = window.appSettings.formAddGoods.UrlApi;
-const messages = window.appSettings.formAddGoods.message;
+let appUrl;
+let messages;
 
-const form = document.querySelector('#group-goods-add-form');
+let form;
+let name;
+let modal;
+let describe;
+let purchase;
+let percent;
+let price;
+let barcode;
 
-const name = form.querySelector('#group-goods-name');
-const describe = form.querySelector('#group-goods-describe');
-const priceGroup = form.querySelector('#group-goods-price');
-const purchase = form.querySelector('#group-goods-price-purchase');
-const extra = form.querySelector('#group-goods-price-extra');
-const sell = form.querySelector('#group-goods-price-sell');
-const barcode = form.querySelector('#group-goods-barcode');
+const initVar = (remModal) => {
+  modal = remModal;
+  form = modal.querySelector('*[data-formName]');
+  name = form.querySelector('*[data-valid="name"]');
+  describe = form.querySelector('*[data-valid="describe"]');
+  purchase = form.querySelector('*[data-valid="purchase"]');
+  percent = form.querySelector('*[data-valid="percent"]');
+  price = form.querySelector('*[data-valid="price"]');
+  barcode = form.querySelector('*[data-valid="barcode"]');
+
+  appUrl = window.appSettings[form.dataset.formname].UrlApi;
+  messages = window.appSettings[form.dataset.formname].messages;
+
+};
 
 const callbackXhrSuccess = (response) => {
-
-  formTools.reset();
-  $('#group-goods-add').modal('hide');
-
   switch (response.status) {
   case 200:
+    $(modal).modal('hide');
+    formTools.reset();
     catalogGroups.redrawGoods();
     break;
   case 400:
+    $(modal).modal('hide');
+    formTools.reset();
     markup.informationtModal = {
       'title': 'Error',
       'messages': messages.mes400
     };
     break;
   case 271:
+    $(modal).modal('hide');
+    formTools.reset();
     markup.informationtModal = {
       'title': 'Error',
       'messages': response.messages
@@ -44,7 +60,7 @@ const submitForm = () => {
   const stor = dataStorage.data;
   const groupId = dataStorage.currentGroupId;
 
-  let postData = `token=${stor.token}&name=${name.value}&description=${describe.value}&purchase_price=${purchase.value}&selling_price=${sell.value}&group=${groupId}&barcode=${barcode.value}`;
+  let postData = `token=${stor.token}&name=${name.value}&description=${describe.value}&purchase_price=${purchase.value}&selling_price=${price.value}&group=${groupId}&barcode=${barcode.value}`;
   let urlApp = appUrl.replace('{{dir}}', stor.directory);
   urlApp = urlApp.replace('{{oper}}', stor.operatorId);
   urlApp = urlApp.replace('{{busId}}', stor.currentBusiness);
@@ -57,49 +73,12 @@ const submitForm = () => {
   });
 };
 
-const calcExtra = () => {
-  sell.value = (Number(purchase.value) + (purchase.value / 100 * extra.value)).toFixed(2);
-};
-
-const calcPercent = () => {
-  extra.value = ((sell.value - purchase.value) * 100 / purchase.value).toFixed(2);
-};
-
-const priceChangeHandler = (evt) => {
-  if (!evt.target.type === 'text') {
-    return false;
-  }
-
-  if (formTools.validElement(evt.target)) {
-
-    switch (evt.target.id) {
-    case 'group-goods-price-purchase':
-      calcExtra(); break;
-
-    case 'group-goods-price-extra':
-      calcExtra(); break;
-
-    case 'group-goods-price-sell':
-      calcPercent(); break;
-    }
-  }
-
-  return true;
-};
-
-const addHandlers = () => {
-  $('#group-goods-add').on('hidden.bs.modal', () => {
-    formTools.reset();
-  });
-
-  $('#group-goods-add').on('shown.bs.modal', () => {
-    document.querySelector('#group-goods-group').value = dataStorage.currentGroupName;
-    formTools.work(form, submitForm);
-  });
-
-  priceGroup.addEventListener('change', priceChangeHandler);
-};
-
 export default {
-  start: addHandlers
+  start(remModal) {
+    initVar(remModal);
+    formTools.work(modal, submitForm);
+  },
+  stop() {
+    formTools.reset();
+  }
 };

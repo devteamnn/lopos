@@ -1,4 +1,5 @@
 import auth from '../tools/storage.js';
+import groupEdit from './catalog-groups-edit.js';
 
 const groupsEditForm = document.querySelector('#groups-edit');
 const groupsEditName = document.querySelector('#groups-edit-name');
@@ -13,6 +14,7 @@ const onListGroupsCardBodyClickEdit = (evt) => {
 
   auth.currentGroupId = currentStringElement.dataset.groupId;
   auth.currentGroupName = currentStringElement.dataset.groupName;
+  groupEdit.start(groupsEditForm);
 };
 
 export default {

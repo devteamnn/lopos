@@ -4,7 +4,11 @@ import groupsMarkup from '../markup/catalog-groups.js';
 import toolsMarkup from '../markup/tools.js';
 import groupsDelete from './catalog-groups--delete.js';
 import groupsEdit from './catalog-groups--edit.js';
+import groupsAdd from './catalog-groups-add.js';
+
+import goodsAdd from './catalog-groups-goods-add.js';
 import goodsCard from './catalog-groups-goods.js';
+
 
 const listGroups = document.querySelector('#list-groups-list');
 const listGroupsCardAddBtn = document.querySelector('#list-groups-card-add-btn');
@@ -17,11 +21,13 @@ const listGroupGoodsAddModalPurchase = document.querySelector('#group-goods-pric
 const listGroupGoodsAddModalExtra = document.querySelector('#group-goods-price-extra');
 const listGroupGoodsAddModalSell = document.querySelector('#group-goods-price-sell');
 const listGroupGoodsAddModalBarcode = document.querySelector('#group-goods-barcode');
+const listGroupGoodsCardAddBtn = document.querySelector('#group-goods-add-btn');
 const listGroupGoodsCardCopyBtn = document.querySelector('#group-goods-copy-btn');
 const listGroupsCard = document.querySelector('#list-groups-card');
 const listGroupsCardBody = document.querySelector('#list-groups-card-body');
 const listGroupsCardCheckMessage = document.querySelector('#list-groups-header-check-message');
 const listGroupsGoodsCardCheckMessage = document.querySelector('#list-groups-goods-header-check-message');
+const groupsAddModal = document.querySelector('#groups-add');
 const groupGoodsCard = document.querySelector('#group-goods-card');
 const groupGoodsReturnBtn = document.querySelector('#group-goods-return-btn');
 const groupGoodsViewBtn = document.querySelector('#group-goods-view-btn');
@@ -116,6 +122,7 @@ const fillCopyCard = (loadedGoodData) => {
 
 const onListGroupGoodsCardCopy = (evt) => {
   $(listGroupGoodsAddModal).modal('show');
+  goodsAdd.start(listGroupGoodsAddModal);
   let currentStringElement = evt.target;
   while (!currentStringElement.dataset.goodId) {
     currentStringElement = currentStringElement.parentNode;
@@ -128,6 +135,10 @@ const onListGroupGoodsCardCopy = (evt) => {
     data: `view_last=0&token=${auth.data.token}`,
     callbackSuccess: fillCopyCard,
   };
+};
+
+const onListGroupGoodsCardAddBtn = () => {
+  goodsAdd.start(listGroupGoodsAddModal);
 };
 
 const onListGroupGoodsCardCopyBtn = (evt) => {
@@ -147,10 +158,12 @@ const onListGroupGoodsCardCopyBtn = (evt) => {
 listGroupsCardAddBtn.addEventListener('click', () => {
   groupGoodsAddSubmitBtn.innerHTML = 'Создание';
   groupGoodsAddLabel.innerHTML = 'Создание товара';
+  groupsAdd.start(groupsAddModal);
 });
 
 
 listGroupGoodsCardCopyBtn.addEventListener('click', onListGroupGoodsCardCopyBtn);
+listGroupGoodsCardAddBtn.addEventListener('click', onListGroupGoodsCardAddBtn);
 
 // отрисовка товаров (данные через замыкание)
 const drawGoods = () => {
