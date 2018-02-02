@@ -1,0 +1,1429 @@
+<!doctype html>
+<html lang="ru">
+
+<head>
+  <title>LoPOS</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="style/style.css">
+
+</head>
+
+<body>
+  <script src="js/metrika.js"></script>
+
+  <div id="login" class="container-fluid mx-auto d-none" style="min-height: 920px; height: 100vh">
+    <div id="globalAlert" class="position-absolute w-75 ml-3"></div>
+
+    <section id="sectionLoginFormMain" class="pt-5">
+
+      <section id="sectionLogin" class="d-none">
+
+        <div class="container-fluid text-center" style="max-width: 27rem">
+          <img src="./img/lopos_web_logo.png" class="img-fluid rounded" style="max-width: 100%; width: 200px; height: 200px;" alt="...">
+        </div>
+
+        <div class="container-fluid">
+          <h3 class="text-center text-primary">Вход</h3>
+          <form id="loginForm" class="mx-auto" style="max-width: 400px;">
+            <div id="loginCaptcha"></div>
+            <div class="form-group">
+              <label for="loginInputLogin">Введите ID или email</label>
+              <input class="form-control" type="text" id="loginInputLogin" placeholder="Введите ID или email" data-erreset="loginLogin">
+              <span id="loginInputLoginError" class="badge badge-danger w-100"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="loginInputPassword">Пароль</label>
+              <input type="password" class="form-control" id="loginInputPassword" placeholder="Password" data-erreset="loginPassword">
+              <span id="loginInputPasswordError" class="badge badge-danger w-100"></span>
+            </div>
+
+            <div id="loginProgress" class="progress mb-3 invisible">
+              <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+            </div>
+
+            <div>
+              <button id="loginButtonSubmit" type="submit" class="btn btn-danger w-100">
+                Войти
+              </button>
+              <button id="loginButtonForgot" type="button" class="btn btn-info w-100 mt-3">Забыли пароль?</button>
+            </div>
+
+            <div>
+
+              <button id="loginButtonRegister" type="button" class="btn btn-info w-100 mt-5">Регистрация</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <section id="sectionRegister" class="d-none">
+        <div class="container-fluid">
+
+          <article>
+            <h3 class="text-center text-primary">Регистрация нового пользователя</h3>
+            <form id="registerForm" class="mx-auto" style="max-width: 27rem">
+              <div id="registerCaptcha"></div>
+              <div class="form-group">
+                <label for="registerInputName">Введите имя ваше имя</label>
+                <input id="registerInputName" class="form-control" type="text" placeholder="Enter name" data-erreset="registerLogin">
+                <span id="registerInputNameError" class="badge badge-danger w-100"></span>
+              </div>
+              <div class="form-group">
+                <label for="registerInputEmail">Введите адрес вашей электронной почты</label>
+                <input id="registerInputEmail" type="text" class="form-control" aria-describedby="emailHelp" placeholder="Enter email" data-erreset="registerEmail">
+                <span id="registerInputEmailError" class="badge badge-danger w-100"></span>
+              </div>
+              <div class="form-group">
+                <label for="registerInputPassword">Введите пароль</label>
+                <input id="registerInputPassword" type="password" class="form-control" placeholder="Password" data-erreset="registerPassword">
+                <span id="registerInputPasswordError" class="badge badge-danger w-100" data-erreset="registerPassword"></span>
+              </div>
+              <div class="form-group">
+                <label for="registerInputConfirmPassword">Повторите пароль</label>
+                <input id="registerInputConfirmPassword" type="password" class="form-control" placeholder="Confirm password" data-erreset="registerConfirm">
+                <span id="registerInputConfirmPasswordError" class="badge badge-danger w-100"></span>
+              </div>
+
+              <div id="registerProgress" class="progress mb-3 invisible">
+                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+              </div>
+
+              <div class="form-group">
+
+                <button id="registerButtonSubmit" type="submit" class="btn btn-danger w-100" data-sitekey="6LcCxT8UAAAAADePAfRygUpreEvUj6J8oMWRE0JW" data-callback="onSubmit">Регистрация</button>
+                <button id="registerButtonCancel" type="button" class="btn btn-info w-100 mt-3">Отмена</button>
+
+              </div>
+
+              <div class="form-group mt-5">
+
+                <button id="registerButtonUserAgreement" type="button" class="btn btn-info w-100" data-toggle="modal" data-target="#exampleModalLong">
+                  <b>Cоглашение использования</b>
+                </button>
+
+              </div>
+
+              <div class="form-group mt-3 form-control-lg">
+                <input id="registerUserAgreement" type="checkbox" class="mr-4 " data-erreset="registerUserAgreement">
+                <label class="" for="registerUserAgreement">
+                  Я согласен!
+                </label>
+                <span id="registerUserAgreementError" class="badge badge-danger w-100"></span>
+              </div>
+            </form>
+          </article>
+        </div>
+      </section>
+
+      <section id="sectionConfirmEmail" class="d-none">
+        <div class="container-fluid" style="max-width: 27rem">
+          <h3 class="text-center text-primary">Подтверждение адреса электронной почты</h3>
+          <form id="emailConfirmForm" class="mx-auto" style="max-width: 27rem">
+            <div id="emailConfirmCaptcha" class="form-group"></div>
+            <div class="form-group">
+              <label for="emailConfirmInputKey">Введите ключ, полученный по электронной почте</label>
+              <input id="emailConfirmInputKey" type="text" class="form-control" placeholder="Confirm Key" data-erreset="emailConfirmInputKey">
+              <span id="emailConfirmInputKeyError" class="badge badge-danger w-100"></span>
+            </div>
+
+            <div id="confirmProgress" class="progress mb-3 invisible">
+              <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+            </div>
+
+            <div class="form-group">
+              <button id="emailConfirmButtonSubmit" type="submit" class="btn btn-danger w-100">Подтвердить</button>
+              <button id="emailConfirmButtonCancel" type="button" class="btn btn-info w-100 mt-3">Отмена</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <section id="sectionForgot" class="mx-auto d-none" style="max-width: 27rem">
+        <div class="container-fluid">
+          <h3 class="text-center text-primary">Восстановление пароля</h3>
+          <form id="forgotForm" class="mx-auto" style="max-width: 27rem">
+            <div id="forgotCaptcha" class="form-group"></div>
+            <div class="form-group">
+              <label for="emailConfirmInputKey">Введите адрес электронной почты </label>
+              <input id="forgotInputEmail" type="text" class="form-control" placeholder="Enter EMAIL" data-erreset="forgotInputEmail">
+              <span id="forgotInputEmailError" class="badge badge-danger w-100"></span>
+            </div>
+
+            <div id="forgotProgress" class="progress mb-3 invisible">
+              <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+            </div>
+
+            <div class="form-group">
+              <button id="forgotButtonSubmit" type="submit" class="btn btn-danger w-100">Восстановить</button>
+              <button id="forgotButtonCancel" type="button" class="btn btn-info w-100 mt-3">Отмена</button>
+            </div>
+
+          </form>
+        </div>
+      </section>
+
+    </section>
+  </div>
+
+  <div id="app" class="container mt-3 mb-5 d-none" style="min-height: 920px;">
+
+    <div>
+
+      <!-- ######################## МЕНЮ ######################## -->
+      <nav class="d-flex justify-content-between">
+
+        <ul class="nav nav-tabs d-flex w-100 justify-content-between" id="list-tab" role="tablist">
+
+          <!-- ==================== МЕНЮ / Операции ==================== -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="list-operations-list" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" aria-controls="operations">Операции</a>
+
+            <div class="dropdown-menu">
+              <a class="dropdown-item" id="list-receipt-list" data-toggle="list" href="#list-receipt" role="tab" aria-controls="receipt">Поступление</a>
+              <a class="dropdown-item" id="list-sell-list" data-toggle="list" href="#list-sell" role="tab" aria-controls="sell">Продажа</a>
+              <a class="dropdown-item" id="list-balance-list" data-toggle="list" href="#list-balance" role="tab" aria-controls="balance">Балансовые операции</a>
+              <a class="dropdown-item" id="list-manufacture-list" data-toggle="list" href="#list-manufacture" role="tab" aria-controls="manufacture">Производство</a>
+            </div>
+
+          </li>
+
+          <!-- ==================== МЕНЮ / Каталог ==================== -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="list-catalog-list" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" aria-controls="catalog">Каталог</a>
+
+            <div class="dropdown-menu">
+              <a class="dropdown-item" id="list-search-list" data-toggle="list" href="#list-search" role="tab" aria-controls="search">Поиск</a>
+              <a class="dropdown-item" id="list-groups-list" data-toggle="list" href="#list-groups" role="tab" aria-controls="groups">Группы товаров</a>
+              <a class="dropdown-item" id="list-cards-list" data-toggle="list" href="#list-cards" role="tab" aria-controls="cards">Производственные карточки</a>
+            </div>
+
+          </li>
+
+          <!-- ==================== МЕНЮ / Учет ==================== -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="list-accounting-list" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" aria-controls="accounting">Учет</a>
+
+            <div class="dropdown-menu">
+              <a class="dropdown-item" id="list-docs-list" data-toggle="list" href="#list-docs" role="tab" aria-controls="docs">Все документы</a>
+              <a class="dropdown-item" id="list-reports-list" data-toggle="list" href="#list-reports" role="tab" aria-controls="reports">Отчеты и аналитика</a>
+            </div>
+
+          </li>
+
+          <!-- ==================== МЕНЮ / Справочники ==================== -->
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="list-reference-list" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" aria-controls="reference">Справочники</a>
+
+            <div class="dropdown-menu">
+              <a class="dropdown-item" id="list-contractor-suppliers-list" data-toggle="list" href="#list-contractors" role="tab" aria-controls="contractors">Поставщики</a>
+              <a class="dropdown-item" id="list-contractor-buyers-list" data-toggle="list" href="#list-contractors" role="tab" aria-controls="contractors">Покупатели</a>
+              <a class="dropdown-item" id="list-points-list" data-toggle="list" href="#list-points" role="tab" aria-controls="points">Точки продаж</a>
+              <a class="dropdown-item" id="list-keywords-list" data-toggle="list" href="#list-keywords" role="tab" aria-controls="keywords">Ключевые слова</a>
+              <a class="dropdown-item" id="list-enterprises-list" data-toggle="list" href="#list-enterprises" role="tab" aria-controls="enterprises">Предприятия</a>
+            </div>
+
+          </li>
+
+          <!-- ==================== МЕНЮ / Журнал операций ==================== -->
+          <li class="nav-item">
+            <a class="nav-link" id="list-log-list" data-toggle="list" href="#list-log" role="tab" aria-controls="log">Журнал операций</a>
+          </li>
+
+          <!-- ==================== МЕНЮ / Онлайн ==================== -->
+          <li class="nav-item dropdown ml-auto">
+            <a class="nav-link dropdown-toggle" id="list-online-list" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" aria-controls="online">Онлайн</a>
+
+            <div class="dropdown-menu  dropdown-menu-right">
+              <a class="dropdown-item" id="list-profile-list" data-toggle="list" href="#list-profile" role="tab" aria-controls="profile">Профиль</a>
+              <a class="dropdown-item" id="list-users-list" data-toggle="list" href="#list-users" role="tab" aria-controls="users">Пользователи</a>
+              <a class="dropdown-item" id="list-setup-list" data-toggle="list" href="#list-setup" role="tab" aria-controls="setup">Настройка</a>
+              <a class="dropdown-item text-danger" id="profile-exit" data-toggle="list" href="#" role="tab" aria-controls="setup">Выйти</a>
+            </div>
+          </li>
+        </ul>
+
+
+      </nav>
+
+      <!-- ######################## КОНТЕЙНЕРЫ ######################## -->
+      <div class="tab-content mt-3" id="nav-tabContent">
+
+
+        <!-- ==================== КОНТЕЙНЕРЫ / Операции ==================== -->
+        <div class="tab-pane fade" id="list-operations" role="tabpanel" aria-labelledby="list-operations-list">
+          <p>ОПЕРАЦИИ (UNDER CONSTRUCTION)</p>
+        </div>
+        <div class="tab-pane fade" id="list-receipt" role="tabpanel" aria-labelledby="list-receipt-list">
+          <p>ПОСТУПЛЕНИЕ (UNDER CONSTRUCTION)</p>
+        </div>
+        <div class="tab-pane fade" id="list-sell" role="tabpanel" aria-labelledby="list-sell-list">
+          <p>ПРОДАЖА (UNDER CONSTRUCTION)</p>
+        </div>
+        <div class="tab-pane fade" id="list-balance" role="tabpanel" aria-labelledby="list-balance-list">
+          <p>БАЛАНСОВЫЕ ОПЕРАЦИИ (UNDER CONSTRUCTION)</p>
+        </div>
+
+        <div class="tab-pane fade" id="list-manufacture" role="tabpanel" aria-labelledby="list-manufacture-list">
+          <p>ПРОИЗВОДСТВО (UNDER CONSTRUCTION)</p>
+        </div>
+
+        <!-- ==================== КОНТЕЙНЕРЫ / Каталог ==================== -->
+
+        <!-- =========== КОНТЕЙНЕРЫ / Каталог / Витрина товаров =========== -->
+        <div class="tab-pane fade" id="list-search" role="tabpanel" aria-labelledby="list-search-list">
+
+          <div id="list-search-card">
+
+            <div id="list-search-header" class="catalog-header">
+              <div class="catalog-header-title">
+                <img src="img/icons8-search-26.png" alt="">
+                <h2>ПОИСК</h2>
+              </div>
+              <div>
+                <form id="list-search-form" action="">
+                  <button id="list-search-card-barcode-btn" type="button" class="btn btn-danger m-2 p-2">|||</button>
+                  <input id="list-search-input" type="text" placeholder="">
+                  <button id="list-search-btn" type="submit" class="btn btn-success">Искать</button>
+                </form>
+              </div>
+              <div class="catalog-header-buttons">
+                <button id="list-search-keywords-btn" type="button" class="btn btn-danger m-2 p-2">Ключевое слово</button>
+                <button id="list-search-card-reset-btn" type="button" class="btn btn-danger m-2 p-2" disabled> Х </button>
+              </div>
+            </div>
+            <div id="list-search-card-body" class="groups-card-block"></div>
+          </div>
+        </div>
+
+        <!-- =========== КОНТЕЙНЕРЫ / Справочники / Группы товаров =========== -->
+        <div class="tab-pane fade" id="list-groups" role="tabpanel" aria-labelledby="list-groups-list">
+
+          <div id="list-groups-card">
+
+            <div id="list-groups-header" class="catalog-header">
+              <div class="catalog-header-title">
+                <img src="img/groups.png" alt="">
+                <h2>ГРУППЫ ТОВАРОВ</h2>
+              </div>
+              <div id="list-groups-header-check-message"></div>
+              <div class="catalog-header-buttons">
+                <button id="list-groups-card-add-btn" type="button" class="btn btn-success p-0 icon-btn icon-btn__add" data-toggle="modal" data-target="#groups-add"></button>
+                <button id="list-groups-card-edit-btn" type="button" class="btn btn-warning p-0 icon-btn icon-btn__edit"></button>
+                <button id="list-groups-card-delete-btn" type="button" class="btn btn-danger p-0 icon-btn icon-btn__delete"></button>
+              </div>
+            </div>
+            <div id="list-groups-search" class="catalog-header">
+              <input id="list-groups-search-input" type="text" placeholder="поиск в группах">
+            </div>
+            <div id="list-groups-card-body" class="groups-card-block"></div>
+          </div>
+
+          <div id="group-goods-card" class="d-none">
+            <div id="group-goods-card-header" class="catalog-header">
+              <div class="catalog-header-title">
+                <button id="group-goods-return-btn" type="button" class="btn btn-success p-0 icon-btn icon-btn__return"></button>
+                <h2 id="group-name"></h2>
+              </div>
+              <div id="list-groups-goods-header-check-message"></div>
+              <div class="catalog-header-buttons">
+                <button id="group-goods-add-btn" type="button" class="btn btn-success p-0 icon-btn icon-btn__add" data-toggle="modal" data-target="#group-goods-add"></button>
+                <button id="group-goods-copy-btn" type="button" class="btn btn-success p-0 icon-btn icon-btn__copy" data-toggle="modal" data-target="#"></button>
+                <button id="group-goods-view-btn" type="button" class="btn btn-success p-0 icon-btn icon-btn__view"></button>
+                <button id="group-goods-sort-btn" type="button" class="btn btn-success p-0 icon-btn icon-btn__sort" data-toggle="modal" data-target="#group-goods-sort"></button>
+
+              </div>
+            </div>
+            <div id="list-groups-goods-search" class="catalog-header">
+              <input id="list-groups-goods-search-input" type="text" placeholder="поиск в товарах">
+            </div>
+            <div id="group-goods-card-body"></div>
+          </div>
+
+
+        </div>
+
+        <!-- =========== КОНТЕЙНЕРЫ / Справочники / Группы товаров =========== -->
+        <div class="tab-pane fade" id="list-cards" role="tabpanel" aria-labelledby="list-cards-list">
+          <div id="list-cards-card">
+
+            <div id="list-cards-header" class="catalog-header">
+              <div class="catalog-header-title">
+                <img src="img/ic_my_nomenclature.png" alt="">
+                <h2>ПРОИЗВОДСТВЕННЫЕ КАРТОЧКИ</h2>
+              </div>
+              <div class="catalog-header-buttons">
+                <button id="list-cards-card-add-btn" type="button" class="btn btn-success p-0 icon-btn icon-btn__add"></button>
+              </div>
+            </div>
+            <div id="list-cards-card-body" class="groups-card-block"></div>
+          </div>
+
+
+          <div id="card-resources" class="d-none">
+            <div id="card-resources-header" class="catalog-header">
+              <div class="catalog-header-title">
+                <button id="card-resources-return-btn" type="button" class="btn btn-success p-0 icon-btn icon-btn__return"></button>
+                <h2 id="card-resources-name"></h2>
+              </div>
+              <div class="catalog-header-buttons">
+                <button id="card-resources-edit-btn" type="button" class="btn btn-warning p-0 icon-btn icon-btn__edit"></button>
+                <button id="card-resources-delete-btn" type="button" class="btn btn-danger p-0 icon-btn icon-btn__delete"></button>
+              </div>
+            </div>
+            <div id="card-resources-body" class="catalog-header-title">
+
+              <div class="w-100 border">
+                <div class="catalog-header">
+                  <div class="catalog-header-title">
+                    <h2>Ресуры</h2>
+                    <div class="catalog-header-buttons">
+                      <button id="resources-add-btn" type="button" class="btn btn-success p-0 icon-btn icon-btn__add" data-toggle="modal" data-target="#cards-add"></button>
+                    </div>
+                  </div>
+                  <div id="card-resources-old-cost"></div>
+                </div>
+                <div id="card-resources-body-resources"></div>
+              </div>
+
+              <div class="w-100 ml-4 border">
+                <div class="catalog-header">
+                  <div class="catalog-header-title">
+                    <h2>Продукт</h2>
+                    <div class="catalog-header-buttons">
+                      <button id="product-add-btn" type="button" class="btn btn-success p-0 icon-btn icon-btn__add" data-toggle="modal" data-target="#cards-add"></button>
+                    </div>
+                  </div>
+                  <div id="card-resources-new-price"></div>
+                </div>
+                <div id="card-resources-body-product"></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ==================== КОНТЕЙНЕРЫ / Учет ==================== -->
+        <div class="tab-pane fade" id="list-docs" role="tabpanel" aria-labelledby="list-docs-list">
+          <p>ВСЕ ДОКУМЕНТЫ (UNDER CONSTRUCTION)</p>
+        </div>
+        <div class="tab-pane fade" id="list-reports" role="tabpanel" aria-labelledby="list-reports-list">
+          <p>ОТЧЕТЫ И АНАЛИТИКА (UNDER CONSTRUCTION)</p>
+        </div>
+
+        <!-- ==================== КОНТЕЙНЕРЫ / Справочники ==================== -->
+
+        <!-- =========== КОНТЕЙНЕРЫ / Справочники / Контрагенты =========== -->
+        <div class="tab-pane fade" id="list-contractors" role="tabpanel" aria-labelledby="list-contractors-list">
+          <div id="list-contractors-header" class="catalog-header">
+            <div id="list-contractors-header-type" class="catalog-header-title"></div>
+            <div class="catalog-header-buttons">
+              <button id="contractors-add-btn" type="button" class="btn btn-success p-0 icon-btn icon-btn__add" data-toggle="modal" data-target="#contractors-add"></button>
+            </div>
+
+          </div>
+          <div id="list-contractors-body"></div>
+
+          <div id="list-contractors-card" class="d-none">
+
+            <div id="list-contractors-card-header" class="d-flex justify-content-between align-items-center mb-2">
+              <div class="d-flex mr-auto pt-2 pb-2">
+                <button id="list-contractors-card-return-btn" type="button" class="btn btn-success p-0 icon-btn icon-btn__return"></button>
+                <h2 id="list-contractors-card-name"></h2>
+              </div>
+
+            </div>
+            <h3>Накладные:</h3>
+            <div id="list-contractors-card-body"></div>
+          </div>
+
+        </div>
+
+        <!-- =========== КОНТЕЙНЕРЫ / Справочники / Точки продаж =========== -->
+        <div class="tab-pane fade" id="list-points" role="tabpanel" aria-labelledby="list-points-list">
+          <div id="list-points-header" class="catalog-header">
+            <div class="catalog-header-title">
+              <img src="img/points.png" alt="">
+              <h2>ТОЧКИ ПРОДАЖ</h2>
+            </div>
+            <div class="catalog-header-buttons">
+              <button id="points-add-btn" type="button" class="btn btn-success p-0 icon-btn icon-btn__add" data-toggle="modal" data-target="#points-add"></button>
+              <button id="points-edit-btn" type="button" class="btn btn-warning p-0 icon-btn icon-btn__edit" data-toggle="modal" data-target="#points-edit"></button>
+              <button id="points-check" type="button" class="btn btn-success p-0 icon-btn icon-btn__check--white"></button>
+            </div>
+
+          </div>
+          <div id="list-points-body"></div>
+        </div>
+
+        <!-- =========== КОНТЕЙНЕРЫ / Справочники / Ключевые слова =========== -->
+        <div class="tab-pane fade" id="list-keywords" role="tabpanel" aria-labelledby="list-keywords-list">
+          <div id="list-keywords-header" class="catalog-header">
+            <div class="catalog-header-title">
+              <img src="img/tags.png" alt="">
+              <h2>КЛЮЧЕВЫЕ СЛОВА</h2>
+            </div>
+            <div class="catalog-header-buttons">
+              <button type="button" class="btn btn-success p-0 icon-btn icon-btn__add" data-toggle="modal" data-target="#keywords-add"></button>
+            </div>
+          </div>
+          <div id="list-keywords-body"></div>
+
+          <div id="list-keywords-card" class="d-none">
+            <div class="d-flex flex-nowrap align-items-center">
+              <div class="d-flex mr-auto align-items-center">
+                <button id="list-keywords-card-return-btn" type="button" class="btn btn-success p-0 icon-btn icon-btn__return"></button>
+                <h2 id="list-keywords-card-name"></h2>
+              </div>
+              <button id="list-keywords-card-check-btn" type="button" class="btn btn-link p-0 icon-btn icon-btn__rgb" data-toggle="modal" data-target="#keywords-card-edit-rgb"></button>
+              <button id="list-keywords-card-edit-btn" type="button" class="btn btn-warning p-0 icon-btn icon-btn__edit" data-toggle="modal" data-target="#keywords-card-edit"></button>
+              <button id="list-keywords-card-delete-btn" type="button" class="btn btn-danger p-0 icon-btn icon-btn__delete"></button>
+            </div>
+            <div id="list-keywords-card-edit" class="text-center"></div>
+          </div>
+
+        </div>
+
+        <!-- =========== КОНТЕЙНЕРЫ / Справочники / Предприятия =========== -->
+        <div class="tab-pane fade" id="list-enterprises" role="tabpanel" aria-labelledby="list-enterprises-list">
+          <div id="list-enterprises-header" class="catalog-header">
+            <div class="catalog-header-title">
+              <img src="img/enterprises.png" alt="">
+              <h2>ПРЕДПРИЯТИЯ</h2>
+            </div>
+            <div class="catalog-header-buttons">
+              <button type="button" class="btn btn-success p-0 icon-btn icon-btn__add" data-toggle="modal" data-target="#enterprises-add"></button>
+            </div>
+          </div>
+          <div id="list-enterprises-body"></div>
+
+          <div id="list-enterprises-card" class="d-none">
+            <div class="d-flex flex-nowrap align-items-center">
+              <div class="d-flex mr-auto align-items-center">
+                <button id="list-enterprises-card-return-btn" type="button" class="btn btn-success p-0 icon-btn icon-btn__return"></button>
+                <h2 id="list-enterprises-card-name"></h2>
+              </div>
+              <button id="list-enterprises-card-check-btn" type="button" class="btn btn-success p-0 icon-btn icon-btn__check--white"></button>
+              <button id="list-enterprises-card-edit-btn" type="button" class="btn btn-warning p-0 icon-btn icon-btn__edit" data-toggle="modal" data-target="#enterprises-card-edit"></button>
+              <button id="list-enterprises-card-delete-btn" type="button" class="btn btn-danger p-0 icon-btn icon-btn__delete"></button>
+            </div>
+            <div class="enterprise-card-block">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <div>
+                  <span>Баланс</span>
+                  <span id="list-enterprises-card-balance"></span>
+                </div>
+                <div id="list-enterprises-card-is-checked" class="p-0 bg-white icon icon__check d-none"></div>
+              </div>
+              <div>
+                <span>Дата создания</span>
+                <span id="list-enterprises-card-date"></span>
+              </div>
+              <div>
+                <span>Свойства</span>
+                <ul>
+                  <li>
+                    <span>Отрицательные остатки</span>
+                    <input id="list-enterprises-card-negative-tailings-switch" class="form-check-input position-static negative-switch" type="checkbox" value="option1" aria-label="...">
+                  </li>
+                  <li>
+                    <span>Отрицательный баланс</span>
+                    <input id="list-enterprises-card-negative-balance-switch" class="form-check-input position-static negative-switch" type="checkbox" value="option1" aria-label="...">
+                  </li>
+                </ul>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ==================== КОНТЕЙНЕРЫ / Журнал ==================== -->
+        <div class="tab-pane fade" id="list-log" role="tabpanel" aria-labelledby="list-log-list">
+          <div id="log-body" class="bg-white" role="alert"></div>
+
+          <div id="loader" class="progress text-white d-none" style="height: 25px;">
+            <div class="progress-bar progress-bar-striped progress-bar-animated text-white font-weight-bold text-uppercase bg-success" style="width: 100%" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">Ждем отрисовки порции карточек...</div>
+          </div>
+
+          <div id="loader-wait" class="progress text-white d-none" style="height: 25px;">
+            <div class="progress-bar progress-bar-striped progress-bar-animated text-white font-weight-bold text-uppercase" style="width: 100%" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">Ждем загрузки карточек...</div>
+          </div>
+
+          <div id="loader-finish" class="container-fluid bg-warning text-dark text-center d-none mb-5" style="height: 25;">На сервере нет ничего нового</div>
+          <div id="loader-fail" class="container-fluid bg-danger text-white text-center d-none mb-5" style="height: 25;">Сервер не возвратил данные</div>
+        </div>
+
+        <!-- ==================== КОНТЕЙНЕРЫ / Онлайн ==================== -->
+        <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list"></div>
+        <div class="tab-pane fade" id="list-users" role="tabpanel" aria-labelledby="list-users-list">
+          <p>ПОЛЬЗОВАТЕЛИ (UNDER CONSTRUCTION)</p>
+        </div>
+        <div class="tab-pane fade" id="list-setup" role="tabpanel" aria-labelledby="list-setup-list">
+          <p>НАСТРОЙКА (UNDER CONSTRUCTION)</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================= ФОРМЫ - МОДАЛЬНЫЕ ОКНА ========================= -->
+
+  <!-- Справочники / добавление предприятия -->
+  <div class="modal fade" id="enterprises-add" tabindex="-1" role="dialog" aria-labelledby="enterprises-add" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" style="width: 300px;" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="enterprises-add-label">Создать предприятие</h5>
+          <button id="enterprises-add-close" type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body">
+          <form id="enterprises-add-form" name="enterprises-add">
+            <div class="form-group">
+              <label for="enterprise-name">Название</label>
+              <input type="text" class="form-control" id="enterprise-name" aria-describedby="enterprise-name" placeholder="Название предприятия">
+              <span id="enterprises-name-valid" class="badge badge-danger w-100"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="enterprise-balance">Баланс</label>
+              <input type="text" class="form-control" id="enterprise-balance" placeholder="Баланс" value="0">
+              <span id="enterprise-balance-valid" class="badge badge-danger w-100"></span>
+            </div>
+            <div class="form-group d-flex justify-content-between">
+              <label for="enterprise-money">Валюта</label>
+              <select class="custom-select" id="enterprise-money">
+              <option value="rub" selected>RUB</option>
+              <option value="usd">USD</option>
+            </select>
+            </div>
+
+            <div id="enterprises-add-spinner" class="progress text-white mb-3 invisible">
+              <div class="progress-bar progress-bar-striped progress-bar-animated text-white font-weight-bold text-uppercase" style="width: 100%" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+
+            <button id="enterprises-add-submit" type="submit" class="btn btn-primary w-100" disabled>Создать</button>
+
+            <button id="enterprises-add-cancel" type="button" class="btn btn-danger w-100 mt-3" data-dismiss="modal">Отменить</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Справочники / редактирование карточки предприятия -->
+  <div class="modal fade" id="enterprises-card-edit" tabindex="-1" role="dialog" aria-labelledby="enterprises-card-edit" aria-hidden="true" backdrop="static">
+    <div class="modal-dialog" style="width: 300px;" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="enterprises-card-edit-label">Переименовать</h5>
+          <button id="enterprises-card-edit-close" type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body">
+          <form id="enterprises-card-edit-form" name="enterprises-card-edit">
+            <div class="form-group">
+              <label for="enterprises-card-edit-name">Название</label>
+              <input type="text" class="form-control" id="enterprises-card-edit-name" aria-describedby="enterprises-card-edit-name" placeholder="Название предприятия">
+              <span id="enterprises-card-edit-valid" class="badge badge-danger w-100"></span>
+            </div>
+
+            <div id="enterprises-card-edit-spinner" class="progress text-white mb-3 invisible">
+              <div class="progress-bar progress-bar-striped progress-bar-animated text-white font-weight-bold text-uppercase" style="width: 100%" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+
+            <button id="enterprises-card-edit-submit" type="submit" class="btn btn-primary w-100" disabled>Переименовать</button>
+            <button id="enterprises-card-edit-cancel" type="button" class="btn btn-danger w-100 mt-3" data-dismiss="modal">Отменить</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Справочники / создание новой точки -->
+  <div class="modal fade" id="points-add" tabindex="-1" role="dialog" aria-labelledby="points-add" aria-hidden="true" backdrop="static">
+    <div class="modal-dialog" style="width: 300px;" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="points-add-label">Создать точку</h5>
+          <button id="points-add-close" type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body">
+          <form id="points-add-form" name="points-add">
+            <div class="form-group">
+              <label for="points-add-name">Название</label>
+              <input type="text" class="form-control" id="points-add-name" aria-describedby="points-add-name" placeholder="Название точки">
+              <span id="points-add-valid" class="badge badge-danger w-100"></span>
+            </div>
+
+            <div id="points-add-spinner" class="progress text-white mb-3 invisible">
+              <div class="progress-bar progress-bar-striped progress-bar-animated text-white font-weight-bold text-uppercase" style="width: 100%" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+
+            <button id="points-add-submit" type="submit" class="btn btn-primary w-100" disabled>Создать</button>
+
+            <button id="points-add-cancel" type="button" class="btn btn-danger w-100 mt-3" data-dismiss="modal">Отменить</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Справочники / редактирование точки -->
+  <div class="modal fade" id="points-edit" tabindex="-1" role="dialog" aria-labelledby="points-edit" aria-hidden="true" backdrop="static">
+    <div class="modal-dialog" style="width: 300px;" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="points-edit-label">Редактировать точку</h5>
+          <button id="points-edit-close" type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body">
+          <form id="points-edit-form" name="points-edit">
+            <div class="form-group">
+              <label for="points-edit-name">Название</label>
+              <input type="text" class="form-control" id="points-edit-name" aria-describedby="points-edit-name" placeholder="Название точки">
+              <span id="points-edit-valid" class="badge badge-danger w-100"></span>
+            </div>
+
+            <div id="points-edit-spinner" class="progress text-white mb-3 invisible">
+              <div class="progress-bar progress-bar-striped progress-bar-animated text-white font-weight-bold text-uppercase" style="width: 100%" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+
+            <button id="points-edit-submit" type="submit" class="btn btn-primary w-100" disabled>Изменить</button>
+
+            <button id="points-edit-cancel" type="button" class="btn btn-danger w-100 mt-3" data-dismiss="modal">Отменить</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Справочники / добавление покупателя -->
+  <div class="modal fade" id="contractors-add" tabindex="-1" role="dialog" aria-labelledby="contractors-add" aria-hidden="true" backdrop="static">
+    <div class="modal-dialog" style="width: 300px;" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="contractors-add-label">Покупатель/Поставщик</h5>
+          <button id="contractors-add-close" type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body">
+          <form id="contractors-add-form" name="contractors-add">
+
+            <div class="form-group">
+              <label for="contractors-name">Название</label>
+              <input type="text" class="form-control" id="contractors-name" aria-describedby="contractors-name" placeholder="Название">
+              <span id="contractors-name-valid" class="badge badge-danger w-100"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="contractors-describe">Описание</label>
+              <input type="text" class="form-control" id="contractors-describe" aria-describedby="contractors-describe" placeholder="Описание">
+              <span id="contractors-describe-valid" class="badge badge-danger w-100"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="contractors-contact">Контактное лицо</label>
+              <input type="text" class="form-control" id="contractors-contact" aria-describedby="contractors-contact" placeholder="Контактное лицо">
+              <span id="contractors-contact-valid" class="badge badge-danger w-100"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="contractors-phone">Телефон</label>
+              <input type="text" class="form-control" id="contractors-phone" aria-describedby="contractors-phone" placeholder="Телефон">
+              <span id="contractors-phone-valid" class="badge badge-danger w-100"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="contractors-email">Email</label>
+              <input type="text" class="form-control" id="contractors-email" aria-describedby="contractors-email" placeholder="Email">
+              <span id="contractors-email-valid" class="badge badge-danger w-100"></span>
+            </div>
+
+            <div id="contractors-add-spinner" class="progress text-white mb-3 invisible">
+              <div class="progress-bar progress-bar-striped progress-bar-animated text-white font-weight-bold text-uppercase" style="width: 100%" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+
+            <button id="contractors-add-submit" type="submit" class="btn btn-primary w-100" disabled>Изменить</button>
+
+            <button id="contractors-add-cancel" type="button" class="btn btn-danger w-100 mt-3" data-dismiss="modal">Отменить</button>
+            <button id="contractors-add-bill" type="button" class="btn btn-info w-100 mt-3 d-none" data-dismiss="modal">Последние накладные</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Справочники / создание ключевого слова -->
+  <div class="modal fade" id="keywords-add" tabindex="-1" role="dialog" aria-labelledby="keywords-add" aria-hidden="true" backdrop="static">
+    <div class="modal-dialog" style="width: 300px;" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="keywords-add-label">Создать ключевое слово</h5>
+          <button id="keywords-add-close" type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body">
+          <form id="keywords-add-form" name="keywords-add">
+            <div class="form-group">
+              <label for="keywords-add-name">Новое название</label>
+              <input type="text" class="form-control" id="keywords-add-name" aria-describedby="keywords-add-name" placeholder="Название">
+              <span id="keywords-add-valid" class="badge badge-danger w-100"></span>
+            </div>
+
+            <div id="keywords-add-spinner" class="progress text-white mb-3 invisible">
+              <div class="progress-bar progress-bar-striped progress-bar-animated text-white font-weight-bold text-uppercase" style="width: 100%" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+
+            <button id="keywords-add-submit" type="submit" class="btn btn-primary w-100">Создать</button>
+
+            <button id="keywords-add-cancel" type="button" class="btn btn-danger w-100 mt-3" data-dismiss="modal">Отменить</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Справочники / изменение названия ключевого слова -->
+  <div class="modal fade" id="keywords-card-edit" tabindex="-1" role="dialog" aria-labelledby="keywords-card-edit-name" aria-hidden="true" backdrop="static">
+    <div class="modal-dialog" style="width: 300px;" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="keywords-card-edit-label">Изменить ключевое слово</h5>
+          <button id="keywords-card-edit-close" type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body">
+          <form id="keywords-card-edit-form" name="keywords-card-edit-name">
+            <div class="form-group">
+              <label for="keywords-card-edit-name">Новое название</label>
+              <input type="text" class="form-control" id="keywords-card-edit-name" aria-describedby="keywords-card-edit-name" placeholder="Название">
+              <span id="keywords-card-edit-valid" class="badge badge-danger w-100"></span>
+            </div>
+
+            <div id="keywords-card-edit-spinner" class="progress text-white mb-3 invisible">
+              <div class="progress-bar progress-bar-striped progress-bar-animated text-white font-weight-bold text-uppercase" style="width: 100%" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+
+            <button id="keywords-card-edit-submit" type="submit" class="btn btn-primary w-100" disabled>Изменить</button>
+
+            <button id="keywords-card-edit-cancel" type="button" class="btn btn-danger w-100 mt-3" data-dismiss="modal">Отменить</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Справочники / изменение цвета ключевого слова -->
+  <div class="modal fade" id="keywords-card-edit-rgb" tabindex="-1" role="dialog" aria-labelledby="keywords-card-edit-rgb" aria-hidden="true" backdrop="static">
+    <div class="modal-dialog" style="width: 200px;" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="keywords-card-edit-rgb-label">Изменить цвет</h5>
+          <button id="keywords-card-edit-rgb-close" type="button" class="close" data-dismiss="modal" aria-label="Close`">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body">
+          <form id="keywords-card-edit-rgb-form" name="keywords-card-edit-rgb">
+            <div class="form-group keywords-card-select-color-container d-flex flex-wrap justify-content-around">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input d-none" type="radio" name="keywords-card-edit-rgb" id="E70027" value="E70027">
+                <label class="form-check-label keywords-card-select-color" style="background-color: #E70027" for="E70027"></label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input d-none" type="radio" name="keywords-card-edit-rgb" id="00A1B6" value="00A1B6">
+                <label class="form-check-label keywords-card-select-color" style="background-color: #00A1B6" for="00A1B6"></label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input d-none" type="radio" name="keywords-card-edit-rgb" id="DCB131" value="DCB131">
+                <label class="form-check-label keywords-card-select-color" style="background-color: #DCB131" for="DCB131"></label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input d-none" type="radio" name="keywords-card-edit-rgb" id="009F39" value="009F39">
+                <label class="form-check-label keywords-card-select-color" style="background-color: #009F39" for="009F39"></label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input d-none" type="radio" name="keywords-card-edit-rgb" id="B154DE" value="B154DE">
+                <label class="form-check-label keywords-card-select-color" style="background-color: #B154DE" for="B154DE"></label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input d-none" type="radio" name="keywords-card-edit-rgb" id="6E81E4" value="6E81E4">
+                <label class="form-check-label keywords-card-select-color" style="background-color: #6E81E4" for="6E81E4"></label>
+              </div>
+            </div>
+
+            <div id="keywords-card-edit-rgb-spinner" class="progress text-white mb-3 invisible">
+              <div class="progress-bar progress-bar-striped progress-bar-animated text-white font-weight-bold text-uppercase" style="width: 100%" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+
+            <button id="keywords-card-edit-rgb-submit" type="submit" class="btn btn-primary w-100">Изменить</button>
+
+            <button id="keywords-card-edit-rgb-cancel" type="button" class="btn btn-danger w-100 mt-3" data-dismiss="modal">Отменить</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Каталог / создание группы -->
+  <div class="modal fade" id="groups-add" tabindex="-1" role="dialog" aria-labelledby="groups-add" aria-hidden="true" backdrop="static">
+    <div class="modal-dialog" style="width: 300px;" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="groups-add-label">Создать группу</h5>
+          <button id="groups-add-close" type="button" class="close" data-dismiss="modal" aria-label="Close" data-cancel>
+          <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body">
+          <form id="groups-add-form" name="groups-add" data-formName="formAddGroup">
+            <div class="form-group">
+              <label for="groups-add-name">Новое название</label>
+              <input type="text" class="form-control" id="groups-add-name" aria-describedby="groups-add-name" placeholder="Название" data-valid="name" data-validLabelName="name">
+              <span id="groups-add-valid" class="badge badge-danger w-100" data-validLabel="name"></span>
+            </div>
+
+            <div id="groups-add-spinner" class="progress text-white mb-3 invisible" data-spinner>
+              <div class="progress-bar progress-bar-striped progress-bar-animated text-white font-weight-bold text-uppercase" style="width: 100%" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+
+            <button id="groups-add-submit" type="submit" class="btn btn-primary w-100" disabled>Создать</button>
+
+            <button id="groups-add-cancel" type="button" class="btn btn-danger w-100 mt-3" data-dismiss="modal" data-butCancel data-cancel>Отменить</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Каталог / Редактирование группы -->
+
+  <div class="modal fade" id="groups-edit" tabindex="-1" role="dialog" aria-labelledby="groups-edit" aria-hidden="true" backdrop="static">
+    <div class="modal-dialog" style="width: 300px;" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="groups-edit-label">Редактировать группу</h5>
+          <button id="groups-edit-close" type="button" class="close" data-dismiss="modal" aria-label="Close" data-cancel>
+          <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body">
+          <form id="groups-edit-form" name="groups-edit" data-formName="formEditGroups">
+            <div class="form-group">
+              <label for="groups-edit-name">Новое название</label>
+              <input type="text" class="form-control" id="groups-edit-name" aria-describedby="groups-edit-name" placeholder="Название" data-valid="name" data-validLabelName="name">
+              <span id="groups-edit-valid" class="badge badge-danger w-100" data-validLabel="name" data-validLabel="name"></span>
+            </div>
+
+            <div id="groups-edit-spinner" class="progress text-white mb-3 invisible" data-spinner>
+              <div class="progress-bar progress-bar-striped progress-bar-animated text-white font-weight-bold text-uppercase" style="width: 100%" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+
+            <button id="groups-edit-submit" type="submit" class="btn btn-primary w-100" disabled>Изменить</button>
+
+            <button id="groups-edit-cancel" type="button" class="btn btn-danger w-100 mt-3" data-dismiss="modal" data-butCancel data-cancel>Отменить</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Каталог / Группы товаров / сортировка -->
+
+  <div class="modal fade" id="group-goods-sort" tabindex="-1" role="dialog" aria-labelledby="groups-edit" aria-hidden="true" backdrop="static">
+    <div class="modal-dialog" style="width: 300px;" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="group-goods-sort-label">Сортировать</h5>
+          <button id="group-goods-sort-close" type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body">
+
+
+          <button id="group-goods-sort-abc-up" type="submit" class="btn btn-primary w-100 mb-2">А - Я</button>
+          <button id="group-goods-sort-abc-down" type="submit" class="btn btn-primary w-100 mb-2">Я - А</button>
+          <button id="group-goods-sort-tailings-up" type="submit" class="btn btn-primary w-100 mb-2">Остатки (по возрастанию)</button>
+          <button id="group-goods-sort-tailings-down" type="submit" class="btn btn-primary w-100 mb-2">Остатки (по убыванию)</button>
+
+          <button id="group-goods-sort-cancel" type="button" class="btn btn-danger w-100 mt-3" data-dismiss="modal">Отменить</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Справочники / Группы товаров / Добавление товара -->
+  <div class="modal fade" id="group-goods-add" tabindex="-1" role="dialog" aria-labelledby="group-goods-add" aria-hidden="true" backdrop="static">
+    <div class="modal-dialog" style="width: 300px;" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="group-goods-add-label">Создание товара</h5>
+          <button id="group-goods-add-close" type="button" class="close" data-dismiss="modal" aria-label="Close" data-cancel>
+          <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body">
+          <form id="group-goods-add-form" name="group-goods-add" data-formName="formAddGoods">
+
+            <div class="form-group">
+              <label for="group-goods-name">Название</label>
+              <input type="text" class="form-control" id="group-goods-name" aria-describedby="group-goods-name" placeholder="Название" data-valid="name" data-validLabelName="name">
+              <span id="group-goods-name-valid" class="badge badge-danger w-100" data-validLabel="name"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="group-goods-describe">Описание</label>
+              <input type="text" class="form-control" id="group-goods-describe" aria-describedby="group-goods-describe" placeholder="Описание" data-valid="describe" data-validLabelName="describe">
+              <span id="group-goods-describe-valid" class="badge badge-danger w-100" data-validLabel="describe"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="group-goods-contact">Группа</label>
+              <input type="text" class="form-control" id="group-goods-group" aria-describedby="group-goods-group" placeholder="Группа" readonly>
+            </div>
+
+            <div class="form-group">
+              <label for="group-goods-price">Цена</label>
+              <div id="group-goods-price" class="d-flex">
+                <input type="text" class="form-control m-1" id="group-goods-price-purchase" aria-describedby="group-goods-price" placeholder="Цена" data-valid="purchase" data-validLabelName="goodsPrice">
+                <input type="text" class="form-control m-1" id="group-goods-price-extra" aria-describedby="group-goods-price" placeholder="Наценка" data-valid="percent" data-validLabelName="goodsPrice">
+                <input type="text" class="form-control m-1" id="group-goods-price-sell" aria-describedby="group-goods-price" placeholder="Цена" data-valid="price" data-validLabelName="goodsPrice">
+              </div>
+              <div class="d-flex">
+                <label class="w-100 m-1" for="group-goods-price-purchase"><small class="form-text text-muted text-center">Закупки</small></label>
+                <label class="w-100 m-1" for="group-goods-price-extra"><small class="form-text text-muted text-center">Наценка</small></label>
+                <label class="w-100 m-1" for="group-goods-price-sell"><small class="form-text text-muted text-center">Продажи</small></label>
+              </div>
+              <span id="group-goods-price-valid" class="badge badge-danger w-100" data-validLabel="goodsPrice"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="group-goods-barcode">Штрихкод</label>
+              <input type="text" class="form-control" id="group-goods-barcode" aria-describedby="group-goods-barcode" placeholder="Штрихкод" data-valid="barcode" data-validLabelName="barcode">
+              <span id="group-goods-barcode-valid" class="badge badge-danger w-100" data-validLabel="barcode"></span>
+            </div>
+
+            <div id="group-goods-add-spinner" class="progress text-white mb-3 invisible" data-spinner>
+              <div class="progress-bar progress-bar-striped progress-bar-animated text-white font-weight-bold text-uppercase" style="width: 100%" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+
+            <button id="group-goods-add-submit" type="submit" class="btn btn-primary w-100" disabled>Создание</button>
+
+            <button id="group-goods-add-cancel" type="button" class="btn btn-danger w-100 mt-3" data-dismiss="modal" data-butCancel data-cancel>Отменить</button>
+            <button id="group-goods-add-bill" type="button" class="btn btn-info w-100 mt-3 d-none" data-dismiss="modal">Последние накладные</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Справочники / Группы товаров / Карточка товара -->
+  <div class="modal fade" id="goods-card" tabindex="-1" role="dialog" aria-labelledby="goods-card" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <form id="goods-card-form" class="goods-card-form" name="goods-card" data-formName="formEditGoods">
+
+          <div class="modal-header">
+            <div class="form-group goods-card-name">
+              <input type="text" class="form-control" id="goods-card-name" aria-describedby="goods-card-name" placeholder="Название" data-valid="name" data-validLabelName="name">
+              <span id="goods-card-name-valid" class="badge badge-danger w-100" data-validLabel="name"></span>
+            </div>
+            <button id="goods-card-close" type="button" class="close" data-dismiss="modal" aria-label="Close" data-cancel>
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+          <div class="modal-body">
+            <div class="goods-card-string">
+
+              <div class="goods-card-first-row">
+                <div class="goods-card-img" width="300" height="300">
+                  <img id="goods-card-image" src="./img/not-available.png" alt="">
+                  <input type="file" class="d-none" id="goods-card-image-upload">
+                  <label class="custom-file-label btn btn-warning icon-btn icon-btn__edit" for="goods-card-image-upload"></label>
+                </div>
+              </div>
+
+              <div class="goods-card-second-row">
+                <div class="form-group">
+                  <label for="goods-card-describe">Описание</label>
+                  <textarea type="text" class="form-control" id="goods-card-describe" aria-describedby="goods-card-describe" placeholder="Описание" data-valid="describe" data-validLabelName="describe"></textarea>
+                  <span id="goods-card-describe-valid" class="badge badge-danger w-100" data-validLabel="describe"></span>
+                </div>
+
+                <div class="form-group">
+                  <label for="goods-card-barcode">Штрихкод</label>
+                  <input type="text" class="form-control" id="goods-card-barcode" aria-describedby="goods-card-barcode" placeholder="Штрихкод" data-valid="barcode" data-validLabelName="barcode">
+                  <span id="goods-card-barcode-valid" class="badge badge-danger w-100" data-validLabel="barcode"></span>
+                </div>
+
+                <div class="form-group">
+                  <label for="goods-card-group">Группа</label>
+                  <select id="goods-card-group" class="custom-select" data-valid="group" data-validLabelName="group">
+                    <option selected>Выберите группу</option>
+                  </select>
+                  <span id="goods-card-group-valid" class="badge badge-danger w-100" data-validLabel="group"></span>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="goods-card-string">
+              <div class="goods-card-first-row" id="goods-card-price-block">
+                <div class="price-total">
+                  <h4>Цена</h4>
+                  <h4 id="goods-card-price-extra" class="text-danger"></h4>
+                </div>
+                <input type="text" class="form-control" id="goods-card-price-purchase" aria-describedby="goods-card-price" placeholder="Наценка" data-valid="purchase" data-validLabelName="goodPrice">
+                <input type="text" class="form-control" id="goods-card-price-sell" aria-describedby="goods-card-price" placeholder="Цена" data-valid="price" data-validLabelName="goodPrice">
+                <span id="goods-card-price-valid" class="badge badge-danger w-100" data-validLabel="goodPrice"></span>
+              </div>
+
+              <div id="express-container" class="express-container goods-card-second-row">
+                <h4>Экспресс-операции</h4>
+                <div id="express-purchase">
+                  <span>Покупка</span>
+                  <button id="express-operation-purchase-5" type="button" class="btn btn-danger">5 шт.</button>
+                  <button id="express-operation-purchase-10" type="button" class="btn btn-danger">10 шт.</button>
+                  <button id="express-operation-purchase-15" type="button" class="btn btn-danger">15 шт.</button>
+                  <button id="express-purchase-custom" type="button" class="btn btn-danger">...</button>
+                </div>
+
+                <div id="express-sell">
+                  <span>Продажа</span>
+                  <button id="express-operation-sell-5-minus" type="button" class="btn btn-success">5 шт.</button>
+                  <button id="express-operation-sell-10-minus" type="button" class="btn btn-success">10 шт.</button>
+                  <button id="express-operation-sell-15-minus" type="button" class="btn btn-success">15 шт.</button>
+                  <button id="express-sell-custom-minus" type="button" class="btn btn-success">...</button>
+                </div>
+
+              </div>
+            </div>
+
+
+            <div id="goods-stock-header" class="goods-card-string">
+              <div class="col-8 d-flex">
+                <h4>Остатки</h4>
+                <button type="button" class="btn btn-warning p-0 icon-btn icon-btn__edit" data-toggle="modal" data-target="#set-stock-modal"></button>
+              </div>
+              <div class="col-4 d-flex justify-content-between">
+                <div class="w-100 text-center">
+                  <span class="icon icon__truck"></span>
+                </div>
+                <div class="w-100 text-center">
+                  <span class="icon icon__box"></span>
+                </div>
+                <div class="w-100 text-center">
+                  <span class="icon icon__male"></span>
+                </div>
+              </div>
+            </div>
+            <div id="goods-stock-body"></div>
+
+            <div class="catalog-header mt-3">
+              <div class="catalog-header-title">
+                <h4>Ключевые слова</h4>
+                <button type="button" class="btn btn-warning p-0 icon-btn icon-btn__edit" data-toggle="modal" data-target="#goods-card-keywords"></button>
+              </div>
+            </div>
+            <div id="goods-keywords"></div>
+
+
+            <div id="goods-card-spinner" class="progress text-white mb-3 invisible" data-spinner>
+              <div class="progress-bar progress-bar-striped progress-bar-animated text-white font-weight-bold text-uppercase" style="width: 100%" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+
+            <div class="goods-card-btns-container">
+              <button id="goods-card-submit" type="submit" class="btn btn-primary" disabled>Изменить</button>
+              <button id="goods-card-cancel" type="button" class="btn btn-danger" data-dismiss="modal" data-butCancel data-cancel>Отменить</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal" id="express-modal" tabindex="-1" role="dialog" aria-labelledby="express-modal" aria-hidden="true">
+    <div class="modal-dialog" style="width: 300px;" role="document">
+      <div class="modal-content">
+        <form id="express-modal-form" name="express-modal" data-formName="formExpressOperation">
+          <div class="modal-header">
+            <h5 class="modal-title" id="express-modal-label"></h5>
+            <button id="express-modal-close" type="button" class="close" data-dismiss="modal" aria-label="Close" data-cancel>
+            <span aria-hidden="true">&times;</span>
+          </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group row w-50">
+              <h5 class="modal-title" id="express-modal-stock"></h5>
+              <label class="col-sm-2 col-form-label" for="express-modal-price">Цена</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control m-1" id="express-modal-price" aria-describedby="express-modal-price" placeholder="Цена" data-valid="price" data-validLabelName="price">
+              </div>
+              <span id="express-modal-price-valid" class="badge badge-danger w-100" data-validLabel="price"></span>
+              <label class="col-sm-2 col-form-label" for="express-modal-quantity">Количество</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control m-1" id="express-modal-quantity" aria-describedby="express-modal-quantity" placeholder="Количество" data-valid="amount" data-validLabelName="amount">
+              </div>
+              <span id="express-modal-quantity-valid" class="badge badge-danger w-100" data-validLabel="amount"></span>
+            </div>
+
+            <div id="express-modal-spinner" class="progress text-white mb-3 invisible" data-spinner>
+              <div class="progress-bar progress-bar-striped progress-bar-animated text-white font-weight-bold text-uppercase" style="width: 100%" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+
+            <button id="express-modal-submit" type="submit" class="btn btn-primary w-100" disabled>Выполнить</button>
+            <button id="express-modal-cancel" type="button" class="btn btn-danger w-100 mt-3" data-dismiss="modal" data-butCancel data-cancel>Отменить</button>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="set-stock-modal" tabindex="-1" role="dialog" aria-labelledby="set-stock-modal" aria-hidden="true">
+    <div class="modal-dialog" style="width: 300px;" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="set-stock-modal-label">Изменить остатки</h5>
+          <button id="set-stock-modal-close" type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body">
+
+          <form id="set-stock-modal-form" name="set-stock-modal" data-formName="goodsCardStockModal">
+            <div class="form-group row w-50">
+              <h5 class="modal-title" id="set-stock-modal-stock"></h5>
+              <label class="col-sm-2 col-form-label" for="set-stock-modal-quantity">Количество</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control m-1" id="set-stock-modal-quantity" aria-describedby="set-stock-modal-quantity" placeholder="Количество" data-valid="amount" data-validLabelName="amount">
+              </div>
+              <span id="set-stock-modal-quantity-valid" class="badge badge-danger w-100" data-validLabel="amount"></span>
+            </div>
+
+            <div id="set-stock-modal-spinner" class="progress text-white mb-3 invisible" data-spinner>
+              <div class="progress-bar progress-bar-striped progress-bar-animated text-white font-weight-bold text-uppercase" style="width: 100%" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+
+            <button id="set-stock-modal-submit" type="submit" class="btn btn-primary w-100" disabled>Выполнить</button>
+            <button id="set-stock-modal-cancel" type="button" class="btn btn-danger w-100 mt-3" data-dismiss="modal" data-butCancel>Отменить</button>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal" id="add-resources-modal" tabindex="-1" role="dialog" aria-labelledby="add-resources-modal" aria-hidden="true">
+    <div class="modal-dialog" style="width: 300px;" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="add-resources-modal-label"></h5>
+          <button id="set-stock-modal-close" type="button" class="close" data-dismiss="modal" aria-label="Close" data-cancel>
+          <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body">
+
+          <form id="add-resources-modal-form" name="add-resources-modal-form" data-formName="addResource">
+            <div class="form-group">
+              <label for="add-resources-modal-quantity">Количество</label>
+              <input type="text" class="form-control" id="add-resources-modal-quantity" aria-describedby="add-resources-modal-quantity" placeholder="Количество" data-valid="quantity" data-validLabelName="quantity">
+              <span id="add-resources-modal-quantity-valid" class="badge badge-danger w-100" data-validLabel="quantity"></span>
+            </div>
+
+            <div id="add-resources-modal-spinner" class="progress text-white mb-3 invisible" data-spinner>
+              <div class="progress-bar progress-bar-striped progress-bar-animated text-white font-weight-bold text-uppercase" style="width: 100%" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+
+            <button id="add-resources-modal-submit" type="submit" class="btn btn-primary w-100" disabled>Добавить</button>
+            <button id="add-resources-modal-cancel" type="button" class="btn btn-danger w-100 mt-3" data-dismiss="modal" data-butCancel data-cancel>Отменить</button>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Справочники / Группы товаров / Карточка товара -->
+  <div id="goods-card-keywords" class="modal" tabindex="-1" role="dialog" aria-labelledby="goods-card-keywords" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 class="modal-title" id="goods-card-keywords-label">Редактирование связи ключевых слов к товару</h5>
+          <button id="goods-card-keywords-close" type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div id="goods-card-keywords-body"></div>
+        <div class="modal-footer">
+          <button id="goods-card-keywords-submit" type="button" class="btn btn-danger" data-dismiss="modal">Завершить</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Справочники / Группы товаров / Карточка товара -->
+  <div id="search-card-keywords" class="modal" tabindex="-1" role="dialog" aria-labelledby="search-card-keywords" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 class="modal-title" id="search-card-keywords-label">Выбрать ключевые слова для поиска</h5>
+          <button id="goods-card-keywords-close" type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div id="search-card-keywords-body"></div>
+        <div class="modal-footer">
+          <button id="search-card-keywords-submit" type="button" class="btn btn-danger" data-dismiss="modal">Поиск</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Завершить</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Справочники / Группы товаров / Карточка товара -->
+  <div id="card-resources-group" class="modal" tabindex="-1" role="dialog" aria-labelledby="card-resources-group" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 id="card-resources-title" class="modal-title">Выбор товара (выбор группы)</h5>
+          <button id="card-resources-group-close" type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div id="card-resources-search">
+          <button id="card-resources-modal-return-btn" type="button" class="btn btn-success p-0 icon-btn icon-btn__return"></button>
+          <input id="card-resources-search-input" type="text" placeholder="поиск в ресурсах">
+        </div>
+        <div id="card-resources-groups-body"></div>
+        <div class="modal-footer">
+          <button id="card-resources-group-submit" type="button" class="btn btn-danger" data-dismiss="modal">Завершить</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- МОДАЛЬНЫЕ ОКНА ДЛЯ ВЫВОДА УВЕДОМЛЕНИЙ И ПОДТВЕРЖДЕНИЯ ДЕЙСТВИЙ -->
+
+  <!-- Окно подтверждения действия при удалении -->
+  <div class="modal" id="modal-action-request" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 id="modal-action-request-title" class="modal-title"></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p id="modal-action-request-message"></p>
+        </div>
+        <div class="modal-footer">
+          <button id="modal-action-request-submit" type="button" class="btn btn-danger" data-dismiss="modal">Подтверждаю</button>
+          <button id="modal-action-request-cancel" type="button" class="btn btn-success" data-dismiss="modal">Ой, нет!</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Окно уведомления о событии -->
+  <div class="modal" id="modal-information" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 id="modal-information-title" class="modal-title"></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p id="modal-information-message"></p>
+        </div>
+        <div class="modal-footer">
+          <button id="modal-information-submit" type="button" class="btn btn-primary" data-dismiss="modal">Понятно</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- УНИВЕРСАЛЬНАЯ ФОРМА ДОБАВЛЕНИЯ -->
+  <div class="modal fade" id="universal-add" tabindex="-1" role="dialog" aria-labelledby="universal-add" aria-hidden="true" backdrop="static">
+    <div class="modal-dialog" style="width: 300px;" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="universal-add-label"></h5>
+          <button id="universal-add-close" type="button" class="close" data-dismiss="modal" aria-label="Close" data-cancel>
+          <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body">
+          <form id="universal-add-form" name="universal-add" data-formName="universalAdd">
+            <div class="form-group">
+              <label id="universal-add-name-label" for="universal-add-name"></label>
+              <input type="text" class="form-control" id="universal-add-name" aria-describedby="universal-add-name" placeholder="" data-valid="name" data-validLabelName="name">
+              <span id="universal-add-valid" class="badge badge-danger w-100" data-validLabel="name"></span>
+            </div>
+
+            <div id="universal-add-spinner" class="progress text-white mb-3 invisible" data-spinner>
+              <div class="progress-bar progress-bar-striped progress-bar-animated text-white font-weight-bold text-uppercase" style="width: 100%" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+
+            <button id="universal-add-submit" type="submit" class="btn btn-primary w-100" disabled>Создать</button>
+            <button id="universal-add-cancel" type="button" class="btn btn-danger w-100 mt-3" data-dismiss="modal" data-butCancel>Отменить</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--
+
+  <div class="informaion-light bg-info text-white">
+      <p id="informaion-light-message">Важное сообщение</p>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  </div>
+
+-->
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+  <!--<script src="script.min.js"></script>-->
+  <script src="js/settings.js"></script>
+  <script src="js/script.js"></script>
+
+  <!-- reCaptcha -->
+  <script src="https://www.google.com/recaptcha/api.js?onload=captchaOnLoadCallback&render=explicit" async defer></script>
+</body>
+
+</html>
