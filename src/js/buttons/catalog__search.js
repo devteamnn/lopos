@@ -5,9 +5,10 @@ import toolsMarkup from '../markup/tools.js';
 import groupsMarkup from '../markup/catalog-groups.js';
 import groups from './catalog-groups.js';
 import keywordsUniversal from './universal-keywords.js';
-import validity from './catalog__search--valid.js';
+import validity from './../tools/single-validation.js';
 
 import searchBarcode from './catalog__search-barcode.js';
+
 
 const listSearch = document.querySelector('#list-search-list');
 const listSearchBody = document.querySelector('#list-search-card-body');
@@ -61,7 +62,9 @@ const onlistSearchFormSubmit = (evt) => {
   // validity.start(listSearchForm);
   // validity.valid(listSearchInput);
   if (listSearchInput.value) {
-    makeSearch();
+    if (validity.valid(listSearchInput)) {
+      makeSearch();
+    }
   } else {
     listSearchBody.innerHTML = 'Ну скажите хоть что-нибудь...';
   }

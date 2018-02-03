@@ -8,12 +8,14 @@ const formInpitHandler = (evt) => {
 
   let parent = el.parentNode;
 
-  while (parent.tagName !== 'form') {
+  while (parent.tagName !== 'FORM') {
     parent = parent.parentNode;
   }
 
-  let span = parent.querySelrctor(`*[data-validLabel=${el.dataset.validlabelname}]`);
+  let span = parent.querySelector(`*[data-validLabel=${el.dataset.validlabelname}]`);
   span.innerHTML = '';
+
+  parent.querySelector('button[type="submit"]').disabled = false;
 
   el.removeEventListener('input', formInpitHandler);
 
@@ -24,24 +26,26 @@ const formInpitHandler = (evt) => {
 
 const inputValid = (el, variable) => {
   let pattern = window.appSettings[el.dataset.valisettings].validPatterns;
-  let message = window.appSettings[el.dataset.valisettings].validMessages;
+  let message = window.appSettings[el.dataset.valisettings].validMessage;
 
   if (!pattern[el.dataset.valid].test(el.value)) {
     el.addEventListener('input', formInpitHandler);
 
-    console.log('HANDLER DEL');
+    console.log('HANDLER ADD');
 
     el.classList.add('border');
     el.classList.add('border-danger');
 
     let parent = el.parentNode;
 
-    while (parent.tagName !== 'form') {
+    while (parent.tagName !== 'FORM') {
       parent = parent.parentNode;
     }
 
-    let span = parent.querySelrctor(`*[data-validLabel=${el.dataset.validlabelname}]`);
+    let span = parent.querySelector(`*[data-validLabel=${el.dataset.validlabelname}]`);
     span.innerHTML = message[el.dataset.valid];
+
+    parent.querySelector('button[type="submit"]').disabled = true;
 
     return false;
   }
