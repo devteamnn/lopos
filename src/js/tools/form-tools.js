@@ -85,9 +85,12 @@ const delHandlers = () => {
   modal.removeEventListener('click', modalClickHandler);
   form.removeEventListener('submit', formSubmitHandler);
   form.removeEventListener('input', formInputHandler);
-  form.querySelectorAll('*[data-cancel]').forEach((el) => {
-    el.removeEventListener('click', modalClickHandler);
+
+  modal.querySelectorAll('*[data-cancel]').forEach((el) => {
+    el.removeEventListener('click', cancelClickHandler);
   });
+
+  modal.removeEventListener('keydown', modalKeyDownHandler);
 };
 
 const formReset = () => {
@@ -169,13 +172,18 @@ const modalKeyDownHandler = (evt) => {
   }
 };
 
+const setSettingsVar = () => {
+  pattern = window.appSettings[form.dataset.formname].validPatterns;
+  message = window.appSettings[form.dataset.formname].validMessage;
+};
+
 const addHandlersFunc = (remoteModal, remoteSubmitCallback, remoteValidCallback) => {
   modal = remoteModal;
   form = modal.querySelector('*[data-formName]');
   submitCallback = remoteSubmitCallback;
   validCallback = remoteValidCallback;
-  pattern = window.appSettings[form.dataset.formname].validPatterns;
-  message = window.appSettings[form.dataset.formname].validMessage;
+
+  setSettingsVar();
 
   butSubmit = form.querySelector('button[type="submit"]');
   butCancel = form.querySelector('*[data-butCancel]');
@@ -201,6 +209,7 @@ const addHandlersFunc = (remoteModal, remoteSubmitCallback, remoteValidCallback)
 };
 
 const valEl = (el) => {
+
   if (pattern[el.dataset.valid].test(el.value)) {
     return true;
   }
@@ -208,12 +217,19 @@ const valEl = (el) => {
   return false;
 };
 
+const setForm = (remForm) => {
+  form = remForm;
+  setSettingsVar();
+};
+
 
 export default {
 
+  setFormVariable: setForm,
   work: addHandlersFunc,
   reset: formReset,
   removeHandlers: delHandlers,
   validElement: valEl,
-  submit: submitForm
+  submit: submitForm,
+  hideAlertMess: hideAlert
 };

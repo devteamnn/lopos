@@ -8,13 +8,15 @@ let appUrlEdit;
 let messages;
 
 let form;
-let name;
+let field1;
 let modal;
 
 const initVar = (remModal) => {
   modal = remModal;
   form = modal.querySelector('*[data-formName]');
-  name = form.querySelector('*[data-valid="name"]');
+
+  form.dataset.formname = 'nomenclatureAddEdit';
+  field1 = form.querySelector('*[data-valid="field1"]');
 
   appUrlAdd = window.appSettings[form.dataset.formname].UrlApiAdd;
   appUrlEdit = window.appSettings[form.dataset.formname].UrlApiEdit;
@@ -47,7 +49,7 @@ const callbackXhrSuccess = (response) => {
 const submitFormAdd = () => {
   const stor = dataStorage.data;
 
-  let postData = `name=${name.value}&token=${stor.token}`;
+  let postData = `name=${field1.value}&token=${stor.token}`;
   let urlApp = appUrlAdd.replace('{{dir}}', stor.directory);
   urlApp = urlApp.replace('{{oper}}', stor.operatorId);
   urlApp = urlApp.replace('{{busId}}', stor.currentBusiness);
@@ -63,7 +65,7 @@ const submitFormAdd = () => {
 const submitFormEdit = () => {
   const stor = dataStorage.data;
 
-  let postData = `name=${name.value}&token=${stor.token}`;
+  let postData = `name=${field1.value}&token=${stor.token}`;
   let urlApp = appUrlEdit.replace('{{dir}}', stor.directory);
   urlApp = urlApp.replace('{{oper}}', stor.operatorId);
   urlApp = urlApp.replace('{{busId}}', stor.currentBusiness);

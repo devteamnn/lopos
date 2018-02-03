@@ -287,9 +287,10 @@
                 <h2>ПОИСК</h2>
               </div>
               <div>
-                <form id="list-search-form" action="">
+                <form id="list-search-form" action="" data-formName="listSearchForm">
                   <button id="list-search-card-barcode-btn" type="button" class="btn btn-danger m-2 p-2">|||</button>
-                  <input id="list-search-input" type="text" placeholder="">
+                  <input id="list-search-input" type="text" placeholder="" data-valid="search" data-validLabelName="search">
+                  <span id="list-search-input-valid" class="badge badge-danger w-100" data-validLabel="search"></span>
                   <button id="list-search-btn" type="submit" class="btn btn-success">Искать</button>
                 </form>
               </div>
@@ -1382,11 +1383,11 @@
         </button>
         </div>
         <div class="modal-body">
-          <form id="universal-add-form" name="universal-add" data-formName="universalAdd">
+          <form id="universal-add-form" name="universal-add" data-formName="universalForm">
             <div class="form-group">
               <label id="universal-add-name-label" for="universal-add-name"></label>
-              <input type="text" class="form-control" id="universal-add-name" aria-describedby="universal-add-name" placeholder="" data-valid="name" data-validLabelName="name">
-              <span id="universal-add-valid" class="badge badge-danger w-100" data-validLabel="name"></span>
+              <input type="text" class="form-control" id="universal-add-name" aria-describedby="universal-add-name" placeholder="" data-valid="field1" data-validLabelName="field1">
+              <span id="universal-add-valid" class="badge badge-danger w-100" data-validLabel="field1"></span>
             </div>
 
             <div id="universal-add-spinner" class="progress text-white mb-3 invisible" data-spinner>

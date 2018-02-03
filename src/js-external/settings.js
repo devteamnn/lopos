@@ -293,14 +293,16 @@ window.appSettings = {
       'mes400': 'Некорректный запрос'
     }
   },
-  'universalAdd': {
+  'nomenclatureAddEdit': {
     'UrlApiAdd': '/lopos_directory/{{dir}}/operator/{{oper}}/business/{{busId}}/nomenclature_card',
     'UrlApiEdit': '/lopos_directory/{{dir}}/operator/{{oper}}/business/{{busId}}/nomenclature_card/{{NCid}}',
     'validPatterns': {
-      'name': /^[а-яёА-ЯЁA-Za-z\s\d]+$/,
+      // название производственной карты
+      'field1': /^[а-яёА-ЯЁA-Za-z\s\d]+$/,
     },
     'validMessage': {
-      'name': 'поле минимум 1 буква,<br>не должно содержать спецсимволы',
+      // название производственной карты
+      'field1': 'поле минимум 1 буква,<br>не должно содержать спецсимволы',
     },
     'messages': {
       'mes400': 'Некорректный запрос'
@@ -314,6 +316,33 @@ window.appSettings = {
     },
     'validMessage': {
       'quantity': 'минимум 1 цифра',
+    },
+    'messages': {
+      'mes400': 'Некорректный запрос'
+    }
+  },
+
+  'listSearchForm': {
+    'validPatterns': {
+      'search': /^[а-яёА-ЯЁA-Za-z\s\d]+$/,
+    },
+    'validMessage': {
+      'search': 'минимум 1 цифра',
+    },
+    'messages': {
+      'mes400': 'Некорректный запрос'
+    }
+  },
+
+  'searchBarcode': {
+    'UrlApi': '/lopos_directory/{{dir}}/operator/{{oper}}/business/{{busId}}/good_search',
+    'validPatterns': {
+      // поиск по штрихкоду
+      'field1': /^[а-яёА-ЯЁA-Za-z\s\d]{0,30}$/,
+    },
+    'validMessage': {
+      // поиск по штрихкоду
+      'field1': 'Штрихкод содержит спецсимволы<br>Максимальная длинна 30 символов',
     },
     'messages': {
       'mes400': 'Некорректный запрос'
