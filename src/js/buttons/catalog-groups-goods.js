@@ -100,15 +100,6 @@ const onSuccessGoodsLoad = (loadedGood) => {
   // saveForm();
   getKeywords.getKeywords(goodTags);
 
-  /*
-  goodsKeywords.innerHTML = '';
-  if (goodTags.length) {
-    goodTags.forEach((item) => keywordsUniversal.getDataAndDraw(goodsKeywords, onGoodKeywordClick, item));
-  } else {
-    goodsKeywords.innerHTML = 'Ключевых слов нет';
-  }
-  */
-
   if (auth.isGoodCardEdit === 'true') {
     restoreForm();
   }
@@ -125,59 +116,6 @@ $(goodsCardKeywordsModal).on('shown.bs.modal', () => {
 });
 
 getKeywords.getKeywords(goodTags);
-
-/*
-const onGoodKeywordClick = (evt) => {
-  auth.isGoodCardEdit = true;
-  saveForm();
-  const returnHandler = (e) => {
-    getGood();
-    $('#list-groups-list').tab('show');
-    $('#goods-card').modal('show');
-    e.target.removeEventListener('click', returnHandler);
-  };
-  referenceKeywords.showKeywordEdit(evt, returnHandler);
-  $('#goods-card').modal('hide');
-  $('#list-keywords-list').tab('show');
-};
-*/
-
-// обработчик клика по ключевому слову (пока внутри карточки связей "товар-слово")
-/*
-const onKeywordClick = (evt) => {
-  let clickedKeywordNode = evt.target;
-  const onSuccessKeywordsCompare = (keywordNode) => clickedKeywordNode.classList.toggle('keyword__mute');
-  let xhrType = (goodTags.every((tagItem) => (tagItem.id !== clickedKeywordNode.dataset.keywordId))) ? 'POST' : 'DELETE';
-  xhr.request = {
-    metod: xhrType,
-    url: `lopos_directory/${auth.data.directory}/operator/1/business/${auth.data.currentBusiness}/tag/${clickedKeywordNode.dataset.keywordId}/compare_meta`,
-    data: `good=${auth.currentGoodId}&token=${auth.data.token}`,
-    callbackSuccess: onSuccessKeywordsCompare,
-  };
-};
-*/
-
-// установка прозрачности
-/*
-const keywordModificator = (keywordId, keywordNode) => {
-  if (goodTags.every((tagItem) => (tagItem.id !== keywordId))) {
-    keywordNode.classList.add('keyword__mute');
-  }
-};
-*/
-/*
-$(goodsCardKeywordsModal).on('shown.bs.modal', () => {
-  auth.isGoodCardEdit = true;
-  saveForm();
-  keywordsUniversal.downloadAndDraw(goodsCardKeywordsBody, onKeywordClick, keywordModificator);
-  $(goodsCard).modal('hide');
-  goodFormEdit.removeHandlers();
-});
-
-$(goodsCardKeywordsModal).on('hidden.bs.modal', () => {
-  getGood();
-});
-*/
 
 goodsStock.addEventListener('change', (evt) => {
   auth.currentStockId = Number(evt.target.id.split('-')[1]);

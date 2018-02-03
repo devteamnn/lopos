@@ -285,18 +285,9 @@ const onCardResourcesDeleteBtnClick = (evt) => {
 
 cardResourcesDeleteBtn.addEventListener('click', onCardResourcesDeleteBtnClick);
 
-// const setRequestToAddCard = (name) => {
-//   xhr.request = {
-//     metod: 'POST',
-//     url: `lopos_directory/${auth.data.directory}/operator/1/business/${auth.data.currentBusiness}/nomenclature_card`,
-//     data: `name=${name}&token=${auth.data.token}`,
-//     callbackSuccess: getCards,
-//   };
-// };
-
 const setupUniversalAdd = () => {
   toolsMarkup.runUniversalAdd = {
-    title: 'Создание карточки (БЕЗ ВАЛИДАЦИИ)',
+    title: 'Создание карточки',
     inputLabel: 'Название',
     inputPlaceholder: 'введите название',
     submitBtnName: 'Создать',
@@ -305,21 +296,9 @@ const setupUniversalAdd = () => {
   cardAdd.start(universalAdd);
 };
 
-// const setRequestToAddEditCard = (name) => {
-//   xhr.request = {
-//     metod: 'PUT',
-//     url: `lopos_directory/${auth.data.directory}/operator/1/business/${auth.data.currentBusiness}/nomenclature_card/${auth.currentCardId}`,
-//     data: `name=${name}&token=${auth.data.token}`,
-//     callbackSuccess: () => {
-//       cardName.innerHTML = name;
-//       auth.currentCardName = name;
-//     },
-//   };
-// };
-
 const setupUniversalAddEdit = () => {
   toolsMarkup.runUniversalAdd = {
-    title: 'Редактирование карточки (БЕЗ ВАЛИДАЦИИ)',
+    title: 'Редактирование карточки',
     inputLabel: 'Название',
     inputPlaceholder: 'введите название',
     inputValue: auth.currentCardName,
@@ -338,7 +317,7 @@ export default {
     listCards.addEventListener('click', getCards);
   },
 
-  redraw: onListCardBodyClick,
+  redraw: getCards,
 
   stop() {
     cardsMarkup.cleanContainer();
