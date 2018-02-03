@@ -1,14 +1,13 @@
 import formTools from './../tools/form-tools.js';
 let form;
 
-
 const formInpitHandler = (evt) => {
   formTools.hideAlert(evt.target);
 };
 
 const addHandlers = (remform) => {
   form = remform;
-  formTools.setForm(form);
+  formTools.setFormVariable(form);
   form.addEventListener('input', formInpitHandler);
 };
 

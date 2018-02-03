@@ -5,6 +5,7 @@ import toolsMarkup from '../markup/tools.js';
 import groupsMarkup from '../markup/catalog-groups.js';
 import groups from './catalog-groups.js';
 import keywordsUniversal from './universal-keywords.js';
+import validity from './catalog__search--valid.js';
 
 import searchBarcode from './catalog__search-barcode.js';
 
@@ -42,6 +43,7 @@ const drawResult = (data) => {
 };
 
 const makeSearch = () => {
+  // ЗДЕСЬ СНИМАЕМ (здесь отрисованы результаты поиска, т.е. он прошел успешно)
   let selectedData = [];
   fullSearch.data.forEach((item) => {
     if (item.name.toLowerCase().indexOf(listSearchInput.value.toLowerCase()) !== -1) {
@@ -55,6 +57,9 @@ const makeSearch = () => {
 const onlistSearchFormSubmit = (evt) => {
   evt.preventDefault();
   listSearchBody.innerHTML = '';
+  // Здесь стартуем (пользователь ввел данные и нажал энтер, или кликнул на поиск)
+  // validity.start(listSearchForm);
+  // validity.valid(listSearchInput);
   if (listSearchInput.value) {
     makeSearch();
   } else {
