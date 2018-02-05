@@ -21,6 +21,8 @@ let percent;
 let barcode;
 let priceBlock;
 
+let inputInitValues;
+
 
 const initVar = (remModal) => {
   modal = remModal;
@@ -34,25 +36,83 @@ const initVar = (remModal) => {
   sell = form.querySelector('#goods-card-price-sell');
   percent = form.querySelector('#goods-card-price-extra');
   barcode = form.querySelector('#goods-card-barcode');
+  barcode = form.querySelector('#goods-card-barcode');
 
   appUrl1 = window.appSettings[form.dataset.formname].UrlApi1;
   appUrl2 = window.appSettings[form.dataset.formname].UrlApi2;
   appUrl3 = window.appSettings[form.dataset.formname].UrlApi3;
-  messages = window.appSettings[form.dataset.formname].message;
+  messages = window.appSettings[form.dataset.formname].messages;
+};
+
+const callbackXhrError = (xhr) => {
+
+  $('#goods-card').modal('hide');
+  formTools.reset();
+  catalogGroups.redrawGoods();
+
+  console.dir(xhr);
+
+  markup.informationtModal = {
+    'title': 'Error',
+    'message': xhr.response
+  };
+};
+
+const submitForm2 = () => {
+  const stor = dataStorage.data;
+  let postData = `token=${stor.token}&name=${name.value}&description=${describe.value}&group=${groupId.value}&barcode=${barcode.value}`;
+  let urlApp = appUrl1.replace('{{dir}}', stor.directory);
+  urlApp = urlApp.replace('{{oper}}', stor.operatorId);
+  urlApp = urlApp.replace('{{busId}}', stor.currentBusiness);
+  urlApp = urlApp.replace('{{goodId}}', dataStorage.currentGoodId);
+
+  formTools.submit({
+    url: urlApp,
+    metod: 'PUT',
+    data: postData,
+    callbackSuccess: callbackXhrSuccess2,
+    callbackError: callbackXhrError
+  });
+};
+
+const submitImg = () => {
+  const stor = dataStorage.data;
+  let postData = new FormData();
+  postData.append('token', stor.token);
+  postData.append('good', dataStorage.currentGoodId);
+  postData.append('file', img.files[0]);
+
+  let urlApp = appUrl3.replace('{{dir}}', stor.directory);
+
+  formTools.submit({
+    url: urlApp,
+    metod: 'POST',
+    data: postData,
+    callbackSuccess: callbackXhrImgLoadSuccess,
+    callbackError: callbackXhrError
+  });
+
 };
 
 const callbackXhrSuccess = (response) => {
   console.log('callbackXhr1');
   console.dir(response);
 
-  formTools.reset();
-  $('#goods-card').modal('hide');
-
   switch (response.status) {
   case 200:
-    catalogGroups.redrawGoods();
+
+    if (name.value !== inputInitValues[0] || describe.value !== inputInitValues[1] || barcode.value !== inputInitValues[2] || groupId.value !== inputInitValues[3]) {
+      submitForm2();
+    } else if (img.files.length !== 0) {
+      submitImg();
+    } else {
+      $('#goods-card').modal('hide');
+      formTools.reset();
+      catalogGroups.redrawGoods();
+    }
     break;
   case 400:
+    formTools.reset();
     markup.informationtModal = {
       'title': 'Error',
       'messages': messages.mes400
@@ -71,12 +131,15 @@ const callbackXhrSuccess2 = (response) => {
   console.log('callbackXhr2');
   console.dir(response);
 
-  formTools.reset();
-  $(modal).modal('hide');
-
   switch (response.status) {
   case 200:
-    catalogGroups.redrawGoods();
+    if (img.files.length !== 0) {
+      submitImg();
+    } else {
+      formTools.reset();
+      $('#goods-card').modal('hide');
+      catalogGroups.redrawGoods();
+    }
     break;
   case 400:
     markup.informationtModal = {
@@ -94,11 +157,17 @@ const callbackXhrSuccess2 = (response) => {
 };
 
 const callbackXhrImgLoadSuccess = (response) => {
-  console.log('callbackXhr2');
+  console.log('callbackImg');
   console.dir(response);
 
   switch (response.status) {
-  case 200:console.log('img load - ok'); break;
+  case 200:
+    console.log('img load - ok');
+
+    formTools.reset();
+    $('#goods-card').modal('hide');
+    catalogGroups.redrawGoods();
+    break;
   case 400:
     markup.informationtModal = {
       'title': 'Error',
@@ -117,21 +186,8 @@ const callbackXhrImgLoadSuccess = (response) => {
 const submitForm = () => {
   const stor = dataStorage.data;
 
-  let postData = `token=${stor.token}&name=${name.value}&description=${describe.value}&group=${groupId.value}&barcode=${barcode.value}`;
-  let urlApp = appUrl1.replace('{{dir}}', stor.directory);
-  urlApp = urlApp.replace('{{oper}}', stor.operatorId);
-  urlApp = urlApp.replace('{{busId}}', stor.currentBusiness);
-  urlApp = urlApp.replace('{{goodId}}', dataStorage.currentGoodId);
-
-  formTools.submit({
-    url: urlApp,
-    metod: 'PUT',
-    data: postData,
-    callbackSuccess: callbackXhrSuccess
-  });
-
-  postData = `token=${stor.token}&purchase_price=${purchase.value}&selling_price=${sell.value}`;
-  urlApp = appUrl2.replace('{{dir}}', stor.directory);
+  let postData = `token=${stor.token}&purchase_price=${purchase.value}&selling_price=${sell.value}`;
+  let urlApp = appUrl2.replace('{{dir}}', stor.directory);
   urlApp = urlApp.replace('{{oper}}', stor.operatorId);
   urlApp = urlApp.replace('{{busId}}', stor.currentBusiness);
   urlApp = urlApp.replace('{{goodId}}', dataStorage.currentGoodId);
@@ -140,7 +196,8 @@ const submitForm = () => {
     url: urlApp,
     metod: 'POST',
     data: postData,
-    callbackSuccess: callbackXhrSuccess2
+    callbackSuccess: callbackXhrSuccess,
+    callbackError: callbackXhrError
   });
 };
 
@@ -158,36 +215,22 @@ const calcPrice = (evt) => {
   return true;
 };
 
-const imgChangeHandler = (evt) => {
-  const stor = dataStorage.data;
-
-  let postData = new FormData();
-  postData.append('token', stor.token);
-  postData.append('good', dataStorage.currentGoodId);
-  postData.append('file', img.files[0]);
-  let urlApp = appUrl3.replace('{{dir}}', stor.directory);
-
-  let data = {
-    url: urlApp,
-    metod: 'POST',
-    data: postData,
-    callbackSuccess: callbackXhrImgLoadSuccess
-  };
-
-  console.dir(data);
-  formTools.submit(data);
-};
-
 export default {
 
   start(remModal) {
     console.log('Card-Edit-START!');
     initVar(remModal);
     percent.innerHTML = calcPr();
+
+    inputInitValues = [];
+    inputInitValues[0] = name.value;
+    inputInitValues[1] = describe.value;
+    inputInitValues[2] = barcode.value;
+    inputInitValues[3] = groupId.value;
+
     formTools.work(modal, submitForm);
 
     priceBlock.addEventListener('change', calcPrice);
-    img.addEventListener('change', imgChangeHandler);
   },
 
   stop() {

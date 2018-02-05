@@ -1,4 +1,5 @@
 import toolsMarkup from '../markup/tools.js';
+import formTools from './../tools/form-tools.js';
 
 export default {
 
@@ -38,21 +39,28 @@ export default {
           }
 
         } catch (error) {
-          requestParameters.callbackError(getError(ErrorAttr.MESSADGE.JSON_ERR,
-            26, error));
+          toolsMarkup.informationtModal = {
+            title: 'Что-то пошло не так...',
+            message: 'Ошибка парсинга JSON'
+          };
         }
 
         requestParameters.callbackSuccess(response);
       } else {
-        requestParameters.callbackError(
-          getError(`${ErrorAttr.MESSADGE.LOAD_ERR} ${xhr.statusText}`,
-          35, ''));
+        if (requestParameters.callbackError && typeof requestParameters.callbackError === 'function') {
+          requestParameters.callbackError(xhr);
+        } else {
+          toolsMarkup.informationtModal = {
+            title: 'Что-то пошло не так...',
+            message: 'Ошибка связи с сервером'
+          };
+        }
       }
     });
 
     xhr.addEventListener('error', function () {
       if (requestParameters.callbackError && typeof requestParameters.callbackError === 'function') {
-        requestParameters.callbackError(getError(`${ErrorAttr.MESSADGE.CONNECT_ERR} ${xhr.statusText}`, 42, ''));
+        requestParameters.callbackError(xhr);
       } else {
         toolsMarkup.informationtModal = {
           title: '400',
@@ -64,7 +72,7 @@ export default {
 
     xhr.addEventListener('timeout', function () {
       if (requestParameters.callbackError && typeof requestParameters.callbackError === 'function') {
-        requestParameters.callbackError(getError(`${ErrorAttr.MESSADGE.CONNECT_ERR} (${xhr.timeout}ms.)`, 50, ''));
+        requestParameters.callbackError(xhr);
       } else {
         toolsMarkup.informationtModal = {
           title: '400',
@@ -75,11 +83,7 @@ export default {
 
     xhr.timeout = window.appSettings.xhrSettings.timeout;
     xhr.open(requestParameters.metod, window.appSettings.xhrSettings.urlApi + requestParameters.url, true);
-    xhr.setRequestHeader('Content-Type', window.appSettings.xhrSettings.contentType);
-
-    if (requestParameters.metod === 'GET') {
-      requestParameters.data = '';
-    }
+    // xhr.setRequestHeader('Content-Type', window.appSettings.xhrSettings.contentType);
 
     xhr.send(requestParameters.data);
   }

@@ -51,7 +51,7 @@ let validCallback;
 let elSaveValues;
 
 const showAlert = (el) => {
-  if (el.dataset.valid) {
+  if (el.dataset.valid && (el.dataset.valid !== 'none')) {
     el.classList.add('border');
     el.classList.add('border-danger');
     form.querySelector(`*[data-validLabel="${el.dataset.validlabelname}"]`).innerHTML =
@@ -60,7 +60,7 @@ const showAlert = (el) => {
 };
 
 const hideAlert = (el) => {
-  if (el.dataset.valid) {
+  if (el.dataset.valid && (el.dataset.valid !== 'none')) {
     el.classList.remove('border');
     el.classList.remove('border-danger');
     form.querySelector(`*[data-validLabel="${el.dataset.validlabelname}"]`).innerHTML = '';
@@ -112,9 +112,11 @@ const validateForm = () => {
   let elements = form.querySelectorAll('*[data-valid]');
 
   elements.forEach((el) => {
-    if (!pattern[el.dataset.valid].test(el.value)) {
-      valid = false;
-      showAlert(el);
+    if (el.dataset.valid !== 'none') {
+      if (!pattern[el.dataset.valid].test(el.value)) {
+        valid = false;
+        showAlert(el);
+      }
     }
   });
 
@@ -191,7 +193,8 @@ const addHandlersFunc = (remoteModal, remoteSubmitCallback, remoteValidCallback)
 
   elSaveValues = [];
 
-  form.querySelectorAll('*[data-valid]').forEach((el) => {
+  let elements = form.querySelectorAll('*[data-valid]');
+  elements.forEach((el) => {
     elSaveValues.push(el.value);
   });
 
@@ -217,19 +220,11 @@ const valEl = (el) => {
   return false;
 };
 
-const setForm = (remForm) => {
-  form = remForm;
-  setSettingsVar();
-};
-
-
 export default {
 
-  setFormVariable: setForm,
   work: addHandlersFunc,
   reset: formReset,
   removeHandlers: delHandlers,
   validElement: valEl,
   submit: submitForm,
-  hideAlertMess: hideAlert
 };
