@@ -1,5 +1,4 @@
 import toolsMarkup from '../markup/tools.js';
-import formTools from './../tools/form-tools.js';
 
 export default {
 

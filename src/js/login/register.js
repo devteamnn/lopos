@@ -97,7 +97,14 @@ let validateForm = function (name, email, password, confirm, userAgreement) {
 };
 
 let getRequestData = function (name, email, password) {
-  let requestData = `email=${email}&phone=&password=${password}&nickname=${name}&prefer_language=ru`;
+  // let requestData = `email=${email}&phone=&password=${password}&nickname=${name}&prefer_language=ru`;
+  let requestData = new FormData();
+  requestData.append('email', email);
+  requestData.append('phone', '');
+  requestData.append('password', password);
+  requestData.append('nickname', name);
+  requestData.append('prefer_language', 'ru');
+
   return {
     url: regUrlApi,
     metod: 'POST',

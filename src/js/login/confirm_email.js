@@ -1,6 +1,7 @@
 import xhr from './../tools/xhr.js';
 import dataStorage from './../tools/storage.js';
 import mainWindow from './main_login_window.js';
+import markTools from './../markup/tools.js';
 
 const kodVal = window.appSettings.confirmEmailKodValid;
 const urlApi = window.appSettings.confirmEmailUrlApi;
@@ -10,19 +11,20 @@ let callbackXhrSuccess = function (response) {
 
   if (response.status === 200) {
     if (response.data.status === '0') {
-      mainWindow.setAlert(window.appSettings.messages.responseStatus.res0, 'message');
+      markTools.setAlert = 'ОШИБКА: ' +
+        window.appSettings.messages.responseStatus.res0;
     } else {
       dataStorage.data = response.data;
       document.dispatchEvent(new Event('loginSuccess'));
     }
   } else {
-    mainWindow.setAlert(response.message, 'error');
+    markTools.setAlert = 'ОШИБКА: ' + response.message;
   }
 };
 
 let callbackXhrError = function (response) {
   mainWindow.hideProgress('emailConfirmButtonSubmit', 'confirmProgress');
-  mainWindow.setAlert(window.appSettings.messages.xhrError, 'error');
+  markTools.setAlert = 'ОШИБКА: ' + window.appSettings.messages.xhrError;
 };
 
 let validateForm = function (kod) {
@@ -37,7 +39,11 @@ let validateForm = function (kod) {
 
 let getRequestData = function (kod, email) {
 
-  let requestData = `email=${email}&validate_code=${kod}&preferable_language=ru`;
+  // let requestData = `email=${email}&validate_code=${kod}&preferable_language=ru`;
+  let requestData = new FormData();
+  requestData.append('email', email);
+  requestData.append('validate_code', kod);
+  requestData.append('preferable_language', 'ru');
   return {
     url: urlApi,
     metod: 'POST',

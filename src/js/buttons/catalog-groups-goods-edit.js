@@ -53,8 +53,8 @@ const callbackXhrError = (xhr) => {
   console.dir(xhr);
 
   markup.informationtModal = {
-    'title': 'Error',
-    'message': xhr.response
+    'title': 'ОШИБКА СВЯЗИ',
+    'message': `Ошибка ${xhr.status}: ${xhr.statusText}`
   };
 };
 

@@ -1,5 +1,6 @@
 import xhr from './../tools/xhr.js';
 import mainWindow from './main_login_window.js';
+import markTools from './../markup/tools.js';
 
 const emailVal = window.appSettings.forgotEmailValid;
 const urlApi = window.appSettings.forgotUrlApi;
@@ -8,15 +9,17 @@ let callbackXhrSuccess = function (response) {
   mainWindow.hideProgress('forgotButtonSubmit', 'forgotProgress');
 
   if (response.status === 400) {
-    mainWindow.setAlert(response.message, 'message');
+    markTools.setAlert = 'ОШИБКА: ' + response.message;
   } else {
-    mainWindow.setAlert(response.message, 'error');
+    // зеленое сообщение
+    markTools.setAlert = response.message;
   }
 };
 
 let callbackXhrError = function (response) {
   mainWindow.hideProgress('forgotButtonSubmit', 'forgotProgress');
-  mainWindow.setAlert(window.appSettings.messages.xhrError, 'error');
+  markTools.setAlert = 'ОШИБКА: ' +
+    window.appSettings.messages.xhrError;
 };
 
 let validateForm = function (email) {
@@ -31,7 +34,10 @@ let validateForm = function (email) {
 
 let getRequestData = function (email) {
 
-  let requestData = `email=${email}`;
+  // let requestData = `email=${email}`;
+  let requestData = new FormData();
+  requestData.append('email', email);
+
   return {
     url: urlApi,
     metod: 'POST',

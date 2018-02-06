@@ -123,16 +123,11 @@ const validateForm = () => {
   return valid && otherValid;
 };
 
-const formIsChange = () => {
-  let change = false;
-
-  form.querySelectorAll('*[data-valid]').forEach((el, index) => {
-    if (el.value !== elSaveValues[index]) {
-      change = true;
-    }
-  });
-
-  return change;
+const elementIsChange = (el, index) => {
+  if (el.value !== elSaveValues[index]) {
+    return true;
+  }
+  return false;
 };
 
 const formSubmitHandler = (evt) => {
@@ -149,12 +144,42 @@ const submitForm = (data) => {
 };
 
 const formInputHandler = (evt) => {
-  hideAlert(evt.target);
+  if (evt.target.tagName === 'INPUT' && evt.target.type !== 'file') {
+    hideAlert(evt.target);
 
-  if (formIsChange()) {
-    butSubmit.disabled = false;
-  } else {
-    butSubmit.disabled = true;
+    let change = false;
+
+    form.querySelectorAll('*[data-valid]').forEach((el, index) => {
+      if (elementIsChange(el, index)) {
+        change = true;
+      }
+    });
+
+    if (change) {
+      butSubmit.disabled = false;
+    } else {
+      butSubmit.disabled = true;
+    }
+  }
+};
+
+const formChangeHandler = (evt) => {
+  if (evt.target.tagName === 'INPUT' && evt.target.type === 'file') {
+    hideAlert(evt.target);
+
+    let change = false;
+
+    form.querySelectorAll('*[data-valid]').forEach((el, index) => {
+      if (elementIsChange(el, index)) {
+        change = true;
+      }
+    });
+
+    if (change) {
+      butSubmit.disabled = false;
+    } else {
+      butSubmit.disabled = true;
+    }
   }
 };
 
@@ -200,6 +225,7 @@ const addHandlersFunc = (remoteModal, remoteSubmitCallback, remoteValidCallback)
 
   form.addEventListener('submit', formSubmitHandler);
   form.addEventListener('input', formInputHandler);
+  form.addEventListener('change', formChangeHandler);
   modal.querySelectorAll('*[data-cancel]').forEach((el) => {
     el.addEventListener('click', cancelClickHandler);
   });

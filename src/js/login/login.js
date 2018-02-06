@@ -2,6 +2,7 @@ import xhr from './../tools/xhr.js';
 import dataStorage from './../tools/storage.js';
 import form from './form_login.js';
 import mainWindow from './main_login_window.js';
+import markTools from './../markup/tools.js';
 
 const validId = window.appSettings.loginValid.id;
 const validEmail = window.appSettings.loginValid.email;
@@ -13,27 +14,34 @@ let callbackXhrSuccess = function (response) {
 
   if (response.status === 200) {
     if (response.data.status === '0') {
-      mainWindow.setAlert(window.appSettings.messages.responseStatus.res0, 'message');
+      markTools.setAlert = 'ОШИБКА: ' +
+        window.appSettings.messages.responseStatus.res0;
+
     } else {
       dataStorage.data = response.data;
       document.dispatchEvent(new Event('loginSuccess'));
     }
   } else {
-    mainWindow.setAlert(response.message, 'error');
+    markTools.setAlert = response.message;
   }
 };
 
 let callbackXhrError = function (response) {
   mainWindow.hideProgress('loginButtonSubmit', 'loginProgress');
-  mainWindow.setAlert(window.appSettings.messages.xhrError, 'error');
+  markTools.setAlert = 'ОШИБКА: ' + window.appSettings.messages.xhrError;
 };
 
 let getRequestDataEmail = function (userLogin, userPassword) {
-  let dataApi = `email=${userLogin}&deviceToken=-&password=${userPassword}`;
+  // let dataApi = `email=${userLogin}&deviceToken=-&password=${userPassword}`;
+  let requestData = new FormData();
+  requestData.append('email', userLogin);
+  requestData.append('deviceToken', '-');
+  requestData.append('password', userPassword);
+
   return {
     url: window.appSettings.loginUrlApi.email,
     metod: 'POST',
-    data: dataApi,
+    data: requestData,
     callbackSuccess: callbackXhrSuccess,
     callbackError: callbackXhrError
   };
@@ -45,12 +53,16 @@ let getRequestDataId = function (userLogin, userPassword) {
   let operator = userLogin.substr(8);
 
   let urlApi = window.appSettings.loginUrlApi.id.replace('{{dir}}', folder);
-  let dataApi = `operator=${operator}&deviceToken=-&password=${userPassword}`;
+  // let dataApi = `operator=${operator}&deviceToken=-&password=${userPassword}`;
+  let requestData = new FormData();
+  requestData.append('operator', operator);
+  requestData.append('deviceToken', '-');
+  requestData.append('password', userPassword);
 
   return {
     url: urlApi,
     metod: 'POST',
-    data: dataApi,
+    data: requestData,
     callbackSuccess: callbackXhrSuccess,
     callbackError: window.callbackXhrError
   };

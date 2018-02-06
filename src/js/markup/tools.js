@@ -3,9 +3,9 @@ const modalActionRequestTitle = modalActionRequest.querySelector('#modal-action-
 const modalActionRequestMessage = modalActionRequest.querySelector('#modal-action-request-message');
 const modalActionRequestSubmit = modalActionRequest.querySelector('#modal-action-request-submit');
 
-const modalInformation = document.querySelector('#modal-information');
-const modalInformationTitle = modalInformation.querySelector('#modal-information-title');
-const modalInformationMessage = modalInformation.querySelector('#modal-information-message');
+// const modalInformation = document.querySelector('#modal-information');
+// const modalInformationTitle = modalInformation.querySelector('#modal-information-title');
+// const modalInformationMessage = modalInformation.querySelector('#modal-information-message');
 
 const modalUniversalAdd = document.querySelector('#universal-add');
 const modalUniversalAddLabel = document.querySelector('#universal-add-label');
@@ -13,6 +13,8 @@ const modalUniversalAddForm = document.querySelector('#universal-add-form');
 const modalUniversalAddName = document.querySelector('#universal-add-name');
 const modalUniversalAddNameLabel = document.querySelector('#universal-add-name-label');
 const modalUniversalAddSubmit = document.querySelector('#universal-add-submit');
+
+const alertBlock = document.querySelector('#alertBlock');
 
 export default {
 
@@ -48,10 +50,20 @@ export default {
     modalActionRequestSubmit.addEventListener('click', requestHandler);
   },
 
+  // set informationtModal(setup) {
+  //   $(modalInformation).modal('show');
+  //   modalInformationTitle.innerHTML = setup.title;
+  //   modalInformationMessage.innerHTML = setup.message;
+  // },
+
   set informationtModal(setup) {
-    $(modalInformation).modal('show');
-    modalInformationTitle.innerHTML = setup.title;
-    modalInformationMessage.innerHTML = setup.message;
+    alertBlock.innerHTML = alertBlock.innerHTML +
+      `<div id="alert" class="alert alert-danger fade show" role="alert">
+        <strong>${setup.title} </strong> ${setup.message}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>`;
   },
 
   set informationModalLight(setup) {
