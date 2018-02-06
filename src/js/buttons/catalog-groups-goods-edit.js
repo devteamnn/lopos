@@ -46,11 +46,9 @@ const initVar = (remModal) => {
 
 const callbackXhrError = (xhr) => {
 
-  $('#goods-card').modal('hide');
+  $(modal).modal('hide');
   formTools.reset();
   catalogGroups.redrawGoods();
-
-  console.dir(xhr);
 
   markup.informationtModal = {
     'title': 'ОШИБКА СВЯЗИ',

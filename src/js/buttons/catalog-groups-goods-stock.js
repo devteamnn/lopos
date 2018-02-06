@@ -39,6 +39,17 @@ const callbackXhrSuccess = (response) => {
   }
 };
 
+const callbackXhrError = (xhr) => {
+
+  $(modal).modal('hide');
+  formTools.reset();
+
+  markup.informationtModal = {
+    'title': 'ОШИБКА СВЯЗИ',
+    'message': `Ошибка ${xhr.status}: ${xhr.statusText}`
+  };
+};
+
 const submitForm = () => {
   const stor = dataStorage.data;
   let value = amount.value;
@@ -54,7 +65,8 @@ const submitForm = () => {
     url: urlApp,
     metod: 'POST',
     data: postData,
-    callbackSuccess: callbackXhrSuccess
+    callbackSuccess: callbackXhrSuccess,
+    callbackError: callbackXhrError
   });
 };
 
