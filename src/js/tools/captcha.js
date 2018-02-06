@@ -2,11 +2,15 @@ import formRegister from './../login/form_register.js';
 import formLogin from './../login/form_login.js';
 import formConfirmEmail from './../login/form_confirm_email.js';
 import formForgot from './../login/form_forgot.js';
-import mainWindow from './../login/main_login_window.js';
+import markTools from './../markup/tools.js';
 
 let captchaErrorCallback = function (response) {
   window.captchaErr = true;
-  mainWindow.setAlert(window.appSettings.messages.captchaError, 'error');
+
+  markTools.informationtModal = {
+    title: 'ОШИБКА: ',
+    message: window.appSettings.messages.captchaError
+  };
 };
 
 export default {

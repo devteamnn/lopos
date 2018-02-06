@@ -9,17 +9,27 @@ let callbackXhrSuccess = function (response) {
   mainWindow.hideProgress('forgotButtonSubmit', 'forgotProgress');
 
   if (response.status === 400) {
-    markTools.setAlert = 'ОШИБКА: ' + response.message;
+
+    markTools.informationtModal = {
+      'title': 'ОШИБКА: ',
+      'message': response.message
+    };
   } else {
     // зеленое сообщение
-    markTools.setAlert = response.message;
+    markTools.informationtModal = {
+      'title': 'УСПЕХ: ',
+      'message': response.message
+    };
   }
 };
 
 let callbackXhrError = function (response) {
   mainWindow.hideProgress('forgotButtonSubmit', 'forgotProgress');
-  markTools.setAlert = 'ОШИБКА: ' +
-    window.appSettings.messages.xhrError;
+
+  markTools.informationtModal = {
+    'title': 'ОШИБКА: ',
+    'message': window.appSettings.messages.xhrError
+  };
 };
 
 let validateForm = function (email) {
@@ -34,7 +44,6 @@ let validateForm = function (email) {
 
 let getRequestData = function (email) {
 
-  // let requestData = `email=${email}`;
   let requestData = new FormData();
   requestData.append('email', email);
 

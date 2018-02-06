@@ -14,21 +14,31 @@ let callbackXhrSuccess = function (response) {
 
   if (response.status === 200) {
     if (response.data.status === '0') {
-      markTools.setAlert = 'ОШИБКА: ' +
-        window.appSettings.messages.responseStatus.res0;
+
+      markTools.informationtModal = {
+        'title': 'ОШИБКА: ',
+        'message': window.appSettings.messages.responseStatus.res0
+      };
 
     } else {
       dataStorage.data = response.data;
       document.dispatchEvent(new Event('loginSuccess'));
     }
   } else {
-    markTools.setAlert = response.message;
+    markTools.informationtModal = {
+      'title': 'ОШИБКА: ',
+      'message': response.message
+    };
   }
 };
 
 let callbackXhrError = function (response) {
   mainWindow.hideProgress('loginButtonSubmit', 'loginProgress');
-  markTools.setAlert = 'ОШИБКА: ' + window.appSettings.messages.xhrError;
+
+  markTools.informationtModal = {
+    'title': 'ОШИБКА: ',
+    'message': window.appSettings.messages.xhrError
+  };
 };
 
 let getRequestDataEmail = function (userLogin, userPassword) {

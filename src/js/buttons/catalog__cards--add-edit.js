@@ -20,7 +20,7 @@ const initVar = (remModal) => {
 
   appUrlAdd = window.appSettings[form.dataset.formname].UrlApiAdd;
   appUrlEdit = window.appSettings[form.dataset.formname].UrlApiEdit;
-  messages = window.appSettings[form.dataset.formname].message;
+  messages = window.appSettings[form.dataset.formname].messages;
 
 };
 

@@ -57,8 +57,11 @@ export default {
   // },
 
   set informationtModal(setup) {
+
+    let type = (setup.mess) ? 'alert-success' : 'alert-danger';
+
     alertBlock.innerHTML = alertBlock.innerHTML +
-      `<div id="alert" class="alert alert-danger fade show" role="alert">
+      `<div id="alert" class="alert ${type} fade show" role="alert">
         <strong>${setup.title} </strong> ${setup.message}
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -87,8 +90,6 @@ export default {
     modalUniversalAddName.setAttribute('placeholder', setup.inputPlaceholder);
     modalUniversalAddName.value = (setup.inputValue) ? setup.inputValue : '';
     modalUniversalAddSubmit.innerHTML = setup.submitBtnName;
-    // modalUniversalAddForm.addEventListener('submit', requestHandler);
-
   }
 
 };

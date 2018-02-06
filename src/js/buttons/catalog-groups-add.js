@@ -16,7 +16,7 @@ const initVar = (remModal) => {
   name = form.querySelector('*[data-valid="name"]');
 
   appUrl = window.appSettings[form.dataset.formname].UrlApi;
-  messages = window.appSettings[form.dataset.formname].message;
+  messages = window.appSettings[form.dataset.formname].messages;
 
 };
 

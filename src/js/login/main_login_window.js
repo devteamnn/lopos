@@ -5,7 +5,6 @@ import formForgot from './form_forgot.js';
 import captcha from './../tools/captcha.js';
 
 const sectionLoginFormMain = document.querySelector('#sectionLoginFormMain');
-const globalAlert = document.querySelector('#globalAlert');
 
 const inputFields = {
   'loginLogin': sectionLoginFormMain.querySelector('#loginInputLogin'),
@@ -45,28 +44,6 @@ const buttons = {
   'forgotButtonSubmit': sectionLoginFormMain.querySelector('#forgotButtonSubmit')
 };
 
-
-let setGlobalAlert = function (msg, type) {
-  let msgType;
-  let msgClass;
-  if (type === 'error') {
-    msgType = 'ОШИБКА! ';
-    msgClass = 'alert-danger';
-  }
-
-  if (type === 'message') {
-    msgType = 'СООБЩЕНИЕ! ';
-    msgClass = 'alert-success';
-  }
-
-  globalAlert.innerHTML = globalAlert.innerHTML + `<div id="globalAlert" class="alert ${msgClass} fade show" role="alert">
-      <strong>${msgType} </strong> ${msg}
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>`;
-};
-
 let resetErrors = function () {
   let errObj = Object.keys(inputFieldsErrors);
   let inObg = Object.keys(inputFields);
@@ -94,7 +71,8 @@ document.addEventListener('logoutSuccess', function () {
 });
 
 let formInit = function () {
-  globalAlert.innerHTML = '';
+  captcha.init();
+  // globalAlert.innerHTML = '';
   resetErrors();
   formConfirmEmail.reset();
   formRegister.reset();
@@ -104,9 +82,8 @@ let formInit = function () {
   formRegister.hide();
   formForgot.hide();
   formLogin.show();
-};
 
-captcha.init();
+};
 
 export default {
 
@@ -133,8 +110,6 @@ export default {
     inputFields[target].classList.add('border-danger');
   },
 
-  setAlert: setGlobalAlert,
-
   showProgress(button, progress) {
     progressBar[progress].classList.remove('invisible');
     if (button) {
@@ -146,6 +121,4 @@ export default {
     progressBar[progress].classList.add('invisible');
     buttons[button].disabled = false;
   }
-
-
 };

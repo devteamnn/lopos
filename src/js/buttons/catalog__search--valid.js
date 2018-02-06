@@ -24,7 +24,7 @@ const formInpitHandler = (evt) => {
 
 const inputValid = (el, variable) => {
   let pattern = window.appSettings[el.dataset.valisettings].validPatterns;
-  let message = window.appSettings[el.dataset.valisettings].validMessages;
+  let validMessage = window.appSettings[el.dataset.valisettings].validMessage;
 
   if (!pattern[el.dataset.valid].test(el.value)) {
     el.addEventListener('input', formInpitHandler);
@@ -41,7 +41,7 @@ const inputValid = (el, variable) => {
     }
 
     let span = parent.querySelrctor(`*[data-validLabel=${el.dataset.validlabelname}]`);
-    span.innerHTML = message[el.dataset.valid];
+    span.innerHTML = validMessage[el.dataset.valid];
 
     return false;
   }
