@@ -222,9 +222,9 @@ window.appSettings = {
     'validPatterns': {
       'name': /^[а-яёА-ЯЁA-Za-z\s\d]+$/,
       'describe': /^[а-яёА-ЯЁA-Za-z\s\d]*$/,
-      'purchase': /(^$)|(^\d+$)|(^\d+[.,]\d{2}$)/,
+      'purchase': /(^$)|(^\d+$)|(^\d+[.,]\d{1,2}$)/,
       'percent': /(^\d*$)|(^\d*\.\d*$)/,
-      'price': /(^$)|(^\d+$)|(^\d+[.,]\d{2}$)/,
+      'price': /(^$)|(^\d+$)|(^\d+[.,]\d{1,2}$)/,
       'barcode': /^[а-яёА-ЯЁA-Za-z\s\d]{0,30}$/,
     },
     'validMessage': {
@@ -248,9 +248,9 @@ window.appSettings = {
     'validPatterns': {
       'name': /^[а-яёА-ЯЁA-Za-z\s\d]+$/,
       'describe': /^[а-яёА-ЯЁA-Za-z\s\d]*$/,
-      'purchase': /(^$)|(^\d+$)|(^\d+[.,]\d{2}$)/,
+      'purchase': /(^$)|(^\d+$)|(^\d+[.,]\d{1,2}$)/,
       'percent': /(^\d*$)|(^\d*\.\d*$)/,
-      'price': /(^$)|(^\d+$)|(^\d+[.,]\d{2}$)/,
+      'price': /(^$)|(^\d+$)|(^\d+[.,]\d{1,2}$)/,
       'barcode': /^[а-яёА-ЯЁA-Za-z\s\d]{0,30}$/,
     },
     'validMessage': {
@@ -269,7 +269,7 @@ window.appSettings = {
   'formExpressOperation': {
     'UrlApi': '/lopos_directory/{{dir}}/operator/{{oper}}/business/{{busId}}/good/{{goodId}}/stock/{{stockId}}/express',
     'validPatterns': {
-      'price': /(^$)|(^\d+$)|(^\d+[.]\d{1,3}$)/,
+      'price': /(^$)|(^\d+$)|(^\d+[.]\d{1,2}$)/,
       'amount': /(^\d+$)|(^\d+[.]\d+$)/,
     },
     'validMessage': {
