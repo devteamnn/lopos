@@ -23,7 +23,7 @@ import searchButton from './buttons/catalog__search.js';
 // Отправка без валидации
 // import cardsResourcesButton from './buttons/catalog__cards--add-resource.js';
 
-console.log('ver: 3D1');
+console.log('ver: 3D2');
 console.log('ver: 3A4');
 
 const exit = document.querySelector('#profile-exit');
