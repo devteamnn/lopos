@@ -222,9 +222,9 @@ window.appSettings = {
     'validPatterns': {
       'name': /^[а-яёА-ЯЁA-Za-z\s\d]+$/,
       'describe': /^[а-яёА-ЯЁA-Za-z\s\d]*$/,
-      'purchase': /(^$)|(^\d+$)|(^\d+[.,]\d{1,2}$)/,
-      'percent': /(^\d*$)|(^\d*\.\d*$)/,
-      'price': /(^$)|(^\d+$)|(^\d+[.,]\d{1,2}$)/,
+      'purchase': /(^$)|(^\d+$)|(^\d+[.]\d{1,2}$)/,
+      'percent': /(^-?\d*$)|(^-?\d*\.\d*$)/,
+      'price': /(^$)|(^\d+$)|(^\d+[.]\d{1,2}$)/,
       'barcode': /^[а-яёА-ЯЁA-Za-z\s\d]{0,30}$/,
     },
     'validMessage': {
@@ -248,9 +248,9 @@ window.appSettings = {
     'validPatterns': {
       'name': /^[а-яёА-ЯЁA-Za-z\s\d]+$/,
       'describe': /^[а-яёА-ЯЁA-Za-z\s\d]*$/,
-      'purchase': /(^$)|(^\d+$)|(^\d+[.,]\d{1,2}$)/,
-      'percent': /(^\d*$)|(^\d*\.\d*$)/,
-      'price': /(^$)|(^\d+$)|(^\d+[.,]\d{1,2}$)/,
+      'purchase': /(^$)|(^\d+$)|(^\d+[.]\d{1,2}$)/,
+      'percent': /(^-?\d*$)|(^-?\d*\.\d*$)/,
+      'price': /(^$)|(^\d+$)|(^\d+[.]\d{1,2}$)/,
       'barcode': /^[а-яёА-ЯЁA-Za-z\s\d]{0,30}$/,
     },
     'validMessage': {
