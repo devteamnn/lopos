@@ -144,7 +144,7 @@ const submitForm = (data) => {
 };
 
 const formInputHandler = (evt) => {
-  if (evt.target.tagName === 'INPUT' && evt.target.type !== 'file') {
+  if (evt.target.type !== 'file') {
     hideAlert(evt.target);
 
     let change = false;
