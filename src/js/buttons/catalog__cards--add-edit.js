@@ -34,13 +34,13 @@ const callbackXhrSuccess = (response) => {
   case 400:
     markup.informationtModal = {
       'title': 'Error',
-      'messages': messages.mes400
+      'message': messages.mes400
     };
     break;
   case 271:
     markup.informationtModal = {
       'title': 'Error',
-      'messages': response.messages
+      'message': response.messages
     };
     break;
   }

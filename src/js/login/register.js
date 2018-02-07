@@ -1,5 +1,6 @@
 import mainWindow from './main_login_window.js';
 import xhr from './../tools/xhr.js';
+import markup from './../markup/tools.js';
 
 const regVal = window.appSettings.registerValid;
 const regUrlApi = window.appSettings.registerUrlApi;
@@ -10,7 +11,11 @@ let callbackXhrSuccess = function (response) {
   switch (response.status) {
 
   case 200:
-    mainWindow.setAlert(response.message, 'message');
+    markup.informationtModal = {
+      'title': 'MESSAGE: ',
+      'message': response.message,
+      'isMess': true
+    };
     mainWindow.confirmEmail();
     break;
   case 400:

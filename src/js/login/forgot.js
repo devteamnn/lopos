@@ -18,7 +18,8 @@ let callbackXhrSuccess = function (response) {
     // зеленое сообщение
     markTools.informationtModal = {
       'title': 'УСПЕХ: ',
-      'message': response.message
+      'message': response.message,
+      'isMess': true
     };
   }
 };

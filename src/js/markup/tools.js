@@ -58,7 +58,7 @@ export default {
 
   set informationtModal(setup) {
 
-    let type = (setup.mess) ? 'alert-success' : 'alert-danger';
+    let type = (setup.isMess === true) ? 'alert-success' : 'alert-danger';
 
     alertBlock.innerHTML = alertBlock.innerHTML +
       `<div id="alert" class="alert ${type} fade show" role="alert">
@@ -91,5 +91,4 @@ export default {
     modalUniversalAddName.value = (setup.inputValue) ? setup.inputValue : '';
     modalUniversalAddSubmit.innerHTML = setup.submitBtnName;
   }
-
 };

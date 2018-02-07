@@ -25,17 +25,22 @@ const callbackXhrSuccess = (response) => {
   switch (response.status) {
   case 270:
     $(modal).modal('hide');
+    markup.informationtModal = {
+      'title': 'MESSAGE: ',
+      'message': response.message,
+      'isMess': true
+    };
     break;
   case 400:
     markup.informationtModal = {
-      'title': 'Error',
-      'messages': messages.mes400
+      'title': 'ERROR: ',
+      'message': messages.mes400
     };
     break;
   case 271:
     markup.informationtModal = {
-      'title': 'Error',
-      'messages': response.messages
+      'title': 'ERROR: ',
+      'message': response.messages
     };
     break;
   }

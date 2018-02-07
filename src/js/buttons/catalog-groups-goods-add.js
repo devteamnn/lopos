@@ -46,7 +46,7 @@ const callbackXhrSuccess = (response) => {
     formTools.reset();
     markup.informationtModal = {
       'title': 'Error',
-      'messages': messages.mes400
+      'message': messages.mes400
     };
     break;
   case 271:
@@ -54,7 +54,7 @@ const callbackXhrSuccess = (response) => {
     formTools.reset();
     markup.informationtModal = {
       'title': 'Error',
-      'messages': response.messages
+      'message': response.messages
     };
     break;
   }
