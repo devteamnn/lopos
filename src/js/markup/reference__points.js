@@ -8,7 +8,6 @@ export default {
   },
 
   getElement(item, index) {
-    // const currentStockFlag = (item.id === auth.data['currentStock']) ? '<button type="button" class="btn p-0 bg-white icon-btn icon-btn__check--green"></button>' : '';
     const currentStockFlag = (item.id === auth.data['currentStock']) ? '<div class="p-0 bg-white icon icon__check"></div>' : '';
 
     return `

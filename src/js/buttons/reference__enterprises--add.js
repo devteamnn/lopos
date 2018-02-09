@@ -1,26 +1,27 @@
 import xhr from './../tools/xhr.js';
 import dataStorage from './../tools/storage.js';
 import markup from './../markup/tools.js';
-import pointButton from './reference-points.js';
+import enterprisesButton from './reference__enterprises.js';
 
-const appUrl = window.appSettings.formAddPoint.UrlApi;
+const appUrl = window.appSettings.formAddEnterprise.UrlApi;
+const messages = window.appSettings.formAddEnterprise.message;
 
-const validPattern = window.appSettings.formAddPoint.validPatterns;
-const validMessage = window.appSettings.formAddPoint.validMessage;
-
-const messages = window.appSettings.formAddPoint.messages;
+const validPattern = window.appSettings.formAddEnterprise.validPatterns;
+const validMessage = window.appSettings.formAddEnterprise.validMessage;
 
 
 const body = document.querySelector('body');
-const enterprisesAdd = body.querySelector('#points-add');
-const form = enterprisesAdd.querySelector('#points-add-form');
+const enterprisesAdd = body.querySelector('#enterprises-add');
+const form = enterprisesAdd.querySelector('#enterprises-add-form');
 
-const name = form.querySelector('#points-add-name');
+const name = form.querySelector('#enterprise-name');
+const balance = form.querySelector('#enterprise-balance');
+const currency = form.querySelector('#enterprise-money');
 
-const spinner = form.querySelector('#points-add-spinner');
+const spinner = form.querySelector('#enterprises-add-spinner');
 
-const buttonSubmit = form.querySelector('#points-add-submit');
-const buttonCancel = form.querySelector('#points-add-cancel');
+const buttonSubmit = form.querySelector('#enterprises-add-submit');
+const buttonCancel = form.querySelector('#enterprises-add-cancel');
 
 const stor = dataStorage.data;
 
@@ -67,11 +68,11 @@ const callbackXhrSuccess = (response) => {
 
   hideSpinner();
   formReset();
-  $('#points-add').modal('hide');
+  $('#enterprises-add').modal('hide');
 
   switch (response.status) {
   case 200:
-    pointButton.redraw();
+    enterprisesButton.redraw();
     break;
   case 400:
     markup.informationtModal = {
@@ -91,7 +92,7 @@ const callbackXhrSuccess = (response) => {
 const callbackXhrError = () => {
   hideSpinner();
   formReset();
-  $('#points-add').modal('hide');
+  $('#enterprises-card-edit').modal('hide');
 
   markup.informationtModal = {
     'title': 'Error',
@@ -106,15 +107,18 @@ const validateForm = () => {
     valid = false;
     showAlert(name);
   }
+  if (!validPattern.balance.test(balance.value)) {
+    valid = false;
+    showAlert(balance);
+  }
 
   return valid;
 };
 
 const submitForm = () => {
-  let postData = `name=${name.value}&token=${stor.token}`;
+  let postData = `name=${name.value}&balance=${balance.value}&currency=${currency.value}&token=${stor.token}`;
   let urlApp = appUrl.replace('{{dir}}', stor.directory);
   urlApp = urlApp.replace('{{oper}}', stor.operatorId);
-  urlApp = urlApp.replace('{{busId}}', stor.currentBusiness);
 
   let response = {
     url: urlApp,
@@ -138,11 +142,11 @@ const formSubmitHandler = (evt) => {
 
 const addHandlers = () => {
 
-  $('#points-add').on('hidden.bs.modal', () => {
+  $('#enterprises-add').on('hidden.bs.modal', () => {
     formReset();
   });
 
-  $('#points-add').on('shown.bs.modal', () => {
+  $('#enterprises-add').on('shown.bs.modal', () => {
     window.appFormCurrValue = {
       'name': name.value,
     };

@@ -3,10 +3,6 @@ const modalActionRequestTitle = modalActionRequest.querySelector('#modal-action-
 const modalActionRequestMessage = modalActionRequest.querySelector('#modal-action-request-message');
 const modalActionRequestSubmit = modalActionRequest.querySelector('#modal-action-request-submit');
 
-// const modalInformation = document.querySelector('#modal-information');
-// const modalInformationTitle = modalInformation.querySelector('#modal-information-title');
-// const modalInformationMessage = modalInformation.querySelector('#modal-information-message');
-
 const modalUniversalAdd = document.querySelector('#universal-add');
 const modalUniversalAddLabel = document.querySelector('#universal-add-label');
 const modalUniversalAddForm = document.querySelector('#universal-add-form');
@@ -50,12 +46,6 @@ export default {
     modalActionRequestSubmit.addEventListener('click', requestHandler);
   },
 
-  // set informationtModal(setup) {
-  //   $(modalInformation).modal('show');
-  //   modalInformationTitle.innerHTML = setup.title;
-  //   modalInformationMessage.innerHTML = setup.message;
-  // },
-
   set informationtModal(setup) {
 
     let type = (setup.isMess === true) ? 'alert-success' : 'alert-danger';
@@ -67,10 +57,7 @@ export default {
           <span aria-hidden="true">&times;</span>
         </button>
       </div>`;
-  },
-
-  set informationModalLight(setup) {
-
+    window.setTimeout(() => alertBlock.firstChild.remove(), 5000);
   },
 
   set runUniversalAdd(setup) {

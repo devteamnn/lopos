@@ -1,26 +1,27 @@
 import xhr from './../tools/xhr.js';
 import dataStorage from './../tools/storage.js';
 import markup from './../markup/tools.js';
-import keywordsButton from './reference-keywords.js';
+import enterprisesButton from './reference__enterprises.js';
 
-const appUrl = window.appSettings.formAddKeywords.UrlApi;
-const validPattern = window.appSettings.formAddKeywords.validPatterns;
-const validMessage = window.appSettings.formAddKeywords.validMessage;
-const messages = window.appSettings.formAddKeywords.messages;
+const appUrl = window.appSettings.formEditEnterprise.UrlApi;
 
+const messages = window.appSettings.formEditEnterprise.messages;
+
+const validPattern = window.appSettings.formEditEnterprise.validPatterns;
+const validMessage = window.appSettings.formEditEnterprise.validMessage;
 
 const body = document.querySelector('body');
-const enterprisesAdd = body.querySelector('#keywords-add');
-const form = enterprisesAdd.querySelector('#keywords-add-form');
+const enterprisesCarEedit = body.querySelector('#enterprises-card-edit');
+const form = enterprisesCarEedit.querySelector('#enterprises-card-edit-form');
 
-const name = form.querySelector('#keywords-add-name');
+const name = form.querySelector('#enterprises-card-edit-name');
 
-const spinner = form.querySelector('#keywords-add-spinner');
+const spinner = form.querySelector('#enterprises-card-edit-spinner');
 
-const buttonSubmit = form.querySelector('#keywords-add-submit');
-const buttonCancel = form.querySelector('#keywords-add-cancel');
+const buttonSubmit = form.querySelector('#enterprises-card-edit-submit');
+const buttonCancel = form.querySelector('#enterprises-card-edit-cancel');
 
-// const stor = dataStorage.data;
+const stor = dataStorage.data;
 
 const showSpinner = () => {
   spinner.classList.remove('invisible');
@@ -35,19 +36,15 @@ const hideSpinner = () => {
 };
 
 const showAlert = (input) => {
-  if (input.type === 'text') {
-    input.classList.add('border');
-    input.classList.add('border-danger');
-    input.nextElementSibling.innerHTML = validMessage[input.id.match(/[\w]+$/)];
-  }
+  input.classList.add('border');
+  input.classList.add('border-danger');
+  input.nextElementSibling.innerHTML = validMessage[input.id.match(/[\w]+$/)];
 };
 
 const hideAlert = (input) => {
-  if (input.type === 'text') {
-    input.classList.remove('border');
-    input.classList.remove('border-danger');
-    input.nextElementSibling.innerHTML = '';
-  }
+  input.classList.remove('border');
+  input.classList.remove('border-danger');
+  input.nextElementSibling.innerHTML = '';
 };
 
 const formReset = () => {
@@ -65,11 +62,11 @@ const callbackXhrSuccess = (response) => {
 
   hideSpinner();
   formReset();
-  $('#keywords-add').modal('hide');
+  $('#enterprises-card-edit').modal('hide');
 
   switch (response.status) {
   case 200:
-    keywordsButton.update();
+    enterprisesButton.updateCard();
     break;
   case 400:
     markup.informationtModal = {
@@ -86,17 +83,23 @@ const callbackXhrSuccess = (response) => {
   }
 };
 
-
 const callbackXhrError = () => {
 
   hideSpinner();
   formReset();
-  $('#keywords-add').modal('hide');
+  $('#enterprises-card-edit').modal('hide');
 
   markup.informationtModal = {
     'title': 'Error',
     'messages': window.appSettings.messagess.xhrError
   };
+};
+
+const formIsChange = () => {
+  if (name.value !== window.appFormCurrValue.name) {
+    return true;
+  }
+  return false;
 };
 
 const validateForm = () => {
@@ -111,25 +114,14 @@ const validateForm = () => {
 };
 
 const submitForm = () => {
-  /*
   let postData = `name=${name.value}&token=${stor.token}`;
   let urlApp = appUrl.replace('{{dir}}', stor.directory);
   urlApp = urlApp.replace('{{oper}}', stor.operatorId);
-  urlApp = urlApp.replace('{{busId}}', stor.currentBusiness);
-  console.log(stor);
-  console.log(dataStorage.data);
-  console.log(stor.currentBusiness);
-  console.log(urlApp);
-  */
-  let {token, directory, operatorId, currentBusiness} = dataStorage.data;
-  let postData = `name=${name.value}&token=${token}`;
-  let urlApp = appUrl.replace('{{dir}}', directory);
-  urlApp = urlApp.replace('{{oper}}', operatorId);
-  urlApp = urlApp.replace('{{busId}}', currentBusiness);
+  urlApp = urlApp.replace('{{busId}}', dataStorage.currentEnterpriseId);
 
   let response = {
     url: urlApp,
-    metod: 'POST',
+    metod: 'PUT',
     data: postData,
     callbackSuccess: callbackXhrSuccess,
     callbackError: callbackXhrError
@@ -149,11 +141,11 @@ const formSubmitHandler = (evt) => {
 
 const addHandlers = () => {
 
-  $('#keywords-add').on('hidden.bs.modal', () => {
+  $('#enterprises-card-edit').on('hidden.bs.modal', () => {
     formReset();
   });
 
-  $('#keywords-add').on('shown.bs.modal', () => {
+  $('#enterprises-card-edit').on('shown.bs.modal', () => {
     window.appFormCurrValue = {
       'name': name.value,
     };
@@ -161,7 +153,13 @@ const addHandlers = () => {
 
   form.addEventListener('input', (evt) => {
     hideAlert(evt.target);
-    buttonSubmit.disabled = false;
+
+    if (formIsChange()) {
+      buttonSubmit.disabled = false;
+    } else {
+      buttonSubmit.disabled = true;
+    }
+
   });
 
   form.addEventListener('submit', formSubmitHandler);
@@ -169,5 +167,4 @@ const addHandlers = () => {
 
 export default {
   start: addHandlers
-
 };

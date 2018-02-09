@@ -10,7 +10,6 @@ const listKeywordsCardDeleteBtn = document.querySelector('#list-keywords-card-de
 const listKeywordsCardEditBtn = document.querySelector('#list-keywords-card-edit-btn');
 const listKeywordsCardEditName = document.querySelector('#keywords-card-edit-name');
 
-// здесь был дубль в модуле с разметкой
 const listKeywordsHeader = document.querySelector('#list-keywords-header');
 const listKeywordsBody = document.querySelector('#list-keywords-body');
 const listKeywordsCard = document.querySelector('#list-keywords-card');

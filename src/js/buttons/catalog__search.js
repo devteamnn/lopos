@@ -1,14 +1,13 @@
 import xhr from '../tools/xhr.js';
 import auth from '../tools/storage.js';
-import searchMarkup from '../markup/catalog-cards.js';
 import toolsMarkup from '../markup/tools.js';
-import groupsMarkup from '../markup/catalog-groups.js';
-import groups from './catalog-groups.js';
+import groups from './catalog__groups.js';
+import goods from './catalog__goods.js';
 import keywordsUniversal from './universal-keywords.js';
+import goodsList from './universal-goods-list.js';
 import validity from './../tools/single-validation.js';
 
 import searchBarcode from './catalog__search-barcode.js';
-
 
 const listSearch = document.querySelector('#list-search-list');
 const listSearchBody = document.querySelector('#list-search-card-body');
@@ -32,12 +31,16 @@ listSearchBody.addEventListener('click', groups.openGoodCard);
 
 // массив с полными результатами
 let fullSearch = [];
+let keywordSearch = [];
+
+const onGoodClick = () => {
+  goods.fill();
+};
 
 // отрисовка результатов поиска
 const drawResult = (data) => {
-  listSearchBody.innerHTML = '';
   if (data.length) {
-    data.forEach((item, index) => listSearchBody.insertAdjacentHTML('beforeend', groupsMarkup.getGoodString(item, index)));
+    goodsList.draw(data, listSearchBody, onGoodClick, 'string');
   } else {
     listSearchBody.innerHTML = `Не завезли пока <b>${listSearchInput.value}</b>, хотя и ждали намедни...`;
   }
@@ -58,13 +61,12 @@ const makeSearch = () => {
 const onlistSearchFormSubmit = (evt) => {
   evt.preventDefault();
   listSearchBody.innerHTML = '';
-  // Здесь стартуем (пользователь ввел данные и нажал энтер, или кликнул на поиск)
-  // validity.start(listSearchForm);
-  // validity.valid(listSearchInput);
   if (listSearchInput.value) {
     if (validity.valid(listSearchInput)) {
       makeSearch();
     }
+  } else if (selectedKeywords === '') {
+    drawResult(keywordSearch.data);
   } else {
     listSearchBody.innerHTML = 'Ну скажите хоть что-нибудь...';
   }
@@ -100,6 +102,7 @@ const onSuccessKeywordSearch = (keywordSearchData) => {
     getFullSearch();
     listSearchInput.value = '';
   } else {
+    keywordSearch = keywordSearchData;
     auth.searchMode = 'keywords';
     listSearchBody.innerHTML = '';
     drawResult(keywordSearchData.data);
@@ -155,6 +158,7 @@ const onListSearchKeywordsBtn = () => {
 const onListSearchKeywordsResetBtn = () => {
   listSearchInput.value = '';
   listSearchKeywordsChecked.innerHTML = '';
+  keywordSearch = '';
   listSearchKeywordsResetBtn.setAttribute('disabled', 'disabled');
   getFullSearch();
 };
@@ -168,6 +172,7 @@ export default {
 
   start() {
     auth.searchMode = 'base';
+    listSearchInput.focus();
     listSearchBtn.addEventListener('click', onlistSearchFormSubmit);
     listSearchForm.addEventListener('submit', onlistSearchFormSubmit);
     listSearch.addEventListener('click', getFullSearch);
@@ -177,7 +182,6 @@ export default {
   drawResult,
 
   stop() {
-    searchMarkup.cleanContainer();
     // listSearchBtn.removeEventListener('click', getSearch);
   }
 };

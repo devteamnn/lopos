@@ -1,6 +1,6 @@
 import xhr from '../tools/xhr.js';
 import auth from '../tools/storage.js';
-import enterprisesMarkup from '../markup/reference-enterprises.js';
+import enterprisesMarkup from '../markup/reference__enterprises.js';
 import toolsMarkup from '../markup/tools.js';
 
 const listEnterprises = document.querySelector('#list-enterprises-list');
@@ -13,8 +13,6 @@ const listEnterprisesCardName = document.querySelector('#list-enterprises-card-n
 const listEnterprisesCardBalance = document.querySelector('#list-enterprises-card-balance');
 const listEnterprisesCardIsChecked = document.querySelector('#list-enterprises-card-is-checked');
 const listEnterprisesCardDate = document.querySelector('#list-enterprises-card-date');
-// const listEnterprisesCardNegativeTailings = document.querySelector('#list-enterprises-card-negative-tailings');
-// const listEnterprisesCardNegativeBalance = document.querySelector('#list-enterprises-card-negative-balance');
 const listEnterprisesCardNegativeTailingsSwitch = document.querySelector('#list-enterprises-card-negative-tailings-switch');
 const listEnterprisesCardNegativeBalanceSwitch = document.querySelector('#list-enterprises-card-negative-balance-switch');
 
@@ -96,10 +94,7 @@ const onErrorNegativeTailingsSwitch = (error) => {
 
 listEnterprisesCardNegativeBalanceSwitch.addEventListener('change', (evt) => {
 
-  // enterprisesMarkup.cleanContainer();
-  // enterprisesMarkup.drawMarkupInContainer(loaderSpinnerMarkup);
   let value = (evt.target.checked) ? 1 : 0;
-  // console.log(value);
 
   xhr.request = {
     metod: 'PUT',
@@ -112,10 +107,7 @@ listEnterprisesCardNegativeBalanceSwitch.addEventListener('change', (evt) => {
 
 listEnterprisesCardNegativeTailingsSwitch.addEventListener('change', (evt) => {
 
-  // enterprisesMarkup.cleanContainer();
-  // enterprisesMarkup.drawMarkupInContainer(loaderSpinnerMarkup);
   let value = (evt.target.checked) ? 1 : 0;
-  // console.log(value);
 
   xhr.request = {
     metod: 'PUT',
@@ -126,7 +118,6 @@ listEnterprisesCardNegativeTailingsSwitch.addEventListener('change', (evt) => {
   };
 });
 
-// listEnterprisesCardNegativeBalanceSwitch
 const onSuccessEnterpriseCardLoad = (loadedEnterpriseCard) => {
   console.log(loadedEnterpriseCard);
 
@@ -162,7 +153,6 @@ const onSuccessEnterpriseCardLoad = (loadedEnterpriseCard) => {
     console.log(loadedEnterpriseCard.data.meta[i].meta_code === '11' && loadedEnterpriseCard.data.meta[i].meta_value === '1');
     if (loadedEnterpriseCard.data.meta[i].meta_code === '11' && loadedEnterpriseCard.data.meta[i].meta_value === '1') {
       listEnterprisesCardNegativeTailingsSwitch.setAttribute('checked', 'checked');
-      // listEnterprisesCardNegativeTailingsSwitch.innerHTML = 'Выключить';
       listEnterprisesCardNegativeTailingsSwitch.checked = true;
       break;
     } else {
@@ -180,7 +170,6 @@ const onSuccessEnterpriseCardLoad = (loadedEnterpriseCard) => {
     }
   }
 
-  // auth.currentEnterpriseId = loadedEnterpriseCard.data.id;
 };
 
 const onErrorEnterpriseCardLoad = (error) => {

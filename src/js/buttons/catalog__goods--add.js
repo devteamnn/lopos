@@ -1,7 +1,7 @@
 import dataStorage from './../tools/storage.js';
 import markup from './../markup/tools.js';
 import formTools from './../tools/form-tools.js';
-import catalogGroups from './catalog-groups.js';
+import catalogGroups from './catalog__groups.js';
 import tools from './../tools/tools.js';
 
 let appUrl;
@@ -39,7 +39,7 @@ const callbackXhrSuccess = (response) => {
   case 200:
     $(modal).modal('hide');
     formTools.reset();
-    catalogGroups.redrawGoods();
+    catalogGroups.getGoodsForGroup();
     break;
   case 400:
     $(modal).modal('hide');

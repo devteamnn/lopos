@@ -1,6 +1,6 @@
 import xhr from '../tools/xhr.js';
 import auth from '../tools/storage.js';
-import pointsMarkup from '../markup/reference-points.js';
+import pointsMarkup from '../markup/reference__points.js';
 import toolsMarkup from '../markup/tools.js';
 
 const loaderSpinnerId = 'loader-enterprises';

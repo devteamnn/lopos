@@ -1,30 +1,30 @@
 import auth from './tools/storage.js';
 import mainWindow from './login/main_login_window.js';
 import logButton from './buttons/log.js';
-import profileButton from './buttons/online-profile.js';
-import enterprisesButton from './buttons/reference-enterprises.js';
-import enterprisesButtonFormAdd from './buttons/reference-enterprises-add.js';
-import enterprisesButtonFormEdit from './buttons/reference-enterprises-edit.js';
-import pointsButton from './buttons/reference-points.js';
-import pointsButtonFormAdd from './buttons/reference-points-add.js';
-import pointsButtonFormEdit from './buttons/reference-points-edit.js';
-import contractorsButton from './buttons/reference-contractors.js';
-import contractorsButtonFormAdd from './buttons/reference-contractors-add.js';
-import keywordsButton from './buttons/reference-keywords.js';
-import keywordsButtonAdd from './buttons/reference-keywords-add.js';
-import keywordsButtonEdit from './buttons/reference-keywords-edit.js';
-import groupsButton from './buttons/catalog-groups.js';
+import profileButton from './buttons/online__profile.js';
+import enterprisesButton from './buttons/reference__enterprises.js';
+import enterprisesButtonFormAdd from './buttons/reference__enterprises--add.js';
+import enterprisesButtonFormEdit from './buttons/reference__enterprises--edit.js';
+import pointsButton from './buttons/reference__points.js';
+import pointsButtonFormAdd from './buttons/reference__points--add.js';
+import pointsButtonFormEdit from './buttons/reference__points--edit.js';
+import contractorsButton from './buttons/reference__contractors.js';
+import contractorsButtonFormAdd from './buttons/reference__contractors--add.js';
+import keywordsButton from './buttons/reference__keywords.js';
+import keywordsButtonAdd from './buttons/reference__keywords--add.js';
+import keywordsButtonEdit from './buttons/reference__keywords--edit.js';
+import groupsButton from './buttons/catalog__groups.js';
 
 
-// import goodsButtonFormEdit from './buttons/catalog-groups-goods-edit.js';
+// import goodsButtonFormEdit from './buttons/catalog__goods--edit.js';
 import cardsButton from './buttons/catalog__cards.js';
 import searchButton from './buttons/catalog__search.js';
 
 // Отправка без валидации
 // import cardsResourcesButton from './buttons/catalog__cards--add-resource.js';
 
-console.log('ver: 3D3 (07.02.18_13:30)');
-console.log('ver: 3A4');
+console.log('3D3 (07.02.18_13:30)');
+console.log('ver: 3A5');
 
 const exit = document.querySelector('#profile-exit');
 const app = document.querySelector('#app');

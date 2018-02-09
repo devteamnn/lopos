@@ -1,7 +1,7 @@
 import xhr from '../tools/xhr.js';
 import auth from '../tools/storage.js';
-import contractorsMarkup from '../markup/reference-contractors.js';
-import contractorsCardMarkup from '../markup/reference-contractors-card.js';
+import contractorsMarkup from '../markup/reference__contractors.js';
+import contractorsCardMarkup from '../markup/reference__contractors-card.js';
 import toolsMarkup from '../markup/tools.js';
 
 const loaderSpinnerId = 'loader-contractors';
@@ -55,13 +55,6 @@ listContractorsAddBtn.addEventListener('click', function () {
 
 });
 
-/*
-listContractorsCardEditBtn.addEventListener('click', function () {
-  auth.currentContractorOperation = 'edit';
-  listContractorsFormSubmit.innerHTML = 'Изменить';
-});
-*/
-
 listContractorsCardReturnBtn.addEventListener('click', function () {
   showBodyHideCard();
   getContractors(auth.currentContractorType);
@@ -79,8 +72,6 @@ const onSuccessContractorsLoad = (loadedContractors) => {
     if (loadedContractors.data) {
       contractorsMarkup.drawDataInContainer(loadedContractors.data);
     }
-    // listContractorsFormSubmit.innerHTML = 'Создать';
-    // auth.currentContractorOperation = 'add';
 
   } else {
     contractorsMarkup.drawMarkupInContainer(`<p>${loadedContractors.message}</p>`);
@@ -99,8 +90,6 @@ const onSuccessBuyerCardLoad = (loadedBuyerCard) => {
     console.log(loadedBuyerCard);
     contractorsCardMarkup.cleanContainer();
     contractorsCardMarkup.drawDataInContainer(loadedBuyerCard.data);
-    // auth.currentContractorOperation = 'edit';
-    // listContractorsFormSubmit.innerHTML = 'Изменить';
 
   } else {
     contractorsCardMarkup.drawMarkupInContainer(`<p>${loadedBuyerCard.message}</p>`);

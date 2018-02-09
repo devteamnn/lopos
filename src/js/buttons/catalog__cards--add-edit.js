@@ -29,7 +29,11 @@ const callbackXhrSuccess = (response) => {
   case 200:
     $(modal).modal('hide');
     formTools.reset();
-    catalogCard.redraw();
+    if (dataStorage.currentCardName === '') {
+      catalogCard.redrawList();
+    } else {
+      catalogCard.redrawCard();
+    }
     break;
   case 400:
     markup.informationtModal = {
@@ -95,7 +99,7 @@ export default {
   start(remModal) {
     initVar(remModal);
 
-    if (name.value === '') {
+    if (dataStorage.currentCardName === '') {
       formTools.work(modal, submitFormAdd);
     } else {
       formTools.work(modal, submitFormEdit);

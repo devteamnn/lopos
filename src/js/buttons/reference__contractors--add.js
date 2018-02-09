@@ -1,6 +1,6 @@
 import xhr from './../tools/xhr.js';
 import dataStorage from './../tools/storage.js';
-import referenceContractors from './reference-contractors.js';
+import referenceContractors from './reference__contractors.js';
 import markup from './../markup/tools.js';
 
 const appUrl = window.appSettings.formAddContractor.UrlApi;

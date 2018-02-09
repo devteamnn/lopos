@@ -2,7 +2,7 @@
 import xhr from '../tools/xhr.js';
 import auth from '../tools/storage.js';
 import toolsMarkup from '../markup/tools.js';
-import groups from './catalog-groups.js';
+import groups from './catalog__groups.js';
 
 const onSuccessGroupDelete = (answer) => {
 
@@ -30,15 +30,9 @@ const setRequestToDeleteGroup = () => {
   };
 };
 
-const onListGroupsCardBodyClickRemove = (evt) => {
-  let currentStringElement = evt.target;
-  while (!currentStringElement.dataset.groupIndex) {
-    currentStringElement = currentStringElement.parentNode;
-  }
-  auth.currentGroupId = currentStringElement.dataset.groupId;
-  auth.currentGroupName = currentStringElement.dataset.groupName;
+const deleteGroup = (evt) => {
 
-  if (+currentStringElement.dataset.groupLevel >= 9000) {
+  if (+auth.currentGroupLevel >= 9000) {
     toolsMarkup.informationtModal = {
       title: 'Уведомление',
       message: '<b>NO! IT\'S OVER NINE THOUSAAAAAND!!!</b>'
@@ -53,5 +47,5 @@ const onListGroupsCardBodyClickRemove = (evt) => {
 };
 
 export default {
-  handler: onListGroupsCardBodyClickRemove
+  make: deleteGroup
 };

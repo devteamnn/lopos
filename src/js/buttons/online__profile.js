@@ -1,4 +1,4 @@
-import profileMarkup from '../markup/online-profile.js';
+import profileMarkup from '../markup/online__profile.js';
 
 export default {
   start() {

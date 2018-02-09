@@ -1,27 +1,26 @@
 import xhr from './../tools/xhr.js';
 import dataStorage from './../tools/storage.js';
 import markup from './../markup/tools.js';
-import pointButton from './reference-points.js';
+import keywordsButton from './reference__keywords.js';
 
-const appUrl = window.appSettings.formEditPoint.UrlApi;
+const appUrl = window.appSettings.formAddKeywords.UrlApi;
+const validPattern = window.appSettings.formAddKeywords.validPatterns;
+const validMessage = window.appSettings.formAddKeywords.validMessage;
+const messages = window.appSettings.formAddKeywords.messages;
 
-const validPattern = window.appSettings.formEditPoint.validPatterns;
-const validMessage = window.appSettings.formEditPoint.validMessage;
-
-const messages = window.appSettings.formEditPoint.messages;
 
 const body = document.querySelector('body');
-const enterprisesAdd = body.querySelector('#points-edit');
-const form = enterprisesAdd.querySelector('#points-edit-form');
+const enterprisesAdd = body.querySelector('#keywords-add');
+const form = enterprisesAdd.querySelector('#keywords-add-form');
 
-const name = form.querySelector('#points-edit-name');
+const name = form.querySelector('#keywords-add-name');
 
-const spinner = form.querySelector('#points-edit-spinner');
+const spinner = form.querySelector('#keywords-add-spinner');
 
-const buttonSubmit = form.querySelector('#points-edit-submit');
-const buttonCancel = form.querySelector('#points-edit-cancel');
+const buttonSubmit = form.querySelector('#keywords-add-submit');
+const buttonCancel = form.querySelector('#keywords-add-cancel');
 
-const stor = dataStorage.data;
+// const stor = dataStorage.data;
 
 const showSpinner = () => {
   spinner.classList.remove('invisible');
@@ -36,15 +35,19 @@ const hideSpinner = () => {
 };
 
 const showAlert = (input) => {
-  input.classList.add('border');
-  input.classList.add('border-danger');
-  input.nextElementSibling.innerHTML = validMessage[input.id.match(/[\w]+$/)];
+  if (input.type === 'text') {
+    input.classList.add('border');
+    input.classList.add('border-danger');
+    input.nextElementSibling.innerHTML = validMessage[input.id.match(/[\w]+$/)];
+  }
 };
 
 const hideAlert = (input) => {
-  input.classList.remove('border');
-  input.classList.remove('border-danger');
-  input.nextElementSibling.innerHTML = '';
+  if (input.type === 'text') {
+    input.classList.remove('border');
+    input.classList.remove('border-danger');
+    input.nextElementSibling.innerHTML = '';
+  }
 };
 
 const formReset = () => {
@@ -62,11 +65,11 @@ const callbackXhrSuccess = (response) => {
 
   hideSpinner();
   formReset();
-  $('#points-edit').modal('hide');
+  $('#keywords-add').modal('hide');
 
   switch (response.status) {
   case 200:
-    pointButton.redraw();
+    keywordsButton.update();
     break;
   case 400:
     markup.informationtModal = {
@@ -81,27 +84,19 @@ const callbackXhrSuccess = (response) => {
     };
     break;
   }
-
 };
+
 
 const callbackXhrError = () => {
 
   hideSpinner();
   formReset();
-  $('#points-edit').modal('hide');
+  $('#keywords-add').modal('hide');
 
   markup.informationtModal = {
     'title': 'Error',
     'messages': window.appSettings.messagess.xhrError
   };
-
-};
-
-const formIsChange = () => {
-  if (name.value !== window.appFormCurrValue.name) {
-    return true;
-  }
-  return false;
 };
 
 const validateForm = () => {
@@ -116,21 +111,29 @@ const validateForm = () => {
 };
 
 const submitForm = () => {
+  /*
   let postData = `name=${name.value}&token=${stor.token}`;
   let urlApp = appUrl.replace('{{dir}}', stor.directory);
   urlApp = urlApp.replace('{{oper}}', stor.operatorId);
   urlApp = urlApp.replace('{{busId}}', stor.currentBusiness);
-  urlApp = urlApp.replace('{{stId}}', dataStorage.currentStockId);
+  console.log(stor);
+  console.log(dataStorage.data);
+  console.log(stor.currentBusiness);
+  console.log(urlApp);
+  */
+  let {token, directory, operatorId, currentBusiness} = dataStorage.data;
+  let postData = `name=${name.value}&token=${token}`;
+  let urlApp = appUrl.replace('{{dir}}', directory);
+  urlApp = urlApp.replace('{{oper}}', operatorId);
+  urlApp = urlApp.replace('{{busId}}', currentBusiness);
 
   let response = {
     url: urlApp,
-    metod: 'PUT',
+    metod: 'POST',
     data: postData,
     callbackSuccess: callbackXhrSuccess,
     callbackError: callbackXhrError
   };
-
-  console.dir(response);
 
   xhr.request = response;
 };
@@ -146,11 +149,11 @@ const formSubmitHandler = (evt) => {
 
 const addHandlers = () => {
 
-  $('#points-edit').on('hidden.bs.modal', () => {
+  $('#keywords-add').on('hidden.bs.modal', () => {
     formReset();
   });
 
-  $('#points-edit').on('shown.bs.modal', () => {
+  $('#keywords-add').on('shown.bs.modal', () => {
     window.appFormCurrValue = {
       'name': name.value,
     };
@@ -158,13 +161,7 @@ const addHandlers = () => {
 
   form.addEventListener('input', (evt) => {
     hideAlert(evt.target);
-
-    if (formIsChange()) {
-      buttonSubmit.disabled = false;
-    } else {
-      buttonSubmit.disabled = true;
-    }
-
+    buttonSubmit.disabled = false;
   });
 
   form.addEventListener('submit', formSubmitHandler);
@@ -172,4 +169,5 @@ const addHandlers = () => {
 
 export default {
   start: addHandlers
+
 };

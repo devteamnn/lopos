@@ -1,10 +1,12 @@
 import xhr from '../tools/xhr.js';
 import auth from '../tools/storage.js';
 import cardsMarkup from '../markup/catalog-cards.js';
-import groupsMarkup from '../markup/catalog-groups.js';
 import toolsMarkup from '../markup/tools.js';
 import cardAdd from './catalog__cards--add-edit.js';
 import resourceAdd from './catalog__cards--add-resource.js';
+import goodsList from './universal-goods-list.js';
+import search from './universal-search.js';
+import groupsList from './universal-groups-list.js';
 
 const listCards = document.querySelector('#list-cards-list');
 const listCardsCard = document.querySelector('#list-cards-card');
@@ -37,32 +39,38 @@ const universalAdd = document.querySelector('#universal-add');
 let loadedGoods = [];
 let loadedGroups = [];
 
+let fastEditFlag = false;
+
 // поиск по товару внутри группы
 const cardResourcesSearchInput = document.querySelector('#card-resources-search-input');
 
+const onGoodClick = (good) => {
+  $(cardResourcesGroupModal).modal('hide');
+  $(addResourcesModal).modal('show');
+  addResourcesModalLabel.innerHTML = good.name;
+  resourceAdd.start(addResourcesModal);
+};
+
 const drawGoods = (data) => {
+
+
   cardResourcesGroupModalReturnBtn.classList.remove('invisible');
   cardResourcesSearchInput.addEventListener('input', onGoodsSearch);
   cardResourcesSearchInput.removeEventListener('input', onGroupsSearch);
-  cardResourcesGroupModalBody.innerHTML = '';
-  data.forEach((item, index) => {
-    cardResourcesGroupModalBody.insertAdjacentHTML('beforeend', groupsMarkup.getGoodString(item, index));
+  goodsList.draw(data, cardResourcesGroupModalBody, onGoodClick, 'string');
+};
 
-    cardResourcesGroupModalBody.lastChild.addEventListener('click', (evt) => {
+const onGroupClick = () => {
 
-      let currentStringElement = evt.target;
-      while (!currentStringElement.dataset.goodId) {
-        currentStringElement = currentStringElement.parentNode;
-      }
-      $(cardResourcesGroupModal).modal('hide');
-      $(addResourcesModal).modal('show');
-      addResourcesModalLabel.innerHTML = item.name;
-      auth.currentGoodId = currentStringElement.dataset.goodId;
+  cardResourcesSearchInput.focus();
+  cardResourcesSearchInput.value = '';
 
-      resourceAdd.start(addResourcesModal);
-    });
-
-  });
+  xhr.request = {
+    metod: 'POST',
+    url: `lopos_directory/${auth.data.directory}/operator/1/business/${auth.data.currentBusiness}/group/${auth.currentGroupId}/goods_light`,
+    data: `view_last=0&token=${auth.data.token}`,
+    callbackSuccess: onSuccessGroupGood,
+  };
 };
 
 const drawGroups = (groupsData) => {
@@ -70,53 +78,16 @@ const drawGroups = (groupsData) => {
   cardResourcesGroupModalReturnBtn.classList.add('invisible');
   cardResourcesSearchInput.removeEventListener('input', onGoodsSearch);
   cardResourcesSearchInput.addEventListener('input', onGroupsSearch);
-  cardResourcesGroupModalBody.innerHTML = '';
-  groupsData.forEach((item, index) => {
-    cardResourcesGroupModalBody.insertAdjacentHTML('beforeend', groupsMarkup.getElement(item, index));
-    cardResourcesGroupModalBody.lastChild.addEventListener('click', (evt) => {
-
-      let currentStringElement = evt.target;
-      cardResourcesSearchInput.value = '';
-      cardResourcesSearchInput.focus();
-      while (!currentStringElement.dataset.groupId) {
-        currentStringElement = currentStringElement.parentNode;
-      }
-
-      let currentGroupName = loadedGroups.data[currentStringElement.dataset.groupIndex].name;
-      auth.currentGroupId = currentStringElement.dataset.groupId;
-      auth.currentGroupName = currentGroupName;
-
-      xhr.request = {
-        metod: 'POST',
-        url: `lopos_directory/${auth.data.directory}/operator/1/business/${auth.data.currentBusiness}/group/${auth.currentGroupId}/goods_light`,
-        data: `view_last=0&token=${auth.data.token}`,
-        callbackSuccess: onSuccessGroupGood,
-      };
-    });
-  });
+  groupsList.draw(groupsData, cardResourcesGroupModalBody, onGroupClick);
 };
 
 const onGoodsSearch = (evt) => {
-  let selectedData = [];
-  loadedGoods.data.forEach((item) => {
-    if (item.name.toLowerCase().indexOf(cardResourcesSearchInput.value.toLowerCase()) !== -1) {
-      selectedData.push(item);
-    }
-  });
-  drawGoods(selectedData);
+  drawGoods(search.make(loadedGoods.data, cardResourcesSearchInput.value));
 };
 
 const onGroupsSearch = (evt) => {
-  let selectedData = [];
-  loadedGroups.data.forEach((item) => {
-    if (item.name.toLowerCase().indexOf(cardResourcesSearchInput.value.toLowerCase()) !== -1) {
-      selectedData.push(item);
-    }
-  });
-  drawGroups(selectedData);
+  drawGroups(search.make(loadedGroups.data, cardResourcesSearchInput.value));
 };
-
-// cardResourcesSearchInput.addEventListener('input', onGoodsSearch);
 
 const onSuccessGroupGood = (goodsData) => {
   loadedGoods = goodsData;
@@ -126,7 +97,9 @@ const onSuccessGroupGood = (goodsData) => {
 };
 
 $(addResourcesModal).on('hidden.bs.modal', function () {
-  $(cardResourcesGroupModal).modal('show');
+  if (fastEditFlag === false) {
+    $(cardResourcesGroupModal).modal('show');
+  }
 });
 
 const onSuccessGroupsLoad = (groupsData) => {
@@ -138,11 +111,10 @@ const onSuccessGroupsLoad = (groupsData) => {
 };
 
 const getGroups = () => {
-  console.log('hi');
-  groupsMarkup.cleanContainer();
   auth.currentGroupId = false;
   cardResourcesSearchInput.value = '';
   $(cardResourcesGroupModal).modal('show');
+  fastEditFlag = false;
 
   xhr.request = {
     metod: 'POST',
@@ -155,7 +127,6 @@ const getGroups = () => {
 
 const onResourcesAddBtn = () => {
   auth.currentCardOperation = -1;
-
   getGroups();
 };
 
@@ -180,20 +151,33 @@ const onSuccessCardResourcesLoad = (cardResourcesData) => {
   cardResourcesProduct.innerHTML = '';
   cardResourcesOldCost.innerHTML = (+cardResourcesData.data.old_cost) ? cardResourcesData.data.old_cost : '';
   cardResourcesNewPrice.innerHTML = (+cardResourcesData.data.new_price) ? cardResourcesData.data.new_price : '';
+  cardName.innerHTML = cardResourcesData.data.name;
+
   if (cardResourcesData.data.resours.length) {
     cardResourcesData.data.resours.forEach((item) => {
+
+      const onResourcesGoodClick = (good) => {
+        $(cardResourcesGroupModal).modal('hide');
+        $(addResourcesModal).modal('show');
+        addResourcesModalLabel.innerHTML = item.name;
+        auth.currentGoodId = item.good_id;
+        auth.currentCardOperation = (item.value < 0) ? -1 : 1;
+        resourceAdd.start(addResourcesModal);
+        fastEditFlag = true;
+      };
+
       if (item.value < 0) {
         cardResourcesResources.insertAdjacentHTML('beforeend', cardsMarkup.getResourceElement(item));
+        cardResourcesResources.lastChild.addEventListener('click', onResourcesGoodClick);
       } else {
         cardResourcesProduct.insertAdjacentHTML('beforeend', cardsMarkup.getResourceElement(item));
+        cardResourcesProduct.lastChild.addEventListener('click', onResourcesGoodClick);
       }
     });
   } else {
     cardResourcesResources.innerHTML = 'Nothig left, but hope';
     cardResourcesProduct.innerHTML = 'Nothig left, but hope';
   }
-
-
 };
 
 const onCardResourcesReturnBtn = () => {
@@ -205,7 +189,8 @@ const onCardResourcesReturnBtn = () => {
 cardResourcesReturnBtn.addEventListener('click', onCardResourcesReturnBtn);
 
 const onListCardBodyClick = (evt) => {
-
+  console.log(evt);
+  console.log('onListCardBodyClick');
   if (evt) {
 
     cardResources.classList.remove('d-none');
@@ -217,10 +202,9 @@ const onListCardBodyClick = (evt) => {
     }
 
     let currentCardName = cardData.data[currentStringElement.dataset.cardIndex].name;
-    cardName.innerHTML = currentCardName;
+    // cardName.innerHTML = currentCardName;
     auth.currentCardName = currentCardName;
     auth.currentCardId = currentStringElement.dataset.cardId;
-
   }
 
   xhr.request = {
@@ -239,6 +223,7 @@ const onSuccessCardsLoad = (loadedCards) => {
   console.log(loadedCards);
   cardData = loadedCards;
   cardsMarkup.drawDataInContainer(loadedCards.data);
+
 };
 
 const getCards = () => {
@@ -286,12 +271,12 @@ const onCardResourcesDeleteBtnClick = (evt) => {
 cardResourcesDeleteBtn.addEventListener('click', onCardResourcesDeleteBtnClick);
 
 const setupUniversalAdd = () => {
+  auth.currentCardName = '';
   toolsMarkup.runUniversalAdd = {
     title: 'Создание карточки',
     inputLabel: 'Название',
     inputPlaceholder: 'введите название',
     submitBtnName: 'Создать',
-    // submitCallback: setRequestToAddCard
   };
   cardAdd.start(universalAdd);
 };
@@ -303,7 +288,6 @@ const setupUniversalAddEdit = () => {
     inputPlaceholder: 'введите название',
     inputValue: auth.currentCardName,
     submitBtnName: 'Изменить',
-    // submitCallback: setRequestToAddEditCard
   };
   cardAdd.start(universalAdd);
 };
@@ -317,10 +301,10 @@ export default {
     listCards.addEventListener('click', getCards);
   },
 
-  redraw: getCards,
+  redrawList: getCards,
+  redrawCard: onListCardBodyClick,
 
   stop() {
-    cardsMarkup.cleanContainer();
     listCards.removeEventListener('click', getCards);
   }
 };

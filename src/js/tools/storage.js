@@ -166,6 +166,14 @@ export default {
     return sessionStorage.getItem('currentGroupName');
   },
 
+  set currentGroupLevel(level) {
+    sessionStorage.setItem('currentGroupLevel', level);
+  },
+
+  get currentGroupLevel() {
+    return sessionStorage.getItem('currentGroupLevel');
+  },
+
   set currentGoodId(id) {
     sessionStorage.setItem('currentGoodId', id);
   },
@@ -228,6 +236,22 @@ export default {
 
   get searchMode() {
     return sessionStorage.getItem('searchMode');
+  },
+
+  set goodListOperationType(type) {
+    sessionStorage.setItem('goodListOperationType', type);
+  },
+
+  get goodListOperationType() {
+    return sessionStorage.getItem('goodListOperationType');
+  },
+
+  set groupListOperationType(type) {
+    sessionStorage.setItem('groupListOperationType', type);
+  },
+
+  get groupListOperationType() {
+    return sessionStorage.getItem('groupListOperationType');
   },
 
 };

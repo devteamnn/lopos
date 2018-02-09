@@ -1,7 +1,7 @@
 import dataStorage from './../tools/storage.js';
 import markup from './../markup/tools.js';
 import formTools from './../tools/form-tools.js';
-import goodsCard from './catalog-groups-goods.js';
+import goodsCard from './catalog__goods.js';
 import search from './catalog__search.js';
 
 let appUrl;
@@ -31,9 +31,11 @@ const callbackXhrSuccess = (response) => {
 
 // чОрное колдовство с автооткрытием карточки при одном найденном варианте
     if (response.data.length === 1) {
-      dataStorage.currentGoodId = response.data[0].id;
-      goodsCard.fill();
-      response.data = 0;
+      $(modal).on('hidden.bs.modal', function (e) {
+        dataStorage.currentGoodId = response.data[0].id;
+        goodsCard.fill();
+        response.data = 0;
+      });
     } else if (response.data.length > 1) {
       search.drawResult(response.data);
     }

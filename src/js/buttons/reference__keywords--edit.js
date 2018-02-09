@@ -1,27 +1,25 @@
 import xhr from './../tools/xhr.js';
 import dataStorage from './../tools/storage.js';
 import markup from './../markup/tools.js';
-import enterprisesButton from './reference-enterprises.js';
+import keywordsButton from './reference__keywords.js';
 
-const appUrl = window.appSettings.formAddEnterprise.UrlApi;
-const messages = window.appSettings.formAddEnterprise.message;
+const appUrl = window.appSettings.formEditKeywords.UrlApi;
 
-const validPattern = window.appSettings.formAddEnterprise.validPatterns;
-const validMessage = window.appSettings.formAddEnterprise.validMessage;
+const messages = window.appSettings.formEditKeywords.messages;
 
+const validPattern = window.appSettings.formEditKeywords.validPatterns;
+const validMessage = window.appSettings.formEditKeywords.validMessage;
 
 const body = document.querySelector('body');
-const enterprisesAdd = body.querySelector('#enterprises-add');
-const form = enterprisesAdd.querySelector('#enterprises-add-form');
+const enterprisesCarEedit = body.querySelector('#keywords-card-edit');
+const form = enterprisesCarEedit.querySelector('#keywords-card-edit-form');
 
-const name = form.querySelector('#enterprise-name');
-const balance = form.querySelector('#enterprise-balance');
-const currency = form.querySelector('#enterprise-money');
+const name = form.querySelector('#keywords-card-edit-name');
 
-const spinner = form.querySelector('#enterprises-add-spinner');
+const spinner = form.querySelector('#keywords-card-edit-spinner');
 
-const buttonSubmit = form.querySelector('#enterprises-add-submit');
-const buttonCancel = form.querySelector('#enterprises-add-cancel');
+const buttonSubmit = form.querySelector('#keywords-card-edit-submit');
+const buttonCancel = form.querySelector('#keywords-card-edit-cancel');
 
 const stor = dataStorage.data;
 
@@ -38,19 +36,15 @@ const hideSpinner = () => {
 };
 
 const showAlert = (input) => {
-  if (input.type === 'text') {
-    input.classList.add('border');
-    input.classList.add('border-danger');
-    input.nextElementSibling.innerHTML = validMessage[input.id.match(/[\w]+$/)];
-  }
+  input.classList.add('border');
+  input.classList.add('border-danger');
+  input.nextElementSibling.innerHTML = validMessage[input.id.match(/[\w]+$/)];
 };
 
 const hideAlert = (input) => {
-  if (input.type === 'text') {
-    input.classList.remove('border');
-    input.classList.remove('border-danger');
-    input.nextElementSibling.innerHTML = '';
-  }
+  input.classList.remove('border');
+  input.classList.remove('border-danger');
+  input.nextElementSibling.innerHTML = '';
 };
 
 const formReset = () => {
@@ -66,13 +60,15 @@ const formReset = () => {
 
 const callbackXhrSuccess = (response) => {
 
+  console.dir(response);
+  dataStorage.currentKeywordName = name.value;
   hideSpinner();
   formReset();
-  $('#enterprises-add').modal('hide');
+  $('#keywords-card-edit').modal('hide');
 
   switch (response.status) {
   case 200:
-    enterprisesButton.redraw();
+    keywordsButton.redraw();
     break;
   case 400:
     markup.informationtModal = {
@@ -90,14 +86,22 @@ const callbackXhrSuccess = (response) => {
 };
 
 const callbackXhrError = () => {
+
   hideSpinner();
   formReset();
-  $('#enterprises-card-edit').modal('hide');
+  $('#keywords-card-edit').modal('hide');
 
   markup.informationtModal = {
     'title': 'Error',
     'messages': window.appSettings.messagess.xhrError
   };
+};
+
+const formIsChange = () => {
+  if (name.value !== window.appFormCurrValue.name) {
+    return true;
+  }
+  return false;
 };
 
 const validateForm = () => {
@@ -107,26 +111,26 @@ const validateForm = () => {
     valid = false;
     showAlert(name);
   }
-  if (!validPattern.balance.test(balance.value)) {
-    valid = false;
-    showAlert(balance);
-  }
 
   return valid;
 };
 
 const submitForm = () => {
-  let postData = `name=${name.value}&balance=${balance.value}&currency=${currency.value}&token=${stor.token}`;
+  let postData = `name=${name.value}&token=${stor.token}`;
   let urlApp = appUrl.replace('{{dir}}', stor.directory);
   urlApp = urlApp.replace('{{oper}}', stor.operatorId);
+  urlApp = urlApp.replace('{{busId}}', stor.currentBusiness);
+  urlApp = urlApp.replace('{{tagId}}', dataStorage.currentKeywordId);
 
   let response = {
     url: urlApp,
-    metod: 'POST',
+    metod: 'PUT',
     data: postData,
     callbackSuccess: callbackXhrSuccess,
     callbackError: callbackXhrError
   };
+
+  console.dir(response);
 
   xhr.request = response;
 };
@@ -142,11 +146,11 @@ const formSubmitHandler = (evt) => {
 
 const addHandlers = () => {
 
-  $('#enterprises-add').on('hidden.bs.modal', () => {
+  $('#keywords-card-edit').on('hidden.bs.modal', () => {
     formReset();
   });
 
-  $('#enterprises-add').on('shown.bs.modal', () => {
+  $('#keywords-card-edit').on('shown.bs.modal', () => {
     window.appFormCurrValue = {
       'name': name.value,
     };
@@ -154,7 +158,13 @@ const addHandlers = () => {
 
   form.addEventListener('input', (evt) => {
     hideAlert(evt.target);
-    buttonSubmit.disabled = false;
+
+    if (formIsChange()) {
+      buttonSubmit.disabled = false;
+    } else {
+      buttonSubmit.disabled = true;
+    }
+
   });
 
   form.addEventListener('submit', formSubmitHandler);

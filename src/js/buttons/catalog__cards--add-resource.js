@@ -24,7 +24,7 @@ const callbackXhrSuccess = (response) => {
   case 200:
     $(modal).modal('hide');
     formTools.reset();
-    catalogCard.redraw();
+    catalogCard.redrawCard();
     break;
   case 400:
     markup.informationtModal = {

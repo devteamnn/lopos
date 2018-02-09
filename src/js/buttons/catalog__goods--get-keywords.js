@@ -1,10 +1,10 @@
 import auth from '../tools/storage.js';
-import goods from './catalog-groups-goods.js';
+import goods from './catalog__goods.js';
 import xhr from '../tools/xhr.js';
 
 import keywordsUniversal from './universal-keywords.js';
-import referenceKeywords from './reference-keywords.js';
-import goodFormEdit from './catalog-groups-goods-edit.js';
+import referenceKeywords from './reference__keywords.js';
+import goodFormEdit from './catalog__goods--edit.js';
 
 
 const goodsKeywords = document.querySelector('#goods-keywords');
@@ -36,7 +36,6 @@ const keywordModificator = (keywordId, keywordNode) => {
 
 $(goodsCardKeywordsModal).on('shown.bs.modal', () => {
   auth.isGoodCardEdit = true;
-  // saveForm();
   keywordsUniversal.downloadAndDraw(goodsCardKeywordsBody, onKeywordClick, keywordModificator);
   $(goodsCard).modal('hide');
   goodFormEdit.removeHandlers();
@@ -52,7 +51,6 @@ const getKeywords = (tags) => {
 
   const onGoodKeywordClick = (evt) => {
     auth.isGoodCardEdit = true;
-    // saveForm();
     const returnHandler = (e) => {
       goods.fill();
       $('#list-groups-list').tab('show');

@@ -1,7 +1,7 @@
 import dataStorage from './../tools/storage.js';
 import markup from './../markup/tools.js';
 import formTools from './../tools/form-tools.js';
-import catalogGroups from './catalog-groups.js';
+import catalogGroups from './catalog__groups.js';
 
 let appUrl;
 let messages;

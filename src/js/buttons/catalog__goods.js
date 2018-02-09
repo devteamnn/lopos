@@ -1,13 +1,12 @@
 import xhr from '../tools/xhr.js';
 import auth from '../tools/storage.js';
-// import keywordsUniversal from './universal-keywords.js';
-// import referenceKeywords from './reference-keywords.js';
 
-import goodsExpressValidityAndSend from './catalog-groups-goods-express.js';
-import stockForm from './catalog-groups-goods-stock.js';
-import goodFormEdit from './catalog-groups-goods-edit.js';
-import getStock from './catalog-groups-goods-get-stock.js';
-import getKeywords from './catalog-groups-goods-get-keywords.js';
+import goodsExpressValidityAndSend from './catalog__goods--express.js';
+import stockForm from './catalog__goods--stock.js';
+import goodFormEdit from './catalog__goods--edit.js';
+import groups from './catalog__groups.js';
+import getStock from './catalog__goods--get-stock.js';
+import getKeywords from './catalog__goods--get-keywords.js';
 
 const goodsCard = document.querySelector('#goods-card');
 const goodsCardName = document.querySelector('#goods-card-name');
@@ -21,9 +20,7 @@ const goodsCardPurchase = document.querySelector('#goods-card-price-purchase');
 const goodsCardSell = document.querySelector('#goods-card-price-sell');
 const goodsCardExtra = document.querySelector('#goods-card-price-extra');
 const goodsStock = document.querySelector('#goods-stock-body');
-// const goodsKeywords = document.querySelector('#goods-keywords');
 const goodsCardKeywordsModal = document.querySelector('#goods-card-keywords');
-// const goodsCardKeywordsBody = document.querySelector('#goods-card-keywords-body');
 
 const expressContainer = document.querySelector('#express-container');
 const expressModal = document.querySelector('#express-modal');
@@ -34,6 +31,163 @@ const expressModalQuantity = document.querySelector('#express-modal-quantity');
 const stockModal = document.querySelector('#set-stock-modal');
 const stockModalName = document.querySelector('#set-stock-modal-stock');
 const stockModalQuantity = document.querySelector('#set-stock-modal-quantity');
+
+// ############################## РАБОТА С ТОВАРАМИ (СПИСОК) ##############################
+import goodsAdd from './catalog__goods--add.js';
+import goodsList from './universal-goods-list.js';
+import search from './universal-search.js';
+
+const listGroupGoodsAddModal = document.querySelector('#group-goods-add');
+const listGroupGoodsAddModalName = document.querySelector('#group-goods-name');
+const listGroupGoodsAddModalDescribe = document.querySelector('#group-goods-describe');
+const listGroupGoodsAddModalPurchase = document.querySelector('#group-goods-price-purchase');
+const listGroupGoodsAddModalExtra = document.querySelector('#group-goods-price-extra');
+const listGroupGoodsAddModalSell = document.querySelector('#group-goods-price-sell');
+const listGroupGoodsAddModalBarcode = document.querySelector('#group-goods-barcode');
+const listGroupGoodsCardCopyBtn = document.querySelector('#group-goods-copy-btn');
+const listGroupGoodsCardAddBtn = document.querySelector('#group-goods-add-btn');
+const listGroupsGoodsCardCheckMessage = document.querySelector('#list-groups-goods-header-check-message');
+const groupGoodsReturnBtn = document.querySelector('#group-goods-return-btn');
+const groupGoodsAddSubmitBtn = document.querySelector('#group-goods-add-submit');
+const groupGoodsAddLabel = document.querySelector('#group-goods-add-label');
+const goodsSortModal = document.querySelector('#group-goods-sort');
+const groupGoodsBody = document.querySelector('#group-goods-card-body');
+
+const groupGoodsCard = document.querySelector('#group-goods-card');
+const listGroupsCard = document.querySelector('#list-groups-card');
+
+const SELECT_DELAY = 2000;
+
+let loadedGoods = [];
+
+// поиск по товарам
+const goodsCardSearch = document.querySelector('#list-groups-goods-search-input');
+goodsCardSearch.addEventListener('input', (evt) => {
+  goodsList.draw(search.make(loadedGoods.data, evt.target.value), groupGoodsBody, onGoodClick);
+});
+
+// заполнение карточки копирования товара
+const fillCopyCard = (loadedGoodData) => {
+  let {
+    name,
+    description,
+    barcode,
+    purchase_price: purchasePrice,
+    selling_price: sellingPrice,
+  } = loadedGoodData.data;
+  purchasePrice = Number(purchasePrice).toFixed(2);
+  sellingPrice = Number(sellingPrice).toFixed(2);
+  listGroupGoodsAddModalName.value = name;
+  listGroupGoodsAddModalDescribe.value = description;
+  listGroupGoodsAddModalPurchase.value = +purchasePrice;
+  listGroupGoodsAddModalSell.value = +sellingPrice;
+  listGroupGoodsAddModalExtra.value = ((+sellingPrice - +purchasePrice) / (+purchasePrice / 100)).toFixed(2);
+  listGroupGoodsAddModalBarcode.value = barcode;
+};
+
+const onListGroupGoodsCardAddBtn = () => {
+  groupGoodsAddSubmitBtn.innerHTML = 'Создать';
+  groupGoodsAddLabel.innerHTML = 'Создание товара';
+  goodsAdd.start(listGroupGoodsAddModal);
+};
+
+const onListGroupGoodsCardCopyBtn = (evt) => {
+  auth.goodListOperationType = 'copy';
+  listGroupsGoodsCardCheckMessage.innerHTML = 'Выберите товар';
+  groupGoodsAddSubmitBtn.innerHTML = 'Скопировать';
+  groupGoodsAddLabel.innerHTML = 'Копирование товара';
+  window.setTimeout(function () {
+    listGroupsGoodsCardCheckMessage.innerHTML = '';
+    auth.goodListOperationType = 'open';
+  }, SELECT_DELAY);
+};
+
+
+listGroupGoodsCardCopyBtn.addEventListener('click', onListGroupGoodsCardCopyBtn);
+listGroupGoodsCardAddBtn.addEventListener('click', onListGroupGoodsCardAddBtn);
+
+// получения списка товаров в группе и его отрисовка
+const onSuccessGroupGood = (goodsData) => {
+  loadedGoods = goodsData;
+  if (auth.goodsSortMode && loadedGoods.data) {
+    universalSort(auth.goodsSortMode);
+  }
+  auth.goodsViewMode = (auth.goodsViewMode === 'null') ? 'string' : auth.goodsViewMode;
+  goodsList.draw(goodsData.data, groupGoodsBody, onGoodClick);
+};
+
+// обработчик клика по ноде товара
+const onGoodClick = () => {
+  if (auth.goodListOperationType === 'copy') {
+    listGroupsGoodsCardCheckMessage.innerHTML = 'Выберите товар';
+    groupGoodsAddSubmitBtn.innerHTML = 'Скопировать';
+    groupGoodsAddLabel.innerHTML = 'Копирование товара';
+    $(listGroupGoodsAddModal).modal('show');
+    goodsAdd.start(listGroupGoodsAddModal);
+    xhr.request = {
+      metod: 'POST',
+      url: `lopos_directory/${auth.data.directory}/operator/1/business/${auth.data.currentBusiness}/good/${auth.currentGoodId}/card_info`,
+      data: `view_last=0&token=${auth.data.token}`,
+      callbackSuccess: fillCopyCard,
+    };
+  } else if (auth.goodListOperationType === 'open' || !auth.goodListOperationType) {
+    getGood();
+  }
+};
+
+// сортировка товаров (массив данных пока по замыканию)
+const universalSort = (sortType) => {
+  switch (sortType) {
+  case 'group-goods-sort-abc-up':
+    loadedGoods.data.sort((a, b) => (a.name > b.name) ? 1 : -1);
+    break;
+  case 'group-goods-sort-abc-down':
+    loadedGoods.data.sort((a, b) => (b.name > a.name) ? 1 : -1);
+    break;
+  case 'group-goods-sort-tailings-up':
+    loadedGoods.data.sort((a, b) => a.count - b.count);
+    break;
+  case 'group-goods-sort-tailings-down':
+    loadedGoods.data.sort((a, b) => b.count - a.count);
+    break;
+  }
+  auth.goodsSortMode = sortType;
+  goodsList.draw(loadedGoods.data, groupGoodsBody, onGoodClick);
+  $(goodsSortModal).modal('hide');
+};
+
+const onGoodsSortModalClick = (evt) => {
+  if (evt.target.tagName === 'BUTTON') {
+    universalSort(evt.target.id);
+  }
+};
+goodsSortModal.addEventListener('click', onGoodsSortModalClick);
+
+// кнопка возврата на список групп
+const onGroupGoodsReturnBtnClick = () => {
+  groupGoodsCard.classList.add('d-none');
+  listGroupsCard.classList.remove('d-none');
+  groups.redraw();
+};
+groupGoodsReturnBtn.addEventListener('click', onGroupGoodsReturnBtnClick);
+
+// переключение режимов отрисовки товаров
+const groupGoodsViewBtn = document.querySelector('#group-goods-view-btn');
+const onGroupGoodsViewBtnClick = () => {
+  if (auth.goodsViewMode === 'string') {
+    auth.goodsViewMode = 'metro';
+    groupGoodsViewBtn.classList.add('icon-btn__view-tiles');
+  } else if (auth.goodsViewMode === 'metro') {
+    auth.goodsViewMode = 'string';
+    groupGoodsViewBtn.classList.remove('icon-btn__view-tiles');
+  }
+  goodsList.draw(loadedGoods.data, groupGoodsBody, onGoodClick);
+
+};
+groupGoodsViewBtn.addEventListener('click', onGroupGoodsViewBtnClick);
+
+// ############################## РАБОТА С ТОВАРАМИ (Карточка) ##############################
+
 
 let formSave = {};
 
@@ -55,7 +209,6 @@ const restoreForm = () => {
   }
   auth.isGoodCardEdit = false;
 };
-
 
 let goodTags = [];
 
@@ -97,7 +250,6 @@ const onSuccessGoodsLoad = (loadedGood) => {
   // заполняем форму - ключевые слова и работа с ними
   goodTags = (tags) ? tags : [];
 
-  // saveForm();
   getKeywords.getKeywords(goodTags);
 
   if (auth.isGoodCardEdit === 'true') {
@@ -132,6 +284,7 @@ const onSuccessExpressExecute = (answer) => {
     placement: 'top'
   }).popover('show');
   getGood();
+  getGoodsForGroup();
   window.setTimeout(function () {
     $(currentExpressBtn).popover('dispose');
     expressContainer.querySelectorAll('BUTTON').forEach((btn) => btn.removeAttribute('disabled', 'disabled'));
@@ -181,6 +334,7 @@ $(expressModal).on('hidden.bs.modal', () => {
   console.log(formSave);
   goodsExpressValidityAndSend.stop();
   getGood();
+  getGoodsForGroup();
   $(goodsCard).modal('toggle');
 });
 
@@ -214,13 +368,21 @@ $(stockModal).on('shown.bs.modal', () => {
 
 });
 
+const getGoodsForGroup = () => {
+  xhr.request = {
+    metod: 'POST',
+    url: `lopos_directory/${auth.data.directory}/operator/1/business/${auth.data.currentBusiness}/group/${auth.currentGroupId}/goods`,
+    data: `view_last=0&token=${auth.data.token}`,
+    callbackSuccess: onSuccessGroupGood,
+  };
+};
 
 // ================= превью картинки =================
 const showPreview = (file) => {
   let fileName = file.name.toLowerCase();
   let fileSize = (file.size / 1024 / 1024).toFixed(2);
 
-  if (fileName.endsWith('jpg') && fileSize < 2) {
+  if ((fileName.endsWith('jpg') || fileName.endsWith('png')) && fileSize < 2) {
     let reader = new FileReader();
 
     reader.addEventListener('load', function () {
@@ -230,7 +392,7 @@ const showPreview = (file) => {
   } else if (!fileName.endsWith('jpg')) {
     goodsCardImage.src = '';
     goodsCardImageUpload.value = '';
-    goodsCardImage.alt = `Формат ${fileName.slice(-3)} не катит, только jpg`;
+    goodsCardImage.alt = `Формат ${fileName.slice(-3)} не катит, только jpg или png`;
   } else if (fileSize > 2) {
     goodsCardImage.src = '';
     goodsCardImageUpload.value = '';
@@ -242,7 +404,10 @@ goodsCardImageUpload.addEventListener('change', function () {
   showPreview(goodsCardImageUpload.files[0]);
 });
 
-
 export default {
-  fill: getGood
+  fill: getGood,
+  onSuccessGroupGood,
+  redraw: getGoodsForGroup,
+
+
 };

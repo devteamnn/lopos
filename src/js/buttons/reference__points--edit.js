@@ -1,25 +1,25 @@
 import xhr from './../tools/xhr.js';
 import dataStorage from './../tools/storage.js';
 import markup from './../markup/tools.js';
-import enterprisesButton from './reference-enterprises.js';
+import pointButton from './reference__points.js';
 
-const appUrl = window.appSettings.formEditEnterprise.UrlApi;
+const appUrl = window.appSettings.formEditPoint.UrlApi;
 
-const messages = window.appSettings.formEditEnterprise.messages;
+const validPattern = window.appSettings.formEditPoint.validPatterns;
+const validMessage = window.appSettings.formEditPoint.validMessage;
 
-const validPattern = window.appSettings.formEditEnterprise.validPatterns;
-const validMessage = window.appSettings.formEditEnterprise.validMessage;
+const messages = window.appSettings.formEditPoint.messages;
 
 const body = document.querySelector('body');
-const enterprisesCarEedit = body.querySelector('#enterprises-card-edit');
-const form = enterprisesCarEedit.querySelector('#enterprises-card-edit-form');
+const enterprisesAdd = body.querySelector('#points-edit');
+const form = enterprisesAdd.querySelector('#points-edit-form');
 
-const name = form.querySelector('#enterprises-card-edit-name');
+const name = form.querySelector('#points-edit-name');
 
-const spinner = form.querySelector('#enterprises-card-edit-spinner');
+const spinner = form.querySelector('#points-edit-spinner');
 
-const buttonSubmit = form.querySelector('#enterprises-card-edit-submit');
-const buttonCancel = form.querySelector('#enterprises-card-edit-cancel');
+const buttonSubmit = form.querySelector('#points-edit-submit');
+const buttonCancel = form.querySelector('#points-edit-cancel');
 
 const stor = dataStorage.data;
 
@@ -62,11 +62,11 @@ const callbackXhrSuccess = (response) => {
 
   hideSpinner();
   formReset();
-  $('#enterprises-card-edit').modal('hide');
+  $('#points-edit').modal('hide');
 
   switch (response.status) {
   case 200:
-    enterprisesButton.updateCard();
+    pointButton.redraw();
     break;
   case 400:
     markup.informationtModal = {
@@ -81,18 +81,20 @@ const callbackXhrSuccess = (response) => {
     };
     break;
   }
+
 };
 
 const callbackXhrError = () => {
 
   hideSpinner();
   formReset();
-  $('#enterprises-card-edit').modal('hide');
+  $('#points-edit').modal('hide');
 
   markup.informationtModal = {
     'title': 'Error',
     'messages': window.appSettings.messagess.xhrError
   };
+
 };
 
 const formIsChange = () => {
@@ -117,7 +119,8 @@ const submitForm = () => {
   let postData = `name=${name.value}&token=${stor.token}`;
   let urlApp = appUrl.replace('{{dir}}', stor.directory);
   urlApp = urlApp.replace('{{oper}}', stor.operatorId);
-  urlApp = urlApp.replace('{{busId}}', dataStorage.currentEnterpriseId);
+  urlApp = urlApp.replace('{{busId}}', stor.currentBusiness);
+  urlApp = urlApp.replace('{{stId}}', dataStorage.currentStockId);
 
   let response = {
     url: urlApp,
@@ -126,6 +129,8 @@ const submitForm = () => {
     callbackSuccess: callbackXhrSuccess,
     callbackError: callbackXhrError
   };
+
+  console.dir(response);
 
   xhr.request = response;
 };
@@ -141,11 +146,11 @@ const formSubmitHandler = (evt) => {
 
 const addHandlers = () => {
 
-  $('#enterprises-card-edit').on('hidden.bs.modal', () => {
+  $('#points-edit').on('hidden.bs.modal', () => {
     formReset();
   });
 
-  $('#enterprises-card-edit').on('shown.bs.modal', () => {
+  $('#points-edit').on('shown.bs.modal', () => {
     window.appFormCurrValue = {
       'name': name.value,
     };
