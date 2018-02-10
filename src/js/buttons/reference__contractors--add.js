@@ -1,13 +1,10 @@
 import xhr from './../tools/xhr.js';
 import dataStorage from './../tools/storage.js';
 import referenceContractors from './reference__contractors.js';
-import markup from './../markup/tools.js';
 
 const appUrl = window.appSettings.formAddContractor.UrlApi;
 const validPattern = window.appSettings.formAddContractor.validPatterns;
 const validMessage = window.appSettings.formAddContractor.validMessage;
-const messages = window.appSettings.formAddContractor.messages;
-
 
 const body = document.querySelector('body');
 const contractorsAdd = body.querySelector('#contractors-add');
@@ -66,35 +63,16 @@ const formReset = () => {
 };
 
 const callbackXhrSuccess = (response) => {
-  console.dir(response);
-
   hideSpinner();
   formReset();
   $('#contractors-add').modal('hide');
-
-  switch (response.status) {
-  case 200:
-    referenceContractors.redraw();
-    break;
-  case 400:
-    markup.informationtModal = {
-      'title': 'Error',
-      'message': messages.mes400
-    };
-    break;
-  }
+  referenceContractors.redraw();
 };
 
 const callbackXhrError = () => {
-
   hideSpinner();
   formReset();
   $('#enterprises-card-edit').modal('hide');
-
-  markup.informationtModal = {
-    'title': 'Error',
-    'messages': window.appSettings.messagess.xhrError
-  };
 };
 
 const validateForm = () => {

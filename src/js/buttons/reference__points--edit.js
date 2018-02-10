@@ -1,14 +1,11 @@
 import xhr from './../tools/xhr.js';
 import dataStorage from './../tools/storage.js';
-import markup from './../markup/tools.js';
 import pointButton from './reference__points.js';
 
 const appUrl = window.appSettings.formEditPoint.UrlApi;
 
 const validPattern = window.appSettings.formEditPoint.validPatterns;
 const validMessage = window.appSettings.formEditPoint.validMessage;
-
-const messages = window.appSettings.formEditPoint.messages;
 
 const body = document.querySelector('body');
 const enterprisesAdd = body.querySelector('#points-edit');
@@ -58,43 +55,17 @@ const formReset = () => {
   buttonCancel.disabled = false;
 };
 
-const callbackXhrSuccess = (response) => {
-
+const callbackXhrSuccess = () => {
   hideSpinner();
   formReset();
   $('#points-edit').modal('hide');
-
-  switch (response.status) {
-  case 200:
-    pointButton.redraw();
-    break;
-  case 400:
-    markup.informationtModal = {
-      'title': 'Error',
-      'messages': messages.mes400
-    };
-    break;
-  case 271:
-    markup.informationtModal = {
-      'title': 'Error',
-      'messages': response.messages
-    };
-    break;
-  }
-
+  pointButton.redraw();
 };
 
 const callbackXhrError = () => {
-
   hideSpinner();
   formReset();
   $('#points-edit').modal('hide');
-
-  markup.informationtModal = {
-    'title': 'Error',
-    'messages': window.appSettings.messagess.xhrError
-  };
-
 };
 
 const formIsChange = () => {

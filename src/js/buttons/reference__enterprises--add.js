@@ -1,11 +1,8 @@
 import xhr from './../tools/xhr.js';
 import dataStorage from './../tools/storage.js';
-import markup from './../markup/tools.js';
 import enterprisesButton from './reference__enterprises.js';
 
 const appUrl = window.appSettings.formAddEnterprise.UrlApi;
-const messages = window.appSettings.formAddEnterprise.message;
-
 const validPattern = window.appSettings.formAddEnterprise.validPatterns;
 const validMessage = window.appSettings.formAddEnterprise.validMessage;
 
@@ -64,40 +61,17 @@ const formReset = () => {
   buttonCancel.disabled = false;
 };
 
-const callbackXhrSuccess = (response) => {
-
+const callbackXhrSuccess = () => {
   hideSpinner();
   formReset();
   $('#enterprises-add').modal('hide');
-
-  switch (response.status) {
-  case 200:
-    enterprisesButton.redraw();
-    break;
-  case 400:
-    markup.informationtModal = {
-      'title': 'Error',
-      'messages': messages.mes400
-    };
-    break;
-  case 271:
-    markup.informationtModal = {
-      'title': 'Error',
-      'messages': response.messages
-    };
-    break;
-  }
+  enterprisesButton.redraw();
 };
 
 const callbackXhrError = () => {
   hideSpinner();
   formReset();
   $('#enterprises-card-edit').modal('hide');
-
-  markup.informationtModal = {
-    'title': 'Error',
-    'messages': window.appSettings.messagess.xhrError
-  };
 };
 
 const validateForm = () => {

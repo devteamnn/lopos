@@ -1,11 +1,8 @@
 import xhr from './../tools/xhr.js';
 import dataStorage from './../tools/storage.js';
-import markup from './../markup/tools.js';
 import keywordsButton from './reference__keywords.js';
 
 const appUrl = window.appSettings.formEditKeywords.UrlApi;
-
-const messages = window.appSettings.formEditKeywords.messages;
 
 const validPattern = window.appSettings.formEditKeywords.validPatterns;
 const validMessage = window.appSettings.formEditKeywords.validMessage;
@@ -58,43 +55,18 @@ const formReset = () => {
   buttonCancel.disabled = false;
 };
 
-const callbackXhrSuccess = (response) => {
-
-  console.dir(response);
+const callbackXhrSuccess = () => {
   dataStorage.currentKeywordName = name.value;
   hideSpinner();
   formReset();
   $('#keywords-card-edit').modal('hide');
-
-  switch (response.status) {
-  case 200:
-    keywordsButton.redraw();
-    break;
-  case 400:
-    markup.informationtModal = {
-      'title': 'Error',
-      'messages': messages.mes400
-    };
-    break;
-  case 271:
-    markup.informationtModal = {
-      'title': 'Error',
-      'messages': response.messages
-    };
-    break;
-  }
+  keywordsButton.redraw();
 };
 
 const callbackXhrError = () => {
-
   hideSpinner();
   formReset();
   $('#keywords-card-edit').modal('hide');
-
-  markup.informationtModal = {
-    'title': 'Error',
-    'messages': window.appSettings.messagess.xhrError
-  };
 };
 
 const formIsChange = () => {

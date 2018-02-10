@@ -1,26 +1,17 @@
 import xhr from './../tools/xhr.js';
 import dataStorage from './../tools/storage.js';
-import markup from './../markup/tools.js';
 import keywordsButton from './reference__keywords.js';
 
 const appUrl = window.appSettings.formAddKeywords.UrlApi;
 const validPattern = window.appSettings.formAddKeywords.validPatterns;
 const validMessage = window.appSettings.formAddKeywords.validMessage;
-const messages = window.appSettings.formAddKeywords.messages;
-
-
 const body = document.querySelector('body');
 const enterprisesAdd = body.querySelector('#keywords-add');
 const form = enterprisesAdd.querySelector('#keywords-add-form');
-
 const name = form.querySelector('#keywords-add-name');
-
 const spinner = form.querySelector('#keywords-add-spinner');
-
 const buttonSubmit = form.querySelector('#keywords-add-submit');
 const buttonCancel = form.querySelector('#keywords-add-cancel');
-
-// const stor = dataStorage.data;
 
 const showSpinner = () => {
   spinner.classList.remove('invisible');
@@ -61,42 +52,18 @@ const formReset = () => {
   buttonCancel.disabled = false;
 };
 
-const callbackXhrSuccess = (response) => {
-
+const callbackXhrSuccess = () => {
   hideSpinner();
   formReset();
   $('#keywords-add').modal('hide');
-
-  switch (response.status) {
-  case 200:
-    keywordsButton.update();
-    break;
-  case 400:
-    markup.informationtModal = {
-      'title': 'Error',
-      'messages': messages.mes400
-    };
-    break;
-  case 271:
-    markup.informationtModal = {
-      'title': 'Error',
-      'messages': response.messages
-    };
-    break;
-  }
+  keywordsButton.update();
 };
 
 
 const callbackXhrError = () => {
-
   hideSpinner();
   formReset();
   $('#keywords-add').modal('hide');
-
-  markup.informationtModal = {
-    'title': 'Error',
-    'messages': window.appSettings.messagess.xhrError
-  };
 };
 
 const validateForm = () => {

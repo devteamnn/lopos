@@ -45,15 +45,9 @@ const initVar = (remModal) => {
   messages = window.appSettings[form.dataset.formname].messages;
 };
 
-const callbackXhrError = (xhr) => {
-
+const callbackXhrError = () => {
   $(modal).modal('hide');
   formTools.reset();
-
-  markup.informationtModal = {
-    'title': 'ОШИБКА СВЯЗИ',
-    'message': `Ошибка ${xhr.status}: ${xhr.statusText}`
-  };
 };
 
 const submitForm2 = () => {
@@ -92,37 +86,16 @@ const submitImg = () => {
 
 };
 
-const callbackXhrSuccess = (response) => {
-  console.log('callbackXhr1');
-  console.dir(response);
-
-  switch (response.status) {
-  case 200:
-
-    if (name.value !== inputInitValues[0] || describe.value !== inputInitValues[1] || barcode.value !== inputInitValues[2] || groupId.value !== inputInitValues[3]) {
-      submitForm2();
-    } else if (img.files.length !== 0) {
-      submitImg();
-    } else {
-      $('#goods-card').modal('hide');
-      formTools.reset();
-      catalogGroups.getGoodsForGroup();
-      catalogGoods.redraw();
-    }
-    break;
-  case 400:
+const callbackXhrSuccess = () => {
+  if (name.value !== inputInitValues[0] || describe.value !== inputInitValues[1] || barcode.value !== inputInitValues[2] || groupId.value !== inputInitValues[3]) {
+    submitForm2();
+  } else if (img.files.length !== 0) {
+    submitImg();
+  } else {
+    $('#goods-card').modal('hide');
     formTools.reset();
-    markup.informationtModal = {
-      'title': 'Error',
-      'messages': messages.mes400
-    };
-    break;
-  case 271:
-    markup.informationtModal = {
-      'title': 'Error',
-      'messages': response.messages
-    };
-    break;
+    catalogGroups.getGoodsForGroup();
+    catalogGoods.redraw();
   }
 };
 

@@ -1,11 +1,9 @@
 import dataStorage from './../tools/storage.js';
-import markup from './../markup/tools.js';
 import formTools from './../tools/form-tools.js';
 import catalogCard from './catalog__cards.js';
 
 let appUrlAdd;
 let appUrlEdit;
-let messages;
 
 let form;
 let field1;
@@ -20,45 +18,22 @@ const initVar = (remModal) => {
 
   appUrlAdd = window.appSettings[form.dataset.formname].UrlApiAdd;
   appUrlEdit = window.appSettings[form.dataset.formname].UrlApiEdit;
-  messages = window.appSettings[form.dataset.formname].messages;
 
 };
 
-const callbackXhrSuccess = (response) => {
-  switch (response.status) {
-  case 200:
-    $(modal).modal('hide');
-    formTools.reset();
-    if (dataStorage.currentCardName === '') {
-      catalogCard.redrawList();
-    } else {
-      catalogCard.redrawCard();
-    }
-    break;
-  case 400:
-    markup.informationtModal = {
-      'title': 'Error',
-      'message': messages.mes400
-    };
-    break;
-  case 271:
-    markup.informationtModal = {
-      'title': 'Error',
-      'message': response.messages
-    };
-    break;
+const callbackXhrSuccess = () => {
+  $(modal).modal('hide');
+  formTools.reset();
+  if (dataStorage.currentCardName === '') {
+    catalogCard.redrawList();
+  } else {
+    catalogCard.redrawCard();
   }
 };
 
-const callbackXhrError = (xhr) => {
-
+const callbackXhrError = () => {
   $(modal).modal('hide');
   formTools.reset();
-
-  markup.informationtModal = {
-    'title': 'ОШИБКА СВЯЗИ',
-    'message': `Ошибка ${xhr.status}: ${xhr.statusText}`
-  };
 };
 
 const submitFormAdd = () => {
