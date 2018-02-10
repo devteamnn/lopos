@@ -171,13 +171,18 @@ data - объект с параметрами для xhr запроса.
 Самая распространенная реализация для отправки на 1 ссылку без дополнительной логики:
 
 глобальные переменные модуля (modal, form и т.д.)
+
 function callbackXhrSuccess(responce) - скрываем окно, сбрасываем форму (***form-tools.reset()***), что-то перерисовываеv или отображаем
+
 function callbackXhrError() - скрываем окно, сбрасываем форму (***form-tools.reset()***)
+
 function submitForm() - формируем данные для xhr, вызываем (***form-tools.submit(data)***)
 
 export:
+
   function start(modal) - принимает ноду окна, инициализирует глобальные переменные, вызывает 
       (***form-tools.work(modal, submitForm)***)
+
   function stop() - сбрасывает форму (***form-tools.reset()***)
 
 single-validation.js
