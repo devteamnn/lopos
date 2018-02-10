@@ -3,7 +3,7 @@ import markup from './../markup/tools.js';
 // import catalogGroupsGoods from './catalog__groups-goods.js';
 import formTools from './../tools/form-tools.js';
 import tools from './../tools/tools.js';
-import catalogGroups from './catalog__goods.js';
+import catalogGroups from './catalog__groups.js';
 import catalogGoods from './catalog__goods.js';
 
 let modal;
@@ -49,8 +49,6 @@ const callbackXhrError = (xhr) => {
 
   $(modal).modal('hide');
   formTools.reset();
-  catalogGroups.getGoodsForGroup();
-  catalogGoods.redraw();
 
   markup.informationtModal = {
     'title': 'ОШИБКА СВЯЗИ',
@@ -108,6 +106,7 @@ const callbackXhrSuccess = (response) => {
     } else {
       $('#goods-card').modal('hide');
       formTools.reset();
+      catalogGroups.getGoodsForGroup();
       catalogGoods.redraw();
     }
     break;
@@ -136,8 +135,9 @@ const callbackXhrSuccess2 = (response) => {
     if (img.files.length !== 0) {
       submitImg();
     } else {
-      formTools.reset();
       $('#goods-card').modal('hide');
+      formTools.reset();
+      catalogGroups.getGoodsForGroup();
       catalogGoods.redraw();
     }
     break;
@@ -164,8 +164,9 @@ const callbackXhrImgLoadSuccess = (response) => {
   case 200:
     console.log('img load - ok');
 
-    formTools.reset();
     $('#goods-card').modal('hide');
+    formTools.reset();
+    catalogGroups.getGoodsForGroup();
     catalogGoods.redraw();
     break;
   case 400:
