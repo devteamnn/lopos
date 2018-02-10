@@ -12,6 +12,14 @@ const setMessage = (mess, type) => {
   };
 };
 
+const setError = (msg) => {
+  setMessage(msg, false);
+  // Если есть errorCallback - вызываем
+  if (requestParameters.callbackError && typeof requestParameters.callbackError === 'function') {
+    requestParameters.callbackError();
+  }
+};
+
 const parseRespCodes = (response) => {
   switch (response.status) {
   case 200:
@@ -22,21 +30,13 @@ const parseRespCodes = (response) => {
     requestParameters.callbackSuccess(response);
     break;
   case 271:
-    setMessage(response.message, false);
-    // Если есть errorCallback - вызываем
-    if (requestParameters.callbackError && typeof requestParameters.callbackError === 'function') {
-      requestParameters.callbackError();
-    }
+    setError(response.message);
     break;
   case 272:
     requestParameters.callbackSuccess(response);
     break;
   case 273:
-    setMessage(response.message, false);
-    // Если есть errorCallback - вызываем
-    if (requestParameters.callbackError && typeof requestParameters.callbackError === 'function') {
-      requestParameters.callbackError();
-    }
+    setError(response.message);
     break;
   case 280:
     setMessage(response.message, false);
@@ -45,60 +45,41 @@ const parseRespCodes = (response) => {
   case 281:
     requestParameters.callbackSuccess(response);
     break;
-
   case 400:
-    setMessage(messages.mes400, false);
-    // Если есть errorCallback - вызываем
-    if (requestParameters.callbackError && typeof requestParameters.callbackError === 'function') {
-      requestParameters.callbackError();
-    }
+    setError(messages.responseStatus.res400);
     break;
   }
 };
 
 const xhrLoadHandler = () => {
-  if (xhr.status === 200) {
-    let response = '';
+  if (xhr.readyState === 4) {
+    if (xhr.status === 200) {
+      let response = '';
 
-    try {
-      response = JSON.parse(xhr.response);
-    } catch (error) {
-      // Вывод ошибки парсинга
-      setMessage('Ошибка разбора JSON', false);
-      // Если есть errorCallback - вызываем
-      if (requestParameters.callbackError && typeof requestParameters.callbackError === 'function') {
-        requestParameters.callbackError();
+      try {
+        response = JSON.parse(xhr.response);
+      } catch (error) {
+        // Вывод ошибки парсинга
+        setError(messages.xhrJsonError);
       }
-    }
 
-    // Разбираем коды ответа APILopos
-    parseRespCodes(response);
-  } else {
-    // Ошибка, которую возвращает сервер
-    setMessage('Ошибка разбора JSON', false);
-    // Если есть errorCallback - вызываем
-    if (requestParameters.callbackError && typeof requestParameters.callbackError === 'function') {
-      requestParameters.callbackError();
+      // Разбираем коды ответа APILopos
+      parseRespCodes(response);
+    } else {
+      // Внутренняя ошибка HTTP
+      setError(messages.xhrError);
     }
   }
 };
 
 const xhrErrorHandler = () => {
   // Ошибка, которую возвращает сервер
-  setMessage(`Ошибка связи: ${xhr.status}: ${xhr.statusText}`, false);
-  // Если есть errorCallback - вызываем
-  if (requestParameters.callbackError && typeof requestParameters.callbackError === 'function') {
-    requestParameters.callbackError();
-  }
+  setError(messages.xhrError);
 };
 
 const xhrTimeoutHandler = () => {
   // Ошибка, которую возвращает сервер
-  setMessage('Превышено время ожидания ответа от сервера', false);
-  // Если есть errorCallback - вызываем
-  if (requestParameters.callbackError && typeof requestParameters.callbackError === 'function') {
-    requestParameters.callbackError();
-  }
+  setError(messages.xhrTimeoutError);
 };
 
 const xhrRun = () => {
@@ -123,67 +104,3 @@ export default {
     xhrRun();
   }
 };
-
-// export default {
-
-//   set request(),
-
-// };
-
-  //         if (response.status === 280 && response.message === 'Invalid token') {
-  //           toolsMarkup.informationtModal = {
-  //             title: 'Что-то пошло не так...',
-  //             message: 'Пожалуйста, авторизуйтесь заново'
-  //           };
-  //           document.dispatchEvent(new Event('authError'));
-  //         }
-
-  //       } catch (error) {
-  //         toolsMarkup.informationtModal = {
-  //           title: 'Что-то пошло не так...',
-  //           message: 'Ошибка парсинга JSON'
-  //         };
-  //       }
-
-  //       requestParameters.callbackSuccess(response);
-  //     } else {
-  //       if (requestParameters.callbackError && typeof requestParameters.callbackError === 'function') {
-  //         requestParameters.callbackError(xhr);
-  //       } else {
-  //         toolsMarkup.informationtModal = {
-  //           title: 'Что-то пошло не так...',
-  //           message: 'Ошибка связи с сервером'
-  //         };
-  //       }
-  //     }
-  //   });
-
-  //   xhr.addEventListener('error', function () {
-  //     if (requestParameters.callbackError && typeof requestParameters.callbackError === 'function') {
-  //       requestParameters.callbackError(xhr);
-  //     } else {
-  //       toolsMarkup.informationtModal = {
-  //         title: '400',
-  //         message: getError(`${ErrorAttr.MESSADGE.CONNECT_ERR} ${xhr.statusText}`, 42, '')
-  //       };
-
-  //     }
-  //   });
-
-  //   xhr.addEventListener('timeout', function () {
-  //     if (requestParameters.callbackError && typeof requestParameters.callbackError === 'function') {
-  //       requestParameters.callbackError(xhr);
-  //     } else {
-  //       toolsMarkup.informationtModal = {
-  //         title: '400',
-  //         message: getError(`${ErrorAttr.MESSADGE.CONNECT_ERR} (${xhr.timeout}ms.)`, 50, '')
-  //       };
-  //     }
-  //   });
-
-  //   xhr.timeout = window.appSettings.xhrSettings.timeout;
-  //   xhr.open(requestParameters.metod, window.appSettings.xhrSettings.urlApi + requestParameters.url, true);
-  //   // xhr.setRequestHeader('Content-Type', window.appSettings.xhrSettings.contentType);
-
-  //   xhr.send(requestParameters.data);
-  // }

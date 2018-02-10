@@ -101,7 +101,7 @@ const onGroupClick = () => {
     groupName.innerHTML = auth.currentGroupName;
     groupGoodsCard.classList.remove('d-none');
     listGroupsCard.classList.add('d-none');
-    getGoodsForGroup();
+    // getGoodsForGroup();
     goodsCard.redraw();
   }
 };

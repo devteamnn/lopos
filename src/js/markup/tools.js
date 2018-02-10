@@ -57,7 +57,12 @@ export default {
           <span aria-hidden="true">&times;</span>
         </button>
       </div>`;
-    window.setTimeout(() => alertBlock.firstChild.remove(), 5000);
+    window.setTimeout(() => {
+      let block = alertBlock.firstChild;
+      if (block) {
+        block.remove();
+      }
+    }, 5000);
   },
 
   set runUniversalAdd(setup) {
