@@ -93,7 +93,6 @@ const xhrRun = () => {
 
   xhr.timeout = window.appSettings.xhrSettings.timeout;
   xhr.open(requestParameters.metod, window.appSettings.xhrSettings.urlApi + requestParameters.url, true);
-
   xhr.send(requestParameters.data);
 };
 

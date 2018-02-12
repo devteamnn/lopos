@@ -20,6 +20,8 @@ import groupsButton from './buttons/catalog__groups.js';
 import cardsButton from './buttons/catalog__cards.js';
 import searchButton from './buttons/catalog__search.js';
 
+import operationsPurchase from './buttons/operations__purchase.js';
+
 // Отправка без валидации
 // import cardsResourcesButton from './buttons/catalog__cards--add-resource.js';
 
@@ -68,7 +70,8 @@ const mainMenuButtons = [
   groupsButton,
   cardsButton,
   // cardsResourcesButton,
-  searchButton
+  searchButton,
+  operationsPurchase
 ];
 
 // ========== ОБНОВЛЕНИЕ/ОТКРЫТИЕ СТРАНИЦЫ ==========
