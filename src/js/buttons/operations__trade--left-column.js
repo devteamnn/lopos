@@ -40,10 +40,9 @@ const getGroups = (groups, groupClickHandler, btnBackHandler) => {
 const getGoods = (goods, goodClickHandler, btnBackHandler) => {
   getHeader('goods', btnBackHandler);
   console.dir(goods);
-  leftColumn.innerHTML = '';
-  goods.forEach((el) => {
-    leftColumn.innerHTML = leftColumn.innerHTML + `<div>${el.id}  ||  ${el.name}  ||  ${el.count}  ||  ${el.price}</div>`;
-  });
+
+  markup.leftColumnGoods(goods, leftColumn, goodClickHandler);
+
 };
 
 

@@ -28,8 +28,15 @@ const headerButtonBackClickHandler = () => {
   operationsTradeLeft.drawGroups(dataStore.all_groups, drawGroupsCallback, headerButtonBackClickHandler);
 };
 
-const drawGoodsCallback = () => {
-  console.log('goods ok');
+const drawGoodsCallback = (type) => {
+  switch (type) {
+  case 'add':
+    console.log('Добавить в накладную');
+    break;
+  case 'card':
+    console.log('Открыть карту');
+    break;
+  }
 };
 
 const getGoodsXhrCallbackSuccess = (response) => {
