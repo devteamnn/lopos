@@ -19,14 +19,34 @@ import groupsButton from './buttons/catalog__groups.js';
 // import goodsButtonFormEdit from './buttons/catalog__goods--edit.js';
 import cardsButton from './buttons/catalog__cards.js';
 import searchButton from './buttons/catalog__search.js';
+import operationTrade from './buttons/operations__trade.js';
 
-import operationsPurchase from './buttons/operations__purchase.js';
+import xhr from './tools/xhr.js';
 
 // Отправка без валидации
 // import cardsResourcesButton from './buttons/catalog__cards--add-resource.js';
 
 console.log('3D3 (07.02.18_13:30)');
 console.log('ver: 3A5');
+
+const onSuccess1 = (answer) => console.log('xhr1');
+const onSuccess2 = (answer) => console.log('xhr2');
+
+xhr.request = {
+  metod: 'POST',
+  url: 'lopos_directory/600a5357/operator/1/business/1/operation/credit',
+  data: 'view_last=0&token=x123lptoken',
+  callbackSuccess: onSuccess1,
+};
+
+
+xhr.request = {
+  metod: 'POST',
+  url: 'lopos_directory/600a5357/operator/1/business/1/operation/credit',
+  data: 'view_last=0&token=x123lptoken',
+  callbackSuccess: onSuccess2,
+};
+
 
 const exit = document.querySelector('#profile-exit');
 const app = document.querySelector('#app');
@@ -69,9 +89,8 @@ const mainMenuButtons = [
   keywordsButton,
   groupsButton,
   cardsButton,
-  // cardsResourcesButton,
   searchButton,
-  operationsPurchase
+  operationTrade
 ];
 
 // ========== ОБНОВЛЕНИЕ/ОТКРЫТИЕ СТРАНИЦЫ ==========
