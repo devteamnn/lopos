@@ -1,14 +1,17 @@
-import markUp from './../tools/operation__trade.js';
+import markup from './../markup/operation__trade.js';
 
-let leftColumn;
+let rightColumn;
 
 const getGoods = (nomenklature, callback) => {
-  markUp.rightColumnGoods(nomenklature, leftColumn, callback);
+  markup.rightColumnGoods(nomenklature, rightColumn, callback);
 };
 
 export default {
   start() {
-    leftColumn = document.querySelector('#operations-trade-right');
+    rightColumn = document.querySelector('#operations-trade-right');
   },
-  drawGoods: getGoods
+  drawGoods: getGoods,
+  clear() {
+    rightColumn.innerHTML = '';
+  }
 };

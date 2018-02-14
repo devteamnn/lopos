@@ -87,7 +87,7 @@ export default {
 
     container.innerHTML = '';
 
-    let tbody = document.createElement('tbody');
+    let fragment = document.createDocumentFragment();
 
     nomenklature.forEach((position, index) => {
       let tr = document.createElement('tr');
@@ -100,9 +100,9 @@ export default {
       `;
 
       tr.addEventListener('click', clickHandler);
-      tbody.addEventListener(tr);
+      fragment.appendChild(tr);
     });
 
-    container.addEventListener(tbody);
+    container.appendChild(fragment);
   }
 };
