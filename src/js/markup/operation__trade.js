@@ -1,3 +1,4 @@
+import stor from './../tools/storage.js';
 
 export default {
   leftColumnHeader(head, node) {
@@ -14,42 +15,30 @@ export default {
   leftColumnGoods(goods, container, clickCallback) {
 
     const clickHandler = (evt) => {
+      let el = evt.target;
+
+      while (!el.dataset['id']) {
+        el = el.parentNode;
+      }
+
+      let posId = el.dataset['id'];
+
       switch (evt.target.dataset['type']) {
       case 'add':
-        console.log('add');
+        stor.operationClickType = 'add';
         break;
       case 'card':
-        console.log('card');
+        stor.operationClickType = 'card';
         break;
       default:
-        console.log('def');
+        stor.operationClickType = 'def';
         break;
       }
+      stor.currentGoodId = posId;
+      clickCallback();
     };
 
     container.innerHTML = '';
-
-
-    // goods.forEach((good, index) => {
-    //   let div = document.createElement('div');
-    //   div.className = 'goods-string';
-    //   div.dataset['id'] = good.id;
-    //   div.innerHTML = `
-    //     <div>
-    //       <span class="reference-row-number">${index + 1}</span>
-    //       <span>${good.id}</span>
-    //       <span>${good.name}</span>
-    //     </div>
-    //     <div>
-    //       <button class="button btn btn-danger" data-type="add">+1</button>
-    //       <button class="button btn btn-danger" data-type="card">i</button>
-    //     </div>
-    //   `;
-
-    //   div.addEventListener('click', clickHandler);
-
-    //   fragment.appendChild(div);
-    // });
 
     let table = document.createElement('table');
     table.className = 'table table-hover';
@@ -63,7 +52,7 @@ export default {
       tr.dataset['id'] = good.id;
       tr.innerHTML = `
         <th scope="row">${index + 1}</th>
-        <td>${good.name}</td>
+        <td>${good.id} || ${good.name}</td>
         <td>${good.count}</td>
         <td>
           <button class="button btn btn-danger" data-type="add">+1</button>
@@ -80,6 +69,40 @@ export default {
 
     table.appendChild(tbody);
     container.appendChild(table);
+  },
 
+  rightColumnGoods(nomenklature, container, clickCallback) {
+
+    const clickHandler = (evt) => {
+      let el = evt.target;
+
+      while (!el.dataset['id']) {
+        el = el.parentNode;
+      }
+
+      stor.currentGoodId = el.dataset['id'];
+
+      clickCallback();
+    };
+
+    container.innerHTML = '';
+
+    let tbody = document.createElement('tbody');
+
+    nomenklature.forEach((position, index) => {
+      let tr = document.createElement('tr');
+      tr.dataset['id'] = position.id;
+      tr.scope = 'row';
+      tr.innerHTML = `
+        <th scope="row">${index + 1}</th>
+        <td>${position.name}</td>
+        <td>${position.price}</td>
+      `;
+
+      tr.addEventListener('click', clickHandler);
+      tbody.addEventListener(tr);
+    });
+
+    container.addEventListener(tbody);
   }
 };

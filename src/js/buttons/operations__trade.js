@@ -28,14 +28,7 @@ const headerButtonBackClickHandler = () => {
 };
 
 const drawGoodsCallback = (type) => {
-  switch (type) {
-  case 'add':
-    console.log('Добавить в накладную');
-    break;
-  case 'card':
-    console.log('Открыть карту');
-    break;
-  }
+  console.log('drawGoodsCallback');
 };
 
 const getGoodsXhrCallbackSuccess = (response) => {

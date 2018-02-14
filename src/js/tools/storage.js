@@ -254,4 +254,11 @@ export default {
     return sessionStorage.getItem('groupListOperationType');
   },
 
+  set operationClickType(type) {
+    sessionStorage.setItem('operationClickType', type);
+  },
+
+  get operationClickType() {
+    return sessionStorage.getItem('operationClickType');
+  }
 };
