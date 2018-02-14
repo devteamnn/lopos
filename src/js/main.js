@@ -29,25 +29,6 @@ import xhr from './tools/xhr.js';
 console.log('3D3 (07.02.18_13:30)');
 console.log('ver: 3A5');
 
-const onSuccess1 = (answer) => console.log('xhr1');
-const onSuccess2 = (answer) => console.log('xhr2');
-
-xhr.request = {
-  metod: 'POST',
-  url: 'lopos_directory/600a5357/operator/1/business/1/operation/credit',
-  data: 'view_last=0&token=x123lptoken',
-  callbackSuccess: onSuccess1,
-};
-
-
-xhr.request = {
-  metod: 'POST',
-  url: 'lopos_directory/600a5357/operator/1/business/1/operation/credit',
-  data: 'view_last=0&token=x123lptoken',
-  callbackSuccess: onSuccess2,
-};
-
-
 const exit = document.querySelector('#profile-exit');
 const app = document.querySelector('#app');
 const login = document.querySelector('#login');

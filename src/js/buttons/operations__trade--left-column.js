@@ -39,7 +39,7 @@ const getGroups = (groups, groupClickHandler, btnBackHandler) => {
 
 const getGoods = (goods, goodClickHandler, btnBackHandler) => {
   getHeader('goods', btnBackHandler);
-  console.dir(goods);
+  // console.dir(goods);
 
   markup.leftColumnGoods(goods, leftColumn, goodClickHandler);
 

@@ -24,7 +24,6 @@ const setKontragentList = (kontragents) => {
 };
 
 const headerButtonBackClickHandler = () => {
-  console.log('button back OK!');
   operationsTradeLeft.drawGroups(dataStore.all_groups, drawGroupsCallback, headerButtonBackClickHandler);
 };
 
@@ -41,7 +40,7 @@ const drawGoodsCallback = (type) => {
 
 const getGoodsXhrCallbackSuccess = (response) => {
   // Выводим товары в группе
-  console.dir(response);
+  // console.dir(response);
   operationsTradeLeft.drawGoods(response.data, drawGoodsCallback, headerButtonBackClickHandler);
 };
 
@@ -61,12 +60,8 @@ const drawGroupsCallback = () => {
   getGoods();
 };
 
-// const setGroupList = (groups) => {
-//   universalGroupsList.draw(groups, leftColumn, universalGroupsListCallback);
-// };
-
 const getDataXhrCallbackSuccess = (response) => {
-  console.dir(response);
+  // console.dir(response);
   dataStore = response.data;
   setstocksList(response.data.all_stocks);
   setKontragentList(response.data.all_kontr_agents);
@@ -84,19 +79,6 @@ const getData = () => {
     'callbackSuccess': getDataXhrCallbackSuccess
   };
 };
-
-// const universalGoodsListCallback = () => {
-
-// };
-
-// export default {
-//   start() {
-//     operationsTradeLeft.start();
-//     // !!Здесь инициализировать переменные и обработчики
-//     operationsTradeLeft.header();
-//     getData();
-//   }
-// };
 
 export default {
   start() {

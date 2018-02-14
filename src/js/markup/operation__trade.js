@@ -1,22 +1,3 @@
-import stor from './../tools/storage.js';
-
-const createButton = (id, value, clickCallback) => {
-  let type = (value === '+1') ? 'add' : 'card';
-  let button = document.createElement('button');
-
-  button.type = 'button';
-  button.className = 'btn btn-danger';
-  button.innerHTML = value;
-  button.dataset['id'] = id;
-  button.dataset['type'] = type;
-
-  button.addEventListener('click', (evt) => {
-    stor.currentGoodId = evt.target.dataset['id'];
-    clickCallback(evt.target.dataset['type']);
-  });
-
-  return button;
-};
 
 export default {
   leftColumnHeader(head, node) {
@@ -31,26 +12,74 @@ export default {
   },
 
   leftColumnGoods(goods, container, clickCallback) {
+
+    const clickHandler = (evt) => {
+      switch (evt.target.dataset['type']) {
+      case 'add':
+        console.log('add');
+        break;
+      case 'card':
+        console.log('card');
+        break;
+      default:
+        console.log('def');
+        break;
+      }
+    };
+
     container.innerHTML = '';
 
+
+    // goods.forEach((good, index) => {
+    //   let div = document.createElement('div');
+    //   div.className = 'goods-string';
+    //   div.dataset['id'] = good.id;
+    //   div.innerHTML = `
+    //     <div>
+    //       <span class="reference-row-number">${index + 1}</span>
+    //       <span>${good.id}</span>
+    //       <span>${good.name}</span>
+    //     </div>
+    //     <div>
+    //       <button class="button btn btn-danger" data-type="add">+1</button>
+    //       <button class="button btn btn-danger" data-type="card">i</button>
+    //     </div>
+    //   `;
+
+    //   div.addEventListener('click', clickHandler);
+
+    //   fragment.appendChild(div);
+    // });
+
+    let table = document.createElement('table');
+    table.className = 'table table-hover';
+    table.innerHTML = '<thead><tr><th scope="col" class="">#</th><th scope="col" class="w-50">Товар</th><th scope="col">Кол-во</th><th scope="col"></th><th scope="col"></th></tr></thead>';
+
+    let tbody = document.createElement('tbody');
+
     goods.forEach((good, index) => {
-      let div = document.createElement('div');
-      div.className = 'goods-string';
-      div.innerHTML = `
-        <div>
-          <span class="reference-row-number">${index + 1}</span>
-          <span>${good.id}</span>
-          <span>${good.name}</span>
-        </div>`;
-      let div2 = document.createElement('div');
-      div2.innerHTML = `${(good.count) ? good.count : ''}`;
-      div2.appendChild(createButton(good.id, '+1', clickCallback));
-      div2.appendChild(createButton(good.id, 'i', clickCallback));
+      let tr = document.createElement('tr');
+      tr.scope = 'row';
+      tr.dataset['id'] = good.id;
+      tr.innerHTML = `
+        <th scope="row">${index + 1}</th>
+        <td>${good.name}</td>
+        <td>${good.count}</td>
+        <td>
+          <button class="button btn btn-danger" data-type="add">+1</button>
+        </td>
+        <td>
+          <button class="button btn btn-danger" data-type="card">i</button>
+        </td>
+      `;
 
-      div.appendChild(div2);
+      tr.addEventListener('click', clickHandler);
 
-      container.appendChild(div);
+      tbody.appendChild(tr);
     });
+
+    table.appendChild(tbody);
+    container.appendChild(table);
+
   }
 };
-
