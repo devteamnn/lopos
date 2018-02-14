@@ -21,7 +21,7 @@ import cardsButton from './buttons/catalog__cards.js';
 import searchButton from './buttons/catalog__search.js';
 import operationTrade from './buttons/operations__trade.js';
 
-import xhr from './tools/xhr.js';
+// import xhr from './tools/xhr.js';
 
 // Отправка без валидации
 // import cardsResourcesButton from './buttons/catalog__cards--add-resource.js';

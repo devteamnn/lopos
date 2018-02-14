@@ -3,7 +3,7 @@ import toolsMarkup from '../markup/tools.js';
 export default {
   set request(parameters) {
     let xhr;
-    let messages;
+    let messages = window.appSettings.messages;
 
     // mess - сообщение, type = true/false - сообщение/ошибка
     const setMessage = (mess, type) => {
@@ -84,20 +84,20 @@ export default {
       setError(messages.xhrTimeoutError);
     };
 
-    const xhrRun = () => {
-      xhr = new XMLHttpRequest();
+    // const xhrRun = () => {
+    xhr = new XMLHttpRequest();
 
-      xhr.addEventListener('load', xhrLoadHandler);
-      // Слушаем событие ошибки XHR
-      xhr.addEventListener('error', xhrErrorHandler);
-      // Слушаем событие таймаута связи
-      xhr.addEventListener('timeout', xhrTimeoutHandler);
+    xhr.addEventListener('load', xhrLoadHandler);
+    // Слушаем событие ошибки XHR
+    xhr.addEventListener('error', xhrErrorHandler);
+    // Слушаем событие таймаута связи
+    xhr.addEventListener('timeout', xhrTimeoutHandler);
 
-      xhr.timeout = window.appSettings.xhrSettings.timeout;
-      xhr.open(parameters.metod, window.appSettings.xhrSettings.urlApi + parameters.url, true);
-      xhr.send(parameters.data);
-    };
+    xhr.timeout = window.appSettings.xhrSettings.timeout;
+    xhr.open(parameters.metod, window.appSettings.xhrSettings.urlApi + parameters.url, true);
+    xhr.send(parameters.data);
+    // };
 
-    xhrRun();
+    // xhrRun();
   }
 };
