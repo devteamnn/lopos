@@ -260,5 +260,37 @@ export default {
 
   get operationClickType() {
     return sessionStorage.getItem('operationClickType');
-  }
+  },
+
+  set operationTradeType(type) {
+    sessionStorage.setItem('operationTradeType', type);
+  },
+
+  get operationTradeType() {
+    return sessionStorage.getItem('operationTradeType');
+  },
+
+  set operationTradeCurrentGoodId(id) {
+    sessionStorage.setItem('operationTradeCurrentGoodId', id);
+  },
+
+  get operationTradeCurrentGoodId() {
+    return sessionStorage.getItem('operationTradeCurrentGoodId');
+  },
+
+  set operationTradeCurrentGoodName(name) {
+    sessionStorage.setItem('operationTradeCurrentGoodName', name);
+  },
+
+  get operationTradeCurrentGoodName() {
+    return sessionStorage.getItem('operationTradeCurrentGoodName');
+  },
+
+  set operationTradeCurrentGoodCount(count) {
+    sessionStorage.setItem('operationTradeCurrentGoodCount', count);
+  },
+
+  get operationTradeCurrentGoodCount() {
+    return sessionStorage.getItem('operationTradeCurrentGoodCount');
+  },
 };

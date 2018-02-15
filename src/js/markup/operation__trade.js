@@ -1,6 +1,13 @@
 import stor from './../tools/storage.js';
 
 export default {
+  header(head, img) {
+    return `
+        <img src="${img}" alt="">
+        <h2>${head}</h2>
+      `;
+  },
+
   leftColumnHeader(head, node) {
     return `
     <div class="catalog-header">
@@ -21,8 +28,6 @@ export default {
         el = el.parentNode;
       }
 
-      let posId = el.dataset['id'];
-
       switch (evt.target.dataset['type']) {
       case 'add':
         stor.operationClickType = 'add';
@@ -34,7 +39,10 @@ export default {
         stor.operationClickType = 'def';
         break;
       }
-      stor.currentGoodId = posId;
+      stor.operationTradeCurrentGoodId = el.dataset['id'];
+      stor.operationTradeCurrentGoodName = el.dataset['name'];
+      stor.operationTradeCurrentGoodCount = el.dataset['count'];
+
       clickCallback();
     };
 
@@ -50,6 +58,8 @@ export default {
       let tr = document.createElement('tr');
       tr.scope = 'row';
       tr.dataset['id'] = good.id;
+      tr.dataset['name'] = good.name;
+      tr.dataset['count'] = good.count;
       tr.innerHTML = `
         <th scope="row">${index + 1}</th>
         <td>${good.id} || ${good.name}</td>

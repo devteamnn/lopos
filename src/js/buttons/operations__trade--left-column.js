@@ -3,8 +3,9 @@
 import universalGroupsList from './universal-groups-list.js';
 import markup from './../markup/operation__trade.js';
 
-let leftColumn;
-let elHeader;
+let leftColumn = document.querySelector('#operations-trade-left');
+let elHeader = document.querySelector('#operations-trade-left-header');
+// const stocksList = document.querySelector('#operations-purchase-stocks-list');
 
 const NodeEnum = {
   IMG_GROUP: '<img src="img/groups.png" alt="">',
@@ -39,18 +40,13 @@ const getGroups = (groups, groupClickHandler, btnBackHandler) => {
 
 const getGoods = (goods, goodClickHandler, btnBackHandler) => {
   getHeader('goods', btnBackHandler);
-  // console.dir(goods);
 
   markup.leftColumnGoods(goods, leftColumn, goodClickHandler);
 
 };
 
-
 export default {
-  start() {
-    leftColumn = document.querySelector('#operations-trade-left');
-    elHeader = document.querySelector('#operations-trade-left-header');
-  },
+
   drawHeader: getHeader,
   drawGroups: getGroups,
   drawGoods: getGoods

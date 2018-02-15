@@ -2,29 +2,17 @@ import xhr from './../tools/xhr.js';
 import stor from './../tools/storage.js';
 import operationsTradeLeft from './operations__trade--left-column.js';
 import operationsTradeRight from './operations__trade--right-column.js';
+import operationsTradeHeader from './operations__trade--header.js';
+import operationsTradeAdd from './operations__trade--good-add.js';
 
 // import universalGoodsList from './universal-goods-list.js';
 
 // const operationsPurchase = document.querySelector('#operations-purchase');
 const stocksList = document.querySelector('#operations-purchase-stocks-list');
-const kontragentsList = document.querySelector('#operations-purchase-kontragents-list');
-const clearBut = document.querySelector('#operations-trade-clear-but');
+// const kontragentsList = document.querySelector('#operations-purchase-kontragents-list');
 
 let dataStore;
 let nakladnaya = [];
-
-
-const setstocksList = (stocks) => {
-  stocks.forEach((el) => {
-    stocksList.innerHTML = stocksList.innerHTML + `<option value="${el.id}">${el.name}</option>`;
-  });
-};
-
-const setKontragentList = (kontragents) => {
-  kontragents.forEach((el) => {
-    kontragentsList.innerHTML = kontragentsList.innerHTML + `<option value="${el.id}">${el.name}</option>`;
-  });
-};
 
 const headerButtonBackClickHandler = () => {
   operationsTradeLeft.drawGroups(dataStore.all_groups, clickGroupsCallback, headerButtonBackClickHandler);
@@ -45,7 +33,7 @@ const clickGoodsLeftCallback = (type) => {
     break;
   case 'card':break;
   case 'def':
-    $('#operations-trade-add').modal('show');
+    operationsTradeAdd.show();
     break;
   }
 
@@ -73,14 +61,15 @@ const getGoods = () => {
 };
 
 const clickGroupsCallback = () => {
+
   getGoods();
 };
 
 const getDataXhrCallbackSuccess = (response) => {
   console.dir(response);
   dataStore = response.data;
-  setstocksList(response.data.all_stocks);
-  setKontragentList(response.data.all_kontr_agents);
+  operationsTradeHeader.setStocksList(dataStore.all_stocks);
+  operationsTradeRight.setKontragentList(response.data.all_kontr_agents);
   operationsTradeLeft.drawGroups(dataStore.all_groups, clickGroupsCallback, headerButtonBackClickHandler);
 };
 
@@ -97,7 +86,24 @@ const getData = () => {
 };
 
 const addHandlers = () => {
-  clearBut.addEventListener('click', () => {
+  document.querySelector('#list-receipt-list').addEventListener('click', () => {
+    stor.operationTradeType = 1;
+    operationsTradeHeader.setHeader();
+    getData();
+  });
+
+  document.querySelector('#list-sell-list').addEventListener('click', () => {
+    stor.operationTradeType = -1;
+    operationsTradeHeader.setHeader();
+    getData();
+  });
+
+  document.querySelector('#operations-trade-clear-but').addEventListener('click', () => {
+    operationsTradeRight.clear();
+  });
+
+  stocksList.addEventListener('change', () => {
+    operationsTradeLeft.drawGroups(dataStore.all_groups, clickGroupsCallback, headerButtonBackClickHandler);
     operationsTradeRight.clear();
   });
 };
@@ -105,9 +111,6 @@ const addHandlers = () => {
 export default {
   start() {
     // !!Здесь инициализировать переменные и обработчики
-    operationsTradeLeft.start();
-    operationsTradeRight.start();
     addHandlers();
-    getData();
   }
 };

@@ -185,7 +185,7 @@
 
             <div class="dropdown-menu">
               <a class="dropdown-item" id="list-receipt-list" data-toggle="list" href="#list-receipt" role="tab" aria-controls="receipt">Поступление</a>
-              <a class="dropdown-item" id="list-sell-list" data-toggle="list" href="#list-sell" role="tab" aria-controls="sell">Продажа</a>
+              <a class="dropdown-item" id="list-sell-list" data-toggle="list" href="#list-receipt" role="tab" aria-controls="sell">Продажа</a>
               <a class="dropdown-item" id="list-balance-list" data-toggle="list" href="#list-balance" role="tab" aria-controls="balance">Балансовые операции</a>
               <a class="dropdown-item" id="list-manufacture-list" data-toggle="list" href="#list-manufacture" role="tab" aria-controls="manufacture">Производство</a>
             </div>
@@ -256,22 +256,19 @@
 
 
         <!-- ==================== КОНТЕЙНЕРЫ / Операции ==================== -->
-        <div class="tab-pane fade" id="list-operations" role="tabpanel" aria-labelledby="list-operations-list">
+<!--         <div class="tab-pane fade" id="list-operations" role="tabpanel" aria-labelledby="list-operations-list">
           <p>ОПЕРАЦИИ (UNDER CONSTRUCTION)</p>
-        </div>
+        </div> -->
 
         <!-- ==================== -->
         <div class="tab-pane fade" id="list-receipt" role="tabpanel" aria-labelledby="list-receipt-list">
 
-          <div id="" class="catalog-header">
-            <div class="catalog-header-title">
-              <img src="img/admission.png" alt="">
-              <h2>ЗАКУПКА</h2>
-            </div>
-            <div class="catalog-header-buttons w-50">
+          <div class="catalog-header">
+              <div id="operation-header" class="catalog-header-title"></div>
+              <!-- Сюда пишем заголовок -->
+              <div class="catalog-header-buttons w-50">
               <!-- сюда пишем склады -->
               <select id="operations-purchase-stocks-list" class="form-control w-75  m-2" id="exampleFormControlSelect1"></select>
-
               <button id="" type="button" class="btn btn-danger m-2 p-2 w-25">Выполнить</button>
             </div>
           </div>
@@ -335,9 +332,6 @@
         </div>
         <!-- ==================== -->
 
-        <div class="tab-pane fade" id="list-sell" role="tabpanel" aria-labelledby="list-sell-list">
-          <p>ПРОДАЖА (UNDER CONSTRUCTION)</p>
-        </div>
         <div class="tab-pane fade" id="list-balance" role="tabpanel" aria-labelledby="list-balance-list">
           <p>БАЛАНСОВЫЕ ОПЕРАЦИИ (UNDER CONSTRUCTION)</p>
         </div>
@@ -1414,9 +1408,13 @@
         <div class="modal-body">
           <form id="operations-trade-discount-form" name="enterprises-card-edit">
             <div class="form-group">
-              <label for="enterprises-card-edit-name">Количество</label>
-              <input type="text" class="form-control" id="operations-trade-discount-input" aria-describedby="enterprises-card-edit-name" placeholder="Название предприятия">
-              <span id="enterprises-card-edit-valid" class="badge badge-danger w-100"></span>
+              <div id="operations-trade-add-name" class="font-weight-bold">Название</div>
+              <div class="d-flex justify-content-between mt-3 mb-3">
+                <div>Остаток</div>
+                <div id="operations-trade-add-count">1000</div>
+              </div>
+              <input type="text" class="form-control" id="operations-trade-add-input" placeholder="Количество">
+              <span id="" class="badge badge-danger w-100"></span>
             </div>
 
             <div id="enterprises-card-edit-spinner" class="progress text-white mb-3 invisible">
