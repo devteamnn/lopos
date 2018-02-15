@@ -106,7 +106,9 @@ export default {
       tr.innerHTML = `
         <th scope="row">${index + 1}</th>
         <td>${position.name}</td>
+        <td>${position.count}</td>
         <td>${position.price}</td>
+        <td>${position.price * position.count}</td>
       `;
 
       tr.addEventListener('click', clickHandler);
