@@ -50,7 +50,7 @@ export default {
 
     let table = document.createElement('table');
     table.className = 'table table-hover';
-    table.innerHTML = '<thead><tr><th scope="col" class="">#</th><th scope="col" class="w-50">Товар</th><th scope="col">Кол-во</th><th scope="col"></th><th scope="col"></th></tr></thead>';
+    table.innerHTML = '<thead><tr><th scope="col" class="">#</th><th scope="col" class="w-50">Товар</th><th scope="col">Цена</th><th scope="col">Остаток</th><th scope="col"></th><th scope="col"></th></tr></thead>';
 
     let tbody = document.createElement('tbody');
 
@@ -63,9 +63,10 @@ export default {
       tr.innerHTML = `
         <th scope="row">${index + 1}</th>
         <td>${good.id} || ${good.name}</td>
+        <td>${good.price}</td>
         <td>${good.count}</td>
         <td>
-          <button class="button btn btn-danger" data-type="add">+1</button>
+          <button class="button btn btn-danger mr-1" data-type="add">+1</button>
         </td>
         <td>
           <button class="button btn btn-danger" data-type="card">i</button>
@@ -101,7 +102,13 @@ export default {
 
     nomenklature.forEach((position, index) => {
       let tr = document.createElement('tr');
+
       tr.dataset['id'] = position.id;
+      tr.dataset['count'] = position.count;
+      tr.dataset['price'] = position.price;
+      tr.dataset['name'] = position.name;
+      tr.dataset['oldCount'] = position.oldCount;
+
       tr.scope = 'row';
       tr.innerHTML = `
         <th scope="row">${index + 1}</th>

@@ -1,10 +1,9 @@
-import xhr from './../tools/xhr.js';
 import stor from './../tools/storage.js';
-import markupTools from './../markup/tools.js';
+import operationsTradeServer from './operations__trade--server-tools.js';
 import operationsTradeLeft from './operations__trade--left-column.js';
 import operationsTradeRight from './operations__trade--right-column.js';
 import operationsTradeHeader from './operations__trade--header.js';
-import operationsTradeAdd from './operations__trade--good-add.js';
+// import operationsTradeAdd from './operations__trade--good-add.js';
 
 // import universalGoodsList from './universal-goods-list.js';
 
@@ -13,118 +12,98 @@ const stocksList = document.querySelector('#operations-purchase-stocks-list');
 // const kontragentsList = document.querySelector('#operations-purchase-kontragents-list');
 
 let dataStore;
-let cycleCount;
-let goods = []; // товары в группе
-let nakladnaya = []; // массив с данными временной накладной
+let dataGoods;
+let nomCard; // номенклатура
 
-const headerButtonBackClickHandler = () => {
-  operationsTradeLeft.drawGroups(dataStore.all_groups, clickGroupsCallback, headerButtonBackClickHandler);
-};
-
-// const addGoodForNakladnaya = () => {
-
-// };
-
-const clickGoodsRightCallback = () => {
-  console.log('clickGoodsRightCallback');
-};
-
-const clickGoodsLeftCallback = (type) => {
-  switch (stor.operationClickType) {
-  case 'add':
-    operationsTradeRight.drawGoods(nakladnaya, clickGoodsRightCallback);
-    break;
-  case 'card':break;
-  case 'def':
-    operationsTradeAdd.show();
-    break;
-  }
-
-};
-
-const getGoods = () => {
-  let currGrp = stor.currentGroupId;
-
-  let filterArray = goods.filter((el) => {
-    if (el.groupId === currGrp) {
-      return true;
+const searchGoodById = (array, id) => {
+  if (array) {
+    for (let i = 0; i < array.length; i++) {
+      if (array[i].id === id) {
+        return i;
+      }
     }
-    return false;
-  });
-
-  if (filterArray) {
-    operationsTradeLeft.drawGoods(filterArray, clickGoodsLeftCallback, headerButtonBackClickHandler);
-  } else {
-    markupTools.informationtModal({
-      'title': 'СООБЩЕНИЕ',
-      'message': 'Группа пустая',
-      'isMess': true
-    });
   }
+  return 'none';
 };
 
 const clickGroupsCallback = () => {
-  getGoods();
+  operationsTradeServer.getGoodsFromServer(stor.currentGroupId, stocksList.value, getGoodsCallback);
 };
 
-const getGoodsXhrCallbackSuccess = (response) => {
-  // Выводим товары в группе
+const clichButtonBackCallback = () => {
+  operationsTradeLeft.drawGroups(dataStore.all_groups, clickGroupsCallback);
+};
 
-  response.data.forEach((el) => {
-    goods.push(el);
-    goods[goods.length - 1].groupId = dataStore.all_groups[cycleCount].id;
-  });
+const clickRightGoodsCallback = () => {
 
-  cycleCount++;
+  // console.dir(operationsTradeRight.getNomenklature());
+};
 
-  if (cycleCount < dataStore.all_groups.length) {
-    getGoodsFromServer();
+const addNomCard = (value) => {
+  let goodId = stor.operationTradeCurrentGoodId;
+  let goodIndex = searchGoodById(dataGoods, goodId);
+
+  dataGoods[goodIndex].count -= value;
+
+  nomCard = operationsTradeRight.getNomenklature();
+
+  let numIndex = searchGoodById(nomCard, goodId);
+
+  if (!nomCard) {
+    nomCard = [];
+    nomCard.push({
+      'id': dataGoods[goodIndex].id,
+      'name': dataGoods[goodIndex].name,
+      'price': dataGoods[goodIndex].price,
+      'count': value,
+      'oldCount': dataGoods[goodIndex].count
+    });
+  } else if (numIndex === 'none') {
+    nomCard.push({
+      'id': dataGoods[goodIndex].id,
+      'name': dataGoods[goodIndex].name,
+      'price': dataGoods[goodIndex].price,
+      'count': value,
+      'oldCount': dataGoods[goodIndex].count
+    });
   } else {
-    console.dir(goods);
-    operationsTradeLeft.drawGroups(dataStore.all_groups, clickGroupsCallback, headerButtonBackClickHandler);
+    nomCard[numIndex].count = Number(nomCard[numIndex].count) + value;
+  }
+
+  operationsTradeLeft.drawGoods(dataGoods, clickLeftGoodsCallback, clichButtonBackCallback);
+  operationsTradeRight.drawGoods(nomCard, clickRightGoodsCallback);
+};
+
+const clickLeftGoodsCallback = () => {
+  switch (stor.operationClickType) {
+  case 'add':
+    addNomCard(1);
+    break;
+  case 'card':
+    console.log('-CARD-');
+    break;
+  case 'def':
+    console.log('<-------DEF<-----------');
+    break;
   }
 };
 
-const getGoodsFromServer = () => {
-
-  let oper = 'purchase'; // Здесь выбор купля\продажа
-  let cred = stor.data;
-  let grpId = dataStore.all_groups[cycleCount].id;
-
-  xhr.request = {
-    'url': `/lopos_directory/${cred.directory}/operator/${cred.operatorId}/business/${cred.currentBusiness}/stock/${stocksList.value}/group/${grpId}/goods`,
-    'metod': 'POST',
-    'data': `operation=${oper}&token=${cred.token}`,
-    'callbackSuccess': getGoodsXhrCallbackSuccess
-  };
+const getGoodsCallback = (data) => {
+  dataGoods = data;
+  operationsTradeLeft.drawGoods(dataGoods, clickLeftGoodsCallback, clichButtonBackCallback);
 };
 
-const initGetGoodsFromServer = () => {
-  cycleCount = 0;
-  goods = [];
-  getGoodsFromServer();
-};
-
-const getDataXhrCallbackSuccess = (response) => {
-  console.dir(response);
-  dataStore = response.data;
+const getDataCallback = (data) => {
+  dataStore = data;
 
   operationsTradeHeader.setStocksList(dataStore.all_stocks);
   operationsTradeRight.setKontragentList(dataStore.all_kontr_agents);
+  operationsTradeLeft.drawGroups(dataStore.all_groups, clickGroupsCallback);
 
-  initGetGoodsFromServer();
 };
 
 const getData = () => {
-  let oper = 'purchase'; // Здесь выбор купля\продажа
-  let cred = stor.data;
-
-  xhr.request = {
-    'url': `/lopos_directory/${cred.directory}/operator/${cred.operatorId}/business/${cred.currentBusiness}/operation/${oper}`,
-    'metod': 'POST',
-    'data': `token=${cred.token}`,
-    'callbackSuccess': getDataXhrCallbackSuccess
-  };
+  operationsTradeServer.getDataFromServer(stor.data.currentStock, getDataCallback);
 };
 
 const addHandlers = () => {
