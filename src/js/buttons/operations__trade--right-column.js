@@ -39,6 +39,7 @@ export default {
 
   clear() {
     rightColumn.innerHTML = '';
+    priceNode.innerHTML = '0';
   },
 
   setKontragentList(kontragents) {

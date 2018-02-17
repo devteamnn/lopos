@@ -4,12 +4,27 @@ import stor from './../tools/storage.js';
 const getGoods = (groupId, stock, callback) => {
 
   const getGoodsXhrCallbackSuccess = (response) => {
+    response.data.forEach((evt) => {
+      evt.price = Number(evt.price).toFixed(2);
+    });
     callback(response.data);
   };
 
 
-  let oper = 'purchase'; // Здесь выбор купля\продажа
+  let oper;
   let cred = stor.data;
+
+  switch (stor.operationTradeType) {
+  case '0':
+    oper = 'purchase';
+    break;
+  case '1':
+    oper = 'sell';
+    break;
+  case '7':
+    oper = 'inventory';
+    break;
+  }
 
   xhr.request = {
     'url': `/lopos_directory/${cred.directory}/operator/${cred.operatorId}/business/${cred.currentBusiness}/stock/${stock}/group/${groupId}/goods`,
@@ -26,13 +41,29 @@ const getData = (stock, callback) => {
     callback(response.data);
   };
 
-  let oper = 'purchase'; // Здесь выбор купля\продажа
   let cred = stor.data;
+  let oper;
+  let xhrData;
+
+  switch (stor.operationTradeType) {
+  case '0':
+    oper = 'purchase';
+    xhrData = `token=${cred.token}`;
+    break;
+  case '1':
+    oper = 'sell  ';
+    xhrData = `token=${cred.token}`;
+    break;
+  case '7':
+    oper = 'inventory';
+    xhrData = `token=${cred.token}&stock=${stock}`;
+    break;
+  }
 
   xhr.request = {
     'url': `/lopos_directory/${cred.directory}/operator/${cred.operatorId}/business/${cred.currentBusiness}/operation/${oper}`,
     'metod': 'POST',
-    'data': `token=${cred.token}`,
+    'data': xhrData,
     'callbackSuccess': getDataXhrCallbackSuccess
   };
 };

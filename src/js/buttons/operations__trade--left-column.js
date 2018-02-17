@@ -1,5 +1,5 @@
 // import xhr from './../tools/xhr.js';
-// import stor from './../tools/storage.js';
+import stor from './../tools/storage.js';
 import universalGroupsList from './universal-groups-list.js';
 import markup from './../markup/operation__trade.js';
 
@@ -22,7 +22,7 @@ const getHeader = (type, handler) => {
     break;
   case 'goods':
     confHead.node = NodeEnum.BUT_BACK;
-    confHead.header = 'Товары';
+    confHead.header = stor.currentGroupName;
     break;
   }
   elHeader.innerHTML = markup.leftColumnHeader(confHead.header, confHead.node);

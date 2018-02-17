@@ -3,18 +3,19 @@ import operationsTradeServer from './operations__trade--server-tools.js';
 import operationsTradeLeft from './operations__trade--left-column.js';
 import operationsTradeRight from './operations__trade--right-column.js';
 import operationsTradeHeader from './operations__trade--header.js';
-// import operationsTradeAdd from './operations__trade--good-add.js';
+import operationsTradeAdd from './operations__trade--good-add.js';
 
-// import universalGoodsList from './universal-goods-list.js';
 
-// const operationsPurchase = document.querySelector('#operations-purchase');
+// Операции: 0 - закупка, 1 - продажа, 7 инвентаризация
 const stocksList = document.querySelector('#operations-purchase-stocks-list');
-// const kontragentsList = document.querySelector('#operations-purchase-kontragents-list');
+const goodAddForm = document.querySelector('#operations-trade-add');
+
 
 let dataStore;
 let dataGoods;
 let nomCard; // номенклатура
 
+// если товар не найден - возврщает 'none'
 const searchGoodById = (array, id) => {
   if (array) {
     for (let i = 0; i < array.length; i++) {
@@ -35,8 +36,7 @@ const clichButtonBackCallback = () => {
 };
 
 const clickRightGoodsCallback = () => {
-
-  // console.dir(operationsTradeRight.getNomenklature());
+  console.log('clickRightGoodsCallback');
 };
 
 const addNomCard = (value) => {
@@ -74,6 +74,10 @@ const addNomCard = (value) => {
   operationsTradeRight.drawGoods(nomCard, clickRightGoodsCallback);
 };
 
+const formAddCallback = (count) => {
+  addNomCard(count);
+};
+
 const clickLeftGoodsCallback = () => {
   switch (stor.operationClickType) {
   case 'add':
@@ -83,13 +87,29 @@ const clickLeftGoodsCallback = () => {
     console.log('-CARD-');
     break;
   case 'def':
-    console.log('<-------DEF<-----------');
+    operationsTradeAdd.show(goodAddForm, formAddCallback);
     break;
   }
 };
 
+const correctAmount = (data) => {
+  nomCard = operationsTradeRight.getNomenklature();
+
+  if (nomCard) {
+    let index;
+    nomCard.forEach((el) => {
+      index = searchGoodById(data, el.id);
+
+      if (index !== 'none') {
+        data[index].count -= el.count;
+      }
+    });
+  }
+  return data;
+};
+
 const getGoodsCallback = (data) => {
-  dataGoods = data;
+  dataGoods = correctAmount(data);
   operationsTradeLeft.drawGoods(dataGoods, clickLeftGoodsCallback, clichButtonBackCallback);
 };
 
@@ -106,16 +126,27 @@ const getData = () => {
   operationsTradeServer.getDataFromServer(stor.data.currentStock, getDataCallback);
 };
 
+const initWindow = () => {
+  operationsTradeHeader.setHeader();
+  operationsTradeRight.clear();
+};
+
 const addHandlers = () => {
   document.querySelector('#list-receipt-list').addEventListener('click', () => {
-    stor.operationTradeType = 1;
-    operationsTradeHeader.setHeader();
+    stor.operationTradeType = 0;
+    initWindow();
     getData();
   });
 
   document.querySelector('#list-sell-list').addEventListener('click', () => {
-    stor.operationTradeType = -1;
-    operationsTradeHeader.setHeader();
+    stor.operationTradeType = 1;
+    initWindow();
+    getData();
+  });
+
+  document.querySelector('#list-inventory-list').addEventListener('click', () => {
+    stor.operationTradeType = 7;
+    initWindow();
     getData();
   });
 
@@ -124,7 +155,7 @@ const addHandlers = () => {
   });
 
   stocksList.addEventListener('change', () => {
-    operationsTradeLeft.drawGroups(dataStore.all_groups, clickGroupsCallback, headerButtonBackClickHandler);
+    operationsTradeLeft.drawGroups(dataStore.all_groups, clickGroupsCallback, clichButtonBackCallback);
     operationsTradeRight.clear();
   });
 };

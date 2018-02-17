@@ -42,6 +42,7 @@ export default {
       stor.operationTradeCurrentGoodId = el.dataset['id'];
       stor.operationTradeCurrentGoodName = el.dataset['name'];
       stor.operationTradeCurrentGoodCount = el.dataset['count'];
+      stor.operationTradeCurrentGoodPrice = el.dataset['price'];
 
       clickCallback();
     };
@@ -60,6 +61,7 @@ export default {
       tr.dataset['id'] = good.id;
       tr.dataset['name'] = good.name;
       tr.dataset['count'] = good.count;
+      tr.dataset['price'] = good.price;
       tr.innerHTML = `
         <th scope="row">${index + 1}</th>
         <td>${good.id} || ${good.name}</td>

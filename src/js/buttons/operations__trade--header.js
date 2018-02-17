@@ -11,15 +11,20 @@ export default {
 
     let type = stor.operationTradeType;
     switch (type) {
-    case '1':
+    case '0':
       head = 'ЗАКУПКА';
       img = 'img/admission.png';
       break;
-    case '-1':
+    case '1':
       head = 'ПРОДАЖА';
       img = 'img/sale.png';
       break;
+    case '7':
+      head = 'ИНВЕНТАРИЗАЦИЯ';
+      img = 'img/inventory.png';
+      break;
     }
+
 
     header.innerHTML = '';
     header.innerHTML = markup.header(head, img);
