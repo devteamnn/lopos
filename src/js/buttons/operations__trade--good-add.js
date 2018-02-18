@@ -1,16 +1,34 @@
 import formTools from './../tools/form-tools.js';
 import stor from './../tools/storage.js';
 
-let form;
-let count;
-let modal;
+
+const modal = document.querySelector('#operations-trade-add');
+const form = modal.querySelector('*[data-formName]');
+const count = form.querySelector('*[data-valid="count"]');
+
+const nodeGoodCount = modal.querySelector('#operations-trade-add-count');
+const nodeGoodName = modal.querySelector('#operations-trade-add-name');
+const nodeGoodPrice = modal.querySelector('#operations-trade-add-price');
+const nodeFormLabel = modal.querySelector('#operations-trade-add-label');
+
 let callback;
 
-const initVar = (remModal) => {
-  modal = remModal;
-  form = modal.querySelector('*[data-formName]');
-  count = form.querySelector('*[data-valid="count"]');
+const formFilling = (type) => {
+  nodeGoodName.innerHTML = stor.operationTradeCurrentGoodName;
+  nodeGoodPrice.innerHTML = stor.operationTradeCurrentGoodPrice;
 
+  switch (type) {
+  case 'l':
+    nodeFormLabel.innerHTML = 'Добавление в накладную';
+    nodeGoodCount.innerHTML = stor.operationTradeCurrentGoodCount;
+    count.placeholder = 'Количество';
+    break;
+  case 'r':
+    nodeFormLabel.innerHTML = 'Количество товара<br>во временной накладной';
+    nodeGoodCount.innerHTML = stor.operationTradeCurrentGoodOldCount;
+    count.placeholder = stor.operationTradeCurrentGoodCount;
+    break;
+  }
 };
 
 const submitForm = () => {
@@ -21,23 +39,13 @@ const submitForm = () => {
 };
 
 export default {
-  show(remModal, call) {
-    initVar(remModal);
+// type = l - леаая колонка, type = r - правая колонка
+  show(call, type) {
+    formFilling(type);
 
     callback = call;
-
-    let nodeGoodCount = modal.querySelector('#operations-trade-add-count');
-    let nodeGoodName = modal.querySelector('#operations-trade-add-name');
-    let nodeGoodPrice = modal.querySelector('#operations-trade-add-price');
-
-    nodeGoodName.innerHTML = stor.operationTradeCurrentGoodName;
-    nodeGoodCount.innerHTML = stor.operationTradeCurrentGoodCount;
-    nodeGoodPrice.innerHTML = stor.operationTradeCurrentGoodPrice;
 
     formTools.work(modal, submitForm);
     $(modal).modal('show');
   },
-  stop() {
-    formTools.reset();
-  }
 };

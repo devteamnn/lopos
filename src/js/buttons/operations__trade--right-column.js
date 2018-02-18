@@ -28,6 +28,7 @@ const getNum = () => {
         'id': el.dataset['id'],
         'price': el.dataset['price'],
         'count': el.dataset['count'],
+        'oldCount': el.dataset['oldCount']
       });
     });
     return nomenklature;

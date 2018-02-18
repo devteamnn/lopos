@@ -301,4 +301,12 @@ export default {
   get operationTradeCurrentGoodPrice() {
     return sessionStorage.getItem('operationTradeCurrentGoodPrice');
   },
+
+  set operationTradeCurrentGoodOldCount(count) {
+    sessionStorage.setItem('operationTradeCurrentGoodOldCount', count);
+  },
+
+  get operationTradeCurrentGoodOldCount() {
+    return sessionStorage.getItem('operationTradeCurrentGoodOldCount');
+  },
 };

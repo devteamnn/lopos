@@ -315,5 +315,15 @@ window.appSettings = {
     'validMessage': {
       'count': 'поле минимум 1 цифра',
     }
+  },
+
+  // ОПЕРАЦИИ купля\продажа\инвентаризация
+  'operationTradeDiscount': {
+    'validPatterns': {
+      'discount': /^\d+$/,
+    },
+    'validMessage': {
+      'discount': 'поле минимум 1 цифра',
+    }
   }
 };

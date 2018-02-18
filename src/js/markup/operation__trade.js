@@ -93,7 +93,11 @@ export default {
         el = el.parentNode;
       }
 
-      stor.currentGoodId = el.dataset['id'];
+      stor.operationTradeCurrentGoodId = el.dataset['id'];
+      stor.operationTradeCurrentGoodName = el.dataset['name'];
+      stor.operationTradeCurrentGoodCount = el.dataset['count'];
+      stor.operationTradeCurrentGoodPrice = el.dataset['price'];
+      stor.operationTradeCurrentGoodOldCount = el.dataset['oldCount'];
 
       clickCallback();
     };

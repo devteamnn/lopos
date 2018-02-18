@@ -4,12 +4,11 @@ import operationsTradeLeft from './operations__trade--left-column.js';
 import operationsTradeRight from './operations__trade--right-column.js';
 import operationsTradeHeader from './operations__trade--header.js';
 import operationsTradeAdd from './operations__trade--good-add.js';
+import operationsTradeDiscount from './operations__trade--discount.js';
 
 
 // Операции: 0 - закупка, 1 - продажа, 7 инвентаризация
 const stocksList = document.querySelector('#operations-purchase-stocks-list');
-const goodAddForm = document.querySelector('#operations-trade-add');
-
 
 let dataStore;
 let dataGoods;
@@ -36,7 +35,11 @@ const clichButtonBackCallback = () => {
 };
 
 const clickRightGoodsCallback = () => {
-  console.log('clickRightGoodsCallback');
+  operationsTradeAdd.show(addRightFormCallback, 'r');
+};
+
+const discountCallback = (discValue) => {
+  console.log('discount OK');
 };
 
 const addNomCard = (value) => {
@@ -68,14 +71,36 @@ const addNomCard = (value) => {
     });
   } else {
     nomCard[numIndex].count = Number(nomCard[numIndex].count) + value;
+    nomCard[numIndex].oldCount = Number(nomCard[numIndex].oldCount) - value;
   }
 
   operationsTradeLeft.drawGoods(dataGoods, clickLeftGoodsCallback, clichButtonBackCallback);
   operationsTradeRight.drawGoods(nomCard, clickRightGoodsCallback);
 };
 
-const formAddCallback = (count) => {
+const remGoodFromNomCard = () => {
+  let id = stor.operationTradeCurrentGoodId;
+  let numIndex = searchGoodById(nomCard, id);
+  let goodIndex = searchGoodById(dataGoods, id);
+
+  dataGoods[goodIndex].count = Number(dataGoods[goodIndex].count) + Number(nomCard[numIndex].count);
+
+  nomCard.splice(numIndex, 1);
+
+  operationsTradeRight.drawGoods(nomCard, clickRightGoodsCallback);
+  operationsTradeLeft.drawGoods(dataGoods, clickLeftGoodsCallback, clichButtonBackCallback);
+};
+
+const addLeftFormCallback = (count) => {
   addNomCard(count);
+};
+
+const addRightFormCallback = (count) => {
+  if (count !== 0) {
+    addNomCard(count);
+  } else {
+    remGoodFromNomCard();
+  }
 };
 
 const clickLeftGoodsCallback = () => {
@@ -87,7 +112,7 @@ const clickLeftGoodsCallback = () => {
     console.log('-CARD-');
     break;
   case 'def':
-    operationsTradeAdd.show(goodAddForm, formAddCallback);
+    operationsTradeAdd.show(addLeftFormCallback, 'l');
     break;
   }
 };
@@ -115,7 +140,7 @@ const getGoodsCallback = (data) => {
 
 const getDataCallback = (data) => {
   dataStore = data;
-
+  console.dir(dataStore);
   operationsTradeHeader.setStocksList(dataStore.all_stocks);
   operationsTradeRight.setKontragentList(dataStore.all_kontr_agents);
   operationsTradeLeft.drawGroups(dataStore.all_groups, clickGroupsCallback);
@@ -148,6 +173,10 @@ const addHandlers = () => {
     stor.operationTradeType = 7;
     initWindow();
     getData();
+  });
+
+  document.querySelector('#operations-trade-discountBtn').addEventListener('click', () => {
+    operationsTradeDiscount.show(discountCallback, dataStore.discount_max);
   });
 
   document.querySelector('#operations-trade-clear-but').addEventListener('click', () => {
