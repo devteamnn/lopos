@@ -10,9 +10,9 @@ import operationsTradeDiscount from './operations__trade--discount.js';
 // Операции: 0 - закупка, 1 - продажа, 7 инвентаризация
 const stocksList = document.querySelector('#operations-purchase-stocks-list');
 
-let dataStore;
-let dataGoods;
-let nomCard; // номенклатура
+let dataStore = [];
+let dataGoods = [];
+let nomCard = []; // номенклатура
 
 // если товар не найден - возврщает 'none'
 const searchGoodById = (array, id) => {
@@ -26,6 +26,20 @@ const searchGoodById = (array, id) => {
   return 'none';
 };
 
+const redrawColumn = () => {
+  switch (stor.operationTradeCurrentOpen) {
+  case 'folder':
+    operationsTradeLeft.drawGroups(dataStore.all_groups, clickGroupsCallback);
+    break;
+  case 'goods':
+    operationsTradeLeft.drawGoods(dataGoods, clickLeftGoodsCallback, clichButtonBackCallback);
+    break;
+  }
+
+  operationsTradeRight.drawPrice(calcNumSum());
+  operationsTradeRight.drawGoods(nomCard, clickRightGoodsCallback);
+};
+
 const clickGroupsCallback = () => {
   operationsTradeServer.getGoodsFromServer(stor.currentGroupId, stocksList.value, getGoodsCallback);
 };
@@ -35,14 +49,22 @@ const clichButtonBackCallback = () => {
 };
 
 const clickRightGoodsCallback = () => {
-  operationsTradeAdd.show(addRightFormCallback, 'r');
+  if (stor.operationTradeDiscount !== 'false') {
+    operationsTradeDiscount.show(discountCallback, dataStore.discount_max);
+  } else {
+    operationsTradeAdd.show(addRightFormCallback, 'r');
+  }
 };
 
 const discountCallback = (discValue) => {
-  console.log('discount OK');
+  if (discValue === 0) {
+    remDiscountFromNomCard();
+  } else {
+    addDiscountToNomCard(discValue);
+  }
 };
 
-const addNomCard = (value) => {
+const addGoodToNomCard = (value) => {
   let goodId = stor.operationTradeCurrentGoodId;
   let goodIndex = searchGoodById(dataGoods, goodId);
 
@@ -74,8 +96,60 @@ const addNomCard = (value) => {
     nomCard[numIndex].oldCount = Number(nomCard[numIndex].oldCount) - value;
   }
 
-  operationsTradeLeft.drawGoods(dataGoods, clickLeftGoodsCallback, clichButtonBackCallback);
+  calcDiscount();
+  redrawColumn();
+};
+
+const addDiscountToNomCard = (precent) => {
+  calcDiscount(precent);
+  stor.operationTradeDiscount = precent;
+  operationsTradeRight.drawPrice(calcNumSum());
   operationsTradeRight.drawGoods(nomCard, clickRightGoodsCallback);
+};
+
+// noDiscount = true, если нужно рассчитать без скидкискидку
+const calcNumSum = (noDiscount) => {
+  let numSum = 0;
+
+  if (nomCard.length !== 0) {
+    if (noDiscount) {
+      nomCard.forEach((el) => {
+        if (!el.discount) {
+          numSum += el.price * el.count;
+        }
+      });
+    } else {
+      nomCard.forEach((el) => {
+        numSum += el.price * el.count;
+      });
+    }
+  }
+
+  return numSum.toFixed(2);
+};
+
+const calcDiscount = (value) => {
+  let indexFromNum = searchGoodById(nomCard, dataStore.discount_id);
+
+  if (indexFromNum !== 'none' || value) {
+    let numSum = calcNumSum(true);
+    let precent = (value) ? value : nomCard[indexFromNum].discount;
+
+    if (indexFromNum === 'none') {
+      nomCard.push({
+        'id': dataStore.discount_id,
+        'name': 'СКИДКА',
+        'price': Number(numSum / 100 * precent).toFixed(2),
+        'count': -1,
+        'discount': precent
+      });
+      console.dir(nomCard);
+    } else {
+      nomCard[indexFromNum].price = Number(numSum / 100 * precent).toFixed(2);
+      nomCard[indexFromNum].discount = precent;
+      console.dir(nomCard);
+    }
+  }
 };
 
 const remGoodFromNomCard = () => {
@@ -87,17 +161,29 @@ const remGoodFromNomCard = () => {
 
   nomCard.splice(numIndex, 1);
 
-  operationsTradeRight.drawGoods(nomCard, clickRightGoodsCallback);
-  operationsTradeLeft.drawGoods(dataGoods, clickLeftGoodsCallback, clichButtonBackCallback);
+  calcDiscount();
+  redrawColumn();
+};
+
+const remDiscountFromNomCard = () => {
+
+  let index = searchGoodById(nomCard, dataStore.discount_id);
+  nomCard.splice(index, 1);
+
+  calcDiscount();
+  stor.operationTradeDiscount = 0;
+
+  redrawColumn();
+
 };
 
 const addLeftFormCallback = (count) => {
-  addNomCard(count);
+  addGoodToNomCard(count);
 };
 
 const addRightFormCallback = (count) => {
   if (count !== 0) {
-    addNomCard(count);
+    addGoodToNomCard(count);
   } else {
     remGoodFromNomCard();
   }
@@ -106,7 +192,7 @@ const addRightFormCallback = (count) => {
 const clickLeftGoodsCallback = () => {
   switch (stor.operationClickType) {
   case 'add':
-    addNomCard(1);
+    addGoodToNomCard(1);
     break;
   case 'card':
     console.log('-CARD-');
@@ -157,6 +243,7 @@ const initWindow = () => {
 };
 
 const addHandlers = () => {
+
   document.querySelector('#list-receipt-list').addEventListener('click', () => {
     stor.operationTradeType = 0;
     initWindow();
@@ -193,5 +280,6 @@ export default {
   start() {
     // !!Здесь инициализировать переменные и обработчики
     addHandlers();
+    stor.operationTradeDiscount = 0;
   }
 };

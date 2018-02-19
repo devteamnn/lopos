@@ -84,50 +84,23 @@ export default {
     container.appendChild(table);
   },
 
-  rightColumnGoods(nomenklature, container, clickCallback) {
+  rightColumnGoods(index, name, count, price) {
+    return `
+      <th scope="row">${index + 1}</th>
+      <td>${name}</td>
+      <td>${count}</td>
+      <td>${price}</td>
+      <td>${price * count}</td>
+    `;
+  },
 
-    const clickHandler = (evt) => {
-      let el = evt.target;
-
-      while (!el.dataset['id']) {
-        el = el.parentNode;
-      }
-
-      stor.operationTradeCurrentGoodId = el.dataset['id'];
-      stor.operationTradeCurrentGoodName = el.dataset['name'];
-      stor.operationTradeCurrentGoodCount = el.dataset['count'];
-      stor.operationTradeCurrentGoodPrice = el.dataset['price'];
-      stor.operationTradeCurrentGoodOldCount = el.dataset['oldCount'];
-
-      clickCallback();
-    };
-
-    container.innerHTML = '';
-
-    let fragment = document.createDocumentFragment();
-
-    nomenklature.forEach((position, index) => {
-      let tr = document.createElement('tr');
-
-      tr.dataset['id'] = position.id;
-      tr.dataset['count'] = position.count;
-      tr.dataset['price'] = position.price;
-      tr.dataset['name'] = position.name;
-      tr.dataset['oldCount'] = position.oldCount;
-
-      tr.scope = 'row';
-      tr.innerHTML = `
-        <th scope="row">${index + 1}</th>
-        <td>${position.name}</td>
-        <td>${position.count}</td>
-        <td>${position.price}</td>
-        <td>${position.price * position.count}</td>
-      `;
-
-      tr.addEventListener('click', clickHandler);
-      fragment.appendChild(tr);
-    });
-
-    container.appendChild(fragment);
+  rightColumnDiscount(name, count, price, discount) {
+    return `
+      <th scope="row">#</th>
+      <td>${name}</td>
+      <td>${discount}%</td>
+      <td></td>
+      <td>${price * count}</td>
+    `;
   }
 };

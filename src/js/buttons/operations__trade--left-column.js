@@ -34,13 +34,14 @@ const getHeader = (type, handler) => {
 };
 
 const getGroups = (groups, groupClickHandler, btnBackHandler) => {
+  stor.operationTradeCurrentOpen = 'folder';
   getHeader('groups', btnBackHandler);
   universalGroupsList.draw(groups, leftColumn, groupClickHandler);
 };
 
 const getGoods = (goods, goodClickHandler, btnBackHandler) => {
+  stor.operationTradeCurrentOpen = 'goods';
   getHeader('goods', btnBackHandler);
-
   markup.leftColumnGoods(goods, leftColumn, goodClickHandler);
 
 };

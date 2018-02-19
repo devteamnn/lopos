@@ -1,4 +1,5 @@
 import formTools from './../tools/form-tools.js';
+import stor from './../tools/storage.js';
 
 const modal = document.querySelector('#operations-trade-discount');
 const form = modal.querySelector('*[data-formName]');
@@ -29,6 +30,7 @@ export default {
   show(call, discMax) {
 
     nodeDiscountMax.innerHTML = `(макс. ${discMax}%)`;
+    discount.placeholder = stor.operationTradeDiscount;
 
     callback = call;
     max = Number(discMax);

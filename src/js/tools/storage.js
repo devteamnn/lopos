@@ -309,4 +309,20 @@ export default {
   get operationTradeCurrentGoodOldCount() {
     return sessionStorage.getItem('operationTradeCurrentGoodOldCount');
   },
+
+  set operationTradeDiscount(discount) {
+    sessionStorage.setItem('operationTradeDiscount', discount);
+  },
+
+  get operationTradeDiscount() {
+    return sessionStorage.getItem('operationTradeDiscount');
+  },
+
+  set operationTradeCurrentOpen(block) {
+    sessionStorage.setItem('operationTradeCurrentOpen', block);
+  },
+
+  get operationTradeCurrentOpen() {
+    return sessionStorage.getItem('operationTradeCurrentOpen');
+  },
 };
