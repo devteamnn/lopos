@@ -90,7 +90,7 @@ export default {
       <td>${name}</td>
       <td>${count}</td>
       <td>${price}</td>
-      <td>${price * count}</td>
+      <td>${Number(price * count).toFixed(2)}</td>
     `;
   },
 
@@ -100,7 +100,7 @@ export default {
       <td>${name}</td>
       <td>${discount}%</td>
       <td></td>
-      <td>${price * count}</td>
+      <td>${Number(price * count).toFixed(2)}</td>
     `;
   }
 };

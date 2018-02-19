@@ -263,13 +263,14 @@
 
         <!-- ==================== -->
         <div class="tab-pane fade" id="list-receipt" role="tabpanel" aria-labelledby="list-receipt-list">
+          <form id = "operation-trade-form"></form>
           <div class="catalog-header">
               <div id="operation-header" class="catalog-header-title"></div>
               <!-- Сюда пишем заголовок -->
               <div class="catalog-header-buttons w-50">
               <!-- сюда пишем склады -->
-              <select id="operations-purchase-stocks-list" class="form-control w-75  m-2" id="exampleFormControlSelect1"></select>
-              <button id="" type="button" class="btn btn-danger m-2 p-2 w-25">Выполнить</button>
+              <select id="operations-purchase-stocks-list" form="operation-trade-form" name="stock" class="form-control w-75  m-2" id="exampleFormControlSelect1"></select>
+              <button id="operations-trade-submit" name="submit" form="operation-trade-form" type="button" class="btn btn-danger m-2 p-2 w-25" disabled>Выполнить</button>
             </div>
           </div>
 
@@ -288,7 +289,7 @@
           <div class="border w-50 ml-1 px-2">
             <div id="" class="catalog-header">
               <!-- контрагенты -->
-              <select id="operations-purchase-kontragents-list" class="form-control w-75  m-2" id="exampleFormControlSelect1"></select>
+              <select id="operations-purchase-kontragents-list" class="form-control w-75  m-2" name="kontragents" form="operation-trade-form"></select>
               <div class="catalog-header-buttons w-50">
                 <p id="operations-trade-price" class='mx-auto h3 text-primary'>XXX.XX</p>
               </div>
@@ -299,14 +300,14 @@
               <button id="operations-trade-discountBtn"type="button" class="btn btn-danger" data-toggle="modal" data-target="#operations-trade-discount" style="width: 40px">%</button>
               <label class="rounded" style="display:inline-block; height:38px; width:60px; background: #DFB939;">
                 <img src="/img/suppliers.png" width="38px" height="38px" >
-                <input id="operations-trade-delivery" type="checkbox">
+                <input id="operations-trade-delivery" type="checkbox" name="delivery" form="operation-trade-form">
               </label>
               <button id="operations-trade-clear-but" type="button" class="btn btn-danger" style="width: 40px">X</button>
             </div>
 
             <!-- Накладная   -->
             <div>
-              <table class="table table-hover">
+              <table id="operations-trade-right" class="table table-hover">
                 <thead>
                   <tr>
                     <th scope="col" class="">#</th>
@@ -317,7 +318,7 @@
                   </tr>
                 </thead>
                 <!-- Сюда выводим таблицу с накладной-->
-                <tbody id="operations-trade-right-tbody" class="table table-hover"></tbody>
+                <tbody class="table table-hover"></tbody>
                 <tfoot id="operations-trade-right-tfoot" class="table table-hover font-weight-bold text-danger"></tfoot>
               </table>
             </div>

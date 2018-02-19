@@ -9,6 +9,9 @@ import operationsTradeDiscount from './operations__trade--discount.js';
 
 // Операции: 0 - закупка, 1 - продажа, 7 инвентаризация
 const stocksList = document.querySelector('#operations-purchase-stocks-list');
+const submitNode = document.querySelector('#operations-trade-submit');
+const kontragents = document.querySelector('#operations-purchase-kontragents-list');
+const deliveryNode = document.querySelector('#operations-trade-delivery');
 
 let dataStore = [];
 let dataGoods = [];
@@ -49,7 +52,7 @@ const clichButtonBackCallback = () => {
 };
 
 const clickRightGoodsCallback = () => {
-  if (stor.operationTradeDiscount !== 'false') {
+  if (stor.operationTradeRightClickType !== 'false') {
     operationsTradeDiscount.show(discountCallback, dataStore.discount_max);
   } else {
     operationsTradeAdd.show(addRightFormCallback, 'r');
@@ -98,6 +101,7 @@ const addGoodToNomCard = (value) => {
 
   calcDiscount();
   redrawColumn();
+  submitNode.disabled = false;
 };
 
 const addDiscountToNomCard = (precent) => {
@@ -161,8 +165,15 @@ const remGoodFromNomCard = () => {
 
   nomCard.splice(numIndex, 1);
 
+  if ((nomCard.length === 0) || (nomCard.length === 1 && nomCard[0].discount)) {
+    submitNode.disabled = true;
+  }
+
+  console.dir(nomCard);
+
   calcDiscount();
   redrawColumn();
+
 };
 
 const remDiscountFromNomCard = () => {
@@ -242,24 +253,25 @@ const initWindow = () => {
   operationsTradeRight.clear();
 };
 
+const init = (type) => {
+  stor.operationTradeType = type;
+  stor.operationTradeDiscount = 0;
+  initWindow();
+  getData();
+};
+
 const addHandlers = () => {
 
   document.querySelector('#list-receipt-list').addEventListener('click', () => {
-    stor.operationTradeType = 0;
-    initWindow();
-    getData();
+    init(0);
   });
 
   document.querySelector('#list-sell-list').addEventListener('click', () => {
-    stor.operationTradeType = 1;
-    initWindow();
-    getData();
+    init(1);
   });
 
   document.querySelector('#list-inventory-list').addEventListener('click', () => {
-    stor.operationTradeType = 7;
-    initWindow();
-    getData();
+    init(7);
   });
 
   document.querySelector('#operations-trade-discountBtn').addEventListener('click', () => {
@@ -267,6 +279,7 @@ const addHandlers = () => {
   });
 
   document.querySelector('#operations-trade-clear-but').addEventListener('click', () => {
+    operationsTradeLeft.drawGroups(dataStore.all_groups, clickGroupsCallback, clichButtonBackCallback);
     operationsTradeRight.clear();
   });
 
@@ -274,12 +287,20 @@ const addHandlers = () => {
     operationsTradeLeft.drawGroups(dataStore.all_groups, clickGroupsCallback, clichButtonBackCallback);
     operationsTradeRight.clear();
   });
+
+  submitNode.addEventListener('click', () => {
+    operationsTradeServer.sendDataToServer({
+      'stock': stocksList.value,
+      'kontragent': kontragents.value,
+      'delivery': (deliveryNode.checked) ? 1 : 0,
+      'data': nomCard
+    });
+  });
 };
 
 export default {
   start() {
     // !!Здесь инициализировать переменные и обработчики
     addHandlers();
-    stor.operationTradeDiscount = 0;
   }
 };

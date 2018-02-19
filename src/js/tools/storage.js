@@ -325,4 +325,13 @@ export default {
   get operationTradeCurrentOpen() {
     return sessionStorage.getItem('operationTradeCurrentOpen');
   },
+
+  // true - скидка, false - товар
+  set operationTradeRightClickType(type) {
+    sessionStorage.setItem('operationTradeRightClickType', type);
+  },
+
+  get operationTradeRightClickType() {
+    return sessionStorage.getItem('operationTradeRightClickType');
+  },
 };

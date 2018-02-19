@@ -68,7 +68,51 @@ const getData = (stock, callback) => {
   };
 };
 
+// data = {
+//   stock
+//   kontragent
+//   delivery
+//   data
+// }
+const sendData = (data, callback) => {
+
+  const getDataXhrCallbackSuccess = (response) => {
+    console.log('SEND OK');
+    console.dir(response);
+    // callback(response.data);
+  };
+
+  let cred = stor.data;
+  let goodData = [];
+
+  data.data.forEach((el) => {
+    goodData.push({
+      'value': el.count,
+      'good': el.id,
+      'price': el.price
+    });
+  });
+
+  goodData = JSON.stringify(goodData);
+
+  console.dir(goodData);
+
+  let xhrData = `token=${cred.token}&kontr_agent=${data.kontragent}&type=${stor.operationTradeType}&delivery=${data.delivery}&content=${goodData}`;
+
+  let xhrResp = {
+    'url': `/lopos_directory/${cred.directory}/operator/${cred.operatorId}/business/${cred.currentBusiness}/stock/${data.stock}/temp_naklad_provesti`,
+    'metod': 'POST',
+    'data': xhrData,
+    'callbackSuccess': getDataXhrCallbackSuccess
+  };
+
+  console.dir(xhrResp);
+
+  xhr.request = xhrResp;
+};
+
 export default {
   getDataFromServer: getData,
-  getGoodsFromServer: getGoods
+  getGoodsFromServer: getGoods,
+  sendDataToServer: sendData
 };

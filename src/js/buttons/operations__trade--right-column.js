@@ -1,8 +1,9 @@
 import markup from './../markup/operation__trade.js';
 import stor from './../tools/storage.js';
 
-const tbodyNode = document.querySelector('#operations-trade-right-tbody');
-const tfootNode = document.querySelector('#operations-trade-right-tfoot');
+const tableNode = document.querySelector('#operations-trade-right');
+const tbodyNode = tableNode.querySelector('tbody');
+const tfootNode = tableNode.querySelector('tfoot');
 const kontragentsList = document.querySelector('#operations-purchase-kontragents-list');
 const priceNode = document.querySelector('#operations-trade-price');
 
@@ -24,16 +25,18 @@ const getGoods = (nomenklature, callback) => {
 
     if (el.dataset['discount']) {
       stor.operationTradeCurrentGoodOldCount = false;
-      stor.operationTradeDiscount = el.dataset['discount'];
+      stor.operationTradeRightClickType = true;
     } else {
-      stor.operationTradeCurrentGoodOldCount = el.dataset['oldCount'];
-      stor.operationTradeDiscount = false;
+      stor.operationTradeCurrentGoodOldCount = true;
+      // stor.operationTradeCurrentGoodOldCount = el.dataset['oldCount'];
+      stor.operationTradeRightClickType = false;
     }
 
     callback();
   };
 
   tbodyNode.innerHTML = '';
+  tfootNode.innerHTML = '';
 
   let fragment = document.createDocumentFragment();
 
@@ -65,31 +68,43 @@ const getGoods = (nomenklature, callback) => {
   tbodyNode.appendChild(fragment);
 };
 const getNum = () => {
-  let arrElements = tbodyNode.parentNode.querySelectorAll('tr');
+  let goodEl = tbodyNode.querySelectorAll('tbody tr');
+  let discEl = tfootNode.querySelector('tfoot tr');
 
-  if (arrElements) {
-    let nomenklature = [];
-
-    arrElements.forEach((el) => {
-      nomenklature.push({
-        'name': el.dataset['name'],
-        'id': el.dataset['id'],
-        'price': el.dataset['price'],
-        'count': el.dataset['count'],
-        'oldCount': el.dataset['oldCount'],
-        'discount': el.dataset['discount']
-      });
-    });
-
-    return nomenklature;
+  if (goodEl.length === 0 && !discEl) {
+    return false;
   }
-  return false;
+
+  let nomenklature = [];
+
+  goodEl.forEach((el) => {
+    nomenklature.push({
+      'name': el.dataset['name'],
+      'id': el.dataset['id'],
+      'price': el.dataset['price'],
+      'count': el.dataset['count'],
+      'oldCount': el.dataset['oldCount'],
+    });
+  });
+
+  if (discEl) {
+    nomenklature.push({
+      'name': discEl.dataset['name'],
+      'id': discEl.dataset['id'],
+      'price': discEl.dataset['price'],
+      'count': discEl.dataset['count'],
+      'discount': discEl.dataset['discount']
+    });
+  }
+
+  return nomenklature;
 };
 
 export default {
 
   clear() {
     tbodyNode.innerHTML = '';
+    tfootNode.innerHTML = '';
     priceNode.innerHTML = '0';
   },
 
