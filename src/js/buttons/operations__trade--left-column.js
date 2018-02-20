@@ -24,7 +24,12 @@ const getHeader = (type, handler) => {
     confHead.node = NodeEnum.BUT_BACK;
     confHead.header = stor.currentGroupName;
     break;
+  case 'find':
+    confHead.node = NodeEnum.BUT_BACK;
+    confHead.header = 'Найденные товары';
+    break;
   }
+
   elHeader.innerHTML = markup.leftColumnHeader(confHead.header, confHead.node);
 
   if (type !== 'groups') {
@@ -43,12 +48,18 @@ const getGoods = (goods, goodClickHandler, btnBackHandler) => {
   stor.operationTradeCurrentOpen = 'goods';
   getHeader('goods', btnBackHandler);
   markup.leftColumnGoods(goods, leftColumn, goodClickHandler);
+};
 
+const getFindWindow = (goods, goodClickHandler, btnBackHandler) => {
+  stor.operationTradeCurrentOpen = 'find';
+  getHeader('find', btnBackHandler);
+  markup.leftColumnGoods(goods, leftColumn, goodClickHandler);
 };
 
 export default {
 
   drawHeader: getHeader,
   drawGroups: getGroups,
-  drawGoods: getGoods
+  drawGoods: getGoods,
+  drawFind: getFindWindow
 };

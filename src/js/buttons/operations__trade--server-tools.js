@@ -77,9 +77,7 @@ const getData = (stock, callback) => {
 const sendData = (data, callback) => {
 
   const getDataXhrCallbackSuccess = (response) => {
-    console.log('SEND OK');
-    console.dir(response);
-    // callback(response.data);
+    callback(response.data);
   };
 
   let cred = stor.data;

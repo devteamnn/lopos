@@ -270,7 +270,7 @@
               <div class="catalog-header-buttons w-50">
               <!-- сюда пишем склады -->
               <select id="operations-purchase-stocks-list" form="operation-trade-form" name="stock" class="form-control w-75  m-2" id="exampleFormControlSelect1"></select>
-              <button id="operations-trade-submit" name="submit" form="operation-trade-form" type="button" class="btn btn-danger m-2 p-2 w-25" disabled>Выполнить</button>
+              <button id="operations-trade-submit" name="submit" form="operation-trade-form" type="submit" class="btn btn-danger m-2 p-2 w-25" disabled>Выполнить</button>
             </div>
           </div>
 
@@ -303,6 +303,10 @@
                 <input id="operations-trade-delivery" type="checkbox" name="delivery" form="operation-trade-form">
               </label>
               <button id="operations-trade-clear-but" type="button" class="btn btn-danger" style="width: 40px">X</button>
+              <form id="operations-trade-search-barcode-form">
+                <input type="text" placeholder="Штрихкод" form="operations-trade-search-barcode-form" name="barcode">
+                <button id="operations-trade-search-barcode-submit" form="operations-trade-search-barcode-form"; type="submit" class="btn btn-danger" name="submit" style="width: 40px;">|||</button>
+              </form>
             </div>
 
             <!-- Накладная   -->
