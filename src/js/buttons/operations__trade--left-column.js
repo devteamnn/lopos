@@ -38,28 +38,96 @@ const getHeader = (type, handler) => {
 
 };
 
+const getGoods = (goods, clickCallback) => {
+
+  const clickHandler = (evt) => {
+    let el = evt.target;
+
+    while (!el.dataset['id']) {
+      el = el.parentNode;
+    }
+
+    switch (evt.target.dataset['type']) {
+    case 'add':
+      stor.operationClickType = 'add';
+      break;
+    case 'card':
+      stor.operationClickType = 'card';
+      break;
+    default:
+      stor.operationClickType = 'def';
+      break;
+    }
+    stor.operationTradeCurrentGoodId = el.dataset['id'];
+    stor.operationTradeCurrentGoodName = el.dataset['name'];
+    stor.operationTradeCurrentGoodCount = el.dataset['count'];
+    stor.operationTradeCurrentGoodPrice = el.dataset['price'];
+
+    clickCallback();
+  };
+
+  leftColumn.innerHTML = '';
+
+  let table = document.createElement('table');
+  table.className = 'table table-hover';
+  table.innerHTML = markup.leftColumnGoodsHeader();
+
+  let tbody = document.createElement('tbody');
+
+  goods.forEach((good, index) => {
+    let count = (good.count) ? good.count : '';
+
+    let tr = document.createElement('tr');
+    tr.scope = 'row';
+    tr.dataset['id'] = good.id;
+    tr.dataset['name'] = good.name;
+    tr.dataset['count'] = count;
+    tr.dataset['price'] = good.price;
+    tr.innerHTML = markup.leftColumnGoodsRow(index, good.id, good.name, good.price, count);
+
+    tr.addEventListener('click', clickHandler);
+
+    tbody.appendChild(tr);
+  });
+
+  table.appendChild(tbody);
+  leftColumn.appendChild(table);
+};
+
 const getGroups = (groups, groupClickHandler, btnBackHandler) => {
   stor.operationTradeCurrentOpen = 'folder';
   getHeader('groups', btnBackHandler);
   universalGroupsList.draw(groups, leftColumn, groupClickHandler);
 };
 
-const getGoods = (goods, goodClickHandler, btnBackHandler) => {
+const drawGoodsToColumn = (goods, goodClickHandler, btnBackHandler) => {
   stor.operationTradeCurrentOpen = 'goods';
   getHeader('goods', btnBackHandler);
-  markup.leftColumnGoods(goods, leftColumn, goodClickHandler);
+  getGoods(goods, goodClickHandler);
 };
 
-const getFindWindow = (goods, goodClickHandler, btnBackHandler) => {
+const drawFindWindow = (goods, ClickHandler, btnBackHandler, type) => {
   stor.operationTradeCurrentOpen = 'find';
   getHeader('find', btnBackHandler);
-  markup.leftColumnGoods(goods, leftColumn, goodClickHandler);
+
+  switch (type) {
+  case 'goods':
+    getGoods(goods, ClickHandler);
+    break;
+  case 'folder':
+    getGroups(goods, ClickHandler);
+    break;
+  }
 };
 
 export default {
 
   drawHeader: getHeader,
   drawGroups: getGroups,
-  drawGoods: getGoods,
-  drawFind: getFindWindow
+  drawGoods: drawGoodsToColumn,
+  drawFind: drawFindWindow,
+
+  message(mess) {
+    leftColumn.innerHTML = mess;
+  }
 };

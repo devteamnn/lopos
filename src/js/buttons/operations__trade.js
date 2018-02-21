@@ -6,7 +6,10 @@ import operationsTradeHeader from './operations__trade--header.js';
 import operationsTradeAdd from './operations__trade--good-add.js';
 import operationsTradeDiscount from './operations__trade--discount.js';
 
+import goodCard from './catalog__goods.js';
+
 const searchBarcodeForm = document.querySelector('#operations-trade-search-barcode-form');
+const searchForm = document.querySelector('#operations-trade-search');
 const tradeForm = document.querySelector('#operation-trade-form');
 
 let dataStore = [];
@@ -102,28 +105,6 @@ const addGoodToNomCard = (value) => {
   if (!nomCard) {
     nomCard = [];
   }
-
-  // if (!nomCard) {
-  //   nomCard = [];
-  //   nomCard.push({
-  //     'id': stor.operationTradeCurrentGoodId,
-  //     'name': stor.operationTradeCurrentGoodName,
-  //     'price': stor.operationTradeCurrentGoodPrice,
-  //     'count': value,
-  //     'oldCount': stor.operationTradeCurrentGoodCount
-  //   });
-  // } else if (numIndex === 'none') {
-  //   nomCard.push({
-  //     'id': dataGoods[goodIndex].id,
-  //     'name': dataGoods[goodIndex].name,
-  //     'price': dataGoods[goodIndex].price,
-  //     'count': value,
-  //     'oldCount': dataGoods[goodIndex].count
-  //   });
-  // } else {
-  //   nomCard[numIndex].count = Number(nomCard[numIndex].count) + value;
-  //   nomCard[numIndex].oldCount = Number(nomCard[numIndex].oldCount) - value;
-  // }
 
   let goodOldCount = (stor.operationTradeCurrentGoodCount !== 'undefined') ? stor.operationTradeCurrentGoodCount : 'none';
 
@@ -250,7 +231,8 @@ const clickLeftGoodsCallback = () => {
     addGoodToNomCard(1);
     break;
   case 'card':
-    console.log('-CARD-');
+    stor.currentGoodId = stor.operationTradeCurrentGoodId;
+    goodCard.fill();
     break;
   case 'def':
     operationsTradeAdd.show(addLeftFormCallback, 'l');
@@ -264,7 +246,8 @@ const clickLeftFindToBarcodeCallack = () => {
     addGoodToNomCard(1);
     break;
   case 'card':
-    console.log('-CARD-');
+    stor.currentGoodId = stor.operationTradeCurrentGoodId;
+    goodCard.fill();
     break;
   case 'def':
     operationsTradeAdd.show(addLeftFormCallback, 'l');
@@ -362,11 +345,42 @@ const addHandlers = () => {
     evt.preventDefault();
     let goods = serachElements(dataStore.all_goods_with_barcode, 'barcode', evt.target.barcode.value);
 
-    if (goods !== 'none') {
-      operationsTradeLeft.drawFind(goods, clickLeftFindToBarcodeCallack, clichButtonBackCallback);
+    if (goods === 'none') {
+      operationsTradeLeft.message('Товар не найден!');
+      return false;
     }
 
-    console.log('нет совпадений');
+    if (goods.length === 1) {
+      addGoodToNomCard(1);
+      return true;
+    }
+
+    operationsTradeLeft.drawFind(goods, clickLeftFindToBarcodeCallack, clichButtonBackCallback, stor.operationTradeCurrentOpen);
+    return true;
+  });
+
+  searchForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    let elements;
+    let elName = evt.target.name.value;
+
+    switch (stor.operationTradeCurrentOpen) {
+    case 'folder':
+      elements = serachElements(dataStore.all_groups, 'name', elName);
+      break;
+    case 'goods':
+      elements = serachElements(dataGoods, 'name', elName);
+      break;
+    }
+
+    if (elements === 'none') {
+      operationsTradeLeft.message('Товар не найден!');
+      return false;
+    }
+
+    operationsTradeLeft.drawFind(elements, clickLeftFindToBarcodeCallack, clichButtonBackCallback, stor.operationTradeCurrentOpen);
+    return true;
   });
 };
 
