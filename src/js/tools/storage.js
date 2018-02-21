@@ -334,4 +334,12 @@ export default {
   get operationTradeRightClickType() {
     return sessionStorage.getItem('operationTradeRightClickType');
   },
+
+  set operationTradeIsFind(type) {
+    sessionStorage.setItem('operationTradeIsFind', type);
+  },
+
+  get operationTradeIsFind() {
+    return sessionStorage.getItem('operationTradeIsFind');
+  },
 };

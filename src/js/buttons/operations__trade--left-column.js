@@ -75,7 +75,7 @@ const getGoods = (goods, clickCallback) => {
   let tbody = document.createElement('tbody');
 
   goods.forEach((good, index) => {
-    let count = (good.count) ? good.count : '';
+    let count = (good.count || good.count === 0) ? good.count : '';
 
     let tr = document.createElement('tr');
     tr.scope = 'row';
@@ -94,28 +94,30 @@ const getGoods = (goods, clickCallback) => {
   leftColumn.appendChild(table);
 };
 
-const getGroups = (groups, groupClickHandler, btnBackHandler) => {
-  stor.operationTradeCurrentOpen = 'folder';
+const drawGroupsToColumt = (groups, groupClickHandler, btnBackHandler) => {
+  stor.operationTradeCurrentOpen = 'groups';
+  stor.operationTradeIsFind = false;
   getHeader('groups', btnBackHandler);
   universalGroupsList.draw(groups, leftColumn, groupClickHandler);
 };
 
 const drawGoodsToColumn = (goods, goodClickHandler, btnBackHandler) => {
   stor.operationTradeCurrentOpen = 'goods';
+  stor.operationTradeIsFind = false;
   getHeader('goods', btnBackHandler);
   getGoods(goods, goodClickHandler);
 };
 
 const drawFindWindow = (goods, ClickHandler, btnBackHandler, type) => {
-  stor.operationTradeCurrentOpen = 'find';
+  stor.operationTradeIsFind = true;
   getHeader('find', btnBackHandler);
 
   switch (type) {
   case 'goods':
     getGoods(goods, ClickHandler);
     break;
-  case 'folder':
-    getGroups(goods, ClickHandler);
+  case 'groups':
+    universalGroupsList.draw(goods, leftColumn, ClickHandler);
     break;
   }
 };
@@ -123,7 +125,7 @@ const drawFindWindow = (goods, ClickHandler, btnBackHandler, type) => {
 export default {
 
   drawHeader: getHeader,
-  drawGroups: getGroups,
+  drawGroups: drawGroupsToColumt,
   drawGoods: drawGoodsToColumn,
   drawFind: drawFindWindow,
 

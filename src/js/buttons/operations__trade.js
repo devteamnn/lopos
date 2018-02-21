@@ -15,6 +15,7 @@ const tradeForm = document.querySelector('#operation-trade-form');
 let dataStore = [];
 let dataGoods = [];
 let nomCard = []; // номенклатура
+let dataFind = [];
 
 // возвращает индекс найденного объекта
 // array - массив в котором искать
@@ -31,12 +32,21 @@ const searchGoodById = (array, id) => {
   return 'none';
 };
 
-const serachElements = (array, property, el) => {
+const serachElements = (array, property, el, strict) => {
   let indexes = [];
 
   array.forEach((good) => {
-    if (good[property] === el) {
-      indexes.push(good);
+    let el1 = good[property].toLocaleLowerCase();
+    let el2 = el.toLocaleLowerCase();
+
+    if (strict) {
+      if (el1 === el2) {
+        indexes.push(good);
+      }
+    } else {
+      if (el1.indexOf(el2) !== -1) {
+        indexes.push(good);
+      }
     }
   });
 
@@ -48,14 +58,28 @@ const serachElements = (array, property, el) => {
 };
 
 const redrawColumn = () => {
-  switch (stor.operationTradeCurrentOpen) {
-  case 'folder':
-    operationsTradeLeft.drawGroups(dataStore.all_groups, clickGroupsCallback);
-    break;
-  case 'goods':
-    operationsTradeLeft.drawGoods(dataGoods, clickLeftGoodsCallback, clichButtonBackCallback);
-    break;
+  if (stor.operationTradeIsFind === 'true') {
+    switch (stor.operationTradeCurrentOpen) {
+    case 'groups':
+      // operationsTradeLeft.drawGroups(dataFind, clickGroupsCallback);
+      operationsTradeLeft.drawFind(dataFind, clickGroupsCallback, clichButtonBackCallback, stor.operationTradeCurrentOpen);
+      break;
+    case 'goods':
+      // operationsTradeLeft.drawGoods(dataFind, clickLeftGoodsCallback, clichButtonBackCallback);
+      operationsTradeLeft.drawFind(dataFind, clickLeftGoodsCallback, clichButtonBackCallback, stor.operationTradeCurrentOpen);
+      break;
+    }
+  } else {
+    switch (stor.operationTradeCurrentOpen) {
+    case 'groups':
+      operationsTradeLeft.drawGroups(dataStore.all_groups, clickGroupsCallback);
+      break;
+    case 'goods':
+      operationsTradeLeft.drawGoods(dataGoods, clickLeftGoodsCallback, clichButtonBackCallback);
+      break;
+    }
   }
+
 
   operationsTradeRight.drawPrice(calcNumSum());
   operationsTradeRight.drawGoods(nomCard, clickRightGoodsCallback);
@@ -343,7 +367,7 @@ const addHandlers = () => {
 
   searchBarcodeForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
-    let goods = serachElements(dataStore.all_goods_with_barcode, 'barcode', evt.target.barcode.value);
+    let goods = serachElements(dataStore.all_goods_with_barcode, 'barcode', evt.target.barcode.value, true);
 
     if (goods === 'none') {
       operationsTradeLeft.message('Товар не найден!');
@@ -355,31 +379,35 @@ const addHandlers = () => {
       return true;
     }
 
-    operationsTradeLeft.drawFind(goods, clickLeftFindToBarcodeCallack, clichButtonBackCallback, stor.operationTradeCurrentOpen);
+    operationsTradeLeft.drawFind(goods, clickLeftFindToBarcodeCallack, clichButtonBackCallback, 'goods');
     return true;
   });
 
   searchForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
 
-    let elements;
     let elName = evt.target.name.value;
+    let callback;
 
     switch (stor.operationTradeCurrentOpen) {
-    case 'folder':
-      elements = serachElements(dataStore.all_groups, 'name', elName);
+    case 'groups':
+      dataFind = serachElements(dataStore.all_groups, 'name', elName);
+      callback = clickGroupsCallback;
       break;
     case 'goods':
-      elements = serachElements(dataGoods, 'name', elName);
+      dataFind = serachElements(dataGoods, 'name', elName);
+      callback = clickLeftGoodsCallback;
       break;
     }
 
-    if (elements === 'none') {
+    if (dataFind === 'none') {
+      operationsTradeLeft.drawHeader('find', clichButtonBackCallback);
       operationsTradeLeft.message('Товар не найден!');
       return false;
     }
 
-    operationsTradeLeft.drawFind(elements, clickLeftFindToBarcodeCallack, clichButtonBackCallback, stor.operationTradeCurrentOpen);
+    operationsTradeLeft.drawFind(dataFind, callback, clichButtonBackCallback, stor.operationTradeCurrentOpen);
+
     return true;
   });
 };
