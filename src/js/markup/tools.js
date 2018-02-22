@@ -53,7 +53,7 @@ export default {
     //   message: сообщение
     // }
 
-    let type = (setup.isMess === true) ? 'alert-success' : 'alert-danger';
+    let type = (setup.isMess   === true) ? 'alert-success' : 'alert-danger';
 
     alertBlock.innerHTML = alertBlock.innerHTML +
       `<div id="alert" class="alert ${type} fade show" role="alert">

@@ -7,6 +7,7 @@ import operationsTradeAdd from './operations__trade--good-add.js';
 import operationsTradeDiscount from './operations__trade--discount.js';
 
 import goodCard from './catalog__goods.js';
+import markupTools from './../markup/tools.js';
 
 const searchBarcodeForm = document.querySelector('#operations-trade-search-barcode-form');
 const searchForm = document.querySelector('#operations-trade-search');
@@ -32,14 +33,20 @@ const searchGoodById = (array, id) => {
   return 'none';
 };
 
-const serachElements = (array, property, el, strict) => {
+// setup = {
+//   array: массив в котором искать
+//   property: свойство объекта (когда массив состоит из объектов). Если пустое, то ищется по массиву
+//   el: что искать
+//   strict: true/false - если true, то ищет значение целиком, если false - вхождение
+// }
+const serachElements = (setup) => {
   let indexes = [];
 
-  array.forEach((good) => {
-    let el1 = good[property].toLocaleLowerCase();
-    let el2 = el.toLocaleLowerCase();
+  setup.array.forEach((good) => {
+    let el1 = (setup.property) ? good[setup.property].toLocaleLowerCase() : good.toLocaleLowerCase();
+    let el2 = setup.el.toLocaleLowerCase();
 
-    if (strict) {
+    if (setup.strict) {
       if (el1 === el2) {
         indexes.push(good);
       }
@@ -114,13 +121,33 @@ const discountCallback = (discValue) => {
   }
 };
 
-const addGoodToNomCard = (value) => {
+const addGoodToNomCard = (value, barcode) => {
   let goodId = stor.operationTradeCurrentGoodId;
-  let goodIndex = searchGoodById(dataGoods, goodId);
 
-  if (goodIndex !== 'none') {
-    dataGoods[goodIndex].count -= value;
+  if (!barcode) {
+    let goodIndex = searchGoodById(dataGoods, goodId);
+
+    let perm = serachElements({
+      'array': dataStore.property_list,
+      'el': '11',
+      'strict': true
+    })
+
+    if (perm !== 'none') {
+      if (goodIndex !== 'none') {
+        if (dataGoods[goodIndex].count > 0) {
+          dataGoods[goodIndex].count -= value;
+        } else {
+          markupTools.informationtModal = {
+            'title': 'ОШИБКА',
+            'message': `Товара "${stor.operationTradeCurrentGoodName}"" нет на складе!`
+          };
+          return false;
+        }
+      }
+    }
   }
+
 
   nomCard = operationsTradeRight.getNomenklature();
 
@@ -154,6 +181,7 @@ const addGoodToNomCard = (value) => {
   calcDiscount();
   redrawColumn();
   tradeForm.submit.disabled = false;
+  return true;
 };
 
 const addDiscountToNomCard = (precent) => {
@@ -367,7 +395,12 @@ const addHandlers = () => {
 
   searchBarcodeForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
-    let goods = serachElements(dataStore.all_goods_with_barcode, 'barcode', evt.target.barcode.value, true);
+    let goods = serachElements({
+      'array': dataStore.all_goods_with_barcode,
+      'property': 'barcode',
+      'el': evt.target.barcode.value,
+      'strict': true
+    });
 
     if (goods === 'none') {
       operationsTradeLeft.message('Товар не найден!');
@@ -391,18 +424,36 @@ const addHandlers = () => {
 
     switch (stor.operationTradeCurrentOpen) {
     case 'groups':
-      dataFind = serachElements(dataStore.all_groups, 'name', elName);
+      dataFind = serachElements({
+        'array': dataStore.all_groups,
+        'property': 'name',
+        'el': elName
+      });
+
       callback = clickGroupsCallback;
       break;
     case 'goods':
-      dataFind = serachElements(dataGoods, 'name', elName);
+      dataFind = serachElements({
+        'array': dataGoods,
+        'property': 'name',
+        'el': elName
+      });
       callback = clickLeftGoodsCallback;
       break;
     }
 
     if (dataFind === 'none') {
       operationsTradeLeft.drawHeader('find', clichButtonBackCallback);
-      operationsTradeLeft.message('Товар не найден!');
+
+      switch (stor.operationTradeCurrentOpen) {
+      case 'groups':
+        operationsTradeLeft.message('Группа не найдена!');
+        break;
+      case 'goods':
+        operationsTradeLeft.message('Товар не найден!');
+        break;
+      }
+
       return false;
     }
 

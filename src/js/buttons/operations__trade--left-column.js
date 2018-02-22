@@ -26,7 +26,7 @@ const getHeader = (type, handler) => {
     break;
   case 'find':
     confHead.node = NodeEnum.BUT_BACK;
-    confHead.header = 'Найденные товары';
+    confHead.header = 'Найдено:';
     break;
   }
 
