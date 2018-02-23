@@ -131,7 +131,7 @@ const addGoodToNomCard = (value, barcode) => {
       'array': dataStore.property_list,
       'el': '11',
       'strict': true
-    })
+    });
 
     if (perm !== 'none') {
       if (goodIndex !== 'none') {
@@ -363,9 +363,9 @@ const addHandlers = () => {
     init(1);
   });
 
-  document.querySelector('#list-inventory-list').addEventListener('click', () => {
-    init(7);
-  });
+  // document.querySelector('#list-inventory-list').addEventListener('click', () => {
+  //   init(7);
+  // });
 
   document.querySelector('#operations-trade-discountBtn').addEventListener('click', () => {
     operationsTradeDiscount.show(discountCallback, dataStore.discount_max);
@@ -390,7 +390,7 @@ const addHandlers = () => {
       'kontragent': form.kontragents.value,
       'delivery': (form.delivery.checked) ? 1 : 0,
       'data': nomCard
-    }, tradeSubmitFormCallback);
+    }, tradeSubmitFormCallback, dataStore.discount_id);
   });
 
   searchBarcodeForm.addEventListener('submit', (evt) => {

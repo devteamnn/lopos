@@ -74,7 +74,7 @@ const getData = (stock, callback) => {
 //   delivery
 //   data
 // }
-const sendData = (data, callback) => {
+const sendData = (data, callback, discId) => {
 
   const getDataXhrCallbackSuccess = (response) => {
     callback(response.data);
@@ -84,6 +84,10 @@ const sendData = (data, callback) => {
   let goodData = [];
 
   data.data.forEach((el) => {
+    if (stor.operationTradeType === '1') {
+      el.count *= -1;
+    }
+
     goodData.push({
       'value': el.count,
       'good': el.id,
