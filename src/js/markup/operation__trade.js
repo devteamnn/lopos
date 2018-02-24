@@ -19,11 +19,15 @@ export default {
     `;
   },
 
-  leftColumnGoodsHeader() {
+  leftColumnGoodsHeaderTrade() {
     return '<thead><tr><th scope="col" class="">#</th><th scope="col" class="w-50">Товар</th><th scope="col">Цена</th><th scope="col">Остаток</th><th scope="col"></th><th scope="col"></th></tr></thead>';
   },
 
-  leftColumnGoodsRow(index, id, name, price, count) {
+  leftColumnGoodsHeaderInventory() {
+    return '<thead><tr><th scope="col" class="">#</th><th scope="col" class="w-50">Товар</th><th scope="col">Остаток</th><th scope="col"></th></tr></thead>';
+  },
+
+  leftColumnGoodsRowTrade(index, id, name, price, count) {
     return `
       <th scope="row">${index + 1}</th>
       <td>${id} || ${name}</td>
@@ -32,6 +36,17 @@ export default {
       <td>
         <button class="button btn btn-danger mr-1" data-type="add">+1</button>
       </td>
+      <td>
+        <button class="button btn btn-danger" data-type="card">i</button>
+      </td>
+    `;
+  },
+
+  leftColumnGoodsRowInventory(index, id, name, price, count) {
+    return `
+      <th scope="row">${index + 1}</th>
+      <td>${id} || ${name}</td>
+      <td>${count}</td>
       <td>
         <button class="button btn btn-danger" data-type="card">i</button>
       </td>
@@ -56,5 +71,16 @@ export default {
       <td></td>
       <td>${Number(price * count).toFixed(2)}</td>
     `;
-  }
+  },
+
+  rightColumnGoodsInventory(index, name, count, curCount) {
+    return `
+      <th scope="row">${index + 1}</th>
+      <td>${name}</td>
+      <td>${curCount}</td>
+      <td>${count}</td>
+      <td>${Number(curCount - count).toFixed(2)}</td>
+    `;
+  },
+
 };

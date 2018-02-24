@@ -3,13 +3,15 @@ import stor from './../tools/storage.js';
 import universalGroupsList from './universal-groups-list.js';
 import markup from './../markup/operation__trade.js';
 
-let leftColumn = document.querySelector('#operations-trade-left');
-let elHeader = document.querySelector('#operations-trade-left-header');
+let leftTradeColumn = document.querySelector('#operations-trade-left');
+let leftInventoryColumn = document.querySelector('#operation-inventory-left');
+let coolTradeHeader = document.querySelector('#operations-trade-left-header');
+let coolInventoryHeader = document.querySelector('#operation-inventory-left-header');
 // const stocksList = document.querySelector('#operations-purchase-stocks-list');
 
 const NodeEnum = {
   IMG_GROUP: '<img src="img/groups.png" alt="">',
-  BUT_BACK: '<button id="operation-trade-left-column-return-btn" type="button" class="btn btn-success p-0 icon-btn icon-btn__return"></button>'
+  BUT_BACK: '<button id="operation-left-column-return-btn" type="button" class="btn btn-success p-0 icon-btn icon-btn__return"></button>'
 };
 
 const getHeader = (type, handler) => {
@@ -30,15 +32,17 @@ const getHeader = (type, handler) => {
     break;
   }
 
-  elHeader.innerHTML = markup.leftColumnHeader(confHead.header, confHead.node);
+  let cool = (stor.operationTradeType === '7') ? coolInventoryHeader : coolTradeHeader;
+
+  cool.innerHTML = markup.leftColumnHeader(confHead.header, confHead.node);
 
   if (type !== 'groups') {
-    document.querySelector('#operation-trade-left-column-return-btn').addEventListener('click', handler);
+    cool.querySelector('#operation-left-column-return-btn').addEventListener('click', handler);
   }
 
 };
 
-const getGoods = (goods, clickCallback) => {
+const getTradeGoods = (goods, clickCallback) => {
 
   const clickHandler = (evt) => {
     let el = evt.target;
@@ -66,11 +70,11 @@ const getGoods = (goods, clickCallback) => {
     clickCallback();
   };
 
-  leftColumn.innerHTML = '';
+  leftTradeColumn.innerHTML = '';
 
   let table = document.createElement('table');
   table.className = 'table table-hover';
-  table.innerHTML = markup.leftColumnGoodsHeader();
+  table.innerHTML = markup.leftColumnGoodsHeaderTrade();
 
   let tbody = document.createElement('tbody');
 
@@ -83,7 +87,7 @@ const getGoods = (goods, clickCallback) => {
     tr.dataset['name'] = good.name;
     tr.dataset['count'] = count;
     tr.dataset['price'] = good.price;
-    tr.innerHTML = markup.leftColumnGoodsRow(index, good.id, good.name, good.price, count);
+    tr.innerHTML = markup.leftColumnGoodsRowTrade(index, good.id, good.name, good.price, count);
 
     tr.addEventListener('click', clickHandler);
 
@@ -91,13 +95,68 @@ const getGoods = (goods, clickCallback) => {
   });
 
   table.appendChild(tbody);
-  leftColumn.appendChild(table);
+  leftTradeColumn.appendChild(table);
+};
+
+const getInventoryGoods = (goods, clickCallback) => {
+
+  const clickHandler = (evt) => {
+    let el = evt.target;
+
+    while (!el.dataset['id']) {
+      el = el.parentNode;
+    }
+
+    switch (evt.target.dataset['type']) {
+    case 'card':
+      stor.operationClickType = 'card';
+      break;
+    default:
+      stor.operationClickType = 'def';
+      break;
+    }
+    stor.operationTradeCurrentGoodId = el.dataset['id'];
+    stor.operationTradeCurrentGoodName = el.dataset['name'];
+    stor.operationTradeCurrentGoodCount = el.dataset['count'];
+
+    clickCallback();
+  };
+
+  leftInventoryColumn.innerHTML = '';
+
+  let table = document.createElement('table');
+  table.className = 'table table-hover';
+  table.innerHTML = markup.leftColumnGoodsHeaderInventory();
+
+  let tbody = document.createElement('tbody');
+
+  goods.forEach((good, index) => {
+    let count = (good.count || good.count === 0) ? good.count : '';
+
+    let tr = document.createElement('tr');
+    tr.scope = 'row';
+    tr.dataset['id'] = good.id;
+    tr.dataset['name'] = good.name;
+    tr.dataset['count'] = count;
+    tr.dataset['price'] = good.price;
+    tr.innerHTML = markup.leftColumnGoodsRowInventory(index, good.id, good.name, good.price, count);
+
+    tr.addEventListener('click', clickHandler);
+
+    tbody.appendChild(tr);
+  });
+
+  table.appendChild(tbody);
+  leftInventoryColumn.appendChild(table);
 };
 
 const drawGroupsToColumt = (groups, groupClickHandler, btnBackHandler) => {
   stor.operationTradeCurrentOpen = 'groups';
   stor.operationTradeIsFind = false;
   getHeader('groups', btnBackHandler);
+
+  let leftColumn = (stor.operationTradeType === '7') ? leftInventoryColumn : leftTradeColumn;
+
   universalGroupsList.draw(groups, leftColumn, groupClickHandler);
 };
 
@@ -105,7 +164,12 @@ const drawGoodsToColumn = (goods, goodClickHandler, btnBackHandler) => {
   stor.operationTradeCurrentOpen = 'goods';
   stor.operationTradeIsFind = false;
   getHeader('goods', btnBackHandler);
-  getGoods(goods, goodClickHandler);
+
+  if (stor.operationTradeType === '7') {
+    getInventoryGoods(goods, goodClickHandler);
+  } else {
+    getTradeGoods(goods, goodClickHandler);
+  }
 };
 
 const drawFindWindow = (goods, ClickHandler, btnBackHandler, type) => {
@@ -114,9 +178,16 @@ const drawFindWindow = (goods, ClickHandler, btnBackHandler, type) => {
 
   switch (type) {
   case 'goods':
-    getGoods(goods, ClickHandler);
+
+    if (stor.operationTradeType === '7') {
+      getInventoryGoods(goods, ClickHandler);
+    } else {
+      getTradeGoods(goods, ClickHandler);
+    }
+
     break;
   case 'groups':
+    let leftColumn = (stor.operationTradeType === '7') ? leftInventoryColumn : leftTradeColumn;
     universalGroupsList.draw(goods, leftColumn, ClickHandler);
     break;
   }
@@ -130,6 +201,7 @@ export default {
   drawFind: drawFindWindow,
 
   message(mess) {
+    let leftColumn = (stor.operationTradeType === '7') ? leftInventoryColumn : leftTradeColumn;
     leftColumn.innerHTML = mess;
   }
 };

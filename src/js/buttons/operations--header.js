@@ -1,7 +1,8 @@
 import markup from './../markup/operation__trade.js';
 import stor from './../tools/storage.js';
 
-let stocksList = document.querySelector('#operations-purchase-stocks-list');
+let stocksListTrade = document.querySelector('#operations-purchase-stocks-list');
+let stocksListInventory = document.querySelector('#operation-inventory-stocks-list');
 let header = document.querySelector('#operation-header');
 
 export default {
@@ -41,6 +42,9 @@ export default {
 
       fragment.appendChild(option);
     });
+
+    let stocksList = (stor.operationTradeType === '7') ? stocksListInventory : stocksListTrade;
+
     stocksList.appendChild(fragment);
   },
 };

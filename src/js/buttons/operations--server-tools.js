@@ -91,15 +91,14 @@ const sendData = (data, callback, discId) => {
     goodData.push({
       'value': el.count,
       'good': el.id,
-      'price': el.price
+      'price': (el.price) ? el.price : 0
     });
   });
 
   goodData = JSON.stringify(goodData);
 
-  console.dir(goodData);
-
-  let xhrData = `token=${cred.token}&kontr_agent=${data.kontragent}&type=${stor.operationTradeType}&delivery=${data.delivery}&content=${goodData}`;
+  let delivery = (data.delivery) ? data.delivery : 0;
+  let xhrData = `token=${cred.token}&kontr_agent=${data.kontragent}&type=${stor.operationTradeType}&delivery=${delivery}&content=${goodData}`;
 
   let xhrResp = {
     'url': `/lopos_directory/${cred.directory}/operator/${cred.operatorId}/business/${cred.currentBusiness}/stock/${data.stock}/temp_naklad_provesti`,

@@ -15,7 +15,9 @@ let callback;
 
 const formFilling = (type) => {
   nodeGoodName.innerHTML = stor.operationTradeCurrentGoodName;
-  nodeGoodPrice.innerHTML = stor.operationTradeCurrentGoodPrice;
+
+
+  nodeGoodPrice.innerHTML = (stor.operationTradeType === '7') ? '-' : stor.operationTradeCurrentGoodPrice;
 
   switch (type) {
   case 'l':

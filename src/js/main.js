@@ -20,6 +20,7 @@ import groupsButton from './buttons/catalog__groups.js';
 import cardsButton from './buttons/catalog__cards.js';
 import searchButton from './buttons/catalog__search.js';
 import operationTrade from './buttons/operations__trade.js';
+import operationInventory from './buttons/operations__inventory.js';
 
 // import xhr from './tools/xhr.js';
 
@@ -71,7 +72,8 @@ const mainMenuButtons = [
   groupsButton,
   cardsButton,
   searchButton,
-  operationTrade
+  operationTrade,
+  operationInventory
 ];
 
 // ========== ОБНОВЛЕНИЕ/ОТКРЫТИЕ СТРАНИЦЫ ==========

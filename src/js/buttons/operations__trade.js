@@ -1,9 +1,10 @@
 import stor from './../tools/storage.js';
-import operationsTradeServer from './operations__trade--server-tools.js';
-import operationsTradeLeft from './operations__trade--left-column.js';
-import operationsTradeRight from './operations__trade--right-column.js';
-import operationsTradeHeader from './operations__trade--header.js';
-import operationsTradeAdd from './operations__trade--good-add.js';
+import tools from './../tools/tools.js';
+import operationsTradeServer from './operations--server-tools.js';
+import operationsTradeLeft from './operations--left-column.js';
+import operationsTradeRight from './operations--right-column.js';
+import operationsTradeHeader from './operations--header.js';
+import operationsTradeAdd from './operations--good-add.js';
 import operationsTradeDiscount from './operations__trade--discount.js';
 
 import goodCard from './catalog__goods.js';
@@ -33,37 +34,6 @@ const searchGoodById = (array, id) => {
   return 'none';
 };
 
-// setup = {
-//   array: массив в котором искать
-//   property: свойство объекта (когда массив состоит из объектов). Если пустое, то ищется по массиву
-//   el: что искать
-//   strict: true/false - если true, то ищет значение целиком, если false - вхождение
-// }
-const serachElements = (setup) => {
-  let indexes = [];
-
-  setup.array.forEach((good) => {
-    let el1 = (setup.property) ? good[setup.property].toLocaleLowerCase() : good.toLocaleLowerCase();
-    let el2 = setup.el.toLocaleLowerCase();
-
-    if (setup.strict) {
-      if (el1 === el2) {
-        indexes.push(good);
-      }
-    } else {
-      if (el1.indexOf(el2) !== -1) {
-        indexes.push(good);
-      }
-    }
-  });
-
-  if (indexes.length === 0) {
-    return 'none';
-  }
-  return indexes;
-
-};
-
 const redrawColumn = () => {
   if (stor.operationTradeIsFind === 'true') {
     switch (stor.operationTradeCurrentOpen) {
@@ -86,7 +56,6 @@ const redrawColumn = () => {
       break;
     }
   }
-
 
   operationsTradeRight.drawPrice(calcNumSum());
   operationsTradeRight.drawGoods(nomCard, clickRightGoodsCallback);
@@ -121,61 +90,91 @@ const discountCallback = (discValue) => {
   }
 };
 
+const calcOldCount = (value, count) => {
+  let oldCount;
+
+  switch (stor.operationTradeType) {
+  case '0':
+    oldCount = count + value;
+    break;
+  case '1':
+    oldCount = count - value;
+    break;
+  }
+
+  return oldCount;
+};
+
 const addGoodToNomCard = (value, barcode) => {
+  nomCard = operationsTradeRight.getNomenklature();
+
   let goodId = stor.operationTradeCurrentGoodId;
 
-  if (!barcode) {
-    let goodIndex = searchGoodById(dataGoods, goodId);
+  let goodIndex = searchGoodById(dataGoods, goodId);
+  let nomIndex = searchGoodById(nomCard, goodId);
 
-    let perm = serachElements({
+  if (!barcode && stor.operationTradeType !== '0') {
+    let count;
+
+    if (goodIndex !== 'none') {
+      count = dataGoods[goodIndex].count;
+    } else {
+      if (nomIndex !== 'none') {
+        count = nomCard[nomIndex].oldCount;
+      } else {
+        console.log('что-то пошло не так....');
+      }
+
+    }
+
+    let perm = tools.serachElements({
       'array': dataStore.property_list,
       'el': '11',
       'strict': true
     });
 
     if (perm !== 'none') {
-      if (goodIndex !== 'none') {
-        if (dataGoods[goodIndex].count > 0) {
-          dataGoods[goodIndex].count -= value;
-        } else {
-          markupTools.informationtModal = {
-            'title': 'ОШИБКА',
-            'message': `Товара "${stor.operationTradeCurrentGoodName}"" нет на складе!`
-          };
-          return false;
-        }
+      if (value > count) {
+        markupTools.informationtModal = {
+          'title': 'ОШИБКА',
+          'message': `Товара "${stor.operationTradeCurrentGoodName}"" нет на складе!`
+        };
+        return false;
       }
     }
   }
-
-
-  nomCard = operationsTradeRight.getNomenklature();
-
-  let numIndex = searchGoodById(nomCard, goodId);
 
   if (!nomCard) {
     nomCard = [];
   }
 
-  let goodOldCount = (stor.operationTradeCurrentGoodCount !== 'undefined') ? stor.operationTradeCurrentGoodCount : 'none';
+  // let goodOldCount = (stor.operationTradeCurrentGoodCount !== 'undefined') ? stor.operationTradeCurrentGoodCount : 'none';
+  let oldCount;
+  if (goodIndex !== 'none') {
+    dataGoods[goodIndex].count = (stor.operationTradeType === '0') ?
+      Number(dataGoods[goodIndex].count) + Number(value) :
+      Number(dataGoods[goodIndex].count) - Number(value);
 
-  if (numIndex === 'none') {
+    oldCount = (!barcode) ? dataGoods[goodIndex].count : 'null';
+  } else if (nomIndex !== 'none') {
+    oldCount = (!barcode) ? calcOldCount(value, stor.operationTradeCurrentGoodCount) :
+      'none';
+  } else {
+    oldCount = 'none';
+  }
+
+  if (nomIndex === 'none') {
     nomCard.push({
       'id': stor.operationTradeCurrentGoodId,
       'name': stor.operationTradeCurrentGoodName,
       'price': stor.operationTradeCurrentGoodPrice,
       'count': value,
-      'oldCount': goodOldCount
+      'oldCount': oldCount
     });
   } else {
-    goodOldCount = nomCard[numIndex].oldCount;
-
-    if (goodOldCount !== 'none') {
-      goodOldCount -= Number(nomCard[numIndex].oldCount) - value;
-    }
-
-    nomCard[numIndex].count = Number(nomCard[numIndex].count) + value;
-    nomCard[numIndex].oldCount = goodOldCount;
+    nomCard[nomIndex].count = Number(nomCard[nomIndex].count) + value;
+    nomCard[nomIndex].oldCount = oldCount;
+    nomCard[nomIndex].price = stor.operationTradeCurrentGoodPrice;
   }
 
   calcDiscount();
@@ -236,12 +235,16 @@ const calcDiscount = (value) => {
 
 const remGoodFromNomCard = () => {
   let id = stor.operationTradeCurrentGoodId;
-  let numIndex = searchGoodById(nomCard, id);
+  let nomIndex = searchGoodById(nomCard, id);
   let goodIndex = searchGoodById(dataGoods, id);
 
-  dataGoods[goodIndex].count = Number(dataGoods[goodIndex].count) + Number(nomCard[numIndex].count);
+  if (goodIndex !== 'none') {
+    dataGoods[goodIndex].count = (stor.operationTradeType === '0') ?
+      Number(dataGoods[goodIndex].count) - Number(nomCard[nomIndex].count) :
+      Number(dataGoods[goodIndex].count) + Number(nomCard[nomIndex].count);
+  }
 
-  nomCard.splice(numIndex, 1);
+  nomCard.splice(nomIndex, 1);
 
   if ((nomCard.length === 0) || (nomCard.length === 1 && nomCard[0].discount)) {
     tradeForm.submit.disabled = true;
@@ -250,6 +253,57 @@ const remGoodFromNomCard = () => {
   calcDiscount();
   redrawColumn();
 
+};
+
+const setCountGoodToNomCard = (value) => {
+  nomCard = operationsTradeRight.getNomenklature();
+
+  let goodIndex = searchGoodById(dataGoods, stor.operationTradeCurrentGoodId);
+  let nomIndex = searchGoodById(nomCard, stor.operationTradeCurrentGoodId);
+
+  let goodCount = nomCard[nomIndex].count;
+  let oldCount = (goodIndex !== 'none') ? dataGoods[goodIndex].count :
+    nomCard[nomIndex].oldCount;
+
+
+  if (stor.operationTradeType !== '0') {
+    let perm = tools.serachElements({
+      'array': dataStore.property_list,
+      'el': '11',
+      'strict': true
+    });
+    if (perm !== 'none' && oldCount && oldCount !== 'none') {
+      if ((value - Number(nomCard[nomIndex].count)) > oldCount) {
+        markupTools.informationtModal = {
+          'title': 'ОШИБКА',
+          'message': `Товара "${stor.operationTradeCurrentGoodName}"" нет на складе!`
+        };
+        return false;
+      }
+    }
+  }
+
+
+  let delta = goodCount - value;
+  if (goodIndex !== 'none') {
+    dataGoods[goodIndex].count = (stor.operationTradeType === '0') ? dataGoods[goodIndex].count - delta :
+      dataGoods[goodIndex].count + delta;
+
+    goodCount = dataGoods[goodIndex].count;
+  } else {
+    nomCard[nomIndex].oldCount = (stor.operationTradeType === '0') ?
+      nomCard[nomIndex].oldCount - delta
+      : nomCard[nomIndex].oldCount + delta;
+  }
+
+
+  nomCard[nomIndex].count = value;
+  nomCard[nomIndex].oldCount = goodCount;
+
+  calcDiscount();
+  redrawColumn();
+  tradeForm.submit.disabled = false;
+  return true;
 };
 
 const remDiscountFromNomCard = () => {
@@ -271,7 +325,7 @@ const addLeftFormCallback = (count) => {
 
 const addRightFormCallback = (count) => {
   if (count !== 0) {
-    addGoodToNomCard(count);
+    setCountGoodToNomCard(count);
   } else {
     remGoodFromNomCard();
   }
@@ -293,9 +347,10 @@ const clickLeftGoodsCallback = () => {
 };
 
 const clickLeftFindToBarcodeCallack = () => {
+  stor.operationTradeIsFind = true;
   switch (stor.operationClickType) {
   case 'add':
-    addGoodToNomCard(1);
+    addGoodToNomCard(1, true);
     break;
   case 'card':
     stor.currentGoodId = stor.operationTradeCurrentGoodId;
@@ -316,7 +371,9 @@ const correctAmount = (data) => {
       index = searchGoodById(data, el.id);
 
       if (index !== 'none') {
-        data[index].count -= el.count;
+        data[index].count = (stor.operationTradeType === '0') ?
+          Number(data[index].count) + Number(el.count) :
+          Number(data[index].count) - Number(el.count);
       }
     });
   }
@@ -395,24 +452,30 @@ const addHandlers = () => {
 
   searchBarcodeForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
-    let goods = serachElements({
+    dataFind = tools.serachElements({
       'array': dataStore.all_goods_with_barcode,
       'property': 'barcode',
       'el': evt.target.barcode.value,
       'strict': true
     });
 
-    if (goods === 'none') {
+    if (dataFind === 'none') {
       operationsTradeLeft.message('Товар не найден!');
       return false;
     }
 
-    if (goods.length === 1) {
-      addGoodToNomCard(1);
+    if (dataFind.length === 1) {
+      stor.operationTradeCurrentGoodId = dataFind[0].id;
+      stor.operationTradeCurrentGoodName = dataFind[0].name;
+      stor.operationTradeCurrentGoodCount = dataFind[0].count;
+      stor.operationTradeCurrentGoodPrice = dataFind[0].price;
+
+      addGoodToNomCard(1, true);
       return true;
     }
-
-    operationsTradeLeft.drawFind(goods, clickLeftFindToBarcodeCallack, clichButtonBackCallback, 'goods');
+    stor.operationTradeIsFind = true;
+    stor.operationTradeCurrentOpen = 'goods';
+    operationsTradeLeft.drawFind(dataFind, clickLeftFindToBarcodeCallack, clichButtonBackCallback, 'goods');
     return true;
   });
 
@@ -420,11 +483,25 @@ const addHandlers = () => {
     evt.preventDefault();
 
     let elName = evt.target.name.value;
+
+    if (!elName) {
+      operationsTradeLeft.drawHeader('find', clichButtonBackCallback);
+      switch (stor.operationTradeCurrentOpen) {
+      case 'groups':
+        operationsTradeLeft.message('Группа не найдена!');
+        break;
+      case 'goods':
+        operationsTradeLeft.message('Товар не найден!');
+        break;
+      }
+      return false;
+    }
+
     let callback;
 
     switch (stor.operationTradeCurrentOpen) {
     case 'groups':
-      dataFind = serachElements({
+      dataFind = tools.serachElements({
         'array': dataStore.all_groups,
         'property': 'name',
         'el': elName
@@ -433,7 +510,7 @@ const addHandlers = () => {
       callback = clickGroupsCallback;
       break;
     case 'goods':
-      dataFind = serachElements({
+      dataFind = tools.serachElements({
         'array': dataGoods,
         'property': 'name',
         'el': elName
