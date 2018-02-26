@@ -32,6 +32,7 @@ export default {
   },
 
   setStocksList(stocks) {
+    let data = stor.data;
 
     let fragment = document.createDocumentFragment();
 
@@ -39,6 +40,10 @@ export default {
       let option = document.createElement('option');
       option.value = el.id;
       option.innerHTML = el.name;
+
+      if (el.id === data.currentStock) {
+        option.selected = true;
+      }
 
       fragment.appendChild(option);
     });

@@ -310,7 +310,7 @@ window.appSettings = {
   // ОПЕРАЦИИ купля\продажа\инвентаризация
   'operationTradeAdd': {
     'validPatterns': {
-      'count': /^\d+$/,
+      'count': /(^\d+$)|(^\d+[.]\d+$)/,
     },
     'validMessage': {
       'count': 'поле минимум 1 цифра',
@@ -320,7 +320,7 @@ window.appSettings = {
   // ОПЕРАЦИИ купля\продажа\инвентаризация
   'operationTradeDiscount': {
     'validPatterns': {
-      'discount': /^\d+$/,
+      'discount': /(^-?\d*$)|(^-?\d*\.\d*$)/,
     },
     'validMessage': {
       'discount': 'поле минимум 1 цифра',

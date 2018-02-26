@@ -79,7 +79,8 @@ const getTradeGoods = (goods, clickCallback) => {
   let tbody = document.createElement('tbody');
 
   goods.forEach((good, index) => {
-    let count = (good.count || good.count === 0) ? good.count : '';
+    // let count = (good.count || good.count === 0) ? good.count : '';
+    let count = (Number(good.count)) ? good.count : '';
 
     let tr = document.createElement('tr');
     tr.scope = 'row';
@@ -131,7 +132,8 @@ const getInventoryGoods = (goods, clickCallback) => {
   let tbody = document.createElement('tbody');
 
   goods.forEach((good, index) => {
-    let count = (good.count || good.count === 0) ? good.count : '';
+    // let count = (good.count || good.count === 0) ? good.count : '';
+    let count = (Number(good.count)) ? good.count : '';
 
     let tr = document.createElement('tr');
     tr.scope = 'row';

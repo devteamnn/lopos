@@ -127,19 +127,21 @@ const addGoodToNomCard = (value, barcode) => {
 
     }
 
-    let perm = tools.serachElements({
-      'array': dataStore.property_list,
-      'el': '11',
-      'strict': true
-    });
+    if (dataStore.property_list) {
+      let perm = tools.serachElements({
+        'array': dataStore.property_list,
+        'el': '11',
+        'strict': true
+      });
 
-    if (perm !== 'none') {
-      if (value > count) {
-        markupTools.informationtModal = {
-          'title': 'ОШИБКА',
-          'message': `Товара "${stor.operationTradeCurrentGoodName}"" нет на складе!`
-        };
-        return false;
+      if (perm !== 'none') {
+        if (value > count) {
+          markupTools.informationtModal = {
+            'title': 'ОШИБКА',
+            'message': `Товара "${stor.operationTradeCurrentGoodName}"" нет на складе!`
+          };
+          return false;
+        }
       }
     }
   }
@@ -266,23 +268,24 @@ const setCountGoodToNomCard = (value) => {
     nomCard[nomIndex].oldCount;
 
 
-  if (stor.operationTradeType !== '0') {
-    let perm = tools.serachElements({
-      'array': dataStore.property_list,
-      'el': '11',
-      'strict': true
-    });
-    if (perm !== 'none' && oldCount && oldCount !== 'none') {
-      if ((value - Number(nomCard[nomIndex].count)) > oldCount) {
-        markupTools.informationtModal = {
-          'title': 'ОШИБКА',
-          'message': `Товара "${stor.operationTradeCurrentGoodName}"" нет на складе!`
-        };
-        return false;
+  if (dataStore.property_list) {
+    if (stor.operationTradeType !== '0') {
+      let perm = tools.serachElements({
+        'array': dataStore.property_list,
+        'el': '11',
+        'strict': true
+      });
+      if (perm !== 'none' && oldCount && oldCount !== 'none') {
+        if ((value - Number(nomCard[nomIndex].count)) > oldCount) {
+          markupTools.informationtModal = {
+            'title': 'ОШИБКА',
+            'message': `Товара "${stor.operationTradeCurrentGoodName}"" нет на складе!`
+          };
+          return false;
+        }
       }
     }
   }
-
 
   let delta = goodCount - value;
   if (goodIndex !== 'none') {
@@ -420,10 +423,6 @@ const addHandlers = () => {
     init(1);
   });
 
-  // document.querySelector('#list-inventory-list').addEventListener('click', () => {
-  //   init(7);
-  // });
-
   document.querySelector('#operations-trade-discountBtn').addEventListener('click', () => {
     operationsTradeDiscount.show(discountCallback, dataStore.discount_max);
   });
@@ -434,9 +433,10 @@ const addHandlers = () => {
   });
 
   tradeForm.stock.addEventListener('change', () => {
-    stor.operationTradeDiscount = 0;
-    operationsTradeLeft.drawGroups(dataStore.all_groups, clickGroupsCallback, clichButtonBackCallback);
+    // stor.operationTradeDiscount = 0;
+    // operationsTradeLeft.drawGroups(dataStore.all_groups, clickGroupsCallback, clichButtonBackCallback);
     operationsTradeRight.clear();
+    init(stor.operationTradeType);
   });
 
   tradeForm.addEventListener('submit', (evt) => {
@@ -460,6 +460,7 @@ const addHandlers = () => {
     });
 
     if (dataFind === 'none') {
+      operationsTradeLeft.drawHeader('find', clichButtonBackCallback);
       operationsTradeLeft.message('Товар не найден!');
       return false;
     }

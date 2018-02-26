@@ -100,19 +100,21 @@ const addGoodToNomCard = (value, barcode) => {
 
     }
 
-    let perm = tools.serachElements({
-      'array': dataStore.property_list,
-      'el': '11',
-      'strict': true
-    });
+    if (dataStore.property_list) {
+      let perm = tools.serachElements({
+        'array': dataStore.property_list,
+        'el': '11',
+        'strict': true
+      });
 
-    if (perm !== 'none') {
-      if (value > count) {
-        markupTools.informationtModal = {
-          'title': 'ОШИБКА',
-          'message': `Товара "${stor.operationTradeCurrentGoodName}"" нет на складе!`
-        };
-        return false;
+      if (perm !== 'none') {
+        if (value > count) {
+          markupTools.informationtModal = {
+            'title': 'ОШИБКА',
+            'message': `Товара "${stor.operationTradeCurrentGoodName}"" нет на складе!`
+          };
+          return false;
+        }
       }
     }
   }
@@ -167,18 +169,20 @@ const setCountGoodToNomCard = (value) => {
 
 
   if (stor.operationTradeType !== '0') {
-    let perm = tools.serachElements({
-      'array': dataStore.property_list,
-      'el': '11',
-      'strict': true
-    });
-    if (perm !== 'none' && oldCount !== 'none') {
-      if ((value - Number(nomCard[nomIndex].count)) > oldCount) {
-        markupTools.informationtModal = {
-          'title': 'ОШИБКА',
-          'message': `Товара "${stor.operationTradeCurrentGoodName}"" нет на складе!`
-        };
-        return false;
+    if (dataStore.property_list) {
+      let perm = tools.serachElements({
+        'array': dataStore.property_list,
+        'el': '11',
+        'strict': true
+      });
+      if (perm !== 'none' && oldCount !== 'none') {
+        if ((value - Number(nomCard[nomIndex].count)) > oldCount) {
+          markupTools.informationtModal = {
+            'title': 'ОШИБКА',
+            'message': `Товара "${stor.operationTradeCurrentGoodName}"" нет на складе!`
+          };
+          return false;
+        }
       }
     }
   }
@@ -330,6 +334,7 @@ const addHandlers = () => {
     });
 
     if (dataFind === 'none') {
+      leftColumn.drawHeader('find', clichButtonBackCallback);
       leftColumn.message('Товар не найден!');
       return false;
     }
