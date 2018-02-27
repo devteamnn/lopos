@@ -1,0 +1,24 @@
+.manufacture-card-block,
+.balance-card-block {
+  display: flex;
+  justify-content: space-between;
+}
+
+.manufacture-card-column {
+  border: 1px solid gray;
+  width: 33%;
+}
+
+.manufacture-column-title {
+  display: flex;
+  justify-content: space-between;
+}
+
+.manufacture-nomenklature-card--muted {
+  opacity: 0.4;
+  background-color: lightgreen;
+}
+
+.manufacture-nomenklature-card--muted::after {
+  content: 'Добавлено';
+}
