@@ -356,7 +356,7 @@
             </div>
           </div>
 
-          <div class="d-flex">
+          <div class="d-flex align-items-stretch">
             <div class="border w-50 px-2">
               <!-- Заголовок столбца  -->
               <div id="operation-inventory-left-header"></div>
@@ -369,24 +369,16 @@
                   <input type="text" name="name" placeholder="Поиск" class="ml-3">
                 </div>
               </form>
-              <div id="operation-inventory-left" class="d-flex flex-column"></div>
+              <div id="operation-inventory-left" class="d-flex flex-column" style="overflow-y: auto; height: 600px;"></div>
             </div>
             <div class="border w-50 ml-1 px-2">
               <div id="" class="catalog-header">
                 <!-- контрагенты -->
                 <select id="operation-inventory-kontragents-list" class="form-control w-75  m-2 d-none" name="kontragents" form="operation-inventory-form"></select>
               </div>
-              <!-- Кнопки -->
-              <div>
-                <button id="operation-inventory-clear-but" type="button" class="btn btn-danger" style="width: 40px">X</button>
-                <form id="operation-inventory-search-barcode-form">
-                  <input type="text" placeholder="Штрихкод" form="operation-inventory-search-barcode-form" name="barcode">
-                  <button id="operation-inventory-search-barcode-submit" form="operation-inventory-search-barcode-form"; type="submit" class="btn btn-danger" name="submit" style="width: 40px;">|||</button>
-                </form>
-              </div>
 
               <!-- Накладная   -->
-              <div>
+              <div style="overflow-y: auto; height: 650px;">
                 <table id="operation-inventory-right" class="table table-hover">
                   <thead>
                     <tr>
@@ -401,6 +393,13 @@
                   <tbody class="table table-hover"></tbody>
                   <tfoot id="operation-inventory-right-tfoot" class="table table-hover font-weight-bold text-danger"></tfoot>
                 </table>
+              </div>
+              <div class="d-flex justify-content-between pt-3" style="bottom: 0px">
+                <button id="operations-trade-clear-but" type="button" class="btn btn-danger" style="width: 40px">X</button>
+                <form id="operations-trade-search-barcode-form">
+                  <input type="text" placeholder="Штрихкод" form="operations-trade-search-barcode-form" name="barcode">
+                  <button id="operations-trade-search-barcode-submit" form="operations-trade-search-barcode-form"; type="submit" class="btn btn-danger" name="submit" style="width: 40px;">|||</button>
+                </form>
               </div>
             </div>
           </div>
