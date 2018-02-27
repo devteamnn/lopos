@@ -87,18 +87,6 @@ const addGoodToNomCard = (value, barcode) => {
   let nomIndex = searchGoodById(nomCard, goodId);
 
   if (!barcode) {
-    // let count;
-
-    // if (goodIndex !== 'none') {
-    //   count = currGoods[goodIndex].count;
-    // } else {
-    //   if (nomIndex !== 'none') {
-    //     count = nomCard[nomIndex].oldCount;
-    //   } else {
-    //     console.log('что-то пошло не так....');
-    //   }
-
-    // }
 
     if (dataStore.property_list) {
       let perm = tools.serachElements({
@@ -107,14 +95,22 @@ const addGoodToNomCard = (value, barcode) => {
         'strict': true
       });
 
-      if (perm !== 'none') {
-        if (value <= 0) {
+      if (perm === 'none') {
+        if (value < 0) {
           markupTools.informationtModal = {
             'title': 'ОШИБКА',
             'message': 'Запрещены отрицательные остатки'
           };
           return false;
         }
+      }
+    } else {
+      if (value < 0) {
+        markupTools.informationtModal = {
+          'title': 'ОШИБКА',
+          'message': 'Запрещены отрицательные остатки'
+        };
+        return false;
       }
     }
   }
@@ -124,87 +120,43 @@ const addGoodToNomCard = (value, barcode) => {
   }
 
   // let goodOldCount = (stor.operationTradeCurrentGoodCount !== 'undefined') ? stor.operationTradeCurrentGoodCount : 'none';
-  let oldCount;
-  if (goodIndex !== 'none') {
-    currGoods[goodIndex].count = Number(currGoods[goodIndex].count) - Number(value);
+  // let oldCount;
+  // if (goodIndex !== 'none') {
+  //   // currGoods[goodIndex].count = Number(currGoods[goodIndex].count) - Number(value);
+  //   oldCount = (!barcode) ? currGoods[goodIndex].count : 'null';
+  //   currGoods[goodIndex].count = value;
 
-    oldCount = (!barcode) ? currGoods[goodIndex].count : 'null';
-  } else if (nomIndex !== 'none') {
-    oldCount = (!barcode) ? stor.operationTradeCurrentGoodCount - value :
-      'none';
-  } else {
-    oldCount = 'none';
-  }
+  // } else if (nomIndex !== 'none') {
+  //   oldCount = (!barcode) ? value - stor.operationTradeCurrentGoodCount :
+  //     'none';
+  // } else {
+  //   oldCount = 'none';
+  // }
 
   if (nomIndex === 'none') {
     nomCard.push({
       'id': stor.operationTradeCurrentGoodId,
       'name': stor.operationTradeCurrentGoodName,
       'count': value,
-      'curCount': stor.operationTradeCurrentGoodCount,
-      'oldCount': oldCount
+      'oldCount': stor.operationTradeCurrentGoodCount
     });
   } else {
-    nomCard[nomIndex].id = stor.operationTradeCurrentGoodId;
-    nomCard[nomIndex].name = stor.operationTradeCurrentGoodName;
-    nomCard[nomIndex].count = Number(nomCard[nomIndex].count) + Number(value);
+    // nomCard[nomIndex].id = stor.operationTradeCurrentGoodId;
+    // nomCard[nomIndex].name = stor.operationTradeCurrentGoodName;
+    nomCard[nomIndex].count = value;
     // nomCard[nomIndex].curCount = stor.operationTradeCurrentGoodCount;
-    nomCard[nomIndex].oldCount = oldCount;
+  }
+
+  if (goodIndex !== 'none') {
+    if (stor.operationTradeIsFind === 'true') {
+      dataFind[goodIndex].count = value;
+    } else {
+      currGoods[goodIndex].count = value;
+    }
   }
 
   redrawColumn();
   inventoryForm.submit.disabled = false;
-  return true;
-};
-
-const setCountGoodToNomCard = (value) => {
-  nomCard = rightColumn.getNomenklature();
-
-  let goodIndex = searchGoodById(dataGoods, stor.operationTradeCurrentGoodId);
-  let nomIndex = searchGoodById(nomCard, stor.operationTradeCurrentGoodId);
-
-  let goodCount = nomCard[nomIndex].count;
-  let oldCount = (goodIndex !== 'none') ? dataGoods[goodIndex].count :
-    nomCard[nomIndex].oldCount;
-
-
-  if (stor.operationTradeType !== '0') {
-    if (dataStore.property_list) {
-      let perm = tools.serachElements({
-        'array': dataStore.property_list,
-        'el': '11',
-        'strict': true
-      });
-      if (perm !== 'none' && oldCount !== 'none') {
-        if ((value - Number(nomCard[nomIndex].count)) > oldCount) {
-          markupTools.informationtModal = {
-            'title': 'ОШИБКА',
-            'message': `Товара "${stor.operationTradeCurrentGoodName}"" нет на складе!`
-          };
-          return false;
-        }
-      }
-    }
-  }
-
-
-  let delta = goodCount - value;
-  if (goodIndex !== 'none') {
-    dataGoods[goodIndex].count = (stor.operationTradeType === '0') ? dataGoods[goodIndex].count - delta :
-      dataGoods[goodIndex].count + delta;
-
-    goodCount = dataGoods[goodIndex].count;
-  } else {
-    nomCard[nomIndex].oldCount = (stor.operationTradeType === '0') ?
-      nomCard[nomIndex].oldCount - delta
-      : nomCard[nomIndex].oldCount + delta;
-  }
-
-
-  nomCard[nomIndex].count = value;
-  nomCard[nomIndex].oldCount = goodCount;
-
-  redrawColumn();
   return true;
 };
 
@@ -214,7 +166,7 @@ const remGoodFromNomCard = () => {
   let goodIndex = searchGoodById(dataGoods, id);
 
   if (goodIndex !== 'none') {
-    dataGoods[goodIndex].count = Number(dataGoods[goodIndex].count) + Number(nomCard[numIndex].count);
+    dataGoods[goodIndex].count = nomCard[numIndex].oldCount;
   }
 
   nomCard.splice(numIndex, 1);
@@ -232,7 +184,7 @@ const addLeftFormCallback = (count) => {
 
 const addRightFormCallback = (count) => {
   if (count !== 0) {
-    setCountGoodToNomCard(count);
+    addGoodToNomCard(count);
   } else {
     remGoodFromNomCard();
   }

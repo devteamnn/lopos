@@ -73,13 +73,13 @@ export default {
     `;
   },
 
-  rightColumnGoodsInventory(index, name, count, curCount) {
+  rightColumnGoodsInventory(index, name, count, oldCount) {
     return `
       <th scope="row">${index + 1}</th>
       <td>${name}</td>
-      <td>${curCount}</td>
+      <td>${oldCount}</td>
+      <td>${Number(count - oldCount).toFixed(2)}</td>
       <td>${count}</td>
-      <td>${Number(curCount - count).toFixed(2)}</td>
     `;
   },
 

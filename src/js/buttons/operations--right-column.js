@@ -99,10 +99,9 @@ const getInventoryGoods = (nomenklature, callback) => {
     tr.dataset['count'] = position.count;
     tr.dataset['name'] = position.name;
     tr.dataset['oldCount'] = position.oldCount;
-    tr.dataset['curCount'] = position.curCount;
     tr.scope = 'row';
 
-    tr.innerHTML = markup.rightColumnGoodsInventory(index, position.name, position.count, position.curCount);
+    tr.innerHTML = markup.rightColumnGoodsInventory(index, position.name, position.count, position.oldCount);
 
     tr.addEventListener('click', clickHandler);
     fragment.appendChild(tr);

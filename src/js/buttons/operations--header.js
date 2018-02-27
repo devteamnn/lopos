@@ -33,8 +33,11 @@ export default {
 
   setStocksList(stocks) {
     let data = stor.data;
-
     let fragment = document.createDocumentFragment();
+
+    let stocksList = (stor.operationTradeType === '7') ? stocksListInventory : stocksListTrade;
+
+    stocksList.innerHTML = '';
 
     stocks.forEach((el) => {
       let option = document.createElement('option');
@@ -47,8 +50,6 @@ export default {
 
       fragment.appendChild(option);
     });
-
-    let stocksList = (stor.operationTradeType === '7') ? stocksListInventory : stocksListTrade;
 
     stocksList.appendChild(fragment);
   },

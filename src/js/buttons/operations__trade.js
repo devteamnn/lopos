@@ -134,7 +134,7 @@ const addGoodToNomCard = (value, barcode) => {
         'strict': true
       });
 
-      if (perm !== 'none') {
+      if (perm === 'none') {
         if (value > count) {
           markupTools.informationtModal = {
             'title': 'ОШИБКА',
@@ -142,6 +142,14 @@ const addGoodToNomCard = (value, barcode) => {
           };
           return false;
         }
+      }
+    } else {
+      if (value > count) {
+        markupTools.informationtModal = {
+          'title': 'ОШИБКА',
+          'message': `Товара "${stor.operationTradeCurrentGoodName}"" нет на складе!`
+        };
+        return false;
       }
     }
   }
@@ -275,7 +283,7 @@ const setCountGoodToNomCard = (value) => {
         'el': '11',
         'strict': true
       });
-      if (perm !== 'none' && oldCount && oldCount !== 'none') {
+      if (perm === 'none' && oldCount && oldCount !== 'none') {
         if ((value - Number(nomCard[nomIndex].count)) > oldCount) {
           markupTools.informationtModal = {
             'title': 'ОШИБКА',
@@ -284,6 +292,14 @@ const setCountGoodToNomCard = (value) => {
           return false;
         }
       }
+    }
+  } else {
+    if ((value - Number(nomCard[nomIndex].count)) > oldCount) {
+      markupTools.informationtModal = {
+        'title': 'ОШИБКА',
+        'message': `Товара "${stor.operationTradeCurrentGoodName}"" нет на складе!`
+      };
+      return false;
     }
   }
 
