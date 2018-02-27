@@ -13,6 +13,9 @@ const kontragentsListTrade = document.querySelector('#operations-purchase-kontra
 const kontragentsListInventory = document.querySelector('#operation-inventory-kontragents-list');
 const priceNode = document.querySelector('#operations-trade-price');
 
+const tradeSubmit = document.querySelector('#operations-trade-submit');
+const inventorySubmit = document.querySelector('#operation-inventory-submit');
+
 const getTradeGoods = (nomenklature, callback) => {
   const clickHandler = (evt) => {
     let el = evt.target;
@@ -165,14 +168,17 @@ export default {
     let tbodyNode;
 
     if (stor.operationTradeType !== '7') {
+      tradeSubmit.disabled = true;
       tbodyNode = tbodyNodeTrade;
       tfootNodeTrade.innerHTML = '';
       priceNode.innerHTML = '0';
     } else {
       tbodyNode = tbodyNodeInventory;
+      inventorySubmit.disabled = true;
     }
 
     tbodyNode.innerHTML = '';
+
 
   },
 

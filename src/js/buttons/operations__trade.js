@@ -10,9 +10,10 @@ import operationsTradeDiscount from './operations__trade--discount.js';
 import goodCard from './catalog__goods.js';
 import markupTools from './../markup/tools.js';
 
+const listReceipt = document.querySelector('#list-receipt');
 const searchBarcodeForm = document.querySelector('#operations-trade-search-barcode-form');
-const searchForm = document.querySelector('#operations-trade-search');
 const tradeForm = document.querySelector('#operation-trade-form');
+const searchForm = document.querySelector('#operations-trade-search');
 
 let dataStore = [];
 let dataGoods = [];
@@ -411,6 +412,7 @@ const getDataCallback = (data) => {
   operationsTradeRight.setKontragentList(dataStore.all_kontr_agents);
   operationsTradeLeft.drawGroups(dataStore.all_groups, clickGroupsCallback);
 
+  searchBarcodeForm.barcode.focus();
 };
 
 const getData = () => {
@@ -427,6 +429,15 @@ const init = (type) => {
   stor.operationTradeDiscount = 0;
   initWindow();
   getData();
+};
+
+const sendTradeForm = () => {
+  operationsTradeServer.sendDataToServer({
+    'stock': tradeForm.stock.value,
+    'kontragent': tradeForm.kontragents.value,
+    'delivery': (tradeForm.delivery.checked) ? 1 : 0,
+    'data': nomCard
+  }, tradeSubmitFormCallback, dataStore.discount_id);
 };
 
 const addHandlers = () => {
@@ -448,6 +459,16 @@ const addHandlers = () => {
     operationsTradeRight.clear();
   });
 
+  document.querySelector('body').addEventListener('keydown', (evt) => {
+    if (evt.altKey && evt.code === 'Enter') {
+      evt.preventDefault();
+
+      if (listReceipt.classList.contains('active') && !tradeForm.submit.disabled) {
+        sendTradeForm();
+      }
+    }
+  }, true);
+
   tradeForm.stock.addEventListener('change', () => {
     // stor.operationTradeDiscount = 0;
     // operationsTradeLeft.drawGroups(dataStore.all_groups, clickGroupsCallback, clichButtonBackCallback);
@@ -457,13 +478,7 @@ const addHandlers = () => {
 
   tradeForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
-    let form = evt.target;
-    operationsTradeServer.sendDataToServer({
-      'stock': form.stock.value,
-      'kontragent': form.kontragents.value,
-      'delivery': (form.delivery.checked) ? 1 : 0,
-      'data': nomCard
-    }, tradeSubmitFormCallback, dataStore.discount_id);
+    sendTradeForm();
   });
 
   searchBarcodeForm.addEventListener('submit', (evt) => {

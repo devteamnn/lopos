@@ -12,6 +12,7 @@ import markupTools from './../markup/tools.js';
 const searchBarcodeForm = document.querySelector('#operation-inventory-search-barcode-form');
 const searchForm = document.querySelector('#operation-inventory-search');
 const inventoryForm = document.querySelector('#operation-inventory-form');
+const listInventory = document.querySelector('#list-inventory');
 
 let dataStore = [];
 let dataGoods = [];
@@ -243,6 +244,15 @@ const getDataCallback = (data) => {
   rightColumn.setKontragentList(dataStore.all_kontr_agents);
   leftColumn.drawGroups(dataStore.all_groups, clickGroupsCallback);
 
+  searchBarcodeForm.barcode.focus();
+};
+
+const sendInventoryForm = () => {
+  serverTools.sendDataToServer({
+    'stock': inventoryForm.stock.value,
+    'kontragent': inventoryForm.kontragents.value,
+    'data': nomCard
+  }, tradeSubmitFormCallback);
 };
 
 const addHandlers = () => {
@@ -259,6 +269,16 @@ const addHandlers = () => {
     inventoryForm.submit.disabled = true;
   });
 
+  document.querySelector('body').addEventListener('keydown', (evt) => {
+    if (evt.altKey && evt.code === 'Enter') {
+      evt.preventDefault();
+
+      if (listInventory.classList.contains('active') && !inventoryForm.submit.disabled) {
+        sendInventoryForm();
+      }
+    }
+  }, true);
+
   inventoryForm.stock.addEventListener('change', () => {
     stor.operationTradeDiscount = 0;
     leftColumn.drawGroups(dataStore.all_groups, clickGroupsCallback, clichButtonBackCallback);
@@ -268,12 +288,7 @@ const addHandlers = () => {
 
   inventoryForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
-    let form = evt.target;
-    serverTools.sendDataToServer({
-      'stock': form.stock.value,
-      'kontragent': form.kontragents.value,
-      'data': nomCard
-    }, tradeSubmitFormCallback);
+    sendInventoryForm();
   });
 
   searchBarcodeForm.addEventListener('submit', (evt) => {
