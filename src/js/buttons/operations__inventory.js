@@ -87,18 +87,18 @@ const addGoodToNomCard = (value, barcode) => {
   let nomIndex = searchGoodById(nomCard, goodId);
 
   if (!barcode) {
-    let count;
+    // let count;
 
-    if (goodIndex !== 'none') {
-      count = currGoods[goodIndex].count;
-    } else {
-      if (nomIndex !== 'none') {
-        count = nomCard[nomIndex].oldCount;
-      } else {
-        console.log('что-то пошло не так....');
-      }
+    // if (goodIndex !== 'none') {
+    //   count = currGoods[goodIndex].count;
+    // } else {
+    //   if (nomIndex !== 'none') {
+    //     count = nomCard[nomIndex].oldCount;
+    //   } else {
+    //     console.log('что-то пошло не так....');
+    //   }
 
-    }
+    // }
 
     if (dataStore.property_list) {
       let perm = tools.serachElements({
@@ -108,10 +108,10 @@ const addGoodToNomCard = (value, barcode) => {
       });
 
       if (perm !== 'none') {
-        if (value > count) {
+        if (value <= 0) {
           markupTools.informationtModal = {
             'title': 'ОШИБКА',
-            'message': `Товара "${stor.operationTradeCurrentGoodName}"" нет на складе!`
+            'message': 'Запрещены отрицательные остатки'
           };
           return false;
         }

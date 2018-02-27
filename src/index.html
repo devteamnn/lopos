@@ -265,16 +265,16 @@
         <div class="tab-pane fade" id="list-receipt" role="tabpanel" aria-labelledby="list-receipt-list">
           <form id = "operation-trade-form"></form>
           <div class="catalog-header">
-              <div id="operation-header" class="catalog-header-title"></div>
-              <!-- Сюда пишем заголовок -->
-              <div class="catalog-header-buttons w-50">
-              <!-- сюда пишем склады -->
+            <div id="operation-header" class="catalog-header-title"></div>
+            <!-- Сюда пишем заголовок -->
+            <div class="catalog-header-buttons w-50">
+            <!-- сюда пишем склады -->
               <select id="operations-purchase-stocks-list" form="operation-trade-form" name="stock" class="form-control w-75  m-2" id="exampleFormControlSelect1"></select>
               <button id="operations-trade-submit" name="submit" form="operation-trade-form" type="submit" class="btn btn-danger m-2 p-2 w-25" disabled>Выполнить</button>
             </div>
           </div>
 
-          <div class="d-flex">
+          <div class="d-flex align-items-stretch">
             <div class="border w-50 px-2">
               <!-- Заголовок столбца  -->
               <div id="operations-trade-left-header"></div>
@@ -287,7 +287,11 @@
                   <input type="text" name="name" placeholder="Поиск" class="ml-3">
                 </div>
               </form>
-             <div id="operations-trade-left" class="d-flex flex-column"></div></div>
+              <!-- Левая колонка -->
+              <div id="operations-trade-left" class="" style="overflow-y: auto; height: 600px;">
+              </div>
+
+            </div>
           <div class="border w-50 ml-1 px-2">
             <div id="" class="catalog-header">
               <!-- контрагенты -->
@@ -304,15 +308,10 @@
                 <img src="/img/suppliers.png" width="38px" height="38px" >
                 <input id="operations-trade-delivery" type="checkbox" name="delivery" form="operation-trade-form">
               </label>
-              <button id="operations-trade-clear-but" type="button" class="btn btn-danger" style="width: 40px">X</button>
-              <form id="operations-trade-search-barcode-form">
-                <input type="text" placeholder="Штрихкод" form="operations-trade-search-barcode-form" name="barcode">
-                <button id="operations-trade-search-barcode-submit" form="operations-trade-search-barcode-form"; type="submit" class="btn btn-danger" name="submit" style="width: 40px;">|||</button>
-              </form>
             </div>
 
             <!-- Накладная   -->
-            <div>
+            <div style="overflow-y: auto; height: 600px;">
               <table id="operations-trade-right" class="table table-hover">
                 <thead>
                   <tr>
@@ -329,6 +328,14 @@
               </table>
             </div>
 
+            <!-- Поиск по штрихкоду -->
+            <div class="d-flex justify-content-between pt-3" style="bottom: 0px">
+              <button id="operations-trade-clear-but" type="button" class="btn btn-danger" style="width: 40px">X</button>
+              <form id="operations-trade-search-barcode-form">
+                <input type="text" placeholder="Штрихкод" form="operations-trade-search-barcode-form" name="barcode">
+                <button id="operations-trade-search-barcode-submit" form="operations-trade-search-barcode-form"; type="submit" class="btn btn-danger" name="submit" style="width: 40px;">|||</button>
+              </form>
+            </div>
           </div>
 
           </div>

@@ -310,7 +310,7 @@ window.appSettings = {
   // ОПЕРАЦИИ купля\продажа\инвентаризация
   'operationTradeAdd': {
     'validPatterns': {
-      'count': /(^\d+$)|(^\d+[.]\d+$)/,
+      'count': /(^-?\d*$)|(^-?\d*\.\d*$)/,
     },
     'validMessage': {
       'count': 'поле минимум 1 цифра',
