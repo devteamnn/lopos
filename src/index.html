@@ -281,9 +281,7 @@
 
               <form id="operations-trade-search" class="catalog-header">
                 <div class="catalog-header-title">
-                  <button style="width: 38px; height: 38px;" type="submit">
-                    <img src="img/icons8-search-26.png" style="width:25px; height:25px;">
-                  </button>
+                  <button type="submit" class="btn btn-secondary" style="width: 40px; height: 40px; background-image: url('img/icons8-search-26.png'); background-position: center; background-size: cover;"></button>
                   <input type="text" name="name" placeholder="Поиск" class="ml-3">
                 </div>
               </form>
@@ -293,22 +291,24 @@
 
             </div>
           <div class="border w-50 ml-1 px-2">
-            <div id="" class="catalog-header">
-              <!-- контрагенты -->
-              <select id="operations-purchase-kontragents-list" class="form-control w-75  m-2" name="kontragents" form="operation-trade-form"></select>
-              <div class="catalog-header-buttons w-50">
-                <p id="operations-trade-price" class='mx-auto h3 text-primary'>XXX.XX</p>
+
+            <div class="d-flex align-items-stretch justify-content-between">
+              <div>
+                <div>
+                  <select id="operations-purchase-kontragents-list" class="form-control w-100  m-2" name="kontragents" form="operation-trade-form"></select>
+                </div>
+                <div class="p-2">
+                  <button id="operations-trade-discountBtn"type="button" class="btn btn-danger" data-toggle="modal" data-target="#operations-trade-discount" style="width: 40px; height: 40px; background-image: url('img/percent.png'); background-position: center; background-size: cover;"></button>
+                  <label class="rounded" style="display:inline-block; height:38px; width:60px; background: #DFB939;">
+                  <img src="/img/suppliers.png" width="38px" height="38px" >
+                  <input id="operations-trade-delivery" type="checkbox" name="delivery" form="operation-trade-form">
+                </div>
+              </div>
+              <div class="ml-5 pt-3">
+                <p id="operations-trade-price" class='mx-auto h3 text-primary align-middle' style="font-size: 60px; font-stretch: ultra-condensed"></p>
               </div>
             </div>
 
-            <!-- Кнопки -->
-            <div>
-              <button id="operations-trade-discountBtn"type="button" class="btn btn-danger" data-toggle="modal" data-target="#operations-trade-discount" style="width: 40px">%</button>
-              <label class="rounded" style="display:inline-block; height:38px; width:60px; background: #DFB939;">
-                <img src="/img/suppliers.png" width="38px" height="38px" >
-                <input id="operations-trade-delivery" type="checkbox" name="delivery" form="operation-trade-form">
-              </label>
-            </div>
 
             <!-- Накладная   -->
             <div style="overflow-y: auto; height: 600px;">
@@ -330,10 +330,10 @@
 
             <!-- Поиск по штрихкоду -->
             <div class="d-flex justify-content-between pt-3" style="bottom: 0px">
-              <button id="operations-trade-clear-but" type="button" class="btn btn-danger" style="width: 40px">X</button>
+              <button id="operations-trade-clear-but" type="button" class="btn btn-danger" style="width: 40px; height: 40px; background-image: url('img/Cancel-96.png'); background-position: center; background-size: cover;"></button>
               <form id="operations-trade-search-barcode-form">
                 <input id="operations-trade-search-barcode" type="text" placeholder="Штрихкод" form="operations-trade-search-barcode-form" name="barcode" tabindex="1">
-                <button id="operations-trade-search-barcode-submit" form="operations-trade-search-barcode-form" type="submit" class="btn btn-danger" name="submit" style="width: 40px;">|||</button>
+                <button id="operations-trade-search-barcode-submit" form="operations-trade-search-barcode-form" type="submit" class="btn btn-danger" name="submit" style="width: 40px; height: 40px; background-image: url('img/Barcode-64.png'); background-position: center; background-size: cover;"></button>
               </form>
             </div>
           </div>
@@ -363,9 +363,7 @@
 
               <form id="operation-inventory-search" class="catalog-header">
                 <div class="catalog-header-title">
-                  <button style="width: 38px; height: 38px;" type="submit">
-                    <img src="img/icons8-search-26.png" style="width:25px; height:25px;">
-                  </button>
+                  <button type="submit" class="btn btn-secondary" style="width: 40px; height: 40px; background-image: url('img/icons8-search-26.png'); background-position: center; background-size: cover;"></button>
                   <input type="text" name="name" placeholder="Поиск" class="ml-3">
                 </div>
               </form>
@@ -395,10 +393,10 @@
                 </table>
               </div>
               <div class="d-flex justify-content-between pt-3" style="bottom: 0px">
-                <button id="operation-inventory-clear-but" type="button" class="btn btn-danger" style="width: 40px">X</button>
+                <button id="operation-inventory-clear-but" type="button" class="btn btn-danger" style="width: 40px; height: 40px; background-image: url('img/Cancel-96.png'); background-position: center; background-size: cover;"></button>
                 <form id="operation-inventory-search-barcode-form">
                   <input type="text" placeholder="Штрихкод" form="operation-inventory-search-barcode-form" name="barcode">
-                  <button id="operation-inventory-search-barcode-submit" form="operation-inventory-search-barcode-form"; type="submit" class="btn btn-danger" name="submit" style="width: 40px;">|||</button>
+                  <button id="operation-inventory-search-barcode-submit" form="operation-inventory-search-barcode-form"; type="submit" class="btn btn-danger" name="submit" style="width: 40px; height: 40px; background-image: url('img/Barcode-64.png'); background-position: center; background-size: cover;"></button>
                 </form>
               </div>
             </div>

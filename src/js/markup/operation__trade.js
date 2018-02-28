@@ -27,10 +27,10 @@ export default {
     return '<thead><tr><th scope="col" class="">#</th><th scope="col" class="w-50">Товар</th><th scope="col">Остаток</th><th scope="col"></th></tr></thead>';
   },
 
-  leftColumnGoodsRowTrade(index, id, name, price, count) {
+  leftColumnGoodsRowTrade(index, name, price, count) {
     return `
       <th scope="row">${index + 1}</th>
-      <td>${id} || ${name}</td>
+      <td>${name}</td>
       <td>${price}</td>
       <td>${count}</td>
       <td>
@@ -42,10 +42,10 @@ export default {
     `;
   },
 
-  leftColumnGoodsRowInventory(index, id, name, price, count) {
+  leftColumnGoodsRowInventory(index, name, price, count) {
     return `
       <th scope="row">${index + 1}</th>
-      <td>${id} || ${name}</td>
+      <td>${name}</td>
       <td>${count}</td>
       <td>
         <button class="button btn btn-danger" data-type="card">i</button>

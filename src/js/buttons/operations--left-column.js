@@ -88,7 +88,7 @@ const getTradeGoods = (goods, clickCallback) => {
     tr.dataset['name'] = good.name;
     tr.dataset['count'] = count;
     tr.dataset['price'] = good.price;
-    tr.innerHTML = markup.leftColumnGoodsRowTrade(index, good.id, good.name, good.price, count);
+    tr.innerHTML = markup.leftColumnGoodsRowTrade(index, good.name, good.price, count);
 
     tr.addEventListener('click', clickHandler);
 
@@ -141,7 +141,7 @@ const getInventoryGoods = (goods, clickCallback) => {
     tr.dataset['name'] = good.name;
     tr.dataset['count'] = count;
     tr.dataset['price'] = good.price;
-    tr.innerHTML = markup.leftColumnGoodsRowInventory(index, good.id, good.name, good.price, count);
+    tr.innerHTML = markup.leftColumnGoodsRowInventory(index, good.name, good.price, count);
 
     tr.addEventListener('click', clickHandler);
 
