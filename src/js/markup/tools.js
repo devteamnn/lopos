@@ -10,6 +10,13 @@ const modalUniversalAddName = document.querySelector('#universal-add-name');
 const modalUniversalAddNameLabel = document.querySelector('#universal-add-name-label');
 const modalUniversalAddSubmit = document.querySelector('#universal-add-submit');
 
+const modalUniversalMicro = document.querySelector('#universal-modal-micro');
+const modalUniversalMicroLabel = document.querySelector('#universal-modal-micro-label');
+const modalUniversalMicroForm = document.querySelector('#universal-modal-micro-form');
+const modalUniversalMicroName = document.querySelector('#universal-modal-micro-name');
+const modalUniversalMicroNameLabel = document.querySelector('#universal-modal-micro-name-label');
+const modalUniversalMicroSubmit = document.querySelector('#universal-modal-micro-submit');
+
 const alertBlock = document.querySelector('#alertBlock');
 
 export default {
@@ -62,7 +69,7 @@ export default {
       if (block) {
         block.remove();
       }
-    }, 5000);
+    }, 2000);
   },
 
   set runUniversalAdd(setup) {
@@ -82,5 +89,25 @@ export default {
     modalUniversalAddName.setAttribute('placeholder', setup.inputPlaceholder);
     modalUniversalAddName.value = (setup.inputValue) ? setup.inputValue : '';
     modalUniversalAddSubmit.innerHTML = setup.submitBtnName;
+  },
+
+  set runUniversalModalMicro(setup) {
+    const requestHandler = (evt) => {
+      evt.preventDefault();
+      setup.submitCallback(modalUniversalAddName.value);
+      modalUniversalAddForm.removeEventListener('submit', requestHandler);
+    };
+
+    $(modalUniversalMicro).modal('show');
+    $(modalUniversalMicro).on('shown.bs.modal', function () {
+      $(modalUniversalMicro).trigger('focus');
+    });
+    modalUniversalMicroLabel.innerHTML = setup.title;
+    modalUniversalMicroNameLabel.innerHTML = setup.inputLabel;
+    modalUniversalMicroName.setAttribute('placeholder', setup.inputPlaceholder);
+    modalUniversalMicroName.value = (setup.inputValue) ? setup.inputValue : '';
+    modalUniversalMicroSubmit.innerHTML = setup.submitBtnName;
+    modalUniversalMicroForm.addEventListener('submit', requestHandler);
+
   }
 };

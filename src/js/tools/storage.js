@@ -26,6 +26,7 @@ export default {
     };
   },
 
+  // отдельные сеттеры для бизнеса и склада
   set currentBusiness(id) {
     localStorage.setItem('currentBusiness', id);
   },
@@ -34,6 +35,24 @@ export default {
     localStorage.setItem('currentStock', id);
   },
 
+  // работа с правами доступа
+  set currentScreen(screen) {
+    sessionStorage.setItem('currentScreen', screen);
+  },
+
+  get currentScreen() {
+    return sessionStorage.getItem('currentScreen');
+  },
+
+  set permissions(data) {
+    localStorage.setItem('permissions', data.map((item) => item.kod_operation).join());
+  },
+
+  get permissions() {
+    return localStorage.getItem('permissions');
+  },
+
+  // проверка хранилища
   get isSetFlag() {
     return Object.values(this.data).some((item) => item !== null);
   },
@@ -252,6 +271,54 @@ export default {
 
   get groupListOperationType() {
     return sessionStorage.getItem('groupListOperationType');
+  },
+
+  set debitCreditType(type) {
+    sessionStorage.setItem('debitCreditType', type);
+  },
+
+  get debitCreditType() {
+    return sessionStorage.getItem('debitCreditType');
+  },
+
+  set debitCreditName(name) {
+    sessionStorage.setItem('debitCreditName', name);
+  },
+
+  get debitCreditName() {
+    return sessionStorage.getItem('debitCreditName');
+  },
+
+  set debitCreditId(id) {
+    sessionStorage.setItem('debitCreditId', id);
+  },
+
+  get debitCreditId() {
+    return sessionStorage.getItem('debitCreditId');
+  },
+
+  set currentUserId(id) {
+    sessionStorage.setItem('currentUserId', id);
+  },
+
+  get currentUserId() {
+    return sessionStorage.getItem('currentUserId');
+  },
+
+  set allDocsOperationType(type) {
+    sessionStorage.setItem('allDocsOperationType', type);
+  },
+
+  get allDocsOperationType() {
+    return sessionStorage.getItem('allDocsOperationType');
+  },
+
+  set currentBillId(id) {
+    sessionStorage.setItem('currentBillId', id);
+  },
+
+  get currentBillId() {
+    return sessionStorage.getItem('currentBillId');
   },
 
 };

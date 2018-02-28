@@ -2,110 +2,79 @@
 @import "src/sass/components/profile.scss";
 @import "src/sass/components/icon.scss";
 @import "src/sass/components/icon-btn.scss";
-@import "src/sass/components/reference-string.scss";
-@import "src/sass/components/reference-header.scss";
+@import "src/sass/components/reference.scss";
 @import "src/sass/components/keyword.scss";
 @import "src/sass/components/good-card-form.scss";
-@import "src/sass/components/good-tile.scss";
+@import "src/sass/components/good.scss";
+@import "src/sass/components/catalog-header.scss";
+@import "src/sass/components/informaion-light.scss";
+@import "src/sass/components/manufacture.scss";
 
-.enterprise-card-block {
-  margin-left: 55px;
-  margin-right: 55px;
-  margin-top: 55px;
+.balance-set-form {
+  display: flex;
+  justify-content: space-between;
 }
 
-.reference-string {
-  height: 44px;
+.balance-set-form div:first-child {
+  width: 30%;
 }
 
-.reference-string:hover {
-  background-color: #ccc;
+.balance-set-form div:last-child {
+  width: 60%;
 }
 
-.btn:disabled {
-  opacity: 0.3;
-}
-
-#list-contractors-card > h3 {
-  margin-left: 54px;
-}
-
+// стилизация для разметки "скрытый инпут + лэйбл" - привести в порядок
 input[name="contact"]:checked + label {
 	border: 1px solid black;
 }
 
-.reference-row-number {
-  display: inline-block;
-  width: 25px;
-  text-align: right;
+.user-status {
+  height: 32px;
+  width: 32px;
+  border-radius: 50%;
   margin-right: 5px;
-  font-weight: bold;
 }
 
-.negative-switch {
-  width: 20px;
-  height: 20px;
-  margin-left: 10px;
+.user-permissions {
 }
 
-.catalog-header {
+.user-permissions-string {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 15px;
+  border-bottom: 1px solid gray;
 }
 
-.catalog-header img {
-  width: 44px;
-  height: 44px;
+.user-permissions-string > span {
+  display: inline-block;
+  width: 300px;
+  margin-right: auto;
 }
 
-.catalog-header h2 {
+.user-permissions-string > div {
+  display: flex;
+  justify-content: space-between;
+  width: 50px;
+  text-align: left;
+}
+
+.user-permissions-string > input {
+}
+
+.user-permissions-switch {
+  width: 15px;
+  height: 15px;
   margin-left: 5px;
-
 }
 
-.catalog-header-title {
-  display: flex;
-
-}
-
-.catalog-header-buttons {
-  display: flex;
-
-}
-
-.goods-string {
-  display: flex;
-  justify-content: space-between;
-  min-height: 35px;
-  border: 1px solid #ccc;
-  margin-bottom: -1px;
-}
-
-.informaion-light {
-  display: flex;
-  position: absolute;
-  justify-content: center;
-  align-items: center;
-  border-radius: 15px;
-  top: 20px;
-  left: 20px;
-  width: 360px;
-  height: 50px;
-  z-index: 9999;
-}
-
-.informaion-light p {
-  margin: 0;
-}
-
-.informaion-light button {
-  display: block;
-  position: absolute;
-  top: 0px;
-  right: 5px;
-  z-index: 9999;
+.user-permissions-stock {
+  display: inline-block;
+  border-radius: 8px;
+  margin: 5px;
+  padding: 5px;
+  cursor: pointer;
+  background-color: #17a2b8;
+  color: #fff;
+  opacity: 1;
 }
 
 // Серый фон и шрифты

@@ -84,13 +84,7 @@ const getEnterprises = () => {
   };
 };
 
-const onSuccessNegativeTailingsSwitch = (loadedEnterpriseCard) => {
-  console.log(loadedEnterpriseCard);
-};
-
-const onErrorNegativeTailingsSwitch = (error) => {
-  console.log(error);
-};
+const onSuccessNegativeTailingsSwitch = (loadedEnterpriseCard) => console.log(loadedEnterpriseCard);
 
 listEnterprisesCardNegativeBalanceSwitch.addEventListener('change', (evt) => {
 
@@ -101,7 +95,6 @@ listEnterprisesCardNegativeBalanceSwitch.addEventListener('change', (evt) => {
     url: `lopos_directory/${auth.data.directory}/operator/1/business/${auth.currentEnterpriseId}/meta`,
     data: `code=12&token=${auth.data.token}&value=${value}`,
     callbackSuccess: onSuccessNegativeTailingsSwitch,
-    callbackError: onErrorNegativeTailingsSwitch
   };
 });
 
@@ -114,9 +107,10 @@ listEnterprisesCardNegativeTailingsSwitch.addEventListener('change', (evt) => {
     url: `lopos_directory/${auth.data.directory}/operator/1/business/${auth.currentEnterpriseId}/meta`,
     data: `code=11&token=${auth.data.token}&value=${value}`,
     callbackSuccess: onSuccessNegativeTailingsSwitch,
-    callbackError: onErrorNegativeTailingsSwitch
   };
 });
+
+const enterpriseCheckSuccess = (answer) => console.log(answer);
 
 const onSuccessEnterpriseCardLoad = (loadedEnterpriseCard) => {
   console.log(loadedEnterpriseCard);
@@ -139,6 +133,12 @@ const onSuccessEnterpriseCardLoad = (loadedEnterpriseCard) => {
     console.log(auth.data.currentBusiness);
     listEnterprisesCardCheckBtn.classList.add('d-none');
     listEnterprisesCardIsChecked.classList.remove('d-none');
+    xhr.request = {
+      metod: 'POST',
+      url: `lopos_directory/${auth.data.directory}/operator/1/business/${auth.currentEnterpriseId}/select`,
+      data: `token=${auth.data.token}`,
+      callbackSuccess: enterpriseCheckSuccess,
+    };
   });
 
   $('#enterprises-card-edit').on('show.bs.modal', function (e) {

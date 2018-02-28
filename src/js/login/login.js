@@ -22,6 +22,7 @@ let callbackXhrSuccess = function (response) {
 
     } else {
       dataStorage.data = response.data;
+      dataStorage.permissions = response.data.list_of_permissions;
       document.dispatchEvent(new Event('loginSuccess'));
     }
   } else {
@@ -34,11 +35,6 @@ let callbackXhrSuccess = function (response) {
 
 let callbackXhrError = function (response) {
   mainWindow.hideProgress('loginButtonSubmit', 'loginProgress');
-
-  markTools.informationtModal = {
-    'title': 'ОШИБКА: ',
-    'message': window.appSettings.messages.xhrError
-  };
 };
 
 let getRequestDataEmail = function (userLogin, userPassword) {
@@ -63,18 +59,17 @@ let getRequestDataId = function (userLogin, userPassword) {
   let operator = userLogin.substr(8);
 
   let urlApi = window.appSettings.loginUrlApi.id.replace('{{dir}}', folder);
-  // let dataApi = `operator=${operator}&deviceToken=-&password=${userPassword}`;
-  let requestData = new FormData();
-  requestData.append('operator', operator);
-  requestData.append('deviceToken', '-');
-  requestData.append('password', userPassword);
+  urlApi = urlApi.replace('{{oper}}', operator);
+  // let requestData = new FormData();
+  // requestData.append('password', userPassword);
+  let requestData = `password=${userPassword}`;
 
   return {
     url: urlApi,
     metod: 'POST',
     data: requestData,
     callbackSuccess: callbackXhrSuccess,
-    callbackError: window.callbackXhrError
+    callbackError: callbackXhrError
   };
 };
 

@@ -33,7 +33,6 @@ const drawKeywordsToContainerExternalData = (containerToDraw, handler, keyword) 
   containerToDraw.lastChild.addEventListener('click', handler);
 };
 
-// принимает необязательный параметр handler на тот случай, когда массив не загружается обычным способом (например, ключевые слова, ассоциированные с товаром)
 const drawKeywordsToContainer = (keyword) => {
   console.log(keyword);
   container.insertAdjacentHTML('beforeend', getKeywordMarkup(keyword));

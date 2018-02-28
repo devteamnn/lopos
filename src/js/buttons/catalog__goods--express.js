@@ -1,7 +1,10 @@
 import dataStorage from './../tools/storage.js';
+import markup from './../markup/tools.js';
 import formTools from './../tools/form-tools.js';
 
 let appUrl;
+let messages;
+
 let form;
 let price;
 let amount;
@@ -12,16 +15,46 @@ const initVar = (remModal) => {
   form = modal.querySelector('*[data-formName]');
   price = form.querySelector('*[data-valid="price"]');
   amount = form.querySelector('*[data-valid="amount"]');
+
   appUrl = window.appSettings[form.dataset.formname].UrlApi;
+  messages = window.appSettings[form.dataset.formname].messages;
+
 };
 
-const callbackXhrSuccess = () => {
-  $(modal).modal('hide');
+const callbackXhrSuccess = (response) => {
+  switch (response.status) {
+  case 270:
+    $(modal).modal('hide');
+    markup.informationtModal = {
+      'title': 'MESSAGE: ',
+      'message': response.message,
+      'isMess': true
+    };
+    break;
+  case 400:
+    markup.informationtModal = {
+      'title': 'ERROR: ',
+      'message': messages.mes400
+    };
+    break;
+  case 271:
+    markup.informationtModal = {
+      'title': 'ERROR: ',
+      'message': response.messages
+    };
+    break;
+  }
 };
 
-const callbackXhrError = () => {
+const callbackXhrError = (xhr) => {
+
   $(modal).modal('hide');
   formTools.reset();
+
+  markup.informationtModal = {
+    'title': 'ОШИБКА СВЯЗИ',
+    'message': `Ошибка ${xhr.status}: ${xhr.statusText}`
+  };
 };
 
 const submitForm = () => {

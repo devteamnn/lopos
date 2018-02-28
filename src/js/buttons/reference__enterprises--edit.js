@@ -1,15 +1,23 @@
 import xhr from './../tools/xhr.js';
 import dataStorage from './../tools/storage.js';
+import markup from './../markup/tools.js';
 import enterprisesButton from './reference__enterprises.js';
 
 const appUrl = window.appSettings.formEditEnterprise.UrlApi;
+
+const messages = window.appSettings.formEditEnterprise.messages;
+
 const validPattern = window.appSettings.formEditEnterprise.validPatterns;
 const validMessage = window.appSettings.formEditEnterprise.validMessage;
+
 const body = document.querySelector('body');
 const enterprisesCarEedit = body.querySelector('#enterprises-card-edit');
 const form = enterprisesCarEedit.querySelector('#enterprises-card-edit-form');
+
 const name = form.querySelector('#enterprises-card-edit-name');
+
 const spinner = form.querySelector('#enterprises-card-edit-spinner');
+
 const buttonSubmit = form.querySelector('#enterprises-card-edit-submit');
 const buttonCancel = form.querySelector('#enterprises-card-edit-cancel');
 
@@ -50,17 +58,41 @@ const formReset = () => {
   buttonCancel.disabled = false;
 };
 
-const callbackXhrSuccess = () => {
+const callbackXhrSuccess = (response) => {
+
   hideSpinner();
   formReset();
   $('#enterprises-card-edit').modal('hide');
-  enterprisesButton.updateCard();
+
+  switch (response.status) {
+  case 200:
+    enterprisesButton.updateCard();
+    break;
+  case 400:
+    markup.informationtModal = {
+      'title': 'Error',
+      'messages': messages.mes400
+    };
+    break;
+  case 271:
+    markup.informationtModal = {
+      'title': 'Error',
+      'messages': response.messages
+    };
+    break;
+  }
 };
 
 const callbackXhrError = () => {
+
   hideSpinner();
   formReset();
   $('#enterprises-card-edit').modal('hide');
+
+  markup.informationtModal = {
+    'title': 'Error',
+    'messages': window.appSettings.messagess.xhrError
+  };
 };
 
 const formIsChange = () => {

@@ -13,13 +13,13 @@ window.appSettings = {
   // Шаборны валидации формы входа
   'loginValid': {
     'email': /@/,
-    'id': /^[0-9a-z]{8,}\d{1,2}$/,
+    'id': /(^[0-9a-z]{8}[0-9]{1,2}$)|(^[0-9a-z]{2}-[0-9a-z]{2}-[0-9a-z]{2}-[0-9a-z]{2}-[0-9]{1,2}$)/,
     'password': /.{3,}/
   },
   // Ссылки на апи для формы входа
   'loginUrlApi': {
     email: 'user_boss/login',
-    id: 'lopos_directory/{{dir}}/authorization/login'
+    id: 'lopos_directory/{{dir}}/operator/{{oper}}/authorization/login'
   },
   // Шаборны валидации формы регистрации
   'registerValid': {
