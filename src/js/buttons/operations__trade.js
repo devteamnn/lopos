@@ -39,11 +39,9 @@ const redrawColumn = () => {
   if (stor.operationTradeIsFind === 'true') {
     switch (stor.operationTradeCurrentOpen) {
     case 'groups':
-      // operationsTradeLeft.drawGroups(dataFind, clickGroupsCallback);
       operationsTradeLeft.drawFind(dataFind, clickGroupsCallback, clichButtonBackCallback, stor.operationTradeCurrentOpen);
       break;
     case 'goods':
-      // operationsTradeLeft.drawGoods(dataFind, clickLeftGoodsCallback, clichButtonBackCallback);
       operationsTradeLeft.drawFind(dataFind, clickLeftGoodsCallback, clichButtonBackCallback, stor.operationTradeCurrentOpen);
       break;
     }
@@ -60,6 +58,24 @@ const redrawColumn = () => {
 
   operationsTradeRight.drawPrice(calcNumSum());
   operationsTradeRight.drawGoods(nomCard, clickRightGoodsCallback);
+
+  focusBarcode();
+};
+
+const focusBarcode = () => {
+  searchBarcodeForm.reset();
+  if (dataStore.property_list) {
+    let perm = tools.serachElements({
+      'array': dataStore.property_list,
+      'el': '30',
+      'strict': true
+    });
+
+    if (perm !== 'none') {
+
+      searchBarcodeForm.barcode.focus();
+    }
+  }
 };
 
 const tradeSubmitFormCallback = () => {
@@ -180,12 +196,14 @@ const addGoodToNomCard = (value, barcode) => {
       'name': stor.operationTradeCurrentGoodName,
       'price': stor.operationTradeCurrentGoodPrice,
       'count': value,
-      'oldCount': oldCount
+      'oldCount': oldCount,
+      'newRow': true
     });
   } else {
     nomCard[nomIndex].count = Number(nomCard[nomIndex].count) + value;
     nomCard[nomIndex].oldCount = oldCount;
     nomCard[nomIndex].price = stor.operationTradeCurrentGoodPrice;
+    nomCard[nomIndex].newRow = true;
   }
 
   calcDiscount();
@@ -319,6 +337,7 @@ const setCountGoodToNomCard = (value) => {
 
   nomCard[nomIndex].count = value;
   nomCard[nomIndex].oldCount = goodCount;
+  nomCard[nomIndex].newRow = true;
 
   calcDiscount();
   redrawColumn();
@@ -411,8 +430,7 @@ const getDataCallback = (data) => {
   operationsTradeHeader.setStocksList(dataStore.all_stocks);
   operationsTradeRight.setKontragentList(dataStore.all_kontr_agents);
   operationsTradeLeft.drawGroups(dataStore.all_groups, clickGroupsCallback);
-
-  searchBarcodeForm.barcode.focus();
+  focusBarcode();
 };
 
 const getData = () => {
@@ -470,8 +488,6 @@ const addHandlers = () => {
   }, true);
 
   tradeForm.stock.addEventListener('change', () => {
-    // stor.operationTradeDiscount = 0;
-    // operationsTradeLeft.drawGroups(dataStore.all_groups, clickGroupsCallback, clichButtonBackCallback);
     operationsTradeRight.clear();
     init(stor.operationTradeType);
   });

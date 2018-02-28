@@ -54,6 +54,11 @@ const getTradeGoods = (nomenklature, callback) => {
     tr.dataset['name'] = position.name;
     tr.scope = 'row';
 
+    if (position.newRow) {
+      let color = (stor.operationTradeType === '0') ? 'table-danger' : 'table-success';
+      tr.classList.add(color);
+    }
+
     if (position.discount) {
       tr.dataset['discount'] = position.discount;
       tr.innerHTML = markup.rightColumnDiscount(position.name, position.count, position.price, position.discount);
@@ -84,8 +89,6 @@ const getInventoryGoods = (nomenklature, callback) => {
     stor.operationTradeCurrentGoodId = el.dataset['id'];
     stor.operationTradeCurrentGoodName = el.dataset['name'];
     stor.operationTradeCurrentGoodCount = el.dataset['count'];
-
-    // stor.operationTradeCurrentGoodOldCount = true;
     stor.operationTradeCurrentGoodOldCount = el.dataset['oldCount'];
     stor.operationTradeRightClickType = false;
 
@@ -103,6 +106,10 @@ const getInventoryGoods = (nomenklature, callback) => {
     tr.dataset['name'] = position.name;
     tr.dataset['oldCount'] = position.oldCount;
     tr.scope = 'row';
+
+    // if (position.newRow) {
+    //   tr.classList.add('table-primary');
+    // }
 
     tr.innerHTML = markup.rightColumnGoodsInventory(index, position.name, position.count, position.oldCount);
 

@@ -38,11 +38,9 @@ const redrawColumn = () => {
   if (stor.operationTradeIsFind === 'true') {
     switch (stor.operationTradeCurrentOpen) {
     case 'groups':
-      // leftColumn.drawGroups(dataFind, clickGroupsCallback);
       leftColumn.drawFind(dataFind, clickGroupsCallback, clichButtonBackCallback, stor.operationTradeCurrentOpen);
       break;
     case 'goods':
-      // leftColumn.drawGoods(dataFind, clickLeftGoodsCallback, clichButtonBackCallback);
       leftColumn.drawFind(dataFind, clickLeftGoodsCallback, clichButtonBackCallback, stor.operationTradeCurrentOpen);
       break;
     }
@@ -58,6 +56,22 @@ const redrawColumn = () => {
   }
 
   rightColumn.drawGoods(nomCard, clickRightGoodsCallback);
+  focusBarcode();
+};
+
+const focusBarcode = () => {
+  searchBarcodeForm.reset();
+  if (dataStore.property_list) {
+    let perm = tools.serachElements({
+      'array': dataStore.property_list,
+      'el': '30',
+      'strict': true
+    });
+
+    if (perm !== 'none') {
+      searchBarcodeForm.barcode.focus();
+    }
+  }
 };
 
 const tradeSubmitFormCallback = () => {
@@ -139,12 +153,14 @@ const addGoodToNomCard = (value, barcode) => {
       'id': stor.operationTradeCurrentGoodId,
       'name': stor.operationTradeCurrentGoodName,
       'count': value,
-      'oldCount': stor.operationTradeCurrentGoodCount
+      'oldCount': stor.operationTradeCurrentGoodCount,
+      'newRow': true
     });
   } else {
     // nomCard[nomIndex].id = stor.operationTradeCurrentGoodId;
     // nomCard[nomIndex].name = stor.operationTradeCurrentGoodName;
     nomCard[nomIndex].count = value;
+    nomCard[nomIndex].newRow = true;
     // nomCard[nomIndex].curCount = stor.operationTradeCurrentGoodCount;
   }
 
@@ -243,8 +259,7 @@ const getDataCallback = (data) => {
   appHeader.setStocksList(dataStore.all_stocks);
   rightColumn.setKontragentList(dataStore.all_kontr_agents);
   leftColumn.drawGroups(dataStore.all_groups, clickGroupsCallback);
-
-  searchBarcodeForm.barcode.focus();
+  focusBarcode();
 };
 
 const sendInventoryForm = () => {
