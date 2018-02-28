@@ -28,6 +28,7 @@ const getTradeGoods = (nomenklature, callback) => {
     stor.operationTradeCurrentGoodName = el.dataset['name'];
     stor.operationTradeCurrentGoodCount = el.dataset['count'];
     stor.operationTradeCurrentGoodPrice = el.dataset['price'];
+    stor.operationTradeCurrentGoodStartCount = el.dataset['startCount'];
 
     if (el.dataset['discount']) {
       stor.operationTradeCurrentGoodOldCount = false;
@@ -52,6 +53,7 @@ const getTradeGoods = (nomenklature, callback) => {
     tr.dataset['count'] = position.count;
     tr.dataset['price'] = position.price;
     tr.dataset['name'] = position.name;
+    tr.dataset['startCount'] = position.startCount;
     tr.scope = 'row';
 
     if (position.newRow) {
@@ -152,7 +154,8 @@ const getNum = () => {
       'price': el.dataset['price'],
       'count': el.dataset['count'],
       'oldCount': el.dataset['oldCount'],
-      'curCount': el.dataset['curCount']
+      'curCount': el.dataset['curCount'],
+      'startCount': el.dataset['startCount']
     });
   });
 

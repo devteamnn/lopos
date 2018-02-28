@@ -42,7 +42,11 @@ const redrawColumn = () => {
       operationsTradeLeft.drawFind(dataFind, clickGroupsCallback, clichButtonBackCallback, stor.operationTradeCurrentOpen);
       break;
     case 'goods':
-      operationsTradeLeft.drawFind(dataFind, clickLeftGoodsCallback, clichButtonBackCallback, stor.operationTradeCurrentOpen);
+      if (stor.operationTradeIsFindToBarcode === 'true') {
+        operationsTradeLeft.drawFind(dataFind, clickLeftFindToBarcodeCallack, clichButtonBackCallback, 'goods');
+      } else {
+        operationsTradeLeft.drawFind(dataFind, clickLeftGoodsCallback, clichButtonBackCallback, stor.operationTradeCurrentOpen);
+      }
       break;
     }
   } else {
@@ -88,6 +92,7 @@ const clickGroupsCallback = () => {
 };
 
 const clichButtonBackCallback = () => {
+  stor.operationTradeIsFindToBarcode = false;
   operationsTradeLeft.drawGroups(dataStore.all_groups, clickGroupsCallback);
 };
 
@@ -197,6 +202,7 @@ const addGoodToNomCard = (value, barcode) => {
       'price': stor.operationTradeCurrentGoodPrice,
       'count': value,
       'oldCount': oldCount,
+      'startCount': stor.operationTradeCurrentGoodCount,
       'newRow': true
     });
   } else {
@@ -291,8 +297,9 @@ const setCountGoodToNomCard = (value) => {
   let nomIndex = searchGoodById(nomCard, stor.operationTradeCurrentGoodId);
 
   let goodCount = nomCard[nomIndex].count;
-  let oldCount = (goodIndex !== 'none') ? dataGoods[goodIndex].count :
-    nomCard[nomIndex].oldCount;
+  // let oldCount = (goodIndex !== 'none') ? dataGoods[goodIndex].count :
+  //   nomCard[nomIndex].oldCount;
+  let startCount = stor.operationTradeCurrentGoodStartCount;
 
 
   if (dataStore.property_list) {
@@ -302,8 +309,8 @@ const setCountGoodToNomCard = (value) => {
         'el': '11',
         'strict': true
       });
-      if (perm === 'none' && oldCount && oldCount !== 'none') {
-        if ((value - Number(nomCard[nomIndex].count)) > oldCount) {
+      if (perm === 'none' && startCount) {
+        if (value > startCount) {
           markupTools.informationtModal = {
             'title': 'ОШИБКА',
             'message': `Товара "${stor.operationTradeCurrentGoodName}"" нет на складе!`
@@ -313,7 +320,7 @@ const setCountGoodToNomCard = (value) => {
       }
     }
   } else {
-    if ((value - Number(nomCard[nomIndex].count)) > oldCount) {
+    if (value > startCount) {
       markupTools.informationtModal = {
         'title': 'ОШИБКА',
         'message': `Товара "${stor.operationTradeCurrentGoodName}"" нет на складе!`
@@ -322,16 +329,12 @@ const setCountGoodToNomCard = (value) => {
     }
   }
 
-  let delta = goodCount - value;
+  let delta = (stor.operationTradeType === '0') ? Number(startCount) + Number(value) : Number(startCount) - Number(value);
   if (goodIndex !== 'none') {
-    dataGoods[goodIndex].count = (stor.operationTradeType === '0') ? dataGoods[goodIndex].count - delta :
-      dataGoods[goodIndex].count + delta;
-
-    goodCount = dataGoods[goodIndex].count;
+    dataGoods[goodIndex].count = delta;
+    goodCount = delta;
   } else {
-    nomCard[nomIndex].oldCount = (stor.operationTradeType === '0') ?
-      nomCard[nomIndex].oldCount - delta
-      : nomCard[nomIndex].oldCount + delta;
+    goodCount = delta;
   }
 
 
@@ -523,6 +526,7 @@ const addHandlers = () => {
     }
     stor.operationTradeIsFind = true;
     stor.operationTradeCurrentOpen = 'goods';
+    stor.operationTradeIsFindToBarcode = true;
     operationsTradeLeft.drawFind(dataFind, clickLeftFindToBarcodeCallack, clichButtonBackCallback, 'goods');
     return true;
   });
