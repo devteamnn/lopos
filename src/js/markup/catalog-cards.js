@@ -1,5 +1,3 @@
-const listCardsBody = document.querySelector('#list-cards-card-body');
-
 export default {
 
   getElement(item, index) {
@@ -10,17 +8,17 @@ export default {
         <span class="reference-row-number">${index + 1}</span>
         <span>${item.name}</span>
       </div>
-      <div class="d-flex justify-content-between align-items-center">
+      <div class="d-flex justify-content-between align-items-center">${(item.k) ? item.k : ''}
       </div>
     </div>`;
   },
 
 
-  drawDataInContainer(cardsData) {
+  drawDataInContainer(cardsData, container) {
     if (cardsData.length > 0) {
-      cardsData.forEach((item, index) => listCardsBody.insertAdjacentHTML('beforeend', this.getElement(item, index)));
+      cardsData.forEach((item, index) => container.insertAdjacentHTML('beforeend', this.getElement(item, index)));
     } else {
-      listCardsBody.innerHTML = 'Производственных карточек еще не создано';
+      container.innerHTML = 'Производственных карточек еще не создано';
     }
   },
 

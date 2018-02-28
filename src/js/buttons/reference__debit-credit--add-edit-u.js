@@ -1,10 +1,10 @@
 import dataStorage from './../tools/storage.js';
 import markup from './../markup/tools.js';
 import formTools from './../tools/form-tools.js';
-import catalogCard from './catalog__cards.js';
+import debitCredit from './reference__debit-credit.js';
 
-let appUrlAdd;
-let appUrlEdit;
+// let appUrlAdd;
+// let appUrlEdit;
 let messages;
 
 let form;
@@ -18,8 +18,8 @@ const initVar = (remModal) => {
   form.dataset.formname = 'nomenclatureAddEdit';
   field1 = form.querySelector('*[data-valid="field1"]');
 
-  appUrlAdd = window.appSettings[form.dataset.formname].UrlApiAdd;
-  appUrlEdit = window.appSettings[form.dataset.formname].UrlApiEdit;
+  // appUrlAdd = window.appSettings[form.dataset.formname].UrlApiAdd;
+  // appUrlEdit = window.appSettings[form.dataset.formname].UrlApiEdit;
   messages = window.appSettings[form.dataset.formname].messages;
 
 };
@@ -29,11 +29,14 @@ const callbackXhrSuccess = (response) => {
   case 200:
     $(modal).modal('hide');
     formTools.reset();
+    debitCredit.redraw();
+    /*
     if (dataStorage.currentCardName === '') {
       catalogCard.redrawList();
     } else {
       catalogCard.redrawCard();
     }
+    */
     break;
   case 400:
     markup.informationtModal = {
@@ -64,11 +67,13 @@ const callbackXhrError = (xhr) => {
 const submitFormAdd = () => {
   const stor = dataStorage.data;
 
-  let postData = `name=${field1.value}&token=${stor.token}`;
+  /*
   let urlApp = appUrlAdd.replace('{{dir}}', stor.directory);
   urlApp = urlApp.replace('{{oper}}', stor.operatorId);
   urlApp = urlApp.replace('{{busId}}', stor.currentBusiness);
-
+  */
+  let postData = `name=${field1.value}&token=${stor.token}`;
+  let urlApp = `lopos_directory/${stor.directory}/operator/1/business/${stor.currentBusiness}/reason/${dataStorage.debitCreditType}`;
   formTools.submit({
     url: urlApp,
     metod: 'POST',
@@ -81,12 +86,14 @@ const submitFormAdd = () => {
 const submitFormEdit = () => {
   const stor = dataStorage.data;
 
-  let postData = `name=${field1.value}&token=${stor.token}`;
+  /*
   let urlApp = appUrlEdit.replace('{{dir}}', stor.directory);
   urlApp = urlApp.replace('{{oper}}', stor.operatorId);
   urlApp = urlApp.replace('{{busId}}', stor.currentBusiness);
   urlApp = urlApp.replace('{{NCid}}', dataStorage.currentCardId);
-
+  */
+  let postData = `name=${field1.value}&token=${stor.token}`;
+  let urlApp = `lopos_directory/${stor.directory}/operator/1/business/${stor.currentBusiness}/reason/${dataStorage.debitCreditId}`;
   formTools.submit({
     url: urlApp,
     metod: 'PUT',
@@ -96,14 +103,15 @@ const submitFormEdit = () => {
 };
 
 export default {
-  start(remModal) {
+  start(remModal, type) {
     initVar(remModal);
 
-    if (dataStorage.currentCardName === '') {
+    if (type === 'add') {
       formTools.work(modal, submitFormAdd);
-    } else {
+    } else if (type === 'edit') {
       formTools.work(modal, submitFormEdit);
     }
+
   },
   stop() {
     formTools.reset();

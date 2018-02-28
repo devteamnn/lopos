@@ -1,4 +1,5 @@
 import auth from './tools/storage.js';
+import permissions from './tools/permissions.js';
 import mainWindow from './login/main_login_window.js';
 import logButton from './buttons/log.js';
 import profileButton from './buttons/online__profile.js';
@@ -14,6 +15,12 @@ import keywordsButton from './buttons/reference__keywords.js';
 import keywordsButtonAdd from './buttons/reference__keywords--add.js';
 import keywordsButtonEdit from './buttons/reference__keywords--edit.js';
 import groupsButton from './buttons/catalog__groups.js';
+import debitCreditButton from './buttons/reference__debit-credit.js';
+import manufactureButton from './buttons/operations__manufacture.js';
+import balanceButton from './buttons/operations__balance.js';
+import inventoryButton from './buttons/operations__inventory.js';
+import usersButton from './buttons/online__users.js';
+import docsButton from './buttons/accounting__all-docs.js';
 
 
 // import goodsButtonFormEdit from './buttons/catalog__goods--edit.js';
@@ -24,7 +31,7 @@ import searchButton from './buttons/catalog__search.js';
 // import cardsResourcesButton from './buttons/catalog__cards--add-resource.js';
 
 console.log('3D3 (07.02.18_13:30)');
-console.log('ver: 3A5');
+console.log('ver: 4А1');
 
 const exit = document.querySelector('#profile-exit');
 const app = document.querySelector('#app');
@@ -68,11 +75,18 @@ const mainMenuButtons = [
   groupsButton,
   cardsButton,
   // cardsResourcesButton,
-  searchButton
+  searchButton,
+  debitCreditButton,
+  manufactureButton,
+  balanceButton,
+  inventoryButton,
+  usersButton,
+  docsButton
 ];
 
 // ========== ОБНОВЛЕНИЕ/ОТКРЫТИЕ СТРАНИЦЫ ==========
 const start = () => {
+  auth.goodsViewMode = 'string';
   if (auth.isSetFlag) {
     showAppHideLogin();
     initMarkup();
@@ -85,6 +99,8 @@ const start = () => {
     contractorsButtonFormAdd.start();
     keywordsButtonAdd.start();
     keywordsButtonEdit.start();
+
+    permissions.read();
 
   } else {
     showLoginHideApp();

@@ -113,6 +113,7 @@ const onSuccessGroupGood = (goodsData) => {
     universalSort(auth.goodsSortMode);
   }
   auth.goodsViewMode = (auth.goodsViewMode === 'null') ? 'string' : auth.goodsViewMode;
+  console.log('hihi');
   goodsList.draw(goodsData.data, groupGoodsBody, onGoodClick);
 };
 

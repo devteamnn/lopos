@@ -108,7 +108,14 @@ const onListContractorsBodyClick = (evt) => {
     currentStringElement = currentStringElement.parentNode;
   }
 
-  let {id, name, description, phone, fio, email} = contractorsData[currentStringElement.dataset.index];
+  let {
+    id,
+    name,
+    description,
+    phone,
+    fio,
+    email
+  } = contractorsData[currentStringElement.dataset.index];
 
   $('#contractors-add').modal('show');
 
@@ -123,10 +130,6 @@ const onListContractorsBodyClick = (evt) => {
   auth.currentContractorOperation = 'edit';
 
   listContractorsFormBill.classList.remove('d-none');
-
-  console.log(auth.currentContractorId);
-  console.log(auth.currentContractorOperation);
-  console.log(contractorsData);
 
   const onListContractorsFormBillClick = () => {
     hideBodyShowCard();
@@ -151,19 +154,21 @@ const onListContractorsBodyClick = (evt) => {
 };
 
 listContractorsBody.addEventListener('click', onListContractorsBodyClick);
+/*
+ */
 
 const getContractors = (type) => {
-  showBodyHideCard();
-  console.log('hi');
-  console.log(type);
-  console.log(auth.currentContractorType);
-  type = type || auth.currentContractorType;
-  console.log(type);
 
+  auth.currentScreen = (Number(type) === ContractorType.SUPPLIER) ? 'reference__contractors--Suppliers' : 'reference__contractors--Buyers';
+
+  showBodyHideCard();
+  document.querySelector('#list-contractors').classList.remove('d-none');
+  type = type || auth.currentContractorType;
 
   listContractorsHeaderType.innerHTML = (Number(type) === ContractorType.SUPPLIER) ? contractorsMarkup.getSuppliersHeader() : contractorsMarkup.getBuyersHeader();
   listContractorsFormEditLabel.innerHTML = (Number(type) === ContractorType.SUPPLIER) ? 'Поставщики' : 'Покупатели';
   auth.currentContractorType = type;
+
 
   contractorsMarkup.cleanContainer();
   contractorsMarkup.drawMarkupInContainer(loaderSpinnerMarkup);
@@ -175,18 +180,16 @@ const getContractors = (type) => {
     callbackSuccess: onSuccessContractorsLoad,
     callbackError: onErrorContractorsLoad
   };
+
+  $('#contractors-add').on('hidden.bs.modal', function (e) {
+    listContractorsFormBill.classList.add('d-none');
+  });
+
+  $('#contractors-add').on('show.bs.modal', function (e) {
+    listContractorsFormSubmit.innerHTML = (auth.currentContractorOperation === 'edit') ? 'Изменить' : 'Создать';
+  });
+
 };
-
-$('#contractors-add').on('hidden.bs.modal', function (e) {
-  listContractorsFormBill.classList.add('d-none');
-
-});
-$('#contractors-add').on('show.bs.modal', function (e) {
-  listContractorsFormSubmit.innerHTML = (auth.currentContractorOperation === 'edit') ? 'Изменить' : 'Создать';
-  console.log(auth.currentContractorId);
-  console.log(auth.currentContractorOperation);
-
-});
 
 export default {
 

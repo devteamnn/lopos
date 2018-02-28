@@ -13,6 +13,7 @@ const listCardsCard = document.querySelector('#list-cards-card');
 const listCardBody = document.querySelector('#list-cards-card-body');
 const listCardAddBtn = document.querySelector('#list-cards-card-add-btn');
 const listCardEditBtn = document.querySelector('#card-resources-edit-btn');
+
 const cardResources = document.querySelector('#card-resources');
 const cardResourcesReturnBtn = document.querySelector('#card-resources-return-btn');
 const cardResourcesDeleteBtn = document.querySelector('#card-resources-delete-btn');
@@ -165,14 +166,17 @@ const onSuccessCardResourcesLoad = (cardResourcesData) => {
         resourceAdd.start(addResourcesModal);
         fastEditFlag = true;
       };
-
+      console.log(item.value < 0);
       if (item.value < 0) {
         cardResourcesResources.insertAdjacentHTML('beforeend', cardsMarkup.getResourceElement(item));
         cardResourcesResources.lastChild.addEventListener('click', onResourcesGoodClick);
       } else {
+        console.log('hi');
+        console.log(cardsMarkup.getResourceElement(item));
         cardResourcesProduct.insertAdjacentHTML('beforeend', cardsMarkup.getResourceElement(item));
         cardResourcesProduct.lastChild.addEventListener('click', onResourcesGoodClick);
       }
+      console.log(cardResourcesProduct);
     });
   } else {
     cardResourcesResources.innerHTML = 'Nothig left, but hope';
@@ -222,7 +226,7 @@ const onSuccessCardsLoad = (loadedCards) => {
   document.querySelector(`#${loaderSpinnerId}`).remove();
   console.log(loadedCards);
   cardData = loadedCards;
-  cardsMarkup.drawDataInContainer(loadedCards.data);
+  cardsMarkup.drawDataInContainer(loadedCards.data, listCardBody);
 
 };
 

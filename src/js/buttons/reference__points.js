@@ -37,10 +37,6 @@ const onSuccessPointsLoad = (loadedPoints) => {
 let selectedString = '';
 disableCheckEditButtons();
 
-const onErrorPointsLoad = (error) => {
-  console.log(error);
-};
-
 listPointsBody.addEventListener('change', function (evt) {
   console.log(evt);
   if (selectedString) {
@@ -52,10 +48,18 @@ listPointsBody.addEventListener('change', function (evt) {
   enableCheckEditButtons();
 });
 
+const onSuccessPointCheck = (answer) => console.log(answer);
+
 pointsCheckBtn.addEventListener('click', function () {
   if (!pointsCheckBtn.hasAttribute('disabled')) {
     auth.currentStock = selectedString.dataset.stockId;
     disableCheckEditButtons();
+    xhr.request = {
+      metod: 'POST',
+      url: `lopos_directory/${auth.data.directory}/operator/1/business/${auth.data.currentBusiness}/stock/${auth.currentStockId}/select`,
+      data: `token=${auth.data.token}`,
+      callbackSuccess: onSuccessPointCheck
+    };
     getPoints();
   }
 });
@@ -78,8 +82,7 @@ const getPoints = () => {
     metod: 'POST',
     url: `lopos_directory/${auth.data.directory}/operator/1/business/${auth.data.currentBusiness}/stock`,
     data: `view_last=0&token=${auth.data.token}`,
-    callbackSuccess: onSuccessPointsLoad,
-    callbackError: onErrorPointsLoad
+    callbackSuccess: onSuccessPointsLoad
   };
 };
 

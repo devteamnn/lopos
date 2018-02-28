@@ -1,0 +1,27 @@
+.catalog-header {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.catalog-header img {
+  width: 44px;
+  height: 44px;
+}
+
+.catalog-header h2 {
+  margin-left: 5px;
+
+}
+
+.catalog-header-title {
+  display: flex;
+
+}
+
+.catalog-header-buttons {
+  display: flex;
+
+}

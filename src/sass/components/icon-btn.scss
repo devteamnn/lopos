@@ -1,3 +1,8 @@
+
+.btn:disabled {
+  opacity: 0.3;
+}
+
 .icon-btn {
   width: 42px;
   height: 42px;
@@ -35,12 +40,33 @@
   background-size: cover;
 }
 
+.icon-btn__delete--red {
+  background-image: url(../img/trash-red.png);
+  background-color: #fff;
+  background-size: cover;
+}
+.icon-btn__settings {
+  background-image: url(../img/menu_s.png);
+  background-size: cover;
+}
+
 .icon-btn__go {
   background-image: url(../img/arrow-right.png);
   background-size: cover;
 }
+
 .icon-btn__rgb {
   background-image: url(../img/rgb-circle-1-50.png);
+  background-size: cover;
+}
+
+.icon-btn__set-password {
+  background-image: url(../img/icons8-set-password.png);
+  background-size: cover;
+}
+
+.icon-btn__lock-user {
+  background-image: url(../img/icons8-lock-user.png);
   background-size: cover;
 }
 
@@ -66,6 +92,27 @@
   background-image: url(../img/select-all-100.png);
   background-size: cover;
   background-color: mediumpurple;
+  margin-right: 5px;
+}
+
+.icon-btn__delivery {
+  background-image: url(../img/suppliers.png);
+  background-size: cover;
+  background-color: transparent;
+  margin-right: 5px;
+}
+
+.icon-btn__pdf {
+  background-image: url(../img/pdf.png);
+  background-size: cover;
+  background-color: transparent;
+  margin-right: 5px;
+}
+
+.icon-btn__excel {
+  background-image: url(../img/excel.png);
+  background-size: cover;
+  background-color: transparent;
   margin-right: 5px;
 }
 

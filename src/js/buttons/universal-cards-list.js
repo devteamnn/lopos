@@ -10,7 +10,7 @@ const markup = {
         <span>${item.name}</span>
       </div>
       <div class="d-flex justify-content-between align-items-center" style="padding-right: 34px;">
-        <span> ${(item.count) ? item.count : ''} </span>
+        <span> ${item.count} </span>
       </div>
     </div>`;
   },

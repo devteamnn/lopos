@@ -1,0 +1,43 @@
+
+.goods-tile {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.goods-tile-card {
+  width: 70px;
+  height: 70px;
+  margin: 10px;
+  border: 1px solid gray;
+  border-radius: 10px;
+}
+
+.goods-tile-card img {
+  border-radius: 10px;
+  object-fit: cover;
+  margin: 0;
+  width: 68px;
+  height: 68px;
+}
+
+.goods-tile-title {
+  position: absolute;
+  font-size: 10px;
+  bottom: 0;
+  right: 0;
+  padding: 0;
+  text-align: center;
+  width: 50px;
+  height: 15px;
+  background-color: aliceblue;
+  opacity: 0.8;
+  border-radius: 10px;
+}
+
+.goods-string {
+  display: flex;
+  justify-content: space-between;
+  min-height: 35px;
+  border: 1px solid #ccc;
+  margin-bottom: -1px;
+}
