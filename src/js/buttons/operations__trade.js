@@ -14,6 +14,11 @@ const listReceipt = document.querySelector('#list-receipt');
 const searchBarcodeForm = document.querySelector('#operations-trade-search-barcode-form');
 const tradeForm = document.querySelector('#operation-trade-form');
 const searchForm = document.querySelector('#operations-trade-search');
+const modalAdd = document.querySelector('#operations-trade-add');
+const modalAddCount = document.querySelector('#operations-trade-add-input');
+const modalDiscount = document.querySelector('#operations-trade-discount');
+const modalDiscountCount = document.querySelector('#operations-trade-discount-input');
+
 
 let dataStore = [];
 let dataGoods = [];
@@ -462,6 +467,14 @@ const sendTradeForm = () => {
 };
 
 const addHandlers = () => {
+
+  $(modalAdd).on('shown.bs.modal', function () {
+    $(modalAddCount).trigger('focus');
+  });
+
+  $(modalDiscount).on('shown.bs.modal', function () {
+    $(modalDiscountCount).trigger('focus');
+  });
 
   document.querySelector('#list-receipt-list').addEventListener('click', () => {
     init(0);

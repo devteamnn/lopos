@@ -109,9 +109,9 @@ const getInventoryGoods = (nomenklature, callback) => {
     tr.dataset['oldCount'] = position.oldCount;
     tr.scope = 'row';
 
-    // if (position.newRow) {
-    //   tr.classList.add('table-primary');
-    // }
+    if (position.newRow) {
+      tr.classList.add('table-primary');
+    }
 
     tr.innerHTML = markup.rightColumnGoodsInventory(index, position.name, position.count, position.oldCount);
 
@@ -194,6 +194,8 @@ export default {
 
   setKontragentList(kontragents) {
     let kontragentsList = (stor.operationTradeType === '7') ? kontragentsListInventory : kontragentsListTrade;
+
+    kontragentsList.innerHTML = '';
 
     kontragents.forEach((el) => {
       kontragentsList.innerHTML = kontragentsList.innerHTML + `<option value="${el.id}">${el.name}</option>`;

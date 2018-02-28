@@ -13,6 +13,10 @@ const searchBarcodeForm = document.querySelector('#operation-inventory-search-ba
 const searchForm = document.querySelector('#operation-inventory-search');
 const inventoryForm = document.querySelector('#operation-inventory-form');
 const listInventory = document.querySelector('#list-inventory');
+const modalAdd = document.querySelector('#operations-trade-add');
+const modalAddCount = document.querySelector('#operations-trade-add-input');
+const modalDiscount = document.querySelector('#operations-trade-discount');
+const modalDiscountCount = document.querySelector('#operations-trade-discount-input');
 
 let dataStore = [];
 let dataGoods = [];
@@ -271,6 +275,14 @@ const sendInventoryForm = () => {
 };
 
 const addHandlers = () => {
+
+  $(modalAdd).on('shown.bs.modal', function () {
+    $(modalAddCount).trigger('focus');
+  });
+
+  $(modalDiscount).on('shown.bs.modal', function () {
+    $(modalDiscountCount).trigger('focus');
+  });
 
   document.querySelector('#list-inventory-list').addEventListener('click', () => {
     stor.operationTradeType = 7;

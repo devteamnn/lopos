@@ -49,5 +49,6 @@ export default {
 
     formTools.work(modal, submitForm);
     $(modal).modal('show');
+    count.focus();
   },
 };
