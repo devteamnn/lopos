@@ -253,4 +253,5 @@ export default {
   removeHandlers: delHandlers,
   validElement: valEl,
   submit: submitForm,
+  stopLoad: hideSpinner
 };

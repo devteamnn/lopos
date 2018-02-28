@@ -306,4 +306,24 @@ window.appSettings = {
       'field1': 'Штрихкод содержит спецсимволы<br>Максимальная длинна 30 символов',
     }
   },
+
+  // ОПЕРАЦИИ купля\продажа\инвентаризация
+  'operationTradeAdd': {
+    'validPatterns': {
+      'count': /(^-?\d*$)|(^-?\d*\.\d*$)/,
+    },
+    'validMessage': {
+      'count': 'поле минимум 1 цифра',
+    }
+  },
+
+  // ОПЕРАЦИИ купля\продажа\инвентаризация
+  'operationTradeDiscount': {
+    'validPatterns': {
+      'discount': /(^-?\d*$)|(^-?\d*\.\d*$)/,
+    },
+    'validMessage': {
+      'discount': 'поле минимум 1 цифра',
+    }
+  }
 };

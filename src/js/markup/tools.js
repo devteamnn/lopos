@@ -54,6 +54,11 @@ export default {
   },
 
   set informationtModal(setup) {
+    // setup = {
+    //   isMess: true - зеленое, alert: красное
+    //   title: заголовок
+    //   message: сообщение
+    // }
 
     let type = (setup.isMess === true) ? 'alert-success' : 'alert-danger';
 

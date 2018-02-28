@@ -18,7 +18,6 @@ import groupsButton from './buttons/catalog__groups.js';
 import debitCreditButton from './buttons/reference__debit-credit.js';
 import manufactureButton from './buttons/operations__manufacture.js';
 import balanceButton from './buttons/operations__balance.js';
-import inventoryButton from './buttons/operations__inventory.js';
 import usersButton from './buttons/online__users.js';
 import docsButton from './buttons/accounting__all-docs.js';
 
@@ -26,6 +25,10 @@ import docsButton from './buttons/accounting__all-docs.js';
 // import goodsButtonFormEdit from './buttons/catalog__goods--edit.js';
 import cardsButton from './buttons/catalog__cards.js';
 import searchButton from './buttons/catalog__search.js';
+import operationTrade from './buttons/operations__trade.js';
+import operationInventory from './buttons/operations__inventory.js';
+
+// import xhr from './tools/xhr.js';
 
 // Отправка без валидации
 // import cardsResourcesButton from './buttons/catalog__cards--add-resource.js';
@@ -79,9 +82,10 @@ const mainMenuButtons = [
   debitCreditButton,
   manufactureButton,
   balanceButton,
-  inventoryButton,
   usersButton,
-  docsButton
+  docsButton,
+  operationTrade,
+  operationInventory
 ];
 
 // ========== ОБНОВЛЕНИЕ/ОТКРЫТИЕ СТРАНИЦЫ ==========

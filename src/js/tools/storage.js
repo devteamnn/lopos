@@ -321,4 +321,109 @@ export default {
     return sessionStorage.getItem('currentBillId');
   },
 
+  set operationClickType(type) {
+    sessionStorage.setItem('operationClickType', type);
+  },
+
+  get operationClickType() {
+    return sessionStorage.getItem('operationClickType');
+  },
+
+  set operationTradeType(type) {
+    sessionStorage.setItem('operationTradeType', type);
+  },
+
+  get operationTradeType() {
+    return sessionStorage.getItem('operationTradeType');
+  },
+
+  set operationTradeCurrentGoodId(id) {
+    sessionStorage.setItem('operationTradeCurrentGoodId', id);
+  },
+
+  get operationTradeCurrentGoodId() {
+    return sessionStorage.getItem('operationTradeCurrentGoodId');
+  },
+
+  set operationTradeCurrentGoodName(name) {
+    sessionStorage.setItem('operationTradeCurrentGoodName', name);
+  },
+
+  get operationTradeCurrentGoodName() {
+    return sessionStorage.getItem('operationTradeCurrentGoodName');
+  },
+
+  set operationTradeCurrentGoodCount(count) {
+    sessionStorage.setItem('operationTradeCurrentGoodCount', count);
+  },
+
+  get operationTradeCurrentGoodCount() {
+    return sessionStorage.getItem('operationTradeCurrentGoodCount');
+  },
+
+  set operationTradeCurrentGoodPrice(price) {
+    sessionStorage.setItem('operationTradeCurrentGoodPrice', price);
+  },
+
+  get operationTradeCurrentGoodPrice() {
+    return sessionStorage.getItem('operationTradeCurrentGoodPrice');
+  },
+
+  set operationTradeCurrentGoodOldCount(count) {
+    sessionStorage.setItem('operationTradeCurrentGoodOldCount', count);
+  },
+
+  get operationTradeCurrentGoodOldCount() {
+    return sessionStorage.getItem('operationTradeCurrentGoodOldCount');
+  },
+
+  set operationTradeCurrentGoodStartCount(count) {
+    sessionStorage.setItem('operationTradeCurrentGoodStartCount', count);
+  },
+
+  get operationTradeCurrentGoodStartCount() {
+    return sessionStorage.getItem('operationTradeCurrentGoodStartCount');
+  },
+
+  set operationTradeDiscount(discount) {
+    sessionStorage.setItem('operationTradeDiscount', discount);
+  },
+
+  get operationTradeDiscount() {
+    return sessionStorage.getItem('operationTradeDiscount');
+  },
+
+  set operationTradeCurrentOpen(block) {
+    sessionStorage.setItem('operationTradeCurrentOpen', block);
+  },
+
+  get operationTradeCurrentOpen() {
+    return sessionStorage.getItem('operationTradeCurrentOpen');
+  },
+
+  // true - скидка, false - товар
+  set operationTradeRightClickType(type) {
+    sessionStorage.setItem('operationTradeRightClickType', type);
+  },
+
+  get operationTradeRightClickType() {
+    return sessionStorage.getItem('operationTradeRightClickType');
+  },
+
+  set operationTradeIsFind(type) {
+    sessionStorage.setItem('operationTradeIsFind', type);
+  },
+
+  get operationTradeIsFind() {
+    return sessionStorage.getItem('operationTradeIsFind');
+  },
+
+  set operationTradeIsFindToBarcode(type) {
+    sessionStorage.setItem('operationTradeIsFindToBarcode', type);
+  },
+
+  get operationTradeIsFindToBarcode() {
+    return sessionStorage.getItem('operationTradeIsFindToBarcode');
+  },
+
 };
