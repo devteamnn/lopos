@@ -401,6 +401,14 @@ export default {
     return sessionStorage.getItem('operationTradeCurrentGoodPrice');
   },
 
+  set operationTradeCurrentGoodPriceSell(price) {
+    sessionStorage.setItem('operationTradeCurrentGoodPriceSell', price);
+  },
+
+  get operationTradeCurrentGoodPriceSell() {
+    return sessionStorage.getItem('operationTradeCurrentGoodPriceSell');
+  },
+
   set operationTradeCurrentGoodOldCount(count) {
     sessionStorage.setItem('operationTradeCurrentGoodOldCount', count);
   },
@@ -456,6 +464,22 @@ export default {
 
   get operationTradeIsFindToBarcode() {
     return sessionStorage.getItem('operationTradeIsFindToBarcode');
+  },
+
+  set operationTradeMarkupGroup(type) {
+    sessionStorage.setItem('operationTradeMarkupSellGroup', type);
+  },
+
+  get operationTradeMarkupGroup() {
+    return sessionStorage.getItem('operationTradeMarkupSellGroup');
+  },
+
+  set operationTradeMarkupGood(type) {
+    sessionStorage.setItem('operationTradeMarkupGood', type);
+  },
+
+  get operationTradeMarkupGood() {
+    return sessionStorage.getItem('operationTradeMarkupGood');
   },
 
 };

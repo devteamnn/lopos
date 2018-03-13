@@ -1,0 +1,97 @@
+ #list-receipt select, #list-sale input[type="text"], #list-sale select, #list-inventory input[type="text"], #list-inventory select {
+  height: 38px;
+}
+
+#list-receipt input[type="text"] {
+  height: 38px;
+}
+
+#list-receipt table input[type="text"] {
+  height: auto;
+  border: none;
+}
+
+#list-receipt table th, #list-sale table th, #list-inventory table th {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.operation-trade-marckup-orange {
+  color: #ff9900;
+}
+
+.otLeftColumn {
+  overflow-y: auto;
+  height: 600px;
+}
+
+.otModalHeight {
+  height: 93vh;
+}
+
+.otModalWidth {
+  max-width: 1000px;
+}
+
+.operations-purchase-kontragents {
+  width: 300px;
+  margin-right: 50px;
+}
+
+.operations-trade-delivery {
+  min-width: 60px;
+  height: 40px;
+  background-image: url('/img/suppliers.png');
+  background-color: #DFB939;
+  background-position: left;
+  background-size: 45px, 45px;
+  background-repeat: no-repeat;
+  border-radius: 5px;
+}
+
+.operations-trade-delivery label {
+  min-width: 60px;
+  height: 40px;
+  padding-left: 43px;
+}
+
+.operations-trade-delivery label input{
+  margin-bottom: 0px;
+  margin-top: 13px;
+}
+
+.otPrice {
+  font-size: 60px;
+  font-stretch: ultra-condensed;
+}
+
+.otButtons {
+  width: 40px;
+  height: 40px;
+  background-position: center;
+  background-size: cover;
+}
+
+.otBtnClear {
+  background-image: url('/img/Cancel-96.png');
+}
+
+.otBtnBarcode {
+  background-image: url('/img/Barcode-64.png');
+  margin-bottom: 5px;
+}
+
+.otBtnAddRow {
+  background-image: url('/img/plus-math-50.png');
+  width: 30px;
+  height: 30px;
+}
+
+.otBtnFind {
+  background-image: url('/img/icons8-search-26.png');
+}
+
+.otBtnDiscount {
+  background-image: url('/img/percent.png');
+}
+

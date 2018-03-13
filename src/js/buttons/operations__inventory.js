@@ -10,8 +10,17 @@ import goodCard from './catalog__goods.js';
 import markupTools from './../markup/tools.js';
 
 const searchBarcodeForm = document.querySelector('#operation-inventory-search-barcode-form');
+const searchBarcodeFormBarcode = document.querySelector('#operations-inventory-search-barcode');
+
 const searchForm = document.querySelector('#operation-inventory-search');
+
 const inventoryForm = document.querySelector('#operation-inventory-form');
+const inventoryFormStock = document.querySelector('#operation-inventory-stocks-list');
+const inventoryFormSubmit = document.querySelector('#operation-inventory-submit');
+
+const submitSpinner = document.querySelector('#operation-inventory-submit-spinner');
+const leftColumnNode = document.querySelector('#operation-inventory-left');
+
 const listInventory = document.querySelector('#list-inventory');
 const modalAdd = document.querySelector('#operations-trade-add');
 const modalAddCount = document.querySelector('#operations-trade-add-input');
@@ -73,18 +82,20 @@ const focusBarcode = () => {
     });
 
     if (perm !== 'none') {
-      searchBarcodeForm.barcode.focus();
+      searchBarcodeFormBarcode.focus();
     }
   }
 };
 
 const tradeSubmitFormCallback = () => {
+  submitSpinner.innerHTML = '';
   leftColumn.drawGroups(dataStore.all_groups, clickGroupsCallback, clichButtonBackCallback);
   rightColumn.clear();
 };
 
 const clickGroupsCallback = () => {
-  serverTools.getGoodsFromServer(stor.currentGroupId, inventoryForm.stock.value, getGoodsCallback);
+  leftColumnNode.innerHTML = markupTools.getLoadSpinner('sp-2', 'Загрузка');
+  serverTools.getGoodsFromServer(stor.currentGroupId, inventoryFormStock.value, getGoodsCallback);
 };
 
 const clichButtonBackCallback = () => {
@@ -177,7 +188,7 @@ const addGoodToNomCard = (value, barcode) => {
   }
 
   redrawColumn();
-  inventoryForm.submit.disabled = false;
+  inventoryFormSubmit.disabled = false;
   return true;
 };
 
@@ -193,7 +204,7 @@ const remGoodFromNomCard = () => {
   nomCard.splice(numIndex, 1);
 
   if ((nomCard.length === 0) || (nomCard.length === 1 && nomCard[0].discount)) {
-    inventoryForm.submit.disabled = true;
+    inventoryFormSubmit.disabled = true;
   }
 
   redrawColumn();
@@ -261,15 +272,16 @@ const getDataCallback = (data) => {
   dataStore = data;
   console.dir(dataStore);
   appHeader.setStocksList(dataStore.all_stocks);
-  rightColumn.setKontragentList(dataStore.all_kontr_agents);
+  // appHeader.setKontragentList(dataStore.all_kontr_agents);
   leftColumn.drawGroups(dataStore.all_groups, clickGroupsCallback);
   focusBarcode();
 };
 
 const sendInventoryForm = () => {
+  submitSpinner.innerHTML = markupTools.getLoadSpinner('sp-1', 'Отправка');
   serverTools.sendDataToServer({
-    'stock': inventoryForm.stock.value,
-    'kontragent': inventoryForm.kontragents.value,
+    'stock': inventoryFormStock.value,
+    'kontragent': 0,
     'data': nomCard
   }, tradeSubmitFormCallback);
 };
@@ -287,34 +299,36 @@ const addHandlers = () => {
   document.querySelector('#list-inventory-list').addEventListener('click', () => {
     stor.operationTradeType = 7;
     rightColumn.clear();
+    leftColumnNode.innerHTML = markupTools.getLoadSpinner('sp-2', 'Загрузка');
     serverTools.getDataFromServer(stor.data.currentStock, getDataCallback);
   });
 
   document.querySelector('#operation-inventory-clear-but').addEventListener('click', () => {
     leftColumn.drawGroups(dataStore.all_groups, clickGroupsCallback, clichButtonBackCallback);
     rightColumn.clear();
-    inventoryForm.submit.disabled = true;
+    inventoryFormSubmit.disabled = true;
   });
 
   document.querySelector('body').addEventListener('keydown', (evt) => {
     if (evt.altKey && evt.code === 'Enter') {
       evt.preventDefault();
 
-      if (listInventory.classList.contains('active') && !inventoryForm.submit.disabled) {
+      if (listInventory.classList.contains('active') && !inventoryFormSubmit.disabled) {
         sendInventoryForm();
       }
     }
   }, true);
 
-  inventoryForm.stock.addEventListener('change', () => {
+  inventoryFormStock.addEventListener('change', () => {
     stor.operationTradeDiscount = 0;
     leftColumn.drawGroups(dataStore.all_groups, clickGroupsCallback, clichButtonBackCallback);
     rightColumn.clear();
-    inventoryForm.submit.disabled = true;
+    inventoryFormSubmit.disabled = true;
   });
 
   inventoryForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
+    console.log('!!!!');
     sendInventoryForm();
   });
 
