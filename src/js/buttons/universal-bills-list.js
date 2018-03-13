@@ -8,79 +8,107 @@ const BillTypes = {
   'type8': 'ic_my_production',
 };
 
+const months = {
+  '11': 'Декабрь',
+  '10': 'Ноябрь',
+  '9': 'Октябрь',
+  '8': 'Сентябрь',
+  '7': 'Август',
+  '6': 'Июль',
+  '5': 'Июнь',
+  '4': 'Май',
+  '3': 'Апрель',
+  '2': 'Март',
+  '1': 'Февраль',
+  '0': 'Январь'
+};
+
 const getYearElement = (item, index) => {
   return `
-  <div id="log-row" class="card mb-0 p-1 rounded-0" style="width: 100%">
-    <div class="media">
-      <div class="media-body">
-        <b> Номер месяца: </b>${item.month_number}
-        <b> Время (первая) </b>${new Date(+(item.doc_time_first + '000')).toLocaleString()}
-        <b> Время (последняя) </b>${new Date(+(item.doc_time_last + '000')).toLocaleString()}
-        <b> Количество документов: </b>${item.count_documents}
-        <b> Всего: </b>${item.total}
-      </div>
+
+  <div class="alldocs-year">
+    <div class="alldocs-year-column">
+      <img src="img/ic_agree.png" alt="">
+      <span>${months[item.month_number - 1]} ${document.querySelector('#docs-year').value} года</span>
+    </div>
+    <div class="alldocs-year-column">
+      <span>${item.total}</span>
+    </div>
+    <div class="alldocs-year-column">
+      <span>${item.count_documents}</span><br>
     </div>`;
+
 };
 
 const getMonthElement = (item, index) => {
   return `
-  <div id="log-row" class="card mb-0 p-1 rounded-0" style="width: 100%">
-    <div class="media">
-      <div class="media-body">
-        <b> Номер дня: </b>${item.day_number}
-        <b> Время (первая) </b>${new Date(+(item.doc_time_first + '000')).toLocaleString()}
-        <b> Время (последняя) </b>${new Date(+(item.doc_time_last + '000')).toLocaleString()}
-        <b> Количество документов: </b>${item.count_documents}
-      </div>
+
+  <div class="alldocs-year">
+    <div class="alldocs-year-column">
+      <img src="img/ic_agree.png" alt="">
+      <span></b>${(+item.day_number < 10) ? '0' + item.day_number : item.day_number}.${(+document.querySelector('#docs-month').value + 1) < 10 ? '0' + (+document.querySelector('#docs-month').value + 1) : (+document.querySelector('#docs-month').value + 1)}.${document.querySelector('#docs-year').value}</span>
+    </div>
+    <div class="alldocs-year-column">
+      <span>${item.total}</span>
+    </div>
+    <div class="alldocs-year-column">
+      <span>${item.count_documents}</span><br>
     </div>`;
+
 };
 
 const getDayElement = (item, index) => {
   return `
-  <div id="log-row" class="card mb-0 p-1 rounded-0" style="width: 100%">
-    <div class="media">
+
+  <div class="alldocs-year">
+    <div class="alldocs-year-column">
       <img class="mr-3" src="img/${BillTypes['type' + item.type]}.png" width="30" alt="">
-      <div class="media-body">
-        <b>ID: </b>${item.id}
-        <b> Статус: </b>${item.status}
-        <b> ID склада: </b>${item.stock_id}
-        <b> Имя склада: </b>${item.stock_name}
-        <b> Время: </b>${new Date(+(item.time + '000')).toLocaleString()}
-        <b> Всего: </b>${item.total}
-        <b> Тип: </b>${item.type}
-      </div>
+      <span> № ${item.id} в ${new Date(+(item.time + '000')).toLocaleTimeString()}</span>
+    </div>
+    <div class="alldocs-year-column">
+      <span>${item.total}</span>
+    </div>
+    <div class="alldocs-year-column">
+      <img class="mr-3 rounded-circle" src="img/user-male-filled-32.png" style="background-color: #${item.operator_color}" width="30" alt="">
     </div>`;
+
 };
 
 const getDayBalanceElement = (item, index) => {
   return `
-  <div id="log-row" class="card mb-0 p-1 rounded-0" style="width: 100%">
-    <div class="media">
 
-      <div class="media-body">
-        <b>ID: </b>${item.id}
-        <b> ID склада: </b>${item.stock_id}
-        <b> Имя склада: </b>${item.stock_name}
-        <b> Время: </b>${new Date(+(item.time + '000')).toLocaleString()}
-        <b> Всего: </b>${item.total}
-        <b> Комментарий: </b>${item.comment}
-        <b> Основание: </b>${item.reason}
-      </div>
+  <div class="alldocs-year">
+    <div class="alldocs-year-column">
+      <img class="mr-3" src="img/${(+item.total < 0) ? 'expenses' : 'revenue'}.png" width="30" alt="">
+      <span> № ${item.id} в ${new Date(+(item.time + '000')).toLocaleTimeString()}</span>
+    </div>
+    <div class="alldocs-year-column">
+      <span>${item.total}</span>
+    </div>
+    <div class="alldocs-year-column">
+      <img class="mr-3 rounded-circle" src="img/user-male-filled-32.png" style="background-color: #${item.operator_color}" width="30" alt="">
     </div>`;
+
 };
 
 const markup = {
 
 
   drawBillsYear(billsData, container, handler) {
-    billsData.forEach((group, index) => {
-      container.insertAdjacentHTML('beforeend', getYearElement(group, index));
+    billsData.forEach((bill, index) => {
+      container.insertAdjacentHTML('beforeend', getYearElement(bill, index));
+      container.lastChild.addEventListener('click', function () {
+        handler(bill);
+      });
     });
   },
 
   drawBillsMonth(billsData, container, handler) {
     billsData.forEach((bill, index) => {
       container.insertAdjacentHTML('beforeend', getMonthElement(bill, index));
+      container.lastChild.addEventListener('click', function () {
+        handler(bill);
+      });
     });
   },
 

@@ -2,16 +2,14 @@ import auth from '../tools/storage.js';
 
 const markup = {
   getGoodString(item, index) {
+
     return `
-    <div class="goods-string" data-good-id="${item.id}">
-      <div>
-        <span class="reference-row-number">${index + 1}</span> <span>${item.name}</span>
-      </div>
-      <div>
-        ${(Number(item.count)) ? Number(item.count).toFixed(2) : ''}
-        <button type="button" class="btn p-0 bg-white icon-btn icon-btn__go"></button>
-      </div>
-    </div>`;
+      <div class="catalog-groups-header" data-good-id="${item.id}">
+        <div class="catalog-groups-column">${index + 1}</div>
+        <div class="catalog-groups-column">${item.name}</div>
+        <div class="catalog-groups-column">${(Number(item.count)) ? Number(item.count).toFixed(2) : ''}</div>
+        <div class="catalog-groups-column"><button type="button" class="btn p-0 bg-white icon-btn icon-btn__go"></button></div>
+      </div>`;
   },
 
   getGoodTile(item, index) {
@@ -28,7 +26,14 @@ const markup = {
   },
 
   drawGoodsTable(goodsData, container, handler) {
-    container.innerHTML = '';
+    container.innerHTML = `
+      <div class="catalog-groups-header">
+        <div class="catalog-groups-column">№</div>
+        <div class="catalog-groups-column">Товар</div>
+        <div class="catalog-groups-column">Количество</div>
+        <div class="catalog-groups-column">Ред.</div>
+      </div>
+    `;
     if (goodsData) {
       goodsData.forEach((good, index) => {
         container.insertAdjacentHTML('beforeend', this.getGoodString(good, index));
@@ -62,7 +67,6 @@ const markup = {
 const drawGoods = (goodsList, container, handler, viewFlag) => {
   console.log(goodsList);
   if (auth.goodsViewMode === 'string' || viewFlag === 'string') {
-    console.log('hihihi');
     markup.drawGoodsTable(goodsList, container, handler);
   } else if (auth.goodsViewMode === 'metro') {
     markup.drawGoodsMetro(goodsList, container, handler);

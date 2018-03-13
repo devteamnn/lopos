@@ -9,14 +9,22 @@ export default {
   getElement(item, index) {
 
     return `
+        <div class="reference-header" data-buyer-id="${item.id}" data-index="${index}">
+            <div class="reference-column">${item.id}</div>
+            <div class="reference-column">${item.name}</div>
+        </div>
+`;
+    /*
+    return `
 
       <div class="d-flex justify-content-between align-items-center reference-string"  data-buyer-id="${item.id}"  data-index="${index}">
         <div style="padding-left: 34px;"><span class="reference-row-number">${index + 1}</span> <span>${item.name}</span></div>
         <div class="d-flex justify-content-between align-items-center">
 
-          <button type="button" class="btn p-0 bg-white icon-btn icon-btn__go"></button>
+
         </div>
     </div>`;
+    */
   },
 
   drawDataInContainer(buyersBodyData) {
@@ -24,6 +32,13 @@ export default {
   },
 
   drawMarkupInContainer(markup) {
+    listContractorsBody.innerHTML = `
+
+        <div class="reference-header">
+            <div class="reference-column">№</div>
+            <div class="reference-column">Имя</div>
+        </div>
+  `;
     listContractorsBody.insertAdjacentHTML('beforeend', markup);
   },
 

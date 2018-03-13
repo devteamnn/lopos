@@ -42,7 +42,7 @@ const onSuccessBalanceFormSend = () => {
 
 const onBalanceFormSendSubmit = (evt) => {
   evt.preventDefault();
-  if (uValid.check([balanceAmount, balanceSetDescribe])) {
+  if (uValid.check([balanceAmount, balanceSetDescribe], ['balance-amount', 'balance-set-describe'])) {
     xhr.request = {
       metod: 'POST',
       url: `lopos_directory/${auth.data.directory}/operator/1/business/${auth.data.currentBusiness}/stock/${auth.currentStockId}/balance_act`,
@@ -64,10 +64,12 @@ balanceForm.addEventListener('input', () => balanceFormSend.removeAttribute('dis
 
 let selectedString = '';
 balanceCardPlusBody.addEventListener('change', function (evt) {
+  console.log(evt.target);
+  // console.log(evt.target.labels[0]);
   if (selectedString) {
     selectedString.classList.remove('bg-light');
   }
-  selectedString = evt.target.labels[0];
+  selectedString = (evt.target.labels) ? evt.target.labels[0] : evt.target;
   selectedString.classList.add('bg-light');
   balanceAmount.removeAttribute('disabled', 'disabled');
   balanceSetDescribe.removeAttribute('disabled', 'disabled');
@@ -85,7 +87,7 @@ balanceCardMinusBody.addEventListener('change', function (evt) {
   if (selectedString) {
     selectedString.classList.remove('bg-light');
   }
-  selectedString = evt.target.labels[0];
+  selectedString = (evt.target.labels) ? evt.target.labels[0] : evt.target;
   selectedString.classList.add('bg-light');
   balanceAmount.removeAttribute('disabled', 'disabled');
   balanceSetDescribe.removeAttribute('disabled', 'disabled');

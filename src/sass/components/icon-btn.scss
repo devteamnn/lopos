@@ -34,6 +34,12 @@
   background-image: url(../img/icons8-edit-50.png);
   background-size: cover;
 }
+.icon-btn__edit--black {
+  background-image: url(../img/edit.png);
+  background-size: cover;
+  height: 28px;
+  width: 28px;
+}
 
 .icon-btn__delete {
   background-image: url(../img/trash-100.png);
@@ -53,6 +59,12 @@
 .icon-btn__go {
   background-image: url(../img/arrow-right.png);
   background-size: cover;
+}
+
+.icon-btn__goods-left {
+  background-image: url(../img/goods-left.png);
+  background-size: cover;
+  background-color: #fff;
 }
 
 .icon-btn__rgb {

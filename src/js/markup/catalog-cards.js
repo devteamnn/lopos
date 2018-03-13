@@ -1,7 +1,7 @@
 export default {
 
   getElement(item, index) {
-
+    /*
     return `
     <div class="d-flex justify-content-between align-items-center reference-string" data-card-id="${item.id}" data-card-index="${index}"">
       <div style="padding-left: 34px;">
@@ -11,10 +11,22 @@ export default {
       <div class="d-flex justify-content-between align-items-center">${(item.k) ? item.k : ''}
       </div>
     </div>`;
+    */
+    return `
+        <div class="reference-header" data-card-id="${item.id}" data-card-index="${index}">
+            <div class="reference-column">${index + 1}</div>
+            <div class="reference-column">${item.name}</div>
+        </div>`;
   },
 
 
   drawDataInContainer(cardsData, container) {
+    container.innerHTML = `
+      <div class="reference-header">
+          <div class="reference-column">№</div>
+          <div class="reference-column">Карточка товара</div>
+      </div>
+    `;
     if (cardsData.length > 0) {
       cardsData.forEach((item, index) => container.insertAdjacentHTML('beforeend', this.getElement(item, index)));
     } else {

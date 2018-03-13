@@ -16,8 +16,9 @@ const docsMonth = document.querySelector('#docs-month');
 const docsDay = document.querySelector('#docs-day');
 
 const docsBillBtn = document.querySelector('#docs-bill-btn');
+const getDocsBtn = document.querySelector('#get-docs-btn');
 const docsBalanceBtn = document.querySelector('#docs-balance-btn');
-// const docsReturnBtn = document.querySelector('#user-card-return-btn');
+const docsReturnBtn = document.querySelector('#docs-return-btn');
 const billCard = document.querySelector('#bill-card');
 
 const billCardType = document.querySelector('#bill-card-type');
@@ -129,7 +130,7 @@ const onSuccessBillDelivery = (answer) => {
 const setRequestToDeliveryBill = () => {
   xhr.request = {
     metod: 'PUT',
-    url: `lopos_directory/${auth.data.directory}/operator/${auth.data.operatorId}/business/${auth.currentEnterpriseId}/${auth.allDocsOperationType}/${auth.currentBillId}`,
+    url: `lopos_directory/${auth.data.directory}/operator/${auth.data.operatorId}/business/${auth.data.currentBusiness}/${auth.allDocsOperationType}/${auth.currentBillId}`,
     data: `status=3&token=${auth.data.token}`,
     callbackSuccess: onSuccessBillDelivery,
   };
@@ -212,53 +213,113 @@ const onBalanceActClick = () => {
   };
 };
 
-// ############################## ЗАГРУЖАЕМ ДОПОЛНИТЕЛЬНЫЕ ДОКУМЕНТЫ   ############
+// ############################## ЗАГРУЖАЕМ ДОПОЛНИТЕЛЬНЫЕ НАКЛАДНЫЕ   ############
 
 
-let lastTime = '';
+let lastId = '';
 let prevData = [];
 
 const onSuccessLoadMore = (billsData) => {
+  console.log(new Date(+(billsData)).toLocaleString());
   console.log(billsData);
-  docsBody.innerHTML = '';
-  bills.drawDay(billsData.data.concat(prevData), docsBody, onBillClick);
 
-  lastTime = billsData.data[billsData.data.length - 1].time;
+  // docsBody.innerHTML = '';
+  if (docsBody.lastChild.tagName === 'BUTTON') {
+    docsBody.lastChild.remove();
+  }
+  // lastId = billsData.data[billsData.data.length - 1].time;
+  lastId = billsData.data[billsData.data.length - 1].id;
+
+  billsData.data.sort((a, b) => b.id - a.id);
+  prevData = prevData.concat(billsData.data);
+  if (billsData.data[0].stock_name && auth.allDocsOperationType === 'naklad') {
+    bills.drawDay(billsData.data, docsBody, onBillClick);
+  } else if (billsData.data[0].stock_name && auth.allDocsOperationType === 'balance') {
+    bills.drawDayBalance(billsData.data, docsBody, onBalanceActClick);
+  }
+
   prevData = billsData.data.concat(prevData);
+
   docsBody.insertAdjacentHTML('beforeend', '<button type="button" class="btn btn-primary">Загрузить еще</button>');
+  docsBody.lastChild.removeAttribute('disabled', 'disabled');
   docsBody.lastChild.addEventListener('click', onClickLoadMore);
 };
 
-const onClickLoadMore = () => {
+const onClickLoadMore = (evt) => {
+  console.log(lastId);
+  evt.target.setAttribute('disabled', 'disabled');
   xhr.request = {
     metod: 'POST',
-    url: `lopos_directory/${auth.data.directory}/operator/${auth.data.operatorId}/business/${auth.data.currentBusiness}/documents/${auth.allDocsOperationType}/time/${lastTime}/before/50`,
+    url: `lopos_directory/${auth.data.directory}/operator/${auth.data.operatorId}/business/${auth.data.currentBusiness}/documents/${auth.allDocsOperationType}/id/${lastId}/before/50`,
     data: `token=${auth.data.token}`,
     callbackSuccess: onSuccessLoadMore
   };
 };
 // ############################## ЗАГРУЖАЕМ ДОКУМЕНТЫ ##############################
+docsReturnBtn.addEventListener('click', () => {
+  if (docsDay.value !== 'all') {
+    docsDay.value = 'all';
+    getDocs(docsYear.value, docsMonth.value, docsDay.value);
+  } else if (docsMonth.value !== 'all') {
+    docsMonth.value = 'all';
+    getDocs(docsYear.value, docsMonth.value, 'all');
+  }
+});
+
+const onYearClick = (bill) => {
+  console.log(bill.month_number - 1);
+  docsMonth.value = bill.month_number - 1;
+  console.log(docsYear.value, docsMonth.value, docsDay.value);
+  getDocs(docsYear.value, docsMonth.value, docsDay.value);
+};
+
+const onMonthClick = (bill) => {
+  console.log(bill.day_number);
+  console.log(docsYear.value, docsMonth.value, docsDay.value);
+  drawDates(docsYear.value, docsMonth.value, 'all');
+  docsDay.value = bill.day_number;
+  getDocs(docsYear.value, docsMonth.value, docsDay.value);
+};
 
 const onSuccessBillsGet = (billsData) => {
   console.log(billsData);
+
+  if (docsMonth.value === 'all') {
+    docsReturnBtn.setAttribute('disabled', 'disabled');
+  } else {
+    docsReturnBtn.removeAttribute('disabled');
+  }
 
   docsBody.innerHTML = '';
   if (billsData.data.length > 0) {
 
     if (billsData.data[0].month_number) {
-      bills.drawYear(billsData.data, docsBody, null);
+      bills.drawYear(billsData.data, docsBody, onYearClick);
 
     } else if (billsData.data[0].day_number) {
-      bills.drawMonth(billsData.data, docsBody, null);
+      bills.drawMonth(billsData.data, docsBody, onMonthClick);
 
-    } else if (billsData.data[0].stock_name && auth.allDocsOperationType === 'naklad') {
+    } else if ((billsData.data[0].stock_name || billsData.data[0].stock_name === 'null') && auth.allDocsOperationType === 'naklad') {
+      billsData.data.sort((a, b) => +b.id - +a.id);
       bills.drawDay(billsData.data, docsBody, onBillClick);
-      lastTime = billsData.data[billsData.data.length - 1].time;
+
+      lastId = billsData.data[billsData.data.length - 1].id;
       prevData = billsData.data.slice(0);
+
       docsBody.insertAdjacentHTML('beforeend', '<button type="button" class="btn btn-primary">Загрузить еще</button>');
       docsBody.lastChild.addEventListener('click', onClickLoadMore);
-    } else if (billsData.data[0].stock_name && auth.allDocsOperationType === 'balance') {
+    } else if ((billsData.data[0].stock_name || billsData.data[0].stock_name === 'null') && auth.allDocsOperationType === 'balance') {
+      // billsData.data.sort((a, b) => +b.id - +a.id);
+      // bills.drawDay(billsData.data, docsBody, onBillClick);
+
+      billsData.data.sort((a, b) => +a.id - +b.id);
       bills.drawDayBalance(billsData.data, docsBody, onBalanceActClick);
+
+      lastId = billsData.data[billsData.data.length - 1].id;
+      prevData = billsData.data.slice(0);
+
+      docsBody.insertAdjacentHTML('beforeend', '<button type="button" class="btn btn-primary">Загрузить еще</button>');
+      docsBody.lastChild.addEventListener('click', onClickLoadMore);
     }
 
   } else {
@@ -276,6 +337,9 @@ const getDocs = (year, month, day, type) => {
 };
 // ############################## ВЫСТАВЛЯЕМ ДАТЫ ##############################
 const drawDates = (year, month, day) => {
+  // month = month || 'all';
+  // day = day || 'all';
+
   let thisYear = new Date().getFullYear();
   let thisMonth = month || new Date().getMonth();
   let numberOfDays = 33 - new Date(thisYear, thisMonth, 33).getDate();
@@ -297,12 +361,14 @@ const drawDates = (year, month, day) => {
   docsYear.value = year || thisYear;
   docsMonth.value = thisMonth;
   docsDay.value = day || new Date().getUTCDate();
-  getDocs(docsYear.value, docsMonth.value, docsDay.value);
+  // getDocs(docsYear.value, docsMonth.value, docsDay.value);
 };
 
 docsYear.addEventListener('change', (evt) => drawDates(evt.target.value, 'all', 'all'));
 docsMonth.addEventListener('change', (evt) => drawDates(docsYear.value, evt.target.value, 'all'));
 docsDay.addEventListener('change', (evt) => drawDates(docsYear.value, docsMonth.value, evt.target.value));
+getDocsBtn.addEventListener('click', () => getDocs(docsYear.value, docsMonth.value, docsDay.value));
+
 docsStocks.addEventListener('change', (evt) => {
   auth.currentStockId = evt.target.value;
   drawDates(docsYear.value, docsMonth.value, docsDay.value);
@@ -310,12 +376,16 @@ docsStocks.addEventListener('change', (evt) => {
 
 docsBillBtn.addEventListener('click', () => {
   auth.allDocsOperationType = 'naklad';
+  docsBalanceBtn.style.opacity = 0.4;
+  docsBillBtn.style.opacity = 1;
   getDocs(docsYear.value, docsMonth.value, docsDay.value);
 
 });
 
 docsBalanceBtn.addEventListener('click', () => {
   auth.allDocsOperationType = 'balance';
+  docsBalanceBtn.style.opacity = 1;
+  docsBillBtn.style.opacity = 0.4;
   getDocs(docsYear.value, docsMonth.value, docsDay.value);
 });
 
@@ -330,6 +400,7 @@ const onSuccessStocksLoad = (docsData) => {
 
 
 const getStocks = () => {
+  auth.currentStockId = 'all';
 
   xhr.request = {
     metod: 'POST',
@@ -346,7 +417,11 @@ export default {
     drawDates();
     getDocs(docsYear.value, docsMonth.value, docsDay.value);
     auth.allDocsOperationType = 'naklad';
+    docsBalanceBtn.style.opacity = 0.4;
   },
+
+  onBillClick,
+  onBalanceActClick,
 
   stop() {
     docsList.removeEventListener('click', getStocks);

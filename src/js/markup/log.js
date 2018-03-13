@@ -1,4 +1,6 @@
 const listLogBody = document.querySelector('#log-body');
+import docs from '../buttons/accounting__all-docs.js';
+import auth from '../tools/storage.js';
 
 export default {
 
@@ -43,22 +45,49 @@ export default {
 
     let cardHeader = item.ha_comment.split('\n');
     cardHeader[1] = (cardHeader[1]) ? cardHeader[1] : '';
-
     return `
-    <div id="log-row" class="card mb-0 p-1 rounded-0" style="width: 100%">
-      <div class="media">
+    <div class="reference-header" data-link="${imgName}" ${(imgName === 'admission' || imgName === 'sale') ? `data-naklad=${item.ha_naklad_id_fk}` : ''} ${(imgName === 'expenses' || imgName === 'revenue') ? `data-balance=${item.ha_balance_act_id_fk}` : ''}>
+      <div class="reference-column">
         <img class="mr-3 rounded-circle p-1" src="img/user-male-filled-32.png" title="${item.ha_operator_name}" style="background-color: #${getIconColor}" width="30" alt="${item.ha_operator_name}">
+      </div>
+      <div class="reference-column">
+
+      <div class="online-user">
         <img class="mr-3" src="img/${imgName}.png" width="30" alt="Generic placeholder image">
-        <div class="media-body">
-          <b>${cardHeader[0]}</b>
-          ${cardHeader[1]}
+        <b>${cardHeader[0]}</b>
+        ${cardHeader[1]}
+      </div>
+
+
+      </div>
+      <div class="reference-column">
           <div class="badge text-right text-muted float-right">${new Date(+(item.ha_time + '000')).toLocaleString()}</div>
-        </div>
-      </div>`;
+      </div>
+      <div class="reference-column">
+          <div class="badge text-right text-muted float-right">${(imgName === 'admission' || imgName === 'sale' || imgName === 'expenses' || imgName === 'revenue') ? '>' : ''}</div>
+      </div>
+    </div>`;
+
   },
 
   addCardToContainer(cardMarkupItem) {
+    console.log(cardMarkupItem);
     listLogBody.insertAdjacentHTML('beforeend', cardMarkupItem);
+    if (listLogBody.lastChild.dataset.link === 'admission' || listLogBody.lastChild.dataset.link === 'sale') {
+      let billId = listLogBody.lastChild.dataset.naklad;
+      listLogBody.lastChild.addEventListener('click', () => {
+        console.log(billId);
+        auth.currentBillId = billId;
+        docs.onBillClick();
+      });
+    } else if (listLogBody.lastChild.dataset.link === 'expenses' || listLogBody.lastChild.dataset.link === 'revenue') {
+      let billId = listLogBody.lastChild.dataset.balance;
+      listLogBody.lastChild.addEventListener('click', () => {
+        console.log(billId);
+        auth.currentBillId = billId;
+        docs.onBalanceActClick();
+      });
+    }
   },
 
 };

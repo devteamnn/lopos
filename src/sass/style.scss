@@ -29,8 +29,8 @@ input[name="contact"]:checked + label {
 }
 
 .user-status {
-  height: 32px;
-  width: 32px;
+  height: 24px;
+  width: 24px;
   border-radius: 50%;
   margin-right: 5px;
 }
@@ -77,6 +77,228 @@ input[name="contact"]:checked + label {
   opacity: 1;
 }
 
+.alldocs-year {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 15px;
+  border-bottom: 1px solid gray;
+}
+
+.alldocs-year-column {
+  width: 30%;
+  align-items: center;
+  justify-content: flex-end;
+  display: flex;
+}
+
+.alldocs-year-column:first-child {
+  width: 30%;
+  justify-content: flex-start;
+}
+
+.alldocs-year-column img {
+  width: 44px;
+  height: 44px;
+  padding-right: 5px;
+}
+
+.catalog-header h2 {
+  margin-left: 5px;
+
+}
+
+.catalog-header-title {
+  display: flex;
+}
+
+.catalog-groups-header {
+  display: flex;
+  justify-content: space-between;
+  height: 30px;
+}
+
+.catalog-groups-column {
+  width: auto;
+  width: 20%;
+  border: 1px solid gray;
+  margin-left: -1px;
+  padding: 2px;
+}
+.catalog-groups-header:first-child {
+  font-weight: 700;
+  background-color: #ccc;
+}
+
+.catalog-groups-header:hover {
+  background-color: #ccc;
+}
+
+.catalog-groups-column:nth-child(1) {
+  width: 10%;
+}
+.catalog-groups-column:nth-child(2) {
+  width: 70%;
+}
+.catalog-groups-column:nth-child(4) button {
+  width: 24px;
+  height: 24px;
+}
+.catalog-groups-column:nth-child(5) {
+  width: 10%;
+  padding: 0;
+  text-align: center;
+}
+
+.catalog-groups-column button {
+  background-color: #fff;
+  padding: 0;
+}
+
+.reference-header {
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+}
+.reference-header:first-child {
+  outline: 1px solid black;
+  margin-right: 1px;
+  background-color: #ccc;
+  font-weight: 700;
+}
+
+.reference-header:hover {
+  background-color: #ccc;
+}
+
+.reference-column {
+  width: auto;
+  // width: 20%;
+  border: 1px solid gray;
+  margin-left: -1px;
+  padding: 2px;
+}
+
+.reference-column:nth-child(1) {
+  width: 10%;
+  display: flex;
+  justify-content: center;
+}
+
+.reference-column:nth-child(1) img {
+  height: 24px;
+  width: 24px;
+}
+
+.reference-column:nth-child(2) {
+  display: flex;
+  justify-content: space-between;
+  width: 95%;
+}
+.reference-column:nth-child(3) {
+  display: flex;
+  justify-content: center;
+  min-width: 15%;
+}
+.reference-column:nth-child(4) {
+  display: flex;
+  justify-content: center;
+  min-width: 7%;
+}
+
+#list-reports-body h4 {
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+.reports-dashboard {
+  display: flex;
+  justify-content: space-between;
+}
+
+.dashboard-item {
+  display: flex;
+  border: 1px solid gray;
+  width: 18%;
+
+}
+.dashboard-status {
+  height: 32px;
+  width: 32px;
+  background-color: #28a745;
+  border-radius: 50%;
+  margin: 15px;
+}
+
+.goods-left-setup-string {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid gray;
+  margin-left: 34px;
+  margin-right: 50px;
+}
+
+.goods-left-setup-string > span {
+  display: inline-block;
+  width: 300px;
+  margin-right: auto;
+}
+/*
+.goods-left-setup-string > div {
+  display: flex;
+  justify-content: space-between;
+  width: 50px;
+  text-align: left;
+}
+*/
+.report-goods-left-modal-footer {
+  display: flex;
+  justify-content: space-between;
+}
+
+#report-goods-left-modal-setup {
+  padding-left: 20px;
+  padding-right: 10px;
+}
+
+.report-setup-header {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 25px;
+  margin-bottom: 15px;
+  margin-left: 20px;
+  margin-right: 60px;
+}
+.report-calendar {
+  margin-left: 34px;
+  margin-right: 50px;
+  margin-bottom: 10px;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+}
+
+input[type="date"] {
+  position: relative;
+  margin-right: 30px;
+  background-image: url('../img/calendar-icon.png');
+  background-size: 20px 20px;
+  background-position: right;
+  background-repeat: no-repeat;
+
+}
+
+.online-user > img {
+  height: 24px;
+  width: 24px;
+}
+
+a.disabled img {
+  opacity: 0.4;
+}
 // Серый фон и шрифты
 /*
 @import "src/sass/components/app.scss";

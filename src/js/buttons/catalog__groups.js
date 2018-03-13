@@ -6,23 +6,22 @@ import groupDelete from './catalog__groups--delete.js';
 import groupsAdd from './catalog__groups--add.js';
 import goodsCard from './catalog__goods.js';
 import groupsList from './universal-groups-list.js';
-import groupEdit from './catalog__groups--edit.js';
+import uValid from './universal-validity-micro.js';
 
 const groupsEditForm = document.querySelector('#groups-edit');
 const groupsEditName = document.querySelector('#groups-edit-name');
+const groupsEditMarkup = document.querySelector('#groups-edit-markup');
+const groupsEditSubmit = document.querySelector('#groups-edit-submit');
 
 const listGroups = document.querySelector('#list-groups-list');
 const listGroupsCardAddBtn = document.querySelector('#list-groups-card-add-btn');
-const listGroupsCardDeleteBtn = document.querySelector('#list-groups-card-delete-btn');
-const listGroupsCardEditBtn = document.querySelector('#list-groups-card-edit-btn');
+const listGroupsCardDeleteBtn = document.querySelector('#groups-edit-delete');
 const listGroupsCard = document.querySelector('#list-groups-card');
 const listGroupsCardBody = document.querySelector('#list-groups-card-body');
-const listGroupsCardCheckMessage = document.querySelector('#list-groups-header-check-message');
 const groupsAddModal = document.querySelector('#groups-add');
 const groupGoodsCard = document.querySelector('#group-goods-card');
 const groupName = document.querySelector('#group-name');
 
-const SELECT_DELAY = 2000;
 
 const loaderSpinnerId = 'loader-groups';
 const loaderSpinnerMessage = 'Загрузка';
@@ -36,7 +35,7 @@ let loadedData = [];
 // поиск по группам
 const listGroupSearchInput = document.querySelector('#list-groups-search-input');
 listGroupSearchInput.addEventListener('input', (evt) => {
-  groupsList.draw(search.make(loadedData.data, evt.target.value), listGroupsCardBody, onGroupClick);
+  groupsList.drawCatalog(search.make(loadedData.data, evt.target.value), listGroupsCardBody, onGroupClick);
 });
 
 listGroupsCardAddBtn.addEventListener('click', () => {
@@ -46,8 +45,9 @@ listGroupsCardAddBtn.addEventListener('click', () => {
 // обработка успеха загрузки групп
 const onSuccessGroupsLoad = (loadedGroups) => {
   loadedData = loadedGroups;
+  console.log(loadedData);
   document.querySelector(`#${loaderSpinnerId}`).remove();
-  groupsList.draw(loadedGroups.data, listGroupsCardBody, onGroupClick);
+  groupsList.drawCatalog(loadedGroups.data, listGroupsCardBody, onGroupClick);
 };
 
 // получение групп
@@ -65,17 +65,7 @@ const getGroups = () => {
 };
 
 // обработчики кликов редактирования/удаления
-const onEditDeleteClick = (evt) => {
-  auth.groupListOperationType = (evt.target === listGroupsCardEditBtn) ? 'edit' : 'delete';
-  listGroupsCardCheckMessage.innerHTML = 'Выберите группу';
 
-  window.setTimeout(function () {
-    listGroupsCardCheckMessage.innerHTML = '';
-    auth.groupListOperationType = 'open';
-  }, SELECT_DELAY);
-};
-listGroupsCardEditBtn.addEventListener('click', onEditDeleteClick);
-listGroupsCardDeleteBtn.addEventListener('click', onEditDeleteClick);
 
 const getGoodsForGroup = () => {
   xhr.request = {
@@ -86,18 +76,55 @@ const getGoodsForGroup = () => {
   };
 };
 
-// обработчик клика по ноде группы
-const onGroupClick = () => {
+listGroupsCardDeleteBtn.addEventListener('click', groupDelete.make);
 
-  if (auth.groupListOperationType === 'edit') {
+
+const onGroupsEditSubmit = (evt) => {
+  evt.preventDefault();
+  if (uValid.check([groupsEditName, groupsEditMarkup]/* , ['balance-amount', 'balance-set-describe'] */)) {
+    xhr.request = {
+      metod: 'PUT',
+      url: `lopos_directory/${auth.data.directory}/operator/${auth.data.operatorId}/business/${auth.data.currentBusiness}/group/${auth.currentGroupId}`,
+      data: `markup=${groupsEditMarkup.value}&name=${groupsEditName.value}&token=${auth.data.token}`,
+      callbackSuccess: getGroups,
+    };
+    $(groupsEditForm).modal('hide');
+
+  }
+};
+
+groupsEditSubmit.addEventListener('click', onGroupsEditSubmit);
+groupsEditForm.addEventListener('submit', onGroupsEditSubmit);
+
+const onGroupsEditNameMarkup = () => {
+  if (groupsEditName.value === auth.currentGroupName && +groupsEditMarkup.value === +auth.currentGroupMarkup) {
+    groupsEditSubmit.setAttribute('disabled', 'disabled');
+  } else {
+    groupsEditSubmit.removeAttribute('disabled');
+  }
+};
+
+
+groupsEditName.addEventListener('input', onGroupsEditNameMarkup);
+groupsEditMarkup.addEventListener('input', onGroupsEditNameMarkup);
+
+// обработчик клика по ноде группы
+const onGroupClick = (evt) => {
+
+  if (evt.target.tagName === 'BUTTON') {
     $(groupsEditForm).modal('show');
     groupsEditName.value = auth.currentGroupName;
-    groupEdit.start(groupsEditForm);
+    groupsEditMarkup.value = auth.currentGroupMarkup;
+    if (auth.currentGroupCount === '0') {
+      listGroupsCardDeleteBtn.removeAttribute('disabled');
+    } else {
+      listGroupsCardDeleteBtn.setAttribute('disabled', 'disabled');
+    }
+    onGroupsEditNameMarkup();
+    // groupEdit.start(groupsEditForm);
 
-  } else if (auth.groupListOperationType === 'delete') {
-    groupDelete.make();
-
-  } else if (auth.groupListOperationType === 'open' || !auth.groupListOperationType) {
+  // } else if (auth.groupListOperationType === 'open' || !auth.groupListOperationType) {
+  } else {
     groupName.innerHTML = auth.currentGroupName;
     groupGoodsCard.classList.remove('d-none');
     listGroupsCard.classList.add('d-none');
@@ -131,6 +158,11 @@ $('#points-add').on('shown.bs.modal', function () {
 $('#keywords-add').on('shown.bs.modal', function () {
   $('#keywords-add-name').trigger('focus');
 });
+
+$('#keywords-add').on('shown.bs.modal', function () {
+  $('#keywords-add-name').trigger('focus');
+});
+
 
 export default {
 

@@ -20,6 +20,7 @@ import manufactureButton from './buttons/operations__manufacture.js';
 import balanceButton from './buttons/operations__balance.js';
 import usersButton from './buttons/online__users.js';
 import docsButton from './buttons/accounting__all-docs.js';
+import reportsButton from './buttons/accounting__reports.js';
 
 
 // import goodsButtonFormEdit from './buttons/catalog__goods--edit.js';
@@ -85,7 +86,8 @@ const mainMenuButtons = [
   usersButton,
   docsButton,
   operationTrade,
-  operationInventory
+  operationInventory,
+  reportsButton
 ];
 
 // ========== ОБНОВЛЕНИЕ/ОТКРЫТИЕ СТРАНИЦЫ ==========

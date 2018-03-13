@@ -3,6 +3,7 @@ import xhr from '../tools/xhr.js';
 import auth from '../tools/storage.js';
 import toolsMarkup from '../markup/tools.js';
 import groups from './catalog__groups.js';
+const groupsEditForm = document.querySelector('#groups-edit');
 
 const onSuccessGroupDelete = (answer) => {
 
@@ -12,6 +13,8 @@ const onSuccessGroupDelete = (answer) => {
   } else {
     message = 'Группа успешно удалена';
     groups.redraw();
+    $(groupsEditForm).modal('hide');
+
   }
 
   toolsMarkup.informationtModal = {

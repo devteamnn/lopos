@@ -42,7 +42,7 @@ listPointsBody.addEventListener('change', function (evt) {
   if (selectedString) {
     selectedString.classList.remove('bg-light');
   }
-  selectedString = evt.target.labels[0];
+  selectedString = (evt.target.labels) ? evt.target.labels[0] : evt.target;
   selectedString.classList.add('bg-light');
   auth.currentStockId = selectedString.dataset.stockId;
   enableCheckEditButtons();

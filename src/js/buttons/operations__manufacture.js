@@ -124,7 +124,7 @@ const onManufactureColumnBodyClick = (evt) => {
     submitBtnName: 'Изменить',
     submitCallback() {
       // if (/^\-?\d+$/.test(document.querySelector('#universal-modal-micro-name').value)) {
-      if (uValid.check([document.querySelector('#universal-modal-micro-name')])) {
+      if (uValid.check([document.querySelector('#universal-modal-micro-name')], ['universal-modal-micro-name'])) {
         if (+document.querySelector('#universal-modal-micro-name').value === 0) {
           selectedNomenklatureCards.splice([currentStringElement.dataset.cardIndex], 1);
           document.querySelectorAll('.manufacture-nomenklature-card--muted')[currentStringElement.dataset.cardIndex].classList.remove('manufacture-nomenklature-card--muted');
@@ -210,6 +210,11 @@ const getManufacture = () => {
     callbackSuccess: onSuccessManufactureLoad,
   };
 };
+
+$('#universal-modal-micro').on('shown.bs.modal', function () {
+  console.log('hi');
+  $('#universal-modal-micro-name').trigger('focus');
+});
 
 
 export default {

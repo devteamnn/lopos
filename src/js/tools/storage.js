@@ -193,6 +193,22 @@ export default {
     return sessionStorage.getItem('currentGroupLevel');
   },
 
+  set currentGroupMarkup(markup) {
+    sessionStorage.setItem('currentGroupMarkup', markup);
+  },
+
+  get currentGroupMarkup() {
+    return sessionStorage.getItem('currentGroupMarkup');
+  },
+
+  set currentGroupCount(count) {
+    sessionStorage.setItem('currentGroupCount', count);
+  },
+
+  get currentGroupCount() {
+    return sessionStorage.getItem('currentGroupCount');
+  },
+
   set currentGoodId(id) {
     sessionStorage.setItem('currentGoodId', id);
   },
@@ -319,6 +335,22 @@ export default {
 
   get currentBillId() {
     return sessionStorage.getItem('currentBillId');
+  },
+
+  set currentUserStatus(type) {
+    sessionStorage.setItem('currentUserStatus', type);
+  },
+
+  get currentUserStatus() {
+    return sessionStorage.getItem('currentUserStatus');
+  },
+
+  set currentReportType(type) {
+    sessionStorage.setItem('currentReportType', type);
+  },
+
+  get currentReportType() {
+    return sessionStorage.getItem('currentReportType');
   },
 
   set operationClickType(type) {

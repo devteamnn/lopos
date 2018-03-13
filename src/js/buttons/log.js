@@ -17,7 +17,17 @@ const drawSet = count / 4;
 
 
 // отрисовка порции карточек
-const drawCardSet = () => logCardNodes.splice(0, drawSet).forEach(logMarkup.addCardToContainer);
+listLogBody.innerHTML = `
+    <div class="reference-header">
+        <div class="reference-column"></div>
+        <div class="reference-column">Операция</div>
+        <div class="reference-column">Время</div>
+        <div class="reference-column">Просм.</div>
+    </div>
+`;
+const drawCardSet = () => {
+  logCardNodes.splice(0, drawSet).forEach(logMarkup.addCardToContainer);
+};
 
 // создание нод по полученной порции данных
 const createCardNodes = (cardData) => cardData.forEach((item, index) => logCardNodes.push(logMarkup.getElement(item, index)));
@@ -25,6 +35,7 @@ const createCardNodes = (cardData) => cardData.forEach((item, index) => logCardN
 // успех загрузки
 const onSuccessLogLoad = (logResponse) => {
   let loadedLog = logResponse.data;
+  console.log(loadedLog);
 
   loaderWait.classList.add('d-none');
   if (loadedLog.length) {

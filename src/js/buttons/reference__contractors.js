@@ -3,6 +3,7 @@ import auth from '../tools/storage.js';
 import contractorsMarkup from '../markup/reference__contractors.js';
 import contractorsCardMarkup from '../markup/reference__contractors-card.js';
 import toolsMarkup from '../markup/tools.js';
+import search from './universal-search.js';
 
 const loaderSpinnerId = 'loader-contractors';
 const loaderSpinnerMessage = 'Загрузка';
@@ -30,6 +31,16 @@ const listContractorsFormSubmit = document.querySelector('#contractors-add-submi
 const listContractorsFormBill = document.querySelector('#contractors-add-bill');
 
 let contractorsData = [];
+
+// поиск по группам
+const listGroupSearchInput = document.querySelector('#list-contractors-search-input');
+listGroupSearchInput.addEventListener('input', (evt) => {
+  // groupsList.drawCatalog(search.make(loadedData.data, evt.target.value), listGroupsCardBody, onGroupClick);
+  contractorsMarkup.cleanContainer();
+  console.log(contractorsData);
+  contractorsMarkup.drawMarkupInContainer('');
+  contractorsMarkup.drawDataInContainer(search.make(contractorsData, evt.target.value));
+});
 
 const ContractorType = {
   SUPPLIER: 1,
@@ -115,7 +126,7 @@ const onListContractorsBodyClick = (evt) => {
     phone,
     fio,
     email
-  } = contractorsData[currentStringElement.dataset.index];
+  } = contractorsData.find((item) => item.id === currentStringElement.dataset.buyerId);
 
   $('#contractors-add').modal('show');
 
@@ -159,6 +170,7 @@ listContractorsBody.addEventListener('click', onListContractorsBodyClick);
 
 const getContractors = (type) => {
 
+  document.querySelector('#list-contractors-search-input').value = '';
   auth.currentScreen = (Number(type) === ContractorType.SUPPLIER) ? 'reference__contractors--Suppliers' : 'reference__contractors--Buyers';
 
   showBodyHideCard();

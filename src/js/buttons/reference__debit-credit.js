@@ -33,15 +33,31 @@ const disableCheckEditButtons = () => {
 const getElement = (item, index) => {
 
   return `
-  <input type="radio" id="reference-${item.id}" class="d-none">
+    <input type="radio" id="reference-${item.id}"  data-debit-credit-id="${item.id}" data-debit-credit-name="${item.name}" class="d-none">
+
+    <label class="reference-header" for="reference-${item.id}" data-debit-credit-id="${item.id}" data-debit-credit-name="${item.name}">
+        <div class="reference-column">${index + 1}</div>
+        <div class="reference-column">${item.name}</div>
+    </label>
+`;
+
+  /*
+  return `
+  <input type="radio" id="reference-${item.id}"  data-debit-credit-id="${item.id}" data-debit-credit-name="${item.name}" class="d-none">
   <label style="padding-left: 34px;" for="reference-${item.id}" class="d-flex justify-content-between align-items-center reference-string" data-debit-credit-id="${item.id}" data-debit-credit-name="${item.name}">
     <div><span class="reference-row-number">${index + 1}</span> ${item.name}</div>
     <div class="d-flex justify-content-between align-items-center">
     </div>
   </label>`;
+  */
 };
 
 const drawDataInContainer = (enterprisesData) => {
+  debitCreditBody.innerHTML = `
+    <div class="reference-header">
+        <div class="reference-column">№</div>
+        <div class="reference-column">Категория</div>
+    </div>`;
   enterprisesData.forEach((item, index) => debitCreditBody.insertAdjacentHTML('beforeend', getElement(item, index)));
 };
 
@@ -109,8 +125,7 @@ debitCreditBody.addEventListener('change', function (evt) {
   if (selectedString) {
     selectedString.classList.remove('bg-light');
   }
-  console.log(evt.target.labels[0]);
-  selectedString = evt.target.labels[0];
+  selectedString = (evt.target.labels) ? evt.target.labels[0] : evt.target;
   selectedString.classList.add('bg-light');
   auth.debitCreditId = selectedString.dataset.debitCreditId;
   auth.debitCreditName = selectedString.dataset.debitCreditName;

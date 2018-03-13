@@ -60,18 +60,30 @@ const permissionsOther = {
 const markup = {
 
   getElement(item, index) {
+
     return `
-    <div class="d-flex justify-content-between align-items-center reference-string" data-user-id="${item.id}">
-      <div style="padding-left: 34px;">
-        <span class="reference-row-number">${index + 1}</span>
-        <img class="ml-2 mr-1 rounded-circle p-1" src="img/user-male-filled-32.png" title="${item.name}" style="background-color: #${item.color}" width="30" alt="${item.name}">
-        <span>${item.name}</span>
+    <div class="reference-header" data-user-id="${item.id}">
+      <div class="reference-column">
+          <img class="rounded-circle" src="img/user-male-filled-32.png" title="${item.name}" style="background-color: #${item.color};" alt="${item.name}">
       </div>
-      <div class="user-status" style="background-color: #${(item.status === '0') ? 'dc3545' : '28a745'}"></div>
+      <div class="reference-column">
+        <div class="online-user">
+          ${item.name}
+        </div>
+      </div>
+      <div class="reference-column"><div class="user-status" style="background-color: #${(item.status === '0') ? 'dc3545' : '28a745'}"></div></div>
     </div>`;
+
   },
 
   drawDataInContainer(users, container, handler) {
+    container.innerHTML = `
+      <div class="reference-header">
+          <div class="reference-column"></div>
+          <div class="reference-column">Пользователь</div>
+          <div class="reference-column">Статус</div>
+      </div>
+    `;
     users.forEach((user, index) => {
       container.insertAdjacentHTML('beforeend', this.getElement(user, index));
       container.lastChild.addEventListener('click', function () {
@@ -85,6 +97,7 @@ const markup = {
 // отрисовка списка групп по данным
 const drawUsers = (users, container, handler) => {
   container.innerHTML = '';
+  auth.currentStockId = 1;
   if (users.length > 0) {
     markup.drawDataInContainer(users, container, handler);
   } else {
@@ -95,7 +108,9 @@ const drawUsers = (users, container, handler) => {
 
 // ############################## БЛОКИРОВКА ПОЛЬЗОВАТЕЛЯ #########################
 const lockSuccess = (answer) => {
-  userProfileStatus.innerText = (+userProfileStatus.innerText === 0) ? '1' : '0';
+  // userProfileStatus.innerText = (+userProfileStatus.innerText === 0) ? '1' : '0';
+  auth.currentUserStatus = (+auth.currentUserStatus === 0) ? 1 : 0;
+  userProfileStatus.innerHTML = (+auth.currentUserStatus === 1) ? '<span class="text-success">Активен</span>' : '<span class="text-danger">Заблокирован</span>';
   console.log(answer);
 };
 
@@ -103,7 +118,7 @@ const onUsersLockBtnClick = () => {
   xhr.request = {
     metod: 'PUT',
     url: `lopos_directory/${auth.data.directory}/operator/${auth.currentUserId}`,
-    data: `status=${(+userProfileStatus.innerText === 0) ? '1' : '0'}&token=${auth.data.token}`,
+    data: `status=${(+auth.currentUserStatus === 0) ? 1 : 0}&token=${auth.data.token}`,
     callbackSuccess: lockSuccess,
   };
 };
@@ -238,6 +253,7 @@ userStockPermissions.addEventListener('change', changeStockPermission);
 userOtherPermissions.addEventListener('change', changeOtherPermission);
 
 // ############################## ЗАГРУЗКА СПИСКА ПОЛЬЗОВАТЕЛЕЙ ##############################
+
 usersReturnBtn.addEventListener('click', () => {
   getUsers();
   usersBody.classList.remove('d-none');
@@ -245,92 +261,107 @@ usersReturnBtn.addEventListener('click', () => {
   usersHeader.classList.remove('d-none');
 });
 
+const screenNamesStock = Object.keys(permissionsStock);
+
+const drawAccessForStock = (accessList) => `
+      <div class="user-permissions-string">
+        <span>${permissionsModule.permissionEngToRus[accessList[0]]}</span>
+        <div>
+          <input class="form-check-input position-static user-permissions-switch" type="checkbox" value="${permissionsStock[accessList[0]]}" ${accessList[1]}>
+        </div>
+      </div>`;
+
+const getScreens = (permissionList, stockName) => {
+  let screens = screenNamesStock.map((screen) => {
+    // console.log('screen-->', screen);
+    // console.log('stockName-->', stockName);
+    return permissionList.stock[stockName].includes(permissionsStock[screen].toString()) ? [screen, 'checked'] : [screen, ''];
+  });
+
+  return screens;
+};
+
+let permissionList = {};
+
 const onSuccessUserInfoLoad = (userData) => {
-  console.log('userData --> ', userData);
-  let permissionList = {
+  console.log(userData);
+
+  let {name, status, id, color, operator_permissons: permissions, all_stocks: allSocks} = userData.data;
+
+  permissionList = {
     stock: {},
     other: []
   };
-  let {name, status, id, color, operator_permissons: permissions, all_stocks: allSocks} = userData.data;
+
   userProfileName.innerHTML = name;
-  userProfileStatus.innerHTML = status;
+  auth.currentUserStatus = status;
+  userProfileStatus.innerHTML = (+auth.currentUserStatus === 1) ? '<span class="text-success">Активен</span>' : '<span class="text-danger">Заблокирован</span>';
   userProfileId.innerHTML = auth.data.directory + '-' + id;
   userProfileImage.style.backgroundColor = '#' + color;
+
 
   if (permissions) {
 
     permissions.forEach((item) => {
-
       if (item.stock === '00') {
         permissionList.other.push(item.code);
-      } else if (permissionList.stock[item.stock]) {
-        permissionList.stock[item.stock].push(item.code);
+      } else if (permissionList.stock[(+item.stock)]) {
+        permissionList.stock[(+item.stock)].push(item.code);
       } else {
-        permissionList.stock[item.stock] = [item.code];
+        permissionList.stock[(+item.stock)] = [item.code];
       }
     });
+  }
 
-    console.log(permissionList);
-    const screenNamesStock = Object.keys(permissionsStock);
+  allSocks.forEach((stock) => {
+    if (!permissionList.stock[stock.id]) {
+      permissionList.stock[(+stock.id)] = [];
+    }
+  });
 
-    const drawAccessForStock = (accessList) => `
-          <div class="user-permissions-string">
-            <span>${permissionsModule.permissionEngToRus[accessList[0]]}</span>
-            <div>
-              <input class="form-check-input position-static user-permissions-switch" type="checkbox" value="${permissionsStock[accessList[0]]}" ${accessList[1]}>
-            </div>
-          </div>`;
+  console.log('permissionList-->', permissionList);
 
-    Object.keys(permissionList.stock).forEach((stockName) => {
 
-      let stock = allSocks.find((item) => item.id === Number(stockName).toFixed());
-      userStockList.insertAdjacentHTML('beforeEnd', `<span class="user-permissions-stock" data-stock-id=${Number(stockName).toFixed()}>${(stock) ? stock.name : ''}</span>`);
+  Object.keys(permissionList.stock).forEach((stockName) => {
 
-      let screens = screenNamesStock.map((screen) => permissionList.stock[stockName].includes(permissionsStock[screen].toString()) ? [screen, 'checked'] : [screen, '']);
-      drawAccessForStock(screens[0]);
+    let stock = allSocks.find((item) => item.id === Number(stockName).toFixed());
+    userStockList.insertAdjacentHTML('beforeEnd', `<span id="stock-${Number(stockName).toFixed()}" class="user-permissions-stock" data-stock-id=${Number(stockName).toFixed()}>${(stock) ? stock.name : ''}</span>`);
 
-      userStockList.lastChild.addEventListener('click', () => {
-        console.log(Number(stockName.split('-')[1]).toFixed());
-        auth.currentStockId = Number(stockName).toFixed();
-        onUserClick();
-        console.log('screens-->', screens);
+    // массив прав доступа для каждого склада, нужен для отрисовки по клику на склад
+    let screens = getScreens(permissionList, stockName);
 
-        userStockPermissions.innerHTML = screens.map(drawAccessForStock).join('');
-        /*
-        userStockPermissions.innerHTML = screens.map((screen) => `
-          <div class="user-permissions-string">
-            <span>${permissionsModule.permissionEngToRus[screen[0]]}</span>
-            <div>
-              <input class="form-check-input position-static user-permissions-switch" type="checkbox" value="${permissionsStock[screen[0]]}" ${screen[1]}>
-            </div>
-          </div>`).join('');
-        */
-      });
+    // document.querySelector(`#stock-${auth.currentStockId}`).classList.add('btn-danger');
+    userStockList.lastChild.addEventListener('click', (evt) => {
+      auth.currentStockId = Number(stockName).toFixed();
+      onUserClick();
+      console.log('screens-->', screens);
+
+      userStockPermissions.innerHTML = screens.map(drawAccessForStock).join('');
     });
-    userOtherPermissions.innerHTML = Object.keys(permissionsOther).map((screen) => {
-      console.log(screen);
-      return `
-      <div class="user-permissions-string">
-        <span>${permissionsModule.permissionEngToRus[screen]}</span>
-        <div>
-          <input class="form-check-input position-static user-permissions-switch" type="checkbox" value="${permissionsOther[screen][0]}" ${permissionList.other.includes(permissionsOther[screen][0].toString()) ? 'checked' : ''}>
-          <input class="form-check-input position-static user-permissions-switch" type="checkbox" value="${permissionsOther[screen][1]}" ${permissionList.other.includes(permissionsOther[screen][1].toString()) ? 'checked' : ''}>
-        </div>
-      </div>`;
-    }).join('');
+  });
+
+  userOtherPermissions.innerHTML = Object.keys(permissionsOther).map((screen) => {
+    return `
+    <div class="user-permissions-string">
+      <span>${permissionsModule.permissionEngToRus[screen]}</span>
+      <div>
+        <input class="form-check-input position-static user-permissions-switch" type="checkbox" value="${permissionsOther[screen][0]}" ${permissionList.other.includes(permissionsOther[screen][0].toString()) ? 'checked' : ''}>
+        <input class="form-check-input position-static user-permissions-switch ${(permissionsOther[screen][1] === '') ? 'd-none' : ''}" type="checkbox" value="${permissionsOther[screen][1]}" ${permissionList.other.includes(permissionsOther[screen][1].toString()) ? 'checked' : ''}>
+      </div>
+    </div>`;
+  }).join('');
 
 
-  } else if (+auth.currentUserId === 1) {
+  userStockPermissions.innerHTML = getScreens(permissionList, auth.currentStockId).map(drawAccessForStock).join('');
+  document.querySelector(`#stock-${auth.currentStockId}`).classList.add('bg-success');
+
+  if (+auth.currentUserId === 1) {
     userStockList.innerHTML = '';
     userStockPermissions.innerHTML = 'У вас все права';
     userOtherPermissions.innerHTML = 'У вас все права';
-  } else {
-    userStockList.innerHTML = '';
-    userStockPermissions.innerHTML = 'У вас нет прав';
-    userOtherPermissions.innerHTML = 'У вас нет прав';
   }
-  // drawUsers(usersData.data, usersBody, onUserClick);
 };
+
 
 // обработчик клика по пользователю
 const onUserClick = () => {

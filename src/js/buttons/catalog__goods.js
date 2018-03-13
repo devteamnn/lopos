@@ -32,6 +32,102 @@ const stockModal = document.querySelector('#set-stock-modal');
 const stockModalName = document.querySelector('#set-stock-modal-stock');
 const stockModalQuantity = document.querySelector('#set-stock-modal-quantity');
 
+// ############################## ОТЧЕТ ПО ОСТАТКАМ ТОВАРА ##############################
+
+const reportsGoodsLeftModal = document.querySelector('#report-catalog-goods-left-modal');
+const reportsGoodsLeftModalStock = document.querySelector('#report-catalog-goods-left-modal-stock');
+const reportsGoodsLeftModalSwitchesBody = document.querySelector('#report-catalog-goods-left-modal-switch');
+const reportsGoodsLeftModalPDFBtn = document.querySelector('#report-catalog-goods-left-modal-pdf');
+const reportsGoodsLeftModalExcelBtn = document.querySelector('#report-catalog-goods-left-modal-excel');
+
+const reportLink = document.querySelector('#report-catalog-link');
+const reportLinkGoogle = document.querySelector('#report-catalog-link-google');
+
+const goodsReportBtn = document.querySelector('#group-goods-report-btn');
+
+const onPDFLoadSuccess = (data) => {
+  console.log(data);
+
+  /*
+  reportLink.href = data.data;
+  reportLink.innerHTML = `Скачать ${auth.currentReportType}`;
+  reportLinkGoogle.href = `https://docs.google.com/viewer?url=${data.data}&embedded=false`;
+  reportLinkGoogle.innerHTML = `Смотреть ${auth.currentReportType} на Google `;
+  */
+
+  reportLink.href = data.data;
+  reportLinkGoogle.href = `https://docs.google.com/viewer?url=${data.data}&embedded=false`;
+
+  reportLink.classList.remove('disabled');
+  reportLinkGoogle.classList.remove('disabled');
+  // reportLink.innerHTML = '<img src="./img/report-download.png" style="height: 34px;" title="Скачать на компьютер">';
+  // reportLinkGoogle.innerHTML = '<img src="./img/report-google.png" style="height: 34px;" title="Смотреть на Google">';
+};
+
+const getReportLink = () => {
+  console.log('stock-->', auth.currentStockId);
+
+  let params = [];
+  reportLink.classList.add('disabled');
+  reportLinkGoogle.classList.add('disabled');
+  reportsGoodsLeftModalSwitchesBody.querySelectorAll('.report-goods-left-modal-switch').forEach((switchParam) => {
+    if (switchParam.checked) {
+      params.push(switchParam.value);
+    }
+  });
+
+  console.log('parameters-->', params);
+
+  xhr.request = {
+    metod: 'POST',
+    url: `lopos_directory/${auth.data.directory}/operator/${auth.data.operatorId}/business/${auth.data.currentBusiness}/report/remains/export/${auth.currentReportType}`,
+    data: `token=${auth.data.token}&parameters=[${params}]&list_of_groups=[${auth.currentGroupId}]${(auth.currentStockId === 'all' ? '' : '&stock=' + auth.currentStockId)}`,
+    callbackSuccess: onPDFLoadSuccess
+  };
+};
+
+reportsGoodsLeftModalPDFBtn.addEventListener('click', () => {
+  auth.currentReportType = 'pdf';
+  reportLink.classList.add('disabled');
+  reportLinkGoogle.classList.add('disabled');
+  getReportLink();
+});
+
+reportsGoodsLeftModalExcelBtn.addEventListener('click', () => {
+  auth.currentReportType = 'excel';
+  reportLink.classList.add('disabled');
+  reportLinkGoogle.classList.add('disabled');
+  getReportLink();
+});
+
+const onSuccessStockLoad = (stockData) => {
+  // reportLink.innerHTML = '';
+  // reportLinkGoogle.innerHTML = '';
+  reportLink.classList.add('disabled');
+  reportLinkGoogle.classList.add('disabled');
+  reportsGoodsLeftModalStock.innerHTML = stockData.data.map((item) => `<option value="${item.id}">${item.name}</option>`).join('');
+
+  if (stockData.data.length > 1) {
+    reportsGoodsLeftModalStock.innerHTML += '<option value="all" selected>Все склады</option';
+  }
+
+  $(reportsGoodsLeftModal).modal('show');
+
+};
+
+const onGodsLeftReport = () => {
+
+  xhr.request = {
+    metod: 'POST',
+    url: `lopos_directory/${auth.data.directory}/operator/${auth.data.operatorId}/business/${auth.data.currentBusiness}/stock`,
+    data: `view_last=0&token=${auth.data.token}`,
+    callbackSuccess: onSuccessStockLoad
+  };
+};
+
+goodsReportBtn.addEventListener('click', onGodsLeftReport);
+
+
 // ############################## РАБОТА С ТОВАРАМИ (СПИСОК) ##############################
 import goodsAdd from './catalog__goods--add.js';
 import goodsList from './universal-goods-list.js';
