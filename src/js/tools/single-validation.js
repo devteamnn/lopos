@@ -13,9 +13,17 @@ const formInpitHandler = (evt) => {
   }
 
   let span = parent.querySelector(`*[data-validLabel=${el.dataset.validlabelname}]`);
-  span.innerHTML = '';
 
-  parent.querySelector('button[type="submit"]').disabled = false;
+  if (span) {
+    span.innerHTML = '';
+  }
+
+
+  let submitBtn = parent.querySelector('button[type="submit"]');
+
+  if (submitBtn) {
+    submitBtn.disabled = false;
+  }
 
   el.removeEventListener('input', formInpitHandler);
 
@@ -31,8 +39,6 @@ const inputValid = (el, variable) => {
   if (!pattern[el.dataset.valid].test(el.value)) {
     el.addEventListener('input', formInpitHandler);
 
-    console.log('HANDLER ADD');
-
     el.classList.add('border');
     el.classList.add('border-danger');
 
@@ -43,15 +49,20 @@ const inputValid = (el, variable) => {
     }
 
     let span = parent.querySelector(`*[data-validLabel=${el.dataset.validlabelname}]`);
-    span.innerHTML = message[el.dataset.valid];
 
-    parent.querySelector('button[type="submit"]').disabled = true;
+    if (span) {
+      span.innerHTML = message[el.dataset.valid];
+    }
+
+    let submitBtn = parent.querySelector('button[type="submit"]');
+
+    if (submitBtn) {
+      submitBtn.disabled = true;
+    }
 
     return false;
   }
-
   return true;
-
 };
 
 export default {

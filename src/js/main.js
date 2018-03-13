@@ -25,7 +25,8 @@ import docsButton from './buttons/accounting__all-docs.js';
 // import goodsButtonFormEdit from './buttons/catalog__goods--edit.js';
 import cardsButton from './buttons/catalog__cards.js';
 import searchButton from './buttons/catalog__search.js';
-import operationTrade from './buttons/operations__trade.js';
+import operationPurchase from './buttons/operations__purchase.js';
+import operationSale from './buttons/operations__sale.js';
 import operationInventory from './buttons/operations__inventory.js';
 
 // import xhr from './tools/xhr.js';
@@ -84,8 +85,6 @@ const mainMenuButtons = [
   balanceButton,
   usersButton,
   docsButton,
-  operationTrade,
-  operationInventory
 ];
 
 // ========== ОБНОВЛЕНИЕ/ОТКРЫТИЕ СТРАНИЦЫ ==========
@@ -103,6 +102,10 @@ const start = () => {
     contractorsButtonFormAdd.start();
     keywordsButtonAdd.start();
     keywordsButtonEdit.start();
+
+    operationPurchase.start();
+    operationSale.start();
+    operationInventory.start();
 
     permissions.read();
 

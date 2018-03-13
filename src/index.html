@@ -185,7 +185,7 @@
 
             <div class="dropdown-menu">
               <a class="dropdown-item" id="list-receipt-list" data-toggle="list" href="#list-receipt" role="tab" aria-controls="receipt">Поступление</a>
-              <a class="dropdown-item" id="list-sell-list" data-toggle="list" href="#list-receipt" role="tab" aria-controls="sell">Продажа</a>
+              <a class="dropdown-item" id="list-sell-list" data-toggle="list" href="#list-sale" role="tab" aria-controls="sell">Продажа</a>
               <a class="dropdown-item" id="list-inventory-list" data-toggle="list" href="#list-inventory" role="tab" aria-controls="inventory">Инвентаризация</a>
               <a class="dropdown-item" id="list-balance-list" data-toggle="list" href="#list-balance" role="tab" aria-controls="balance">Балансовые операции</a>
               <a class="dropdown-item" id="list-manufacture-list" data-toggle="list" href="#list-manufacture" role="tab" aria-controls="manufacture">Производство</a>
@@ -256,71 +256,157 @@
 
       <!-- ==================== КОНТЕЙНЕРЫ / Операции ==================== -->
         <div class="tab-pane fade" id="list-receipt" role="tabpanel" aria-labelledby="list-receipt-list">
-          <form id = "operation-trade-form"></form>
+          <form id = "operations-purchase-form"></form>
           <div class="catalog-header">
-            <div id="operation-header" class="catalog-header-title"></div>
+            <div class="catalog-header-title">
+              <img src="/img/admission.png" alt="">
+              <h2>ЗАКУПКА</h2>
+            </div>
             <div class="catalog-header-buttons w-50">
-              <select id="operations-purchase-stocks-list" form="operation-trade-form" name="stock" class="form-control w-75  m-2" id="exampleFormControlSelect1"></select>
-              <button id="operations-trade-submit" name="submit" form="operation-trade-form" type="submit" class="btn btn-danger m-2 p-2 w-25" disabled>Выполнить</button>
+              <select id="operations-purchase-stocks-list" form="operations-purchase-form" name="stock" class="form-control w-75 m-2"></select>
+              <span class="">
+                <button id="operations-purchase-submit" name="submit" form="operations-purchase-form" type="submit" class="btn btn-danger m-2 p-2 w-100" disabled>Выполнить</button>
+                <div id="operation-purchase-submit-spinner" class="w-100 ml-2 mr-2"></div>
+              </span>
+            </div>
+          </div>
+          <div class="d-flex justify-content-between">
+            <div>
+              <div class="d-flex justify-content-between w-75">
+                <div>
+                  <select id="operations-purchase-kontragents-list" class="form-control operations-purchase-kontragents" name="kontragents" form="operations-purchase-form"></select>
+                </div>
+                <div class="operations-trade-delivery">
+                  <label>
+                    <input id="operations-purchase-delivery" type="checkbox" name="delivery" form="operations-purchase-form">
+                  </label>
+                </div>
+              </div>
+              <div class="d-flex justify-content-between pt-3">
+                <button id="operations-purchase-clear-but" type="button" class="btn btn-danger mr-5 otButtons otBtnClear"></button>
+                <form id="operations-purchase-search-barcode-form">
+                  <input id="operations-purchase-search-barcode" type="text" placeholder="Штрихкод" form="operations-purchase-search-barcode-form" name="barcode" tabindex="1" style="">
+                  <button id="operations-purchase-search-barcode-submit" form="operations-purchase-search-barcode-form" type="submit" class="btn btn-danger otButtons otBtnBarcode" name="submit"></button>
+                </form>
+              </div>
+            </div>
+            <div>
+              <div class="ml-5 pt-3">
+                <p id="operations-purchase-price" class='mx-auto h3 text-primary otPrice'></p>
+              </div>
+            </div>
+          </div>
+          <!-- ========Таблица======= -->
+
+          <form>
+            <table id="operations-purchase-right" class="table table-hover">
+              <thead>
+                <tr>
+                  <th scope="col" class="align-middle">№</th>
+                  <th scope="col" class="w-50 align-middle">Наименование:</th>
+                  <th scope="col" class="w-50 align-middle">Кол-во:</th>
+                  <th scope="col" class="w-50 align-middle">Цена закупки:</th>
+                  <th scope="col" class="align-middle">Сумма:</th>
+                  <th scope="col" class="align-middle">Текущая<br>наценка:</th>
+                  <th scope="col" class="align-middle">Рекомендуемая<br>наценка:</th>
+                  <th scope="col" class="align-middle">Цена<br>продажи:</th>
+                  <th scope="col" class="align-middle">Сумма<br>продажи:</th>
+                </tr>
+              </thead>
+              <tbody class="table table-hover"></tbody>
+              <tfoot>
+                <tr>
+                  <td></td>
+                  <td>
+                    <button id="operations-purchase-add-good" type="button" class="btn btn-success ml-auto otButtons otBtnAddRow"></button>
+                  </td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </tfoot>
+            </table>
+          </form>
+        </div>
+
+<!-- =========================================== -->
+        <div class="tab-pane fade" id="list-sale" role="tabpanel" aria-labelledby="list-receipt-list">
+          <form id = "operations-sale-form"></form>
+          <div class="catalog-header">
+            <div class="catalog-header-title">
+              <img src="/img/sale.png" alt="">
+              <h2>ПРОДАЖА</h2>
+            </div>
+            <div class="catalog-header-buttons w-50">
+              <select id="operations-sale-stocks-list" form="operations-sale-form" name="stock" class="form-control w-75  m-2"></select>
+              <span class="">
+                <button id="operations-sale-submit" name="submit" form="operations-sale-form" type="submit" class="btn btn-success m-2 p-2 w-100" disabled>Выполнить</button>
+                <div id="operation-sale-submit-spinner" class="w-100 ml-2 mr-2"></div>
+              </span>
             </div>
           </div>
 
           <div class="d-flex align-items-stretch">
             <div class="border w-50 px-2">
-              <div id="operations-trade-left-header"></div>
-
-              <form id="operations-trade-search" class="catalog-header">
+              <div id="operations-sale-left-header"></div>
+              <form id="operations-sale-search" class="catalog-header">
                 <div class="catalog-header-title">
-                  <button type="submit" class="btn btn-secondary" style="width: 40px; height: 40px; background-image: url('img/icons8-search-26.png'); background-position: center; background-size: cover;"></button>
+                  <button type="submit" class="btn btn-secondary otButtons otBtnFind"></button>
                   <input type="text" name="name" placeholder="Поиск" class="ml-3">
                 </div>
               </form>
-              <div id="operations-trade-left" class="" style="overflow-y: auto; height: 600px;">
+              <div id="operations-sale-left" class="otLeftColumn">
               </div>
             </div>
-          <div class="border w-50 ml-1 px-2">
-            <div class="d-flex align-items-stretch justify-content-between">
-              <div>
+            <div class="border w-50 ml-1 px-2">
+              <div class="d-flex align-items-stretch justify-content-between">
                 <div>
-                  <select id="operations-purchase-kontragents-list" class="form-control w-100  m-2" name="kontragents" form="operation-trade-form"></select>
+                  <div>
+                    <select id="operations-sale-kontragents-list" class="form-control w-100  m-2" name="kontragents" form="operations-sale-form"></select>
+                  </div>
+                  <div class="p-2 d-flex">
+                    <button id="operations-sale-discountBtn" type="button" class="btn btn-danger otButtons otBtnDiscount mr-2" data-toggle="modal" data-target="#operations-trade-discount"></button>
+                    <div class="operations-trade-delivery">
+                      <label>
+                        <input id="operations-sale-delivery" type="checkbox" name="delivery" form="operations-sale-form">
+                      </label>
+                    </div>
+                  </div>
                 </div>
-                <div class="p-2">
-                  <button id="operations-trade-discountBtn"type="button" class="btn btn-danger" data-toggle="modal" data-target="#operations-trade-discount" style="width: 40px; height: 40px; background-image: url('img/percent.png'); background-position: center; background-size: cover;"></button>
-                  <label class="rounded" style="display:inline-block; height:38px; width:60px; background: #DFB939;">
-                  <img src="/img/suppliers.png" width="38px" height="38px" >
-                  <input id="operations-trade-delivery" type="checkbox" name="delivery" form="operation-trade-form">
+                <div class="ml-5 pt-3">
+                  <p id="operations-sale-price" class='mx-auto h3 text-primary align-middle otPrice'></p>
                 </div>
               </div>
-              <div class="ml-5 pt-3">
-                <p id="operations-trade-price" class='mx-auto h3 text-primary align-middle' style="font-size: 60px; font-stretch: ultra-condensed"></p>
+              <div class="otLeftColumn">
+                <table id="operations-sale-right" class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th scope="col" class="">#</th>
+                      <th scope="col" class="w-50">Товар</th>
+                      <th scope="col" class="w-50">Кол-во</th>
+                      <th scope="col" class="w-50">Цена</th>
+                      <th scope="col">Сумма</th>
+                    </tr>
+                  </thead>
+                  <tbody class="table table-hover"></tbody>
+                  <tfoot id="operations-sale-right-tfoot" class="table table-hover font-weight-bold text-danger"></tfoot>
+                </table>
+              </div>
+              <div class="d-flex justify-content-between pt-3">
+                <button id="operations-sale-clear-but" type="button" class="btn btn-danger otButtons otBtnClear" ></button>
+                <form id="operations-sale-search-barcode-form">
+                  <input id="operations-sale-search-barcode" type="text" placeholder="Штрихкод" form="operations-sale-search-barcode-form" name="barcode" tabindex="1">
+                  <button id="operations-sale-search-barcode-submit" form="operations-sale-search-barcode-form" type="submit" class="btn btn-danger otButtons otBtnBarcode" name="submit"></button>
+                </form>
               </div>
             </div>
-            <div style="overflow-y: auto; height: 600px;">
-              <table id="operations-trade-right" class="table table-hover">
-                <thead>
-                  <tr>
-                    <th scope="col" class="">#</th>
-                    <th scope="col" class="w-50">Товар</th>
-                    <th scope="col" class="w-50">Кол-во</th>
-                    <th scope="col" class="w-50">Цена</th>
-                    <th scope="col">Сумма</th>
-                  </tr>
-                </thead>
-                <tbody class="table table-hover"></tbody>
-                <tfoot id="operations-trade-right-tfoot" class="table table-hover font-weight-bold text-danger"></tfoot>
-              </table>
-            </div>
-            <div class="d-flex justify-content-between pt-3" style="bottom: 0px">
-              <button id="operations-trade-clear-but" type="button" class="btn btn-danger" style="width: 40px; height: 40px; background-image: url('img/Cancel-96.png'); background-position: center; background-size: cover;"></button>
-              <form id="operations-trade-search-barcode-form">
-                <input id="operations-trade-search-barcode" type="text" placeholder="Штрихкод" form="operations-trade-search-barcode-form" name="barcode" tabindex="1">
-                <button id="operations-trade-search-barcode-submit" form="operations-trade-search-barcode-form" type="submit" class="btn btn-danger" name="submit" style="width: 40px; height: 40px; background-image: url('img/Barcode-64.png'); background-position: center; background-size: cover;"></button>
-              </form>
-            </div>
-          </div>
-
           </div>
         </div>
+<!-- =================================== -->
         <div class="tab-pane fade" id="list-inventory" role="tabpanel" aria-labelledby="list-receipt-list">
           <form id = "operation-inventory-form"></form>
           <div class="catalog-header">
@@ -330,7 +416,10 @@
               </div>
               <div class="catalog-header-buttons w-50">
               <select id="operation-inventory-stocks-list" form="operation-inventory-form" name="stock" class="form-control w-75  m-2" id="exampleFormControlSelect1"></select>
-              <button id="operation-inventory-submit" name="submit" form="operation-inventory-form" type="submit" class="btn btn-danger m-2 p-2 w-25" disabled>Выполнить</button>
+              <span class="">
+                <button id="operation-inventory-submit" name="submit" form="operation-inventory-form" type="submit" class="btn btn-primary m-2 p-2 w-100" disabled>Выполнить</button>
+                <div id="operation-inventory-submit-spinner" class="w-100 ml-2 mr-2"></div>
+              </span>
             </div>
           </div>
 
@@ -340,17 +429,17 @@
 
               <form id="operation-inventory-search" class="catalog-header">
                 <div class="catalog-header-title">
-                  <button type="submit" class="btn btn-secondary" style="width: 40px; height: 40px; background-image: url('img/icons8-search-26.png'); background-position: center; background-size: cover;"></button>
+                  <button type="submit" class="btn btn-secondary otButtons otBtnFind"></button>
                   <input type="text" name="name" placeholder="Поиск" class="ml-3">
                 </div>
               </form>
-              <div id="operation-inventory-left" class="d-flex flex-column" style="overflow-y: auto; height: 600px;"></div>
+              <div id="operation-inventory-left" class="d-flex flex-column otLeftColumn"></div>
             </div>
             <div class="border w-50 ml-1 px-2">
               <div id="" class="catalog-header">
                 <select id="operation-inventory-kontragents-list" class="form-control w-75  m-2 d-none" name="kontragents" form="operation-inventory-form"></select>
               </div>
-              <div style="overflow-y: auto; height: 650px;">
+              <div class="otLeftColumn">
                 <table id="operation-inventory-right" class="table table-hover">
                   <thead>
                     <tr>
@@ -365,11 +454,11 @@
                   <tfoot id="operation-inventory-right-tfoot" class="table table-hover font-weight-bold text-danger"></tfoot>
                 </table>
               </div>
-              <div class="d-flex justify-content-between pt-3" style="bottom: 0px">
-                <button id="operation-inventory-clear-but" type="button" class="btn btn-danger" style="width: 40px; height: 40px; background-image: url('img/Cancel-96.png'); background-position: center; background-size: cover;"></button>
+              <div class="d-flex justify-content-between pt-3">
+                <button id="operation-inventory-clear-but" type="button" class="btn btn-danger otButtons otBtnClear"></button>
                 <form id="operation-inventory-search-barcode-form">
-                  <input type="text" placeholder="Штрихкод" form="operation-inventory-search-barcode-form" name="barcode">
-                  <button id="operation-inventory-search-barcode-submit" form="operation-inventory-search-barcode-form"; type="submit" class="btn btn-danger" name="submit" style="width: 40px; height: 40px; background-image: url('img/Barcode-64.png'); background-position: center; background-size: cover;"></button>
+                  <input id="operations-inventory-search-barcode" type="text" placeholder="Штрихкод" form="operation-inventory-search-barcode-form" name="barcode">
+                  <button id="operation-inventory-search-barcode-submit" form="operation-inventory-search-barcode-form"; type="submit" class="btn btn-danger otButtons otBtnBarcode" name="submit"></button>
                 </form>
               </div>
             </div>
@@ -1822,6 +1911,33 @@
     </div>
   </div>
 
+  <!-- Операции / накладные / ЗАКУПКИ - группы товаров-->
+  <div class="modal fade" id="operations-purchase-modal-goods" tabindex="-1" role="dialog" aria-labelledby="operations-trade-discount" aria-hidden="true" backdrop="static" data-cancel>
+    <div class="modal-dialog otModalWidth" role="document" style="">
+      <div class="modal-content otModalHeight">
+        <div class="modal-header">
+
+          <div>
+            <div id="operations-purchase-left-header"></div>
+            <form id="operations-purchase-search" class="catalog-header">
+              <div class="catalog-header-title">
+                <button type="submit" class="btn btn-secondary otButtons otBtnFind"></button>
+                <input type="text" name="name" placeholder="Поиск" class="ml-3">
+              </div>
+            </form>
+          </div>
+
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" data-cancel>
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <div class="modal-body otLeftColumn" id="operations-purchase-left"></div>
+
+      </div>
+    </div>
+  </div>
+
    <!-- Операции / накладные / добавление товара в накладную-->
   <div class="modal fade" id="operations-trade-add" tabindex="-1" role="dialog" aria-labelledby="operations-trade-discount" aria-hidden="true" backdrop="static" data-cancel>
     <div class="modal-dialog" style="width: 300px;" role="document">
@@ -1833,7 +1949,7 @@
         </button>
         </div>
         <div class="modal-body">
-          <form id="operations-trade-discount-form" name="enterprises-card-edit" data-formName="operationTradeAdd">
+          <form name="enterprises-card-edit" data-formName="operationTradeAdd">
             <div class="form-group">
               <div id="operations-trade-add-name" class="font-weight-bold">Название</div>
               <div class="d-flex justify-content-between mt-3 mb-3">

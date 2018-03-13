@@ -83,7 +83,7 @@ const sendData = (data, callback, discId) => {
   let cred = stor.data;
   let goodData = [];
 
-  data.data.forEach((el) => {
+  data.data.forEach((el, index) => {
     if (stor.operationTradeType === '1') {
       el.count *= -1;
     }
@@ -93,6 +93,11 @@ const sendData = (data, callback, discId) => {
       'good': el.id,
       'price': (el.price) ? el.price : 0
     });
+
+    if (stor.operationTradeType === '0') {
+      goodData[index]['new_price_sell'] = el.priceSell;
+    }
+
   });
 
   goodData = JSON.stringify(goodData);

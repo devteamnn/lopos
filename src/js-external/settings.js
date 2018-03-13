@@ -308,6 +308,7 @@ window.appSettings = {
   },
 
   // ОПЕРАЦИИ купля\продажа\инвентаризация
+  // Добавление товара. Модальное окно.
   'operationTradeAdd': {
     'validPatterns': {
       'count': /(^-?\d*$)|(^-?\d*\.\d*$)/,
@@ -317,7 +318,7 @@ window.appSettings = {
     }
   },
 
-  // ОПЕРАЦИИ купля\продажа\инвентаризация
+  // Скидка. Модальное окно.
   'operationTradeDiscount': {
     'validPatterns': {
       'discount': /(^-?\d*$)|(^-?\d*\.\d*$)/,
@@ -325,5 +326,17 @@ window.appSettings = {
     'validMessage': {
       'discount': 'поле минимум 1 цифра',
     }
+  },
+
+  // Закупка поля таблицы
+  'operationPurchase': {
+    'validPatterns': {
+      'count': /(^\d*$)|(^-?\d*\.\d*$)/,
+      'price': /(^$)|(^\d+$)|(^\d+[.]\d{1,2}$)/,
+      'PurchaseSum': /(^$)|(^\d+$)|(^\d+[.]\d{1,2}$)/,
+      'currMarkup': /(^-?\d*$)|(^-?\d*\.\d*$)/,
+      'sellPrice': /(^$)|(^\d+$)|(^\d+[.]\d{1,2}$)/,
+      'sellSum': /(^$)|(^\d+$)|(^\d+[.]\d{1,2}$)/,
+    },
   }
 };
