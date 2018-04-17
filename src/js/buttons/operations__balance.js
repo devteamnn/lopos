@@ -22,11 +22,12 @@ const balanceFormSend = document.querySelector('#list-balance-make');
 const getElement = (item, index) => {
 
   return `
-  <input type="radio" id="operations-${item.id}" name="contact" value="email" class="d-none">
+  
   <label style="padding-left: 34px;" for="operations-${item.id}"  class="d-flex justify-content-between align-items-center reference-string" data-debit-credit-id="${item.id}" data-debit-credit-name="${item.name}">
     <div><span class="reference-row-number">${index + 1}</span> ${item.name}</div>
     <div class="d-flex justify-content-between align-items-center">
     </div>
+    <input type="radio" id="operations-${item.id}" name="contact" value="email" class="d-none">
   </label>`;
 };
 
@@ -67,10 +68,10 @@ balanceCardPlusBody.addEventListener('change', function (evt) {
   console.log(evt.target);
   // console.log(evt.target.labels[0]);
   if (selectedString) {
-    selectedString.classList.remove('bg-light');
+    selectedString.classList.remove('bg-light-selected');
   }
   selectedString = (evt.target.labels) ? evt.target.labels[0] : evt.target;
-  selectedString.classList.add('bg-light');
+  selectedString.classList.add('bg-light-selected');
   balanceAmount.removeAttribute('disabled', 'disabled');
   balanceSetDescribe.removeAttribute('disabled', 'disabled');
   if (balanceAmount.value || balanceSetDescribe.value) {
@@ -85,10 +86,10 @@ balanceCardPlusBody.addEventListener('change', function (evt) {
 balanceCardMinusBody.addEventListener('change', function (evt) {
   console.log(evt);
   if (selectedString) {
-    selectedString.classList.remove('bg-light');
+    selectedString.classList.remove('bg-light-selected');
   }
   selectedString = (evt.target.labels) ? evt.target.labels[0] : evt.target;
-  selectedString.classList.add('bg-light');
+  selectedString.classList.add('bg-light-selected');
   balanceAmount.removeAttribute('disabled', 'disabled');
   balanceSetDescribe.removeAttribute('disabled', 'disabled');
   if (balanceAmount.value || balanceSetDescribe.value) {

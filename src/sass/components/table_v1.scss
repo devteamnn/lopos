@@ -1,0 +1,62 @@
+.user_table_property {
+
+
+// border: 1px solid #89DCD8;
+ width: 100%;
+
+
+}
+.user_table_property_w_40 {
+
+text-align: center;
+ width: 100px;
+}
+
+
+
+.user_table_property tr:nth-child(odd){ 
+
+  background-color: #ECF9FA;
+}
+.user_table_property tr:nth-child(even){ /* Задаем стили для четных рядов таблицы */
+  background-color: #ffffff;
+}
+
+
+
+.user_table_property tr:first-child {
+
+
+  background-color: #94E0DD;
+  font-weight: 600;
+  
+
+  
+  border: 0px solid gray;
+ /* color: #ffffff;
+  */color: #000000;
+  border-radius: 6px 6px 0 0;
+
+}
+
+
+
+.user_table_property td:first-child {
+ padding-left:20px;
+}
+
+
+.user_table_property td:last-child {
+ padding-right:20px;
+}
+
+.user_table_header td:first-child {
+
+    border-top-left-radius: 10px; 
+
+      //background-color: #ECF9FA;
+}
+.user_table_header td:last-child {
+    border-top-right-radius: 10px; 
+       
+}

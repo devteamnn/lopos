@@ -91,8 +91,9 @@ const focusBarcode = () => {
     });
 
     if (perm !== 'none') {
-
-      searchBarcodeFormBarcode.focus();
+      setTimeout(() => {
+        searchBarcodeFormBarcode.focus();
+      }, 500);
     }
   }
 };
@@ -446,7 +447,6 @@ const getGoodsCallback = (data) => {
 
 const getDataCallback = (data) => {
   dataStore = data;
-  console.dir(dataStore);
   operationsTradeHeader.setStocksList(dataStore.all_stocks);
   operationsTradeRight.setKontragentList(dataStore.all_kontr_agents);
   operationsTradeLeft.drawGroups(dataStore.all_groups, clickGroupsCallback);

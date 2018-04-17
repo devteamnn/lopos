@@ -4,7 +4,7 @@ export default {
   header(head, img) {
     return `
         <img src="${img}" alt="">
-        <h2>${head}</h2>
+        <h3 class="header_first_level_in_modal">${head}</h3>
       `;
   },
 
@@ -13,18 +13,18 @@ export default {
     <div class="catalog-header">
       <div class="catalog-header-title">
         ${node}
-        <h2>${head}</h2>
+        <h3 class="header_second_level_in_modal">${head}</h3>
       </div>
     </div>
     `;
   },
 
   leftColumnGoodsHeaderTrade() {
-    return '<thead><tr><th scope="col" class="">#</th><th scope="col" class="w-50">Товар</th><th scope="col">Цена</th><th scope="col">Остаток</th><th scope="col"></th><th scope="col"></th></tr></thead>';
+    return '<thead class="inventory-header"><tr ><th scope="col" >№</th><th scope="col" class="w-50">Товар</th><th scope="col">Цена</th><th scope="col">Остаток</th><th scope="col"></th><th scope="col"></th></tr></thead>';
   },
 
   leftColumnGoodsHeaderInventory() {
-    return '<thead><tr><th scope="col" class="">#</th><th scope="col" class="w-50">Товар</th><th scope="col">Остаток</th></tr></thead>';
+    return '<thead class="inventory-header" ><tr><th scope="col" class="inventory-header-row" ><div>№</div></th><th scope="col" height="30"  class="inventory-header-row"><div>Товар</div></th><th scope="col"  class="inventory-header-row" ><div>Остаток</div></th></tr></thead>';
   },
 
   leftColumnGoodsRowTrade(index, name, price, count) {
@@ -64,15 +64,17 @@ export default {
 
     return `
       <th scope="row">${index + 1}</th>
-      <td>${name}</td>
-      <td data-click="true">
+      <td style="width:100%;" >${name}</td>
+      <td data-click="true" style="text-align: right;">
         <span class="w-100" data-click="true">${count}</span>
-        <input type="text" class="w-100 d-none" placeholder=${count} name="count" data-oldValue=${count} data-valisettings="operationPurchase" data-valid="count">
+        <input type="text"  class="w-100 d-none" placeholder=${count} name="count" data-oldValue=${count} data-valisettings="operationPurchase" data-valid="count">
       </td>
+         <td>x</td>
       <td>
         <span class="w-100" data-click="true">${price}</span>
         <input type="text" class="w-100 d-none" placeholder=${price} name="price" data-oldValue=${price} data-valisettings="operationPurchase" data-valid="price">
       </td>
+      <td>=</td>
       <td data-click="true">
         <span class="w-100" data-click="true">
           ${sumPurchase}
@@ -99,8 +101,10 @@ export default {
     return `
       <th scope="row">${index + 1}</th>
       <td>${name}</td>
-      <td>${count}</td>
+      <td style="text-align: right;">${count}</td>
+      <td>x</td>
       <td>${price}</td>
+      <td>=</td>
       <td>${Number(price * count).toFixed(2)}</td>
     `;
   },

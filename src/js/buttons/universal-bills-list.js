@@ -6,7 +6,18 @@ const BillTypes = {
   'type2': 'buyers',
   'type3': 'sale',
   'type8': 'ic_my_production',
+  'type15': 'inventory'
 };
+
+const BillTypesName = {
+  '0': 'Доставка-поступление',
+  '1': 'Поступление',
+  '2': 'Доставка-продажа',
+  '3': 'Продажа',
+  '8': 'Производство',
+  '15': 'Инвентаризация'
+};
+
 
 const months = {
   '11': 'Декабрь',
@@ -26,68 +37,78 @@ const months = {
 const getYearElement = (item, index) => {
   return `
 
-  <div class="alldocs-year">
-    <div class="alldocs-year-column">
+  <div class="alldocs-row">
+    <div class="alldocs-row-3-column">
       <img src="img/ic_agree.png" alt="">
       <span>${months[item.month_number - 1]} ${document.querySelector('#docs-year').value} года</span>
     </div>
-    <div class="alldocs-year-column">
+    <div class="alldocs-row-3-column">
+      <span>${item.count_documents}</span><br>
+    </div>
+    <div class="alldocs-row-3-column">
       <span>${item.total}</span>
     </div>
-    <div class="alldocs-year-column">
-      <span>${item.count_documents}</span><br>
-    </div>`;
+`;
 
 };
 
 const getMonthElement = (item, index) => {
   return `
 
-  <div class="alldocs-year">
-    <div class="alldocs-year-column">
+  <div class="alldocs-row">
+    <div class="alldocs-row-3-column">
       <img src="img/ic_agree.png" alt="">
       <span></b>${(+item.day_number < 10) ? '0' + item.day_number : item.day_number}.${(+document.querySelector('#docs-month').value + 1) < 10 ? '0' + (+document.querySelector('#docs-month').value + 1) : (+document.querySelector('#docs-month').value + 1)}.${document.querySelector('#docs-year').value}</span>
     </div>
-    <div class="alldocs-year-column">
+    <div class="alldocs-row-3-column">
+      <span>${item.count_documents}</span><br>
+    </div>
+    <div class="alldocs-row-3-column">
       <span>${item.total}</span>
     </div>
-    <div class="alldocs-year-column">
-      <span>${item.count_documents}</span><br>
-    </div>`;
+`;
 
 };
 
 const getDayElement = (item, index) => {
   return `
 
-  <div class="alldocs-year">
-    <div class="alldocs-year-column">
-      <img class="mr-3" src="img/${BillTypes['type' + item.type]}.png" width="30" alt="">
+  <div class="alldocs-row">
+    <div class="alldocs-row-2-column">
+      <div style="background-color: #${item.operator_color};   border-radius: 10px 10px 10px 10px;" width="60px;" >
+          <img  src="img/user-male-filled-32.png" style="margin-left:1px;   width="24px; height=24;"  >
+          <span style="margin-right:2px; color:#ffffff;">${item.operator_id}</span>
+      </div>
+
+      <img  class="alldocs-row-2-column-img" src="img/${BillTypes['type' + item.type]}.png"  alt="">
       <span> № ${item.id} в ${new Date(+(item.time + '000')).toLocaleTimeString()}</span>
     </div>
-    <div class="alldocs-year-column">
+    
+    <div class="alldocs-row-2-column">
       <span>${item.total}</span>
     </div>
-    <div class="alldocs-year-column">
-      <img class="mr-3 rounded-circle" src="img/user-male-filled-32.png" style="background-color: #${item.operator_color}" width="30" alt="">
-    </div>`;
+`;
 
 };
 
 const getDayBalanceElement = (item, index) => {
   return `
 
-  <div class="alldocs-year">
-    <div class="alldocs-year-column">
-      <img class="mr-3" src="img/${(+item.total < 0) ? 'expenses' : 'revenue'}.png" width="30" alt="">
+  <div class="alldocs-row">
+    <div class="alldocs-row-2-column">
+     <div style="background-color: #${item.operator_color};   border-radius: 10px 10px 10px 10px;" width="60px;" >
+          <img  src="img/user-male-filled-32.png" style="margin-left:1px;   width="24px; height=24;"  >
+          <span style="margin-right:2px; color:#ffffff;">${item.operator_id}</span>
+      </div>
+
+
+      <img class="alldocs-row-2-column-img" src="img/${(+item.total < 0) ? 'expenses' : 'revenue'}.png" width="30" alt="">
       <span> № ${item.id} в ${new Date(+(item.time + '000')).toLocaleTimeString()}</span>
     </div>
-    <div class="alldocs-year-column">
+    <div class="alldocs-row-2-column">
       <span>${item.total}</span>
     </div>
-    <div class="alldocs-year-column">
-      <img class="mr-3 rounded-circle" src="img/user-male-filled-32.png" style="background-color: #${item.operator_color}" width="30" alt="">
-    </div>`;
+   `;
 
 };
 
@@ -142,5 +163,6 @@ export default {
   drawMonth: markup.drawBillsMonth,
   drawDay: markup.drawBillsDay,
   drawDayBalance: markup.drawBalanceDay,
-  BillTypes
+  BillTypes,
+  BillTypesName
 };

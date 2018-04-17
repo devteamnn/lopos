@@ -33,11 +33,11 @@ const disableCheckEditButtons = () => {
 const getElement = (item, index) => {
 
   return `
-    <input type="radio" id="reference-${item.id}"  data-debit-credit-id="${item.id}" data-debit-credit-name="${item.name}" class="d-none">
-
+   
     <label class="reference-header" for="reference-${item.id}" data-debit-credit-id="${item.id}" data-debit-credit-name="${item.name}">
         <div class="reference-column">${index + 1}</div>
         <div class="reference-column">${item.name}</div>
+         <input type="radio" id="reference-${item.id}"  data-debit-credit-id="${item.id}" data-debit-credit-name="${item.name}" class="d-none">
     </label>
 `;
 
@@ -123,10 +123,10 @@ let selectedString = '';
 debitCreditBody.addEventListener('change', function (evt) {
   console.log(evt);
   if (selectedString) {
-    selectedString.classList.remove('bg-light');
+    selectedString.classList.remove('bg-light-selected');
   }
   selectedString = (evt.target.labels) ? evt.target.labels[0] : evt.target;
-  selectedString.classList.add('bg-light');
+  selectedString.classList.add('bg-light-selected');
   auth.debitCreditId = selectedString.dataset.debitCreditId;
   auth.debitCreditName = selectedString.dataset.debitCreditName;
   enableCheckEditButtons();

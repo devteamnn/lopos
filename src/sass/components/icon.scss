@@ -10,21 +10,23 @@
 
 .icon__box {
   display: block;
-  background-color: #ccc;
-  background-image: url("../img/cardboard-box-filled-32.png");
+  background-image: url("../img/box_c.png");
   background-size: cover;
 }
 
 .icon__truck {
   display: block;
-  background-color: #ccc;
   background-image: url("../img/truck-filled-32.png");
   background-size: cover;
 }
 
 .icon__male {
   display: block;
-  background-color: #ccc;
-  background-image: url("../img/user-male-filled-32.png");
+  background-image: url("../img/user-male-filled.png");
   background-size: cover;
+}
+
+.icon-little{
+  width: 20px;
+  height: 20px;
 }

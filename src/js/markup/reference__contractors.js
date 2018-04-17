@@ -10,7 +10,7 @@ export default {
 
     return `
         <div class="reference-header" data-buyer-id="${item.id}" data-index="${index}">
-            <div class="reference-column">${item.id}</div>
+            <div class="reference-column">${index + 1}</div>
             <div class="reference-column">${item.name}</div>
         </div>
 `;

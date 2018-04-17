@@ -19,7 +19,7 @@ const drawSet = count / 4;
 // отрисовка порции карточек
 listLogBody.innerHTML = `
     <div class="reference-header">
-        <div class="reference-column"></div>
+        <div class="reference-column-3"></div>
         <div class="reference-column">Операция</div>
         <div class="reference-column">Время</div>
         <div class="reference-column">Просм.</div>

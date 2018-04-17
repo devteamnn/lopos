@@ -1,5 +1,6 @@
-// Переменные
+
 @import "src/sass/components/profile.scss";
+@import "src/sass/components/user.scss";
 @import "src/sass/components/icon.scss";
 @import "src/sass/components/icon-btn.scss";
 @import "src/sass/components/reference.scss";
@@ -7,279 +8,43 @@
 @import "src/sass/components/good-card-form.scss";
 @import "src/sass/components/good.scss";
 @import "src/sass/components/catalog-header.scss";
+@import "src/sass/components/catalog-groups.scss";
+
 @import "src/sass/components/informaion-light.scss";
 @import "src/sass/components/manufacture.scss";
 @import "src/sass/components/operations-trade.scss";
 
-.balance-set-form {
-  display: flex;
-  justify-content: space-between;
-}
 
-.balance-set-form div:first-child {
-  width: 30%;
-}
+@import "src/sass/components/reference-header.scss";
+@import "src/sass/components/reference-string.scss";
+@import "src/sass/components/search_field.scss";
+@import "src/sass/components/menu.scss";
+@import "src/sass/components/reports.scss";
+@import "src/sass/components/table_v1.scss";
+@import "src/sass/components/btn.scss";
+@import "src/sass/components/all_docs.scss";
 
-.balance-set-form div:last-child {
-  width: 60%;
-}
+@import "src/sass/components/balance.scss";
+@import "src/sass/components/inventory.scss";
 
-// стилизация для разметки "скрытый инпут + лэйбл" - привести в порядок
+@import "src/sass/components/modal-balance-act.scss";
+@import "src/sass/components/modal-naklad.scss";
+
+@import "src/sass/components/sale.scss";
+@import "src/sass/components/purchase.scss";
+@import "src/sass/components/modal-view.scss";
+
+/*
+// стилизация для разметки "скрытый инпут + лэйбл" - привести в порядок*/
 input[name="contact"]:checked + label {
 	border: 1px solid black;
 }
 
-.user-status {
-  height: 24px;
-  width: 24px;
-  border-radius: 50%;
-  margin-right: 5px;
-}
 
-.user-permissions {
-}
 
-.user-permissions-string {
-  display: flex;
+.layot-line-horizont{
+    display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid gray;
-}
-
-.user-permissions-string > span {
-  display: inline-block;
-  width: 300px;
-  margin-right: auto;
-}
-
-.user-permissions-string > div {
-  display: flex;
-  justify-content: space-between;
-  width: 50px;
-  text-align: left;
-}
-
-.user-permissions-string > input {
-}
-
-.user-permissions-switch {
-  width: 15px;
-  height: 15px;
-  margin-left: 5px;
-}
-
-.user-permissions-stock {
-  display: inline-block;
-  border-radius: 8px;
-  margin: 5px;
-  padding: 5px;
-  cursor: pointer;
-  background-color: #17a2b8;
-  color: #fff;
-  opacity: 1;
-}
-
-.alldocs-year {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  align-items: center;
-  margin-bottom: 15px;
-  border-bottom: 1px solid gray;
-}
-
-.alldocs-year-column {
-  width: 30%;
-  align-items: center;
-  justify-content: flex-end;
-  display: flex;
-}
-
-.alldocs-year-column:first-child {
-  width: 30%;
-  justify-content: flex-start;
-}
-
-.alldocs-year-column img {
-  width: 44px;
-  height: 44px;
-  padding-right: 5px;
-}
-
-.catalog-header h2 {
-  margin-left: 5px;
-
-}
-
-.catalog-header-title {
-  display: flex;
-}
-
-.catalog-groups-header {
-  display: flex;
-  justify-content: space-between;
-  height: 30px;
-}
-
-.catalog-groups-column {
-  width: auto;
-  width: 20%;
-  border: 1px solid gray;
-  margin-left: -1px;
-  padding: 2px;
-}
-.catalog-groups-header:first-child {
-  font-weight: 700;
-  background-color: #ccc;
-}
-
-.catalog-groups-header:hover {
-  background-color: #ccc;
-}
-
-.catalog-groups-column:nth-child(1) {
-  width: 10%;
-}
-.catalog-groups-column:nth-child(2) {
-  width: 70%;
-}
-.catalog-groups-column:nth-child(4) button {
-  width: 24px;
-  height: 24px;
-}
-.catalog-groups-column:nth-child(5) {
-  width: 10%;
-  padding: 0;
-  text-align: center;
-}
-
-.catalog-groups-column button {
-  background-color: #fff;
-  padding: 0;
-}
-
-.reference-header {
-  display: flex;
-  justify-content: space-between;
-  margin: 0;
-}
-.reference-header:first-child {
-  outline: 1px solid black;
-  margin-right: 1px;
-  background-color: #ccc;
-  font-weight: 700;
-}
-
-.reference-header:hover {
-  background-color: #ccc;
-}
-
-.reference-column {
-  width: auto;
-  // width: 20%;
-  border: 1px solid gray;
-  margin-left: -1px;
-  padding: 2px;
-}
-
-.reference-column:nth-child(1) {
-  width: 10%;
-  display: flex;
-  justify-content: center;
-}
-
-.reference-column:nth-child(1) img {
-  height: 24px;
-  width: 24px;
-}
-
-.reference-column:nth-child(2) {
-  display: flex;
-  justify-content: space-between;
-  width: 95%;
-}
-.reference-column:nth-child(3) {
-  display: flex;
-  justify-content: center;
-  min-width: 15%;
-}
-.reference-column:nth-child(4) {
-  display: flex;
-  justify-content: center;
-  min-width: 7%;
-}
-
-#list-reports-body h4 {
-  margin-top: 30px;
-  margin-bottom: 10px;
-}
-.reports-dashboard {
-  display: flex;
-  justify-content: space-between;
-}
-
-.dashboard-item {
-  display: flex;
-  border: 1px solid gray;
-  width: 18%;
-
-}
-.dashboard-status {
-  height: 32px;
-  width: 32px;
-  background-color: #28a745;
-  border-radius: 50%;
-  margin: 15px;
-}
-
-.goods-left-setup-string {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid gray;
-  margin-left: 34px;
-  margin-right: 50px;
-}
-
-.goods-left-setup-string > span {
-  display: inline-block;
-  width: 300px;
-  margin-right: auto;
-}
-/*
-.goods-left-setup-string > div {
-  display: flex;
-  justify-content: space-between;
-  width: 50px;
-  text-align: left;
-}
-*/
-.report-goods-left-modal-footer {
-  display: flex;
-  justify-content: space-between;
-}
-
-#report-goods-left-modal-setup {
-  padding-left: 20px;
-  padding-right: 10px;
-}
-
-.report-setup-header {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 25px;
-  margin-bottom: 15px;
-  margin-left: 20px;
-  margin-right: 60px;
-}
-.report-calendar {
-  margin-left: 34px;
-  margin-right: 50px;
-  margin-bottom: 10px;
-}
-
-.search-container {
-  display: flex;
-  align-items: center;
 }
 
 input[type="date"] {
@@ -300,12 +65,28 @@ input[type="date"] {
 a.disabled img {
   opacity: 0.4;
 }
-// Серый фон и шрифты
-/*
+.enterprise-card-block{
+      margin-top: 20px;
+}
+#card-resources-groups-body {
+  margin: 10px;
+}
+
 @import "src/sass/components/app.scss";
 @import "src/sass/components/font.scss";
 body {
   font-family: "HelveticaNeue";
   font-size: 1rem;
-}
+  /*background-color: #F9F9F9;
+  F0FAFF
 */
+
+  background: linear-gradient(to bottom , #94E0DD, #FFFFFF);
+
+  background-position: center;
+  background-repeat: no-repeat;
+
+}
+.label-h3{
+  
+}

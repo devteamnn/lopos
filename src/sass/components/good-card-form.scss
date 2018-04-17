@@ -1,6 +1,14 @@
+
+
 .goods-card-form {
+  max-width: 780px;
 
 }
+.goods-card-second-row{
+
+  width: 100%;
+}
+
 
 .goods-card-name {
   width: 100%;
@@ -9,26 +17,39 @@
 .goods-card-string {
   display: flex;
   justify-content: space-between;
+  }
+
+
+.goods-card-string-first-string {
+  display: flex;
+  justify-content: space-between;
   margin-bottom: 20px;
-}
+  }
+
 
 .goods-card-first-row {
-  width: 40%;
+  width: 35%;
 }
 
 .goods-card-first-row input {
   margin-bottom: 2px;
   text-align: right;
 }
-
-.goods-card-second-row {
-  width: 55%;
+.goods-card-first-row-price-column{
+ width: 30%;
+ max-width: 105px;
 }
-.goods-card-second-row textarea {
+.goods-card-first-row-express-column {
+  width: 80%;
+  padding-left: 6px;
+  max-width: 406px;
+}
+.goods-card-first-row-express-column textarea {
   height: 100px;
+  width: 100%;
   resize: none;
 }
-.goods-card-second-row select {
+.goods-card-first-row-express-column select {
   display: block;
   width: 100%;
 }
@@ -37,12 +58,13 @@
   position: relative;
   // display: flex;
   border: 1px solid black;
-  width: 305px;
-  height: 305px;
+  
+  width: 210px;
+  height: 210px;
   margin-right: 15px;
   // padding: 2px;
   // vertical-align: middle;
-  line-height: 300px;
+  line-height: 210px;
   text-align: center;
 }
 .price-total {
@@ -87,6 +109,7 @@ input[name="express-sell-radio"]:checked + label {
 
 .express-container button {
   margin: 0;
+  max-width: 64px;
 }
 
 .express-container span {
@@ -100,4 +123,22 @@ input[name="express-sell-radio"]:checked + label {
 
 .express-container.express-container__muted {
   opacity: 0.3;
+}
+
+
+.goods-card-price-lbl{
+  text-align: right;
+width: 100px;
+  }
+
+.good-card-stock-row{
+  height: 30px;
+  border-width: 0px;
+}
+.goods-stock-header{
+  margin-top: 20px;
+}
+.goods-stock-body{
+  border-width: 10px;
+  border-color: #000;
 }

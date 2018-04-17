@@ -34,7 +34,16 @@ export default {
     }
   },
 
-  getResourceElement(item) {
+  getResourceElement(item, number) {
+
+    return `
+    <div class="reference-header" data-card-id="${item.good_id}">
+      <div class="reference-column">${number}</div>
+      <div class="reference-column">${item.name}</div>
+      <div class="reference-column">${item.value}</div>
+    </div>
+    `;
+    /*
     return `
     <div class="d-flex justify-content-between reference-string" data-card-id="${item.good_id}"">
       <div style="padding-left: 34px;">
@@ -43,8 +52,9 @@ export default {
       <div style="padding-right: 10px;">
         ${item.value}
       </div>
-
     </div>`;
+    */
+
   },
 
 };

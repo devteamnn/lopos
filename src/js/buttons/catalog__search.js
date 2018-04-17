@@ -40,9 +40,9 @@ const onGoodClick = () => {
 // отрисовка результатов поиска
 const drawResult = (data) => {
   if (data.length) {
-    goodsList.draw(data, listSearchBody, onGoodClick, 'string');
+    goodsList.draw(data, listSearchBody, onGoodClick, 'search');
   } else {
-    listSearchBody.innerHTML = `Не завезли пока <b>${listSearchInput.value}</b>, хотя и ждали намедни...`;
+    listSearchBody.innerHTML = `<div style="width:100%; text-alight:center;">Не завезли пока <b>${listSearchInput.value}</b>, хотя и ждали намедни...</div><div class="docs-empty-container"><img src="../img/empty_state_search.png" alt="Накладных не обнаружено" class="docs-empty-img">  </div>`;
   }
 };
 
@@ -68,7 +68,7 @@ const onlistSearchFormSubmit = (evt) => {
   } else if (selectedKeywords === '') {
     drawResult(keywordSearch.data);
   } else {
-    listSearchBody.innerHTML = 'Ну скажите хоть что-нибудь...';
+    listSearchBody.innerHTML = ' Ну скажите хоть что-нибудь... <div class="docs-empty-container"><img src="../img/empty_state_search.png" alt="Накладных не обнаружено" class="docs-empty-img"></div>';
   }
 };
 
@@ -78,7 +78,7 @@ const onSuccessFullSearchLoad = (fullSearchLoad) => {
   if (fullSearchLoad.status === 271) {
     listSearchBody.innerHTML = fullSearchLoad.message;
   }
-  listSearchBody.innerHTML = '';
+  listSearchBody.innerHTML = '<div class="docs-empty-container"><img src="../img/empty_state_search.png" alt="Накладных не обнаружено" class="docs-empty-img"></div>';
 };
 
 const getFullSearch = () => {

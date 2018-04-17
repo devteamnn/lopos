@@ -22,7 +22,7 @@
       <section id="sectionLogin" class="d-none">
 
         <div class="container-fluid text-center" style="max-width: 27rem">
-          <img src="./img/lopos_web_logo.png" class="img-fluid rounded" style="max-width: 100%; width: 200px; height: 200px;" alt="...">
+          <img src="img/lopos_web_logo.png" class="img-fluid rounded" style="max-width: 100%; width: 200px; height: 200px;" alt="...">
         </div>
 
         <div class="container-fluid">
@@ -169,7 +169,7 @@
     </section>
   </div>
 
-  <div id="app" class="container mt-3 mb-5 d-none" style="min-height: 920px;">
+  <div id="app" class="container mt-3 mb-5 d-none" style="min-height: 920px; height: 100%">
 
     <div>
 
@@ -178,6 +178,9 @@
 
         <ul class="nav nav-tabs d-flex w-100 justify-content-between" id="list-tab" role="tablist">
 
+          <li class="nav-item">
+            <button id="lopos_logo" type="button" class="btn icon-logo"> LoPOS</button>
+          </li>
           <!-- ==================== МЕНЮ / Операции ==================== -->
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" id="list-operations-list" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" aria-controls="operations">Операции</a>
@@ -236,12 +239,17 @@
           </li>
 
           <!-- ==================== МЕНЮ / Онлайн ==================== -->
-          <li class="nav-item dropdown ml-auto">
+          <li class="nav-item ml-auto">
+            <button id="widescreen-mode-btn" type="button" class="btn  icon-btn__widescreen"> </button>
+          </li>
+
+          <!-- ==================== МЕНЮ / Онлайн ==================== -->
+          <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" id="list-online-list" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" aria-controls="online">Онлайн</a>
             <div class="dropdown-menu  dropdown-menu-right">
               <a class="dropdown-item" id="list-profile-list" data-toggle="list" href="#list-profile" role="tab" aria-controls="profile">Профиль</a>
               <a class="dropdown-item" id="list-users-list" data-toggle="list" href="#list-users" role="tab" aria-controls="users">Пользователи</a>
-              <a class="dropdown-item" id="list-setup-list" data-toggle="list" href="#list-setup" role="tab" aria-controls="setup">Настройка</a>
+                <!--  <a class="dropdown-item" id="list-setup-list" data-toggle="list" href="#list-setup" role="tab" aria-controls="setup">Настройка</a>-->
               <a class="dropdown-item" id="list-support-list" data-toggle="list" href="#list-support" role="tab" aria-controls="setup">Техподдержка</a>
               <a class="dropdown-item text-danger" id="profile-exit" data-toggle="list" href="#" role="tab" aria-controls="setup">Выйти</a>
             </div>
@@ -251,27 +259,27 @@
 
       <!-- ######################## КОНТЕЙНЕРЫ ######################## -->
       <div class="tab-content mt-3" id="nav-tabContent">
-
+ 
 
         <!-- ==================== КОНТЕЙНЕРЫ / Операции ==================== -->
         <div class="tab-pane fade" id="list-receipt" role="tabpanel" aria-labelledby="list-receipt-list">
           <form id = "operations-purchase-form"></form>
           <div class="catalog-header">
             <div class="catalog-header-title">
-              <img src="/img/admission.png" alt="">
-              <h2>ЗАКУПКА</h2>
+              <img src="img/admission.png" alt="">
+              <h2>ПОСТУПЛЕНИЕ</h2>
             </div>
             <div class="catalog-header-buttons w-50">
-              <select id="operations-purchase-stocks-list" form="operations-purchase-form" name="stock" class="form-control w-75 m-2"></select>
+              <select id="operations-purchase-stocks-list" form="operations-purchase-form" name="stock" class="form-control w-70 m-2"></select>
               <span class="">
-                <button id="operations-purchase-submit" name="submit" form="operations-purchase-form" type="submit" class="btn btn-danger m-2 p-2 w-100" disabled>Выполнить</button>
+                <button id="operations-purchase-submit" name="submit" form="operations-purchase-form" type="submit" class="btn btn-danger m-2 p-2 w-30" disabled>Выполнить  <small>(Alt+Enter)</small></button>
                 <div id="operation-purchase-submit-spinner" class="w-100 ml-2 mr-2"></div>
               </span>
             </div>
           </div>
           <div class="d-flex justify-content-between">
             <div>
-              <div class="d-flex justify-content-between w-75">
+              <div class="d-flex justify-content-between w-50">
                 <div>
                   <select id="operations-purchase-kontragents-list" class="form-control operations-purchase-kontragents" name="kontragents" form="operations-purchase-form"></select>
                 </div>
@@ -299,12 +307,14 @@
 
           <form>
             <table id="operations-purchase-right" class="table table-hover">
-              <thead>
-                <tr>
+              <thead class="operations-purchase-main-table-header">
+                <tr >
                   <th scope="col" class="align-middle">№</th>
-                  <th scope="col" class="w-50 align-middle">Наименование:</th>
-                  <th scope="col" class="w-50 align-middle">Кол-во:</th>
+                  <th scope="col" class="w-50 align-left" style="text-align: left;">Наименование:</th>
+                  <th scope="col" class="w-50 align-right" style="text-align: right;">Кол-во:</th>
+                  <th scope="col" class="w-50 align-left"></th>
                   <th scope="col" class="w-50 align-middle">Цена закупки:</th>
+                  <th scope="col" class="w-50 align-left"></th>
                   <th scope="col" class="align-middle">Сумма:</th>
                   <th scope="col" class="align-middle">Текущая<br>наценка:</th>
                   <th scope="col" class="align-middle">Рекомендуемая<br>наценка:</th>
@@ -312,13 +322,16 @@
                   <th scope="col" class="align-middle">Сумма<br>продажи:</th>
                 </tr>
               </thead>
-              <tbody class="table table-hover"></tbody>
+              <tbody class="table table-hover operations-purchase-main-table-body"></tbody>
               <tfoot>
                 <tr>
                   <td></td>
-                  <td>
+                  <td class="operations-purchase-column-title">
+                    <div></div>
                     <button id="operations-purchase-add-good" type="button" class="btn btn-success ml-auto otButtons otBtnAddRow"></button>
                   </td>
+                  <td></td>
+                  <td></td>
                   <td></td>
                   <td></td>
                   <td></td>
@@ -337,71 +350,93 @@
           <form id = "operations-sale-form"></form>
           <div class="catalog-header">
             <div class="catalog-header-title">
-              <img src="/img/sale.png" alt="">
+              <img src="img/sale.png" alt="">
               <h2>ПРОДАЖА</h2>
             </div>
             <div class="catalog-header-buttons w-50">
-              <select id="operations-sale-stocks-list" form="operations-sale-form" name="stock" class="form-control w-75  m-2"></select>
+              <select id="operations-sale-stocks-list" form="operations-sale-form" name="stock" class="form-control w-70  m-2"></select>
               <span class="">
-                <button id="operations-sale-submit" name="submit" form="operations-sale-form" type="submit" class="btn btn-success m-2 p-2 w-100" disabled>Выполнить</button>
+                <button id="operations-sale-submit" name="submit" form="operations-sale-form" type="submit" class="btn btn-success m-2 p-2 w-30" disabled>Выполнить  <small>(Alt+Enter)</small></button>
                 <div id="operation-sale-submit-spinner" class="w-100 ml-2 mr-2"></div>
               </span>
             </div>
           </div>
 
           <div class="d-flex align-items-stretch">
-            <div class="border w-50 px-2">
-              <div id="operations-sale-left-header"></div>
-              <form id="operations-sale-search" class="catalog-header">
-                <div class="catalog-header-title">
-                  <button type="submit" class="btn btn-secondary otButtons otBtnFind"></button>
-                  <input type="text" name="name" placeholder="Поиск" class="ml-3">
-                </div>
-              </form>
+            <div class=" w-50 px-2">
+              <div class="layot-line-horizont">
+                <div id="operations-sale-left-header"></div>
+    <!--            /*     <form id="operation-inventory-search" class="catalog-header">
+                      <div class="search-container">
+                       
+                        <input type="text" name="name" placeholder="Поиск" class="ml-3 search-short-field">
+                        <button type="submit" class="btn btn-secondary otButtons otBtnFind search-btn-main"></button>
+                      </div>
+                    </form>
+  -->
+                <form id="operations-sale-search" class="catalog-header">
+                  <div class="search-container">
+                    <input type="text" name="name" placeholder="Поиск" class="ml-3 search-short-field">
+                    <button type="submit" class="btn btn-secondary otButtons otBtnFind search-btn-main"></button>
+                  </div>
+                </form>
+              </div>
               <div id="operations-sale-left" class="otLeftColumn">
               </div>
             </div>
-            <div class="border w-50 ml-1 px-2">
-              <div class="d-flex align-items-stretch justify-content-between">
-                <div>
+            <div class="w-50 p-2  ml-0 px-2">
+              <div class="d-flex align-items-stretch justify-content-between" style="margin-top: -12px;">
+                <div  class="w-60">
                   <div>
-                    <select id="operations-sale-kontragents-list" class="form-control w-100  m-2" name="kontragents" form="operations-sale-form"></select>
-                  </div>
-                  <div class="p-2 d-flex">
-                    <button id="operations-sale-discountBtn" type="button" class="btn btn-danger otButtons otBtnDiscount mr-2" data-toggle="modal" data-target="#operations-trade-discount"></button>
-                    <div class="operations-trade-delivery">
-                      <label>
-                        <input id="operations-sale-delivery" type="checkbox" name="delivery" form="operations-sale-form">
-                      </label>
+                    <div class="p-2 d-flex " style="margin-left: -8px;">
+                      <select id="operations-sale-kontragents-list" class="form-control w-70  operations-sale-kontragents-list" name="kontragents" form="operations-sale-form" ></select>
+                      <div class="operations-trade-delivery">
+                        <label>
+                          <input id="operations-sale-delivery" type="checkbox" name="delivery" form="operations-sale-form">
+                        </label>
+                      </div>
                     </div>
                   </div>
+                  <div class="p-2 d-flex " style="margin-left: -8px;">
+                   <button id="operations-sale-clear-but" type="button" class="btn btn-danger otButtons otBtnClear" ></button>
+                    <button id="operations-sale-discountBtn" type="button" class="btn  otButtons otBtnDiscount  pl-0 ml-2 mr-2" data-toggle="modal" data-target="#operations-trade-discount"></button>
+                    <form id="operations-sale-search-barcode-form">
+                    <input id="operations-sale-search-barcode" type="text" placeholder="Штрихкод" form="operations-sale-search-barcode-form" name="barcode" tabindex="1">
+                    <button id="operations-sale-search-barcode-submit" form="operations-sale-search-barcode-form" type="submit" class="btn btn-danger otButtons otBtnBarcode" name="submit"></button>
+                  </form>
+                    
+
+                    
+                  </div>
                 </div>
-                <div class="ml-5 pt-3">
+                <div class="ml-2 pt-3">
                   <p id="operations-sale-price" class='mx-auto h3 text-primary align-middle otPrice'></p>
                 </div>
               </div>
               <div class="otLeftColumn">
                 <table id="operations-sale-right" class="table table-hover">
-                  <thead>
+                  <thead class="operations-sale-right-header">
                     <tr>
                       <th scope="col" class="">#</th>
-                      <th scope="col" class="w-50">Товар</th>
-                      <th scope="col" class="w-50">Кол-во</th>
+                      <th scope="col" class="w-50" style="text-align: left;">Товар</th>
+                      <th scope="col" class="w-50" style="text-align: right;">Кол-во</th>
+                      <th scope="col" class=""></th>
                       <th scope="col" class="w-50">Цена</th>
+                      <th scope="col" class=""></th>
                       <th scope="col">Сумма</th>
                     </tr>
                   </thead>
-                  <tbody class="table table-hover"></tbody>
+                  <tbody class="table table-hover operations-sale-right-body"></tbody>
                   <tfoot id="operations-sale-right-tfoot" class="table table-hover font-weight-bold text-danger"></tfoot>
                 </table>
               </div>
-              <div class="d-flex justify-content-between pt-3">
+              <!-- <div class="d-flex justify-content-between pt-3">
                 <button id="operations-sale-clear-but" type="button" class="btn btn-danger otButtons otBtnClear" ></button>
                 <form id="operations-sale-search-barcode-form">
                   <input id="operations-sale-search-barcode" type="text" placeholder="Штрихкод" form="operations-sale-search-barcode-form" name="barcode" tabindex="1">
                   <button id="operations-sale-search-barcode-submit" form="operations-sale-search-barcode-form" type="submit" class="btn btn-danger otButtons otBtnBarcode" name="submit"></button>
                 </form>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>
@@ -414,50 +449,57 @@
                 <h2>ИНВЕНТАРИЗАЦИЯ</h2>
               </div>
               <div class="catalog-header-buttons w-50">
-              <select id="operation-inventory-stocks-list" form="operation-inventory-form" name="stock" class="form-control w-75  m-2" id="exampleFormControlSelect1"></select>
+              <select id="operation-inventory-stocks-list" form="operation-inventory-form" name="stock" class="form-control w-70  m-2 operation-inventory-stocks-list"  id="exampleFormControlSelect1"></select>
               <span class="">
-                <button id="operation-inventory-submit" name="submit" form="operation-inventory-form" type="submit" class="btn btn-primary m-2 p-2 w-100" disabled>Выполнить</button>
+                <button id="operation-inventory-submit" name="submit" form="operation-inventory-form" type="submit" class="btn btn-primary m-2 p-2 w-30 btn-operation" disabled>Выполнить  <small>(Alt+Enter)</small></button>
                 <div id="operation-inventory-submit-spinner" class="w-100 ml-2 mr-2"></div>
               </span>
             </div>
           </div>
 
           <div class="d-flex align-items-stretch">
-            <div class="border w-50 px-2">
-              <div id="operation-inventory-left-header"></div>
+            <div class=" w-50 px-  inventory_left_table">
+            <div class="layot-line-horizont">
 
-              <form id="operation-inventory-search" class="catalog-header">
-                <div class="catalog-header-title">
-                  <button type="submit" class="btn btn-secondary otButtons otBtnFind"></button>
-                  <input type="text" name="name" placeholder="Поиск" class="ml-3">
-                </div>
-              </form>
+
+                  <div id="operation-inventory-left-header"></div>
+
+                  <form id="operation-inventory-search" class="catalog-header">
+                    <div class="search-container">
+                     
+                      <input type="text" name="name" placeholder="Поиск" class="ml-3 search-short-field">
+                      <button type="submit" class="btn btn-secondary otButtons otBtnFind search-btn-main"></button>
+                    </div>
+                  </form>
+
+            </div>
+
               <div id="operation-inventory-left" class="d-flex flex-column otLeftColumn"></div>
             </div>
-            <div class="border w-50 ml-1 px-2">
-              <div id="" class="catalog-header">
+            <div class=" w-50 ml-1  pt-2  marginup">
+              <div id="" class="catalog-header" style="height: 0px;"><!--  это можно удалить??? ЧЧЧ3-->
                 <select id="operation-inventory-kontragents-list" class="form-control w-75  m-2 d-none" name="kontragents" form="operation-inventory-form"></select>
               </div>
-              <div class="otRightColumnInv">
+              <div class="otRightColumnInventory">
                 <table id="operation-inventory-right" class="table table-hover">
-                  <thead>
+                  <thead class="operation-inventory-right-header">
                     <tr>
-                      <th scope="col" class="">#</th>
+                      <th scope="col" class="">№</th>
                       <th scope="col" class="w-50">Товар</th>
                       <th scope="col" class="w-50">Предыдущее значение</th>
                       <th scope="col" class="w-50">Разница</th>
                       <th scope="col">Текущее значение</th>
                     </tr>
                   </thead>
-                  <tbody class="table table-hover"></tbody>
+                  <tbody class="table table-hover operation-inventory-right-body"></tbody>
                   <tfoot id="operation-inventory-right-tfoot" class="table table-hover font-weight-bold text-danger"></tfoot>
                 </table>
               </div>
               <div class="d-flex justify-content-between pt-3">
-                <button id="operation-inventory-clear-but" type="button" class="btn btn-danger otButtons otBtnClear"></button>
-                <form id="operation-inventory-search-barcode-form">
-                  <input id="operations-inventory-search-barcode" type="text" placeholder="Штрихкод" form="operation-inventory-search-barcode-form" name="barcode">
-                  <button id="operation-inventory-search-barcode-submit" form="operation-inventory-search-barcode-form"; type="submit" class="btn btn-danger otButtons otBtnBarcode" name="submit"></button>
+                <button id="operations-inventory-clear-but" type="button" class="btn btn-danger otButtons otBtnClear" ></button>
+                <form id="operations-inventory-search-barcode-form">
+                  <input id="operations-inventory-search-barcode" type="text" placeholder="Штрихкод" form="operations-inventory-search-barcode-form" name="barcode" tabindex="1">
+                  <button id="operations-inventory-search-barcode-submit" form="operations-inventory-search-barcode-form" type="submit" class="btn btn-danger otButtons otBtnBarcode" name="submit"></button>
                 </form>
               </div>
             </div>
@@ -538,10 +580,13 @@
 
                   <div class="manufacture-card-column">
                     <div class="manufacture-column-title">
-                      <h4>ПРОИЗВОДСТВО</h4>
-                      <button id="list-manufacture-card-add-btn" type="button" class="btn btn-success p-0 icon-btn icon-btn__add"></button>
+                      <h4>ПРОИЗВОД.КАРТОЧКИ</h4>
                     </div>
                     <div id="manufacture-card-manufacture"></div>
+                    <div class="manufacture-column-title">
+                      <div></div>
+                      <button id="list-manufacture-card-add-btn" type="button" class="btn btn-success p-0 icon-btn icon-btn__add"></button>
+                    </div>
                   </div>
 
                   <div class="manufacture-card-column">
@@ -567,29 +612,34 @@
 
             <!-- =========== КОНТЕЙНЕРЫ / Каталог / Витрина товаров =========== -->
             <div class="tab-pane fade" id="list-search" role="tabpanel" aria-labelledby="list-search-list">
+              <div id="list-search-card"  >
 
-              <div id="list-search-card">
+                  <div id="list-search-header" class="catalog-header">
+                    <div class="catalog-header-title">
+                        <img src="img/icons8-search-26-black.png" alt="">
+                        <h2>ПОИСК</h2>
+                    </div>
+                    <div id="list-groups-header-check-message"></div>
+                    <div id="list-search-header" class="catalog-header-buttons ">
+                        <div>
+                          <form id="list-search-form" action="" class="search-container">
+                            <span id="list-search-input-valid" class="badge badge-danger w-100" data-validLabel="search"></span>
+                            <button id="list-search-card-barcode-btn" type="button" class=" btn btn-danger m-2 p-2 search-card-barcode-btn"></button>
+                            <input id="list-search-input" type="text" placeholder="" data-valid="search" data-validLabelName="search" data-valisettings="listSearchForm">
+                      
+                            <button id="list-search-btn" type="submit" class="btn btn-success  search-btn-main"></button>
 
-                <div class="catalog-header-title">
-                  <img src="img/icons8-search-26-black.png" alt="">
-                  <h2>ПОИСК</h2>
-                </div>
-                <div id="list-search-header" class="catalog-header">
-                  <div>
-                    <form id="list-search-form" action="">
-                      <button id="list-search-card-barcode-btn" type="button" class="btn btn-danger m-2 p-2">|||</button>
-                      <input id="list-search-input" type="text" placeholder="" data-valid="search" data-validLabelName="search" data-valisettings="listSearchForm">
-                      <span id="list-search-input-valid" class="badge badge-danger w-100" data-validLabel="search"></span>
-                      <button id="list-search-btn" type="submit" class="btn btn-success">Искать</button>
-                    </form>
+                          </form>
+                        </div>
+                        <div class="catalog-header-buttons">
+                          <button id="list-search-keywords-btn" type="button" class="btn btn-danger m-2 p-2 search-tag-bt">Ключевое слово</button>
+                          <button id="list-search-card-reset-btn" type="button" class="btn btn-danger  search-clean-tag-bt" disabled></button>
+                        </div>
+                    </div>
+                    
                   </div>
-                  <div class="catalog-header-buttons">
-                    <button id="list-search-keywords-btn" type="button" class="btn btn-danger m-2 p-2">Ключевое слово</button>
-                    <button id="list-search-card-reset-btn" type="button" class="btn btn-danger m-2 p-2" disabled> Х </button>
-                  </div>
-                </div>
-                <div id="list-search-card-body-checked-keywords" class="groups-card-block"></div>
-                <div id="list-search-card-body" class="groups-card-block"></div>
+                  <div id="list-search-card-body-checked-keywords" class="groups-card-block"></div>
+                 <div id="list-search-card-body" class="groups-card-block"></div>
               </div>
             </div>
 
@@ -671,30 +721,32 @@
                 </div>
                 <div id="card-resources-body" class="catalog-header-title">
 
-                  <div class="w-100 border">
+                  <div class="w-100 ">
                     <div class="catalog-header">
                       <div class="catalog-header-title">
                         <h2>Ресуры</h2>
-                        <div class="catalog-header-buttons">
-                          <button id="resources-add-btn" type="button" class="btn btn-success p-0 icon-btn icon-btn__add" data-toggle="modal" data-target="#cards-add"></button>
-                        </div>
+                       
                       </div>
-                      <div id="card-resources-old-cost"></div>
+                      <div id="card-resources-old-cost" class="label-h3"></div>
                     </div>
                     <div id="card-resources-body-resources"></div>
+                    <div class="catalog-header-buttons">
+                          <button id="resources-add-btn" type="button" class="btn btn-success p-0 icon-btn icon-btn__add" data-toggle="modal" data-target="#cards-add"></button>
+                    </div>
                   </div>
 
-                  <div class="w-100 ml-4 border">
+                  <div class="w-100 ml-4 ">
                     <div class="catalog-header">
                       <div class="catalog-header-title">
                         <h2>Продукт</h2>
-                        <div class="catalog-header-buttons">
-                          <button id="product-add-btn" type="button" class="btn btn-success p-0 icon-btn icon-btn__add" data-toggle="modal" data-target="#cards-add"></button>
-                        </div>
+                       
                       </div>
-                      <div id="card-resources-new-price"></div>
+                      <div id="card-resources-new-price" class="label-h3"></div>
                     </div>
                     <div id="card-resources-body-product"></div>
+                    <div class="catalog-header-buttons">
+                          <button id="product-add-btn" type="button" class="btn btn-success p-0 icon-btn icon-btn__add" data-toggle="modal" data-target="#cards-add"></button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -742,7 +794,7 @@
                   <select id="docs-day" class="custom-select mr-1">
                 <option value="null" selected>---------</option>
               </select>
-                  <button id="get-docs-btn" type="button" class="btn btn-primary p-0 icon-btn">-></button>
+                  <button id="get-docs-btn" type="button" class="btn btn-primary p-0 docs-btn-search"> </button>
                 </div>
                 <div>
                   <button id="docs-bill-btn" type="button" class="btn btn-primary">Накладные</button>
@@ -768,13 +820,25 @@
 
               </div>
               <div id="list-reports-body">
-                <h4>Данные на текущий момент / в течение дня:</h4>
-                <div id="reports-dashboard" class="reports-dashboard"></div>
+                <div id="reports-dashboard-two-columns">
+                  <div>
+                     <h4>Данные на текущий момент:</h4>
+                     <div id="reports-dashboard-at-the-moment" class="reports-dashboard-at-the_moment"></div>
+                  </div>
+                   <div>
+                     <h4>Данные в течении текущего дня: </h4>
+                     <div id="reports-dashboard-today" class="reports-dashboard-today"></div>
+                  </div>
+
+                </div>
+
+
+
                 <h4>Отчеты:</h4>
                 <div id="reports-links" class="reports-links">
-                  <div id="report-goods-left" class="d-flex justify-content-between align-items-center reference-string">1. Остаток товара.</div>
-                  <div id="report-goods-turn" class="d-flex justify-content-between align-items-center reference-string">2. Оборот товара.</div>
-                  <div id="report-profit-retail" class="d-flex justify-content-between align-items-center reference-string">3. Прибыль с розничных продаж.</div>
+                  <div id="report-goods-left" class="report-row">1. Остаток товара.</div>
+                  <div id="report-goods-turn" class="report-row">2. Оборот товара.</div>
+                  <div id="report-profit-retail" class="report-row">3. Прибыль с розничных продаж.</div>
                 </div>
               </div>
 
@@ -806,6 +870,7 @@
 
                 </div>
                 <h3>Накладные:</h3>
+
                 <div id="list-contractors-card-body"></div>
               </div>
 
@@ -852,6 +917,7 @@
                   <button id="list-keywords-card-delete-btn" type="button" class="btn btn-danger p-0 icon-btn icon-btn__delete"></button>
                 </div>
                 <div id="list-keywords-card-edit" class="text-center"></div>
+                <div id="list-keywords-links"></div>
               </div>
 
             </div>
@@ -875,39 +941,51 @@
                     <button id="list-enterprises-card-return-btn" type="button" class="btn btn-success p-0 icon-btn icon-btn__return"></button>
                     <h2 id="list-enterprises-card-name"></h2>
                   </div>
+                  <div id="list-enterprises-card-is-checked" class="p-0 bg-white icon icon__check d-none"></div>
                   <button id="list-enterprises-card-check-btn" type="button" class="btn btn-success p-0 icon-btn icon-btn__check--white"></button>
                   <button id="list-enterprises-card-edit-btn" type="button" class="btn btn-warning p-0 icon-btn icon-btn__edit" data-toggle="modal" data-target="#enterprises-card-edit"></button>
                   <button id="list-enterprises-card-delete-btn" type="button" class="btn btn-danger p-0 icon-btn icon-btn__delete"></button>
                 </div>
                 <div class="enterprise-card-block">
-                  <div class="d-flex justify-content-between align-items-center mb-2">
-                    <div>
-                      <span>Баланс</span>
-                      <span id="list-enterprises-card-balance"></span>
-                    </div>
-                    <div id="list-enterprises-card-is-checked" class="p-0 bg-white icon icon__check d-none"></div>
-                  </div>
-                  <div>
-                    <span>Дата создания</span>
-                    <span id="list-enterprises-card-date"></span>
-                  </div>
-                  <div>
-                    <span>Свойства</span>
-                    <ul>
-                      <li>
-                        <span>Отрицательные остатки</span>
-                        <input id="list-enterprises-card-negative-tailings-switch" class="form-check-input position-static negative-switch" type="checkbox" value="option1" aria-label="...">
-                      </li>
-                      <li>
-                        <span>Отрицательный баланс</span>
-                        <input id="list-enterprises-card-negative-balance-switch" class="form-check-input position-static negative-switch" type="checkbox" value="option1" aria-label="...">
-                      </li>
-                    </ul>
+   
+                    <table >
+                       <tr>
+                          <th><h4>Обшая информация:</h4></th>
+                          <th> </th> 
+                       
+                        </tr>
+                        <tr>
+                           <td><span>Баланс:</span></td>
+                            <td><span id="list-enterprises-card-balance"></span></td>
+                        </tr>
+                        <tr>
+                           <td> <span>Дата создания:</span></td>
+                            <td> <span id="list-enterprises-card-date"></span></td>
+                        </tr>
+                         <tr>
+                           <td> <span></span></td>
+                            <td> </td>
+                        </tr>
+                        <tr>
+                          <th><h4>Свойства:</h4></th>
+                          <th> </th> 
+                       
+                        </tr>
+                        <tr>
+                          <td><span>Отрицательные остатки</span></td>
+                          <td><input id="list-enterprises-card-negative-tailings-switch" class="form-check-input position-static negative-switch" type="checkbox" value="option1" aria-label="..."></td>
+                        </tr>
+                        <tr>
+                          <td><span>Отрицательные баланс</span></td>
+                          <td><input id="list-enterprises-card-negative-balance-switch" class="form-check-input position-static negative-switch" type="checkbox" value="option1" aria-label="...">
+                          </td>
+                        </tr>
+                    </table>
+                    
                   </div>
 
                 </div>
-              </div>
-
+              
             </div>
             <!-- =========== КОНТЕЙНЕРЫ / Справочники / Категории доходов =========== -->
             <div class="tab-pane fade" id="list-debit-credit" role="tabpanel" aria-labelledby="list-debit-credit-list">
@@ -988,17 +1066,28 @@
                 </div>
                 <div id="user-card-data">
                   <div id="user-card-profile" class="d-flex">
-                    <img id="user-profile-image" class="mr-3 rounded-circle " src="img/user-male-filled-32.png" style="width: 72px; height: 72px;" alt="">
+                    <img id="user-profile-image" class="mr-3 rounded-circle " src="img/icons8-user-240.png" style="width: 72px; height: 72px;" alt="">
                     <div>
-                      <div><span>Имя: </span> <span id="user-profile-name"></span></div>
-                      <div><span>Статус: </span> <span id="user-profile-status"></span></div>
-                      <div><span>LOPOD ID: </span> <span id="user-profile-id"></span></div>
+                      <table >
+                        <tr>
+                           <td><span>Имя:</span></td>
+                            <td><span id="user-profile-name"></span></td>
+                        </tr>
+                         <tr>
+                           <td><span>Статус:</span></td>
+                            <td><span id="user-profile-status"></span></td>
+                        </tr> 
+                        <tr>
+                           <td><span>LOPOD ID:</span></td>
+                            <td><span id="user-profile-id"></span></td>
+                        </tr>   
+                      </table>                  
                     </div>
                   </div>
-                  <div class="mt-3"><b>Права доступа по складу:</b></div>
+                  <div class="mt-3"><h4>Права доступа по складу:</h4></div>
                   <div id="user-stock-list" class="d-flex flex-wrap"></div>
                   <div id="user-stock-permissions" class="user-permissions"></div>
-                  <div class="mt-3"><b>Прочие права доступа:</b></div>
+                  <div class="mt-3"><h4>Прочие права доступа:</h4></div>
                   <div id="user-other-permissions"></div>
                 </div>
               </div>
@@ -1011,7 +1100,9 @@
               <p>НАСТРОЙКА (UNDER CONSTRUCTION)</p>
             </div>
             <div class="tab-pane fade" id="list-support" role="tabpanel" aria-labelledby="list-support-list">
-              <p>Техподдержка (UNDER CONSTRUCTION)</p>
+              <br>
+              <p align="center">Все предложения и замечания просим присылать на адрес:<br> lopos@bidone.ru</p>
+            
             </div>
 
           </div>
@@ -1539,46 +1630,75 @@
 
           <div class="modal-content">
 
-            <div class="catalog-header">
+            <div class="catalog-header modal-balance-act-card-header">
               <div class="catalog-header-title">
-                <h2 id="bill-card-stock"></h2>
+                 <h2>Накладная <span id="bill-card-id"></span></h2>
               </div>
               <div class="catalog-header-buttons">
-                <button id="bill-delivery-btn" type="button" class="btn p-0 icon-btn icon-btn__delivery"></button>
-                <button id="bill-delete-btn" type="button" class="btn p-0 icon-btn icon-btn__delete--red"></button>
-                <button id="bill-pdf-btn" type="button" class="btn btn-success p-0 icon-btn icon-btn__pdf"></button>
-                <button id="bill-excel-btn" type="button" class="btn btn-success p-0 icon-btn icon-btn__excel"></button>
+         
                 <button id="bill-card-close" type="button" class="close ml-3 mr-2" data-dismiss="modal" aria-label="Close" data-cancel>
               <span aria-hidden="true">&times;</span>
             </button>
               </div>
             </div>
+            <div class='layot-line-horizont'>
+             
+                <table class="modal-table-naklad modal-table-naklad-1 " >
+                      <tr>
+                         <td><span>Время:</span></td>
+                          <td><span id="bill-card-time"></span></td>
+                      </tr>
+                      <tr>
+                         <td><span>Операция:</span></td>
+                          <td><span id="bill-card-type"></span></td>
+                      </tr>
+                      <tr>
+                         <td><span>Статус:</span></td>
+                          <td><span id="bill-card-status">Проведена</span></td>
+                      </tr>
+                    </table>
+              
+                <table class="modal-table-naklad modal-table-naklad-2" >
+                           
+                          
+                             <tr>
+                               <td><span>Точка:</span></td>
+                                <td><span id="bill-card-stock"></span></td>
+                            </tr>
+                            
+                             <tr>
+                               <td><span>Сотрудник:</span></td>
+                                <td><span id="bill-card-user"></span></td>
+                            </tr>
+                             <tr>
+                               <td><span>Контрагент:</span></td>
+                                <td><span id="bill-card-kontragent-name"></span></td>
+                            </tr>
+                  </table> 
+              
+            </div>
+                        
+            <div id="bill-card-goods" style="padding:4px;"></div>
 
-            <div class="catalog-header">
-              <div>
-                <img id="bill-card-type" src="" alt="">
-                <span id="bill-card-id"></span>
-                <span id="bill-card-time"></span>
-              </div>
-              <img id="bill-card-user" src="img/user-male-filled-32.png" class="bg-danger rounded-circle mr-2" alt="">
-            </div>
-            <div class="catalog-header">
-              <span id="bill-card-name"></span>
-              <span id="bill-card-total"></span>
-            </div>
-            <div id="bill-card-goods"></div>
+            
 
             <div class="modal-body">
-
-              <div></div>
+                  
 
               <div id="bill-card-spinner" class="progress text-white mb-3 invisible" data-spinner>
                 <div class="progress-bar progress-bar-striped progress-bar-animated text-white font-weight-bold text-uppercase" style="width: 100%" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
               </div>
-
-              <div class="bill-card-btns-container">
-                <button id="bill-card-cancel" type="button" class="btn btn-danger" data-dismiss="modal">Отменить</button>
-              </div>
+                <div class="layot-line-horizont"> 
+                  <div class="bill-card-btns-container">  
+                    <button id="bill-delivery-btn" type="button" class="btn p-0 icon-btn icon-btn__delivery"></button>
+                    <button id="bill-delete-btn" type="button" class="btn p-0 icon-btn icon-btn__delete--red"></button>
+                    <button id="bill-pdf-btn" type="button" class="btn btn-success p-0 icon-btn icon-btn__pdf"></button>
+                    <button id="bill-excel-btn" type="button" class="btn btn-success p-0 icon-btn icon-btn__excel"></button>
+                  </div>
+                  <div class="catalog-header-buttons">
+                    <h4 style="color: #C3EDEB;">Итого:&nbsp;&nbsp;</h4><h4><span id="bill-card-total"></span></h4>
+                  </div> 
+                </div> 
             </div>
 
           </div>
@@ -1589,32 +1709,52 @@
       <div class="modal fade" id="balance-act-card" tabindex="-1" role="dialog" aria-labelledby="balance-act-card" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
 
-          <div class="modal-content">
+          <div class="modal-content modal-balance-act-card">
 
-            <div class="catalog-header">
+            <div class="catalog-header modal-balance-act-card-header">
               <div class="catalog-header-title">
-                <h2 id="balance-act-card-stock"></h2>
+                <h2>Балансовый документ</h2>
               </div>
               <div class="catalog-header-buttons">
-                <button id="balance-act-delete-btn" type="button" class="btn p-0 icon-btn icon-btn__delete--red"></button>
+              
                 <button id="balance-act-card-close" type="button" class="close ml-3 mr-2" data-dismiss="modal" aria-label="Close" data-cancel>
               <span aria-hidden="true">&times;</span>
             </button>
               </div>
             </div>
 
-            <div class="catalog-header">
-              <div>
-                <img id="balance-act-card-user" src="img/debitcredit.png" class="bg-danger rounded-circle mr-2" alt="">
-                <span id="balance-act-card-id"></span>
-                <span id="balance-act-card-time"></span>
-              </div>
-              <img id="balance-act-card-user" src="img/user-male-filled-32.png" class="bg-danger rounded-circle mr-2" alt="">
-            </div>
             <div>
-              <p><span>Сумма: </span><span id="balance-act-total"></span></p>
-              <p><span>Причина: </span><span id="balance-act-reason"></span></p>
-              <p><span>Комментарий: </span><span id="balance-act-comment"></span></p>
+             
+                <table class="modal-table-balance-act" >
+                        <tr>
+                           <td><span>№:</span></td>
+                            <td><span id="balance-act-card-id"></span></td>
+                        </tr>
+                         <tr>
+                           <td><span>Время:</span></td>
+                            <td><span id="balance-act-card-time"></span></td>
+                        </tr>
+                         <tr>
+                           <td><span>Точка:</span></td>
+                            <td><span id="balance-act-card-stock"></span></td>
+                        </tr>
+                         <tr>
+                           <td><span>Сотрудник:</span></td>
+                            <td><span id="balance-act-card-user"></span></td>
+                        </tr>
+                         <tr>
+                           <td><span>Причина:</span></td>
+                            <td><span id="balance-act-reason"></span></td>
+                        </tr>
+                         <tr>
+                           <td><span>Комментарий:</span></td>
+                            <td><span id="balance-act-comment"></span></td>
+                        </tr>
+                         <tr>
+                           <td><span>Сумма:</span></td>
+                            <td><span id="balance-act-total"></span></td>
+                        </tr>
+                </table>
             </div>
 
             <div class="modal-body">
@@ -1626,9 +1766,14 @@
               </div>
 
               <div class="balance-act-card-btns-container">
-                <button id="balance-act-card-cancel" type="button" class="btn btn-danger" data-dismiss="modal">Отменить</button>
+                  <button id="balance-act-delete-btn" type="button" class="btn p-0 icon-btn icon-btn__delete--red"></button>
               </div>
+
+             
+
             </div>
+
+
 
           </div>
         </div>
@@ -1655,73 +1800,89 @@
 
                   <div class="goods-card-first-row">
                     <div class="goods-card-img" width="300" height="300">
-                      <img id="goods-card-image" src="./img/not-available.png" alt="">
+                      <img id="goods-card-image" src="img/not-available.png" alt="">
                       <input type="file" class="d-none" id="goods-card-image-upload" data-valid='none'>
-                      <label class="custom-file-label btn btn-warning icon-btn icon-btn__edit" for="goods-card-image-upload"></label>
+                      <label class="custom-file-label btn btn-warning icon-btn icon-btn__edit_small" for="goods-card-image-upload"></label>
                     </div>
                   </div>
 
                   <div class="goods-card-second-row">
-                    <div class="form-group">
-                      <label for="goods-card-describe">Описание</label>
-                      <textarea type="text" class="form-control" id="goods-card-describe" aria-describedby="goods-card-describe" placeholder="Описание" data-valid="describe" data-validLabelName="describe"></textarea>
-                      <span id="goods-card-describe-valid" class="badge badge-danger w-100" data-validLabel="describe"></span>
+                      <div class="goods-card-string-first-string">
+                           <div class="goods-card-first-row-price-column" id="goods-card-price-block">
+                              <div class="price-total">
+                                <h4>Цена</h4>
+                                
+                                <h6 id="goods-card-price-extra" class="text-danger"></h6>
+                              </div>
+                              <input type="text" class="form-control goods-card-price-lbl" id="goods-card-price-purchase" aria-describedby="goods-card-price" placeholder="Наценка" data-valid="purchase" data-validLabelName="goodPrice">
+                              <input type="text" class="form-control goods-card-price-lbl" id="goods-card-price-sell" aria-describedby="goods-card-price" placeholder="Цена" data-valid="price" data-validLabelName="goodPrice">
+                              <span id="goods-card-price-valid" class="badge badge-danger w-100" data-validLabel="goodPrice"></span>
+                          </div>
+                           <div id="express-container" class="express-container goods-card-first-row-express-column">
+                              <h4>Экспресс-операции</h4>
+                              <div id="express-purchase">
+                                <span>Покупка</span>
+                                <button id="express-operation-purchase-1" type="button" class="btn btn-danger">1 шт.</button>
+                                <button id="express-operation-purchase-5" type="button" class="btn btn-danger">5 шт.</button>
+                                <button id="express-operation-purchase-10" type="button" class="btn btn-danger">10 шт.</button>
+                                <button id="express-operation-purchase-15" type="button" class="btn btn-danger">15 шт.</button>
+                                <button id="express-purchase-custom" type="button" class="btn btn-danger">...</button>
+                              </div>
+
+                              <div id="express-sell">
+                                <span>Продажа</span>
+                                <button id="express-operation-sell-1-minus" type="button" class="btn btn-success">1 шт.</button>
+                                <button id="express-operation-sell-5-minus" type="button" class="btn btn-success">5 шт.</button>
+                                <button id="express-operation-sell-10-minus" type="button" class="btn btn-success">10 шт.</button>
+                                <button id="express-operation-sell-15-minus" type="button" class="btn btn-success">15 шт.</button>
+                                <button id="express-sell-custom-minus" type="button" class="btn btn-success">...</button>
+                              </div>
+
+                         </div>
+                    </div>
+                    <div class="goods-card-string">
+                      <div class="form-group">
+
+                        <label for="goods-card-barcode">Наценка</label>
+                        <input type="text" class="form-control goods-card-price-lbl" id="goods-card-markup" aria-describedby="goods-card-markup" placeholder="Наценка" data-valid="markup" data-validLabelName="goodMarkup">
+                             
+                      </div>
+                       <div class="form-group" style="padding-left: 22px;">
+                          <label for="goods-card-group">Группа</label>
+                          <select id="goods-card-group" class="custom-select" data-valid='none'>
+                             <option selected>Выберите группу</option>
+                          </select>
+                          <span id="goods-card-group-valid" class="badge badge-danger w-100"></span>
+                     </div>
+                      <div class="form-group">
+                          <label for="goods-card-barcode">Штрихкод</label>
+                          <input type="text" class="form-control" id="goods-card-barcode" aria-describedby="goods-card-barcode" placeholder="Штрихкод" data-valid="barcode" data-validLabelName="barcode">
+                          <span id="goods-card-barcode-valid" class="badge badge-danger w-100" data-validLabel="barcode"></span>
+                      </div>
+                    
                     </div>
 
-                    <div class="form-group">
-                      <label for="goods-card-barcode">Штрихкод</label>
-                      <input type="text" class="form-control" id="goods-card-barcode" aria-describedby="goods-card-barcode" placeholder="Штрихкод" data-valid="barcode" data-validLabelName="barcode">
-                      <span id="goods-card-barcode-valid" class="badge badge-danger w-100" data-validLabel="barcode"></span>
-                    </div>
-
-                    <div class="form-group">
-                      <label for="goods-card-group">Группа</label>
-                      <select id="goods-card-group" class="custom-select" data-valid='none'>
-                    <option selected>Выберите группу</option>
-                  </select>
-                      <span id="goods-card-group-valid" class="badge badge-danger w-100"></span>
-                    </div>
 
                   </div>
                 </div>
 
                 <div class="goods-card-string">
-                  <div class="goods-card-first-row" id="goods-card-price-block">
-                    <div class="price-total">
-                      <h4>Цена</h4>
-                      <h4 id="goods-card-price-extra" class="text-danger"></h4>
-                    </div>
-                    <input type="text" class="form-control" id="goods-card-price-purchase" aria-describedby="goods-card-price" placeholder="Наценка" data-valid="purchase" data-validLabelName="goodPrice">
-                    <input type="text" class="form-control" id="goods-card-price-sell" aria-describedby="goods-card-price" placeholder="Цена" data-valid="price" data-validLabelName="goodPrice">
-                    <span id="goods-card-price-valid" class="badge badge-danger w-100" data-validLabel="goodPrice"></span>
+                
+                  <div class="goods-card-second-row">
+                    <label for="goods-card-describe">Описание</label>
+                    <textarea type="text" class="form-control" id="goods-card-describe" aria-describedby="goods-card-describe" placeholder="Описание" data-valid="describe" data-validLabelName="describe"></textarea>
+                    <span id="goods-card-describe-valid" class="badge badge-danger w-100" data-validLabel="describe"></span>
                   </div>
 
-                  <div id="express-container" class="express-container goods-card-second-row">
-                    <h4>Экспресс-операции</h4>
-                    <div id="express-purchase">
-                      <span>Покупка</span>
-                      <button id="express-operation-purchase-5" type="button" class="btn btn-danger">5 шт.</button>
-                      <button id="express-operation-purchase-10" type="button" class="btn btn-danger">10 шт.</button>
-                      <button id="express-operation-purchase-15" type="button" class="btn btn-danger">15 шт.</button>
-                      <button id="express-purchase-custom" type="button" class="btn btn-danger">...</button>
-                    </div>
 
-                    <div id="express-sell">
-                      <span>Продажа</span>
-                      <button id="express-operation-sell-5-minus" type="button" class="btn btn-success">5 шт.</button>
-                      <button id="express-operation-sell-10-minus" type="button" class="btn btn-success">10 шт.</button>
-                      <button id="express-operation-sell-15-minus" type="button" class="btn btn-success">15 шт.</button>
-                      <button id="express-sell-custom-minus" type="button" class="btn btn-success">...</button>
-                    </div>
 
-                  </div>
                 </div>
 
 
-                <div id="goods-stock-header" class="goods-card-string">
+                <div id="goods-stock-header" class="goods-card-string goods-stock-header">
                   <div class="col-8 d-flex">
                     <h4>Остатки</h4>
-                    <button type="button" class="btn btn-warning p-0 icon-btn icon-btn__edit" data-toggle="modal" data-target="#set-stock-modal"></button>
+                    <button type="button" class="btn btn-warning p-0 icon-btn icon-btn__edit_small" data-toggle="modal" data-target="#set-stock-modal"></button>
                   </div>
                   <div class="col-4 d-flex justify-content-between">
                     <div class="w-100 text-center">
@@ -1735,12 +1896,12 @@
                     </div>
                   </div>
                 </div>
-                <div id="goods-stock-body"></div>
+                <div id="goods-stock-body" class="goods-stock-body"></div>
 
                 <div class="catalog-header mt-3">
                   <div class="catalog-header-title">
                     <h4>Ключевые слова</h4>
-                    <button type="button" class="btn btn-warning p-0 icon-btn icon-btn__edit" data-toggle="modal" data-target="#goods-card-keywords"></button>
+                    <button type="button" class="btn btn-warning p-0 icon-btn icon-btn__edit_small" data-toggle="modal" data-target="#goods-card-keywords"></button>
                   </div>
                 </div>
                 <div id="goods-keywords"></div>
@@ -1913,13 +2074,14 @@
             <div class="modal-header">
               <h5 id="card-resources-title" class="modal-title">Выбор товара (выбор группы)</h5>
               <button id="card-resources-group-close" type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+               <span aria-hidden="true">&times;</span>
+              </button>
+               <div id="card-resources-search">
+                <button id="card-resources-modal-return-btn" type="button" class="btn btn-success p-0 icon-btn icon-btn__return"></button>
+                <input id="card-resources-search-input" type="text" placeholder="поиск в ресурсах">
+              </div>
             </div>
-            <div id="card-resources-search">
-              <button id="card-resources-modal-return-btn" type="button" class="btn btn-success p-0 icon-btn icon-btn__return"></button>
-              <input id="card-resources-search-input" type="text" placeholder="поиск в ресурсах">
-            </div>
+           
             <div id="card-resources-groups-body"></div>
             <div class="modal-footer">
               <button id="card-resources-group-submit" type="button" class="btn btn-danger" data-dismiss="modal">Завершить</button>
@@ -1934,18 +2096,26 @@
           <div class="modal-content">
 
             <div class="modal-header">
-              <h5 class="modal-title">Выберите производственную карточку</h5>
-              <button id="select-nomenklature-card-close" type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-            </div>
-            <div id="select-nomenklature-card-search">
-              <input id="select-nomenklature-card-input" type="text" placeholder="поиск в карточках">
-            </div>
+              <h5 class="modal-title" style="margin-top: 6px;">Выберите производственную карточку</h5>
+              <div class="layot-line-horizont" >
+           
+                  <div id="select-nomenklature-card-search" class="catalog-header  search-container-in-modal" align="right">
+
+                    <div class="catalog-header-title">
+                      <button type="submit" class="btn btn-secondary otButtons otBtnFind"></button>
+                      <input id="select-nomenklature-card-input" type="text" placeholder="поиск в карточках"  class="ml-3" style="margin-top: 2px;">
+                  </div>
+                  <button id="select-nomenklature-card-close" type="button" class="close  bt-close" data-dismiss="modal"  aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+              </div>
+           </div>
+           
             <div id="select-nomenklature-card-body"></div>
-            <div class="modal-footer">
+             <!--  <div class="modal-footer">
               <button id="select-nomenklature-card-submit" type="button" class="btn btn-danger" data-dismiss="modal">Завершить</button>
-            </div>
+            </div>-->
           </div>
         </div>
       </div>
@@ -1963,14 +2133,14 @@
             </div>
 
             <div class="report-setup-header">
-              <h5>Склад</h5>
+              <h5>Склад:</h5>
                 <select id="report-goods-left-modal-stock" class="custom-select mr-1">
                   <option value="null" selected>---------</option>
                 </select>
             </div>
 
             <div id="report-goods-left-modal-switch">
-
+              <h5 class="goods-left-setup-header">Настройки:</h5>
               <div class="goods-left-setup-string">
                 <span>На текущий момент</span>
                 <input class="form-check-input position-static" type="checkbox" value="111" checked="" disabled>
@@ -2014,21 +2184,22 @@
             </div>
             <div class="report-setup-header">
               <h5>Группы</h5>
-              <input id="report-groups-main-switch" type="checkbox" value="" checked>
+              <button id="report-groups-main-switch" type="button" >Переключить у всех</button>
+                <!--<input id="report-groups-main-switch" type="checkbox" value="" checked>-->
             </div>
-            <div id="report-goods-left-modal-body" style="overflow-y: auto; height: 400px;"></div>
+            <div id="report-goods-left-modal-body" style=" margin-left:20px; overflow-y: auto; height: 400px;"></div>
             <div class="modal-footer report-goods-left-modal-footer">
               <div>
-                <button id="report-goods-left-modal-pdf" type="button" class="btn btn-danger">PDF</button>
-                <button id="report-goods-left-modal-excel" type="button" class="btn btn-danger">Excel</button>
+                <button id="report-goods-left-modal-pdf" type="button" class="btn btn-pdf">PDF</button>
+                <button id="report-goods-left-modal-excel" type="button" class="btn btn-excel">Excel</button>
               </div>
               <div>
-                <a download id="report-link" target="_blank"><img src="./img/report-download.png" style="height: 34px;" title="Скачать на компьютер"></a>
-                <a id="report-link-google" target="_blank"><img src="./img/report-google.png" style="height: 34px;" title="Смотреть на Google"></a>
+
+                <a download id="report-link" target="_blank"><button download id="report-link-bt" type="button"  target="_blank" class="btn-download">Скачать</button></a>
+                <a id="report-link-google" target="_blank"><button id="report-link-google-bt" type="button"  target="_blank" class="btn-preview-google">Просмотр</button></a>
+              
               </div>
-              <div>
-                <button id="report-goods-left-modal-submit" type="button" class="btn btn-danger" data-dismiss="modal">Завершить</button>
-              </div>
+             
             </div>
           </div>
         </div>
@@ -2099,28 +2270,47 @@
 
             <div class="modal-footer report-goods-left-modal-footer">
               <div>
-                <button id="report-catalog-goods-left-modal-pdf" type="button" class="btn btn-danger">PDF</button>
-                <button id="report-catalog-goods-left-modal-excel" type="button" class="btn btn-danger">Excel</button>
+
+                <button id="report-catalog-goods-left-modal-pdf" type="button" class="btn btn-pdf">PDF</button>
+                <button id="report-catalog-goods-left-modal-excel" type="button" class="btn btn-excel">Excel</button>
+
               </div>
               <div>
-                <a download id="report-catalog-link" target="_blank"><img src="./img/report-download.png" style="height: 34px;" title="Скачать на компьютер"></a>
-                <a id="report-catalog-link-google" target="_blank"><img src="./img/report-google.png" style="height: 34px;" title="Смотреть на Google"></a>
+                <a download id="report-catalog-link" target="_blank"><button download id="report-link-bt" type="button"  target="_blank" class="btn-download">Скачать</button></a>
+                <a id="report-catalog-link-google" target="_blank"><button id="report-link-google-bt" type="button"  target="_blank" class="btn-preview-google">Просмотр</button></a>
+              
               </div>
-              <div>
-                <button id="report-catalog-goods-left-modal-submit" type="button" class="btn btn-danger" data-dismiss="modal">Завершить</button>
-              </div>
+             
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Модальное окно ОТЧЕТЫ / ОБОРОТ ТОВАРА -->
+      <!--
+
+ <div class="modal-footer report-goods-left-modal-footer">
+              <div>
+                
+                <button id="report-goods-turn-modal-pdf" type="button" class="btn btn-pdf">PDF</button>
+                <button id="report-goods-turn-modal-excel" type="button" class="btn btn-excel">Excel</button>
+
+              </div>
+              <div>
+                <a download id="report-link-turn" target="_blank"><button download id="report-link-turn-bt" type="button"  target="_blank" class="btn-download">Скачать</button></a>
+                <a id="report-link-turn-google" target="_blank"><button id="report-link-turn-google-bt" type="button"  target="_blank" class="btn-preview-google">Просмотр</button></a>
+                
+              </div>
+              
+            </div>
+
+
+       Модальное окно ОТЧЕТЫ / ОБОРОТ ТОВАРА -->
       <div id="report-goods-turn-modal" class="modal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
 
             <div class="modal-header">
-              <h5 class="modal-title">Остатки товара</h5>
+              <h5 class="modal-title">Обороты товара</h5>
               <button id="report-goods-turn-modal-close" type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -2136,8 +2326,12 @@
             </div>
 
               <div class="report-calendar">
+                <h5>Период:</h5>
                 С: <input id="report-turn-from" type="date">
                 По: <input id="report-turn-to" type="date">
+              </div>
+              <div class="report-setup-header">
+                <h5>Настройки:</h5>
               </div>
 
               <div class="goods-left-setup-string">
@@ -2150,24 +2344,27 @@
                 <div><input class="form-check-input position-static report-goods-turn-modal-switch" type="checkbox" value="p02"></div>
               </div>
 
+
+
             </div>
             <div class="report-setup-header">
               <h5>Группы</h5>
-              <input id="report-groups-turn-main-switch" class="form-check-input position-static user-permissions-switch" type="checkbox" value="" checked>
+                <button id="report-groups-turn-main-switch" type="button" >Переключить у всех</button>
             </div>
             <div id="report-goods-turn-modal-body" style="overflow-y: auto; height: 400px;"></div>
             <div class="modal-footer report-goods-left-modal-footer">
               <div>
-                <button id="report-goods-turn-modal-pdf" type="button" class="btn btn-danger">PDF</button>
-                <button id="report-goods-turn-modal-excel" type="button" class="btn btn-danger">Excel</button>
+                
+                <button id="report-goods-turn-modal-pdf" type="button" class="btn btn-pdf">PDF</button>
+                <button id="report-goods-turn-modal-excel" type="button" class="btn btn-excel">Excel</button>
+
               </div>
               <div>
-                <a id="report-link-turn" target="_blank"><img src="./img/report-download.png" style="height: 34px;" title="Скачать на компьютер"></a>
-                <a id="report-link-turn-google" target="_blank"><img src="./img/report-google.png" style="height: 34px;" title="Смотреть на Google"></a>
+                <a download id="report-link-turn" target="_blank"><button download id="report-link-turn-bt" type="button"  target="_blank" class="btn-download">Скачать</button></a>
+                <a id="report-link-turn-google" target="_blank"><button id="report-link-turn-google-bt" type="button"  target="_blank" class="btn-preview-google">Просмотр</button></a>
+                
               </div>
-              <div>
-                <button id="report-goods-turn-modal-submit" type="button" class="btn btn-danger" data-dismiss="modal">Завершить</button>
-              </div>
+              
             </div>
           </div>
         </div>
@@ -2179,7 +2376,7 @@
           <div class="modal-content">
 
             <div class="modal-header">
-              <h5 class="modal-title">Остатки товара</h5>
+              <h5 class="modal-title">Прибыль с розничных продаж.</h5>
               <button id="report-goods-profit-modal-close" type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -2194,8 +2391,12 @@
               </div>
 
               <div class="report-calendar">
+                <h5>Период:</h5>
                 С: <input id="report-profit-from" type="date">
                 По: <input id="report-profit-to" type="date">
+              </div>
+              <div class="report-setup-header">
+                <h5>Настройки:</h5>
               </div>
 
               <div class="goods-left-setup-string">
@@ -2221,27 +2422,42 @@
 
             <div class="modal-footer report-goods-left-modal-footer">
               <div>
-                <button id="report-goods-profit-modal-pdf" type="button" class="btn btn-danger">PDF</button>
-                <button id="report-goods-profit-modal-excel" type="button" class="btn btn-danger">Excel</button>
+
+                <button id="report-goods-profit-modal-pdf" type="button" class="btn btn-pdf">PDF</button>
+                <button id="report-goods-profit-modal-excel" type="button" class="btn btn-excel">Excel</button>
               </div>
               <div>
-                <a id="report-link-profit" target="_blank"><img src="./img/report-download.png" style="height: 34px;" title="Скачать на компьютер"></a>
-                <a id="report-link-profit-google" target="_blank"><img src="./img/report-google.png" style="height: 34px;" title="Смотреть на Google"></a>
+                <a download id="report-link-profit" target="_blank"><button download id="report-link-profit-bt" type="button"  target="_blank" class="btn-download">Скачать</button></a>
+                <a id="report-link-profit-google" target="_blank"><button id="report-link-profit-google-bt" type="button"  target="_blank" class="btn-preview-google">Просмотр</button></a>
               </div>
-              <div>
-                <button id="report-goods-profit-modal-submit" type="button" class="btn btn-danger" data-dismiss="modal">Завершить</button>
-              </div>
+              
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Операции / накладные / ЗАКУПКИ - группы товаров-->
+        <!-- Операции / накладные / ЗАКУПКИ - группы товаров-->
       <div class="modal fade" id="operations-purchase-modal-goods" tabindex="-1" role="dialog" aria-labelledby="operations-trade-discount" aria-hidden="true" backdrop="static" data-cancel>
         <div class="modal-dialog otModalWidth" role="document" style="">
           <div class="modal-content otModalHeight">
             <div class="modal-header">
-
+              <div id="operations-purchase-left-header"></div>
+              <div class="layot-line-horizont" >
+                
+                 <div id="operations-purchase-left-header"></div>
+                  <form id="operations-purchase-search" class="catalog-header search-container-in-modal">
+                    <div class="catalog-header-title">
+                      <button type="submit" class="btn btn-secondary otButtons otBtnFind"></button>
+                      <input type="text" name="name" placeholder="Поиск" class="ml-1">
+                    </div>
+                  </form>
+                  <button type="button" class="close mr-2 mb-1" data-dismiss="modal" aria-label="Close" data-cancel>
+                  <span aria-hidden="true">&times;</span>
+                  </button>
+                
+              </div>
+            </div>
+<!--//
               <div>
                 <div id="operations-purchase-left-header"></div>
                 <form id="operations-purchase-search" class="catalog-header">
@@ -2251,12 +2467,14 @@
                   </div>
                 </form>
               </div>
-
               <button type="button" class="close" data-dismiss="modal" aria-label="Close" data-cancel>
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
+          -->
+
             <div class="modal-body otLeftColumn" id="operations-purchase-left"></div>
+
           </div>
         </div>
       </div>

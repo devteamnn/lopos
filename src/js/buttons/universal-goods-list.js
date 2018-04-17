@@ -12,6 +12,16 @@ const markup = {
       </div>`;
   },
 
+  getGoodStringSearch(item, index) {
+
+    return `
+      <div class="catalog-groups-header" data-good-id="${item.id}">
+        <div class="catalog-groups-column">${index + 1}</div>
+        <div class="catalog-groups-column">${item.name}</div>
+
+      </div>`;
+  },
+
   getGoodTile(item, index) {
 
     const getImg = (imgUrl) => (imgUrl) ? `https://lopos.bidone.ru/users/600a5357/images/${imgUrl}_preview150.jpg` : './img/not-available.png';
@@ -47,6 +57,26 @@ const markup = {
     }
   },
 
+  drawGoodsSearch(goodsData, container, handler) {
+    container.innerHTML = `
+      <div class="catalog-groups-header">
+        <div class="catalog-groups-column">№</div>
+        <div class="catalog-groups-column">Товар</div>
+      </div>
+    `;
+    if (goodsData) {
+      goodsData.forEach((good, index) => {
+        container.insertAdjacentHTML('beforeend', this.getGoodStringSearch(good, index));
+        container.lastChild.addEventListener('click', function () {
+          auth.currentGoodId = good.id;
+          handler(good);
+        });
+      });
+    } else {
+      container.innerHTML = 'Пусто';
+    }
+  },
+
   drawGoodsMetro(goodsData, container, handler) {
     if (goodsData) {
       container.innerHTML = '<div class="goods-tile"></div>';
@@ -66,7 +96,9 @@ const markup = {
 // отрисовка списка товаров по данным
 const drawGoods = (goodsList, container, handler, viewFlag) => {
   console.log(goodsList);
-  if (auth.goodsViewMode === 'string' || viewFlag === 'string') {
+  if (viewFlag === 'search') {
+    markup.drawGoodsSearch(goodsList, container, handler);
+  } else if (auth.goodsViewMode === 'string' || viewFlag === 'string') {
     markup.drawGoodsTable(goodsList, container, handler);
   } else if (auth.goodsViewMode === 'metro') {
     markup.drawGoodsMetro(goodsList, container, handler);

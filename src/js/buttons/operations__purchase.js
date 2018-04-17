@@ -105,7 +105,6 @@ const focusBarcode = () => {
     });
 
     if (perm !== 'none') {
-
       setTimeout(() => {
         searchBarcodeFormBarcode.focus();
       }, 500);

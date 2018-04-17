@@ -13,7 +13,7 @@ let coolInventoryHeader = document.querySelector('#operation-inventory-left-head
 
 const NodeEnum = {
   IMG_GROUP: '<img src="img/groups.png" alt="">',
-  BUT_BACK: '<button id="operation-left-column-return-btn" type="button" class="btn btn-success p-0 icon-btn icon-btn__return"></button>'
+  BUT_BACK: '<button id="operation-left-column-return-btn" type="button" class="btn btn-danger p-0 pr-3 icon-btn icon-btn__return_modal"></button>'
 };
 
 const getHeader = (type, handler) => {
@@ -99,6 +99,7 @@ const getTradeGoods = (goods, clickCallback) => {
   table.innerHTML = markup.leftColumnGoodsHeaderTrade();
 
   let tbody = document.createElement('tbody');
+  tbody.className = 'modal-view-inventory-body';
 
   goods.forEach((good, index) => {
 
@@ -154,10 +155,11 @@ const getInventoryGoods = (goods, clickCallback) => {
   leftInventoryColumn.innerHTML = '';
 
   let table = document.createElement('table');
-  table.className = 'table table-hover';
+  table.className = 'table  table-condensed';
   table.innerHTML = markup.leftColumnGoodsHeaderInventory();
 
   let tbody = document.createElement('tbody');
+  tbody.className = 'l-inventory-body';
 
   goods.forEach((good, index) => {
     // let count = (good.count || good.count === 0) ? good.count : '';

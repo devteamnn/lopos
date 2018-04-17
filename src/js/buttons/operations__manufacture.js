@@ -2,7 +2,8 @@ import xhr from '../tools/xhr.js';
 import auth from '../tools/storage.js';
 import uValid from './universal-validity-micro.js';
 import toolsMarkup from '../markup/tools.js';
-import cardsMarkup from '../markup/catalog-cards.js';
+import cardsMarkup from '../markup/catalog-cards-manufacture.js';
+import cardsMarkupModal from '../markup/catalog-cards.js';
 
 const manufactureList = document.querySelector('#list-manufacture-list');
 const manufactureStocks = document.querySelector('#manufacture-stocks');
@@ -22,17 +23,25 @@ let selectedNomenklatureCards = '';
 let currentGoods = [];
 // #################### РАЗМЕТКА ДЛЯ ПОМЕЩЕНИЯ ТОВАРОВ В КОЛОНКИ ######################
 
-const getGoodString = (id, name, good, index, value, classDanger) => {
+const getMaterialString = (id, name, good, index, value, classDanger) => {
+
   return `
-  <div class="goods-string ${classDanger}" data-good-id="${id}">
-    <div>
-      <span class="reference-row-number">${index}</span> <span>${name}</span>
-    </div>
-    <div>
-      <span>${(good) ? good : 'X' }</span>
-      <span>${value}</span>
-    </div>
-  </div>`;
+      <div class="manufacture-header ${classDanger}" data-good-id="${id}">
+        <div class="manufacture-4-column">${index}</div>
+        <div class="manufacture-4-column">${name}</div>
+        <div class="manufacture-4-column ${(good) ? good : 'text-muted'}">${(good) ? good : 'x' }</div>
+        <div class="manufacture-4-column">${value}</div>
+      </div>`;
+};
+
+const getGoodString = (id, name, good, index, value, classDanger) => {
+
+  return `
+      <div class="manufacture-header ${classDanger}" data-good-id="${id}">
+        <div class="manufacture-3-column">${index}</div>
+        <div class="manufacture-3-column">${name}</div>
+        <div class="manufacture-3-column">${value}</div>
+      </div>`;
 };
 
 const drawGoodsToColumns = () => {
@@ -42,13 +51,29 @@ const drawGoodsToColumns = () => {
   goodColumnBody.innerHTML = '';
   manufactureCountBtn.removeAttribute('disabled');
   currentGoods = [];
+  materialColumnBody.innerHTML = `
+      <div class="manufacture-header">
+        <div class="manufacture-4-column">№</div>
+        <div class="manufacture-4-column">Товар</div>
+        <div class="manufacture-4-column">Нал</div>
+        <div class="manufacture-4-column style="margin-right:3px;">Кол-во</div>
+      </div>
+    `;
+
+  goodColumnBody.innerHTML = `
+      <div class="manufacture-header">
+        <div class="manufacture-3-column">№</div>
+        <div class="manufacture-3-column">Товар</div>
+        <div class="manufacture-3-column style="margin-right:3px;">Кол-во</div>
+      </div>
+    `;
   selectedNomenklatureCards.forEach((card) => {
     if (card.content) {
       card.content.forEach((good) => {
         currentGoods.push(good);
         if (good.value < 0) {
           materialNumber++;
-          materialColumnBody.insertAdjacentHTML('beforeend', getGoodString(good.id, good.name, good.good, materialNumber, good.value * card.k, ''));
+          materialColumnBody.insertAdjacentHTML('beforeend', getMaterialString(good.id, good.name, good.good, materialNumber, good.value * card.k, ''));
         } else {
           goodNumber++;
           goodColumnBody.insertAdjacentHTML('beforeend', getGoodString(good.id, good.name, '', goodNumber, good.value * card.k, ''));
@@ -78,13 +103,27 @@ manufactureMakeBtn.addEventListener('click', onManufactureMakeBtnClick);
 const onSuccessCountLoad = (data) => {
   let materialNumber = 0;
   let goodNumber = 0;
-  materialColumnBody.innerHTML = '';
-  goodColumnBody.innerHTML = '';
+  materialColumnBody.innerHTML = `
+      <div class="manufacture-header">
+        <div class="manufacture-4-column">№</div>
+        <div class="manufacture-4-column">Товар</div>
+        <div class="manufacture-4-column">Нал</div>
+        <div class="manufacture-4-column">Кол</div>
+      </div>
+    `;
+
+  goodColumnBody.innerHTML = `
+      <div class="manufacture-header">
+        <div class="manufacture-3-column">№</div>
+        <div class="manufacture-3-column">Товар</div>
+        <div class="manufacture-3-column">Кол</div>
+      </div>
+    `;
   for (let i = 0; i < data.data.length; i++) {
     if (currentGoods[i].value < 0) {
       materialNumber++;
       let classDanger = ((+data.data[i].value + +currentGoods[i].value) < 0) ? 'bg-danger' : '';
-      materialColumnBody.insertAdjacentHTML('beforeend', getGoodString(currentGoods[i].id, currentGoods[i].name, data.data[i].value, materialNumber, currentGoods[i].value, classDanger));
+      materialColumnBody.insertAdjacentHTML('beforeend', getMaterialString(currentGoods[i].id, currentGoods[i].name, data.data[i].value, materialNumber, currentGoods[i].value, classDanger));
     } else {
       goodNumber++;
       goodColumnBody.insertAdjacentHTML('beforeend', getGoodString(currentGoods[i].id, currentGoods[i].name, data.data[i].value, goodNumber, currentGoods[i].value));
@@ -189,7 +228,29 @@ manufactureStocks.addEventListener('change', (evt) => {
 const onSuccessManufactureLoad = (manufactureData) => {
   loadedNomenklatureCards = manufactureData.data.all_nomenclature_cards;
   nomenklatureCardModalBody.innerHTML = '';
-  cardsMarkup.drawDataInContainer(loadedNomenklatureCards, nomenklatureCardModalBody);
+  manufactureColumnBody.innerHTML = `
+      <div class="manufacture-header">
+        <div class="manufacture-3-column">№</div>
+        <div class="manufacture-3-column">Товар</div>
+        <div class="manufacture-3-column style="margin-right:3px;">Кол-во</div>
+      </div>
+    `;
+  materialColumnBody.innerHTML = `
+      <div class="manufacture-header">
+        <div class="manufacture-4-column">№</div>
+        <div class="manufacture-4-column">Товар</div>
+        <div class="manufacture-4-column">Нал</div>
+        <div class="manufacture-4-column">Кол-во</div>
+      </div>
+    `;
+  goodColumnBody.innerHTML = `
+      <div class="manufacture-header">
+        <div class="manufacture-3-column">№</div>
+        <div class="manufacture-3-column">Товар</div>
+        <div class="manufacture-3-column">Кол-во</div>
+      </div>
+    `;
+  cardsMarkupModal.drawDataInContainer(loadedNomenklatureCards, nomenklatureCardModalBody);
 
   manufactureStocks.innerHTML = manufactureData.data.all_stocks.map((item) => `<option value="${item.id}" ${(item.id === auth.data.currentStock) ? 'selected' : ''}>${item.name}</option>`).join('');
   currentGoods = [];

@@ -1,0 +1,29 @@
+.modal-table-balance-act{
+
+	width: 100%;
+	padding-left: 40px;
+	border: 1px solid #ECF9FA;
+}
+
+
+.modal-table-balance-act td{
+
+	padding-left: 10px;
+
+  
+}
+
+.modal-balance-act-card-header{
+
+  background-color: #94E0DD;	
+  height: 60px;
+  margin-bottom: 0px;
+}
+.modal-table-balance-act tr:nth-child(odd){ 
+
+  background-color: #ECF9FA;
+}
+.modal-table-balance-act tr:nth-child(even){ /* Задаем стили для четных рядов таблицы */
+  background-color: #ffffff;
+}
+

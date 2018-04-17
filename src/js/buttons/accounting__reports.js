@@ -5,7 +5,9 @@ import groupsList from './universal-groups-list.js';
 const reportsList = document.querySelector('#list-reports-list');
 const reportsGroupMainSwitch = document.querySelector('#report-groups-main-switch');
 const reportsGroupMainSwitchTurn = document.querySelector('#report-groups-turn-main-switch');
-const reportsDashboard = document.querySelector('#reports-dashboard');
+
+const reportsDashboardToday = document.querySelector('#reports-dashboard-today');
+const reportsDashboardAtTheMoment = document.querySelector('#reports-dashboard-at-the-moment');
 
 const reportsGoodsLeft = document.querySelector('#report-goods-left');
 const reportsGoodsLeftModal = document.querySelector('#report-goods-left-modal');
@@ -34,36 +36,71 @@ const reportsGoodsProfitModalExcelBtn = document.querySelector('#report-goods-pr
 const reportProfitFrom = document.querySelector('#report-profit-from');
 const reportProfitTo = document.querySelector('#report-profit-to');
 
+const reportLinkBt = document.querySelector('#report-link-bt');
+const reportLinkGoogleBt = document.querySelector('#report-link-google-bt');
 const reportLink = document.querySelector('#report-link');
 const reportLinkGoogle = document.querySelector('#report-link-google');
 const reportLinkTurn = document.querySelector('#report-link-turn');
 const reportLinkTurnGoogle = document.querySelector('#report-link-turn-google');
+const reportLinkTurnBt = document.querySelector('#report-link-turn-bt');
+const reportLinkTurnGoogleBt = document.querySelector('#report-link-turn-google-bt');
 const reportLinkProfit = document.querySelector('#report-link-profit');
 const reportLinkProfitGoogle = document.querySelector('#report-link-profit-google');
-
+const reportLinkProfitBt = document.querySelector('#report-link-profit-bt');
+const reportLinkProfitGoogleBt = document.querySelector('#report-link-profit-google-bt');
 const reportsStocks = document.querySelector('#reports-stocks');
 
 // ############################## РАЗМЕТКА ДАШБОРДА #############
-const dashboardTypes = {
-  money: 'Баланс',
-  form: 'Закупки',
-  proceeds: 'Выручка',
-  profit: 'Кол-во продаж',
-  purchase: 'Прибыль'
+
+const dashboardTypesToday = {
+  form: 'Чеков:',
+  proceeds: 'Выручка:',
+  purchase: 'Закуплено на сумму:'
 };
 
-const getDashboardItem = (item) => {
+const dashboardTypesTodayIcons = {
+  form: 'dashboard_forms.png',
+  proceeds: 'dashboard_proceeds.png',
+  purchase: 'dashboard_purchase.png'
+};
+
+const dashboardTypesAtTheMoment = {
+  goodsInMoney: 'Товаров на сумму:',
+  money: 'Денежный баланс:'
+};
+
+
+const dashboardTypesAtTheMomentIcons = {
+  goodsInMoney: 'dashboard_balance_goods_on_stocks.png',
+  money: 'dashboard_balance_money.png'
+};
+
+const getDashboardItemToday = (item) => {
   console.log(item);
+  console.log(item[1]);
+
   return `
-    <div class="dashboard-item">
-      <div class="dashboard-status"></div>
-      <div>
-        <p>${dashboardTypes[item[0]]}</p>
-        <span>${item[1]}</span>
+    <div class="dashboard-item-today">
+      <img src="img/${dashboardTypesTodayIcons[item[0]]}"  class="dashboard_icon" alt="">
+      <div class="dashboard-item-block_info">
+        <p style=" height: 14px;   margin-bottom: 8px;" >${dashboardTypesToday[item[0]]}</p>
+        <div class="dashboard-item-value">${((item[1] && item[1].includes('.')) ? Number(item[1]).toFixed(2) : item[1]) }</div>
       </div>
     </div>`;
 };
+const getDashboardItemAtTheMoment = (item) => {
+  console.log(item);
+  console.log(item[1]);
 
+  return `
+    <div class="dashboard-item-at-the-moment">
+      <img src="img/${dashboardTypesAtTheMomentIcons[item[0]]}"  class="dashboard_icon" alt="">
+      <div class="dashboard-item-block_info">
+        <p style=" height: 14px;   margin-bottom: 8px;">${dashboardTypesAtTheMoment[item[0]]}</p>
+        <div class="dashboard-item-value">${((item[1] && item[1].includes('.')) ? Number(item[1]).toFixed(2) : item[1]) }</div>
+      </div>
+    </div>`;
+};
 // ############################## ОТЧЕТ / ОСТАТОК ТОВАРА     ##############################
 
 const onPDFLoadSuccess = (data) => {
@@ -75,6 +112,10 @@ const onPDFLoadSuccess = (data) => {
   // reportLinkGoogle.href = `https://docs.google.com/viewer?url=${data.data}&embedded=false`;
   // reportLinkGoogle.innerHTML = `Смотреть ${auth.currentReportType} на Google `;
   reportLink.classList.remove('disabled');
+  reportLinkBt.disabled = false;
+  reportLinkGoogleBt.disabled = false;
+  reportLinkBt.style.opacity = 1;
+  reportLinkGoogleBt.style.opacity = 1;
   reportLinkGoogle.classList.remove('disabled');
   reportLink.href = data.data;
   reportLinkGoogle.href = `https://docs.google.com/viewer?url=${data.data}&embedded=false`;
@@ -113,6 +154,11 @@ const getReportLink = () => {
 reportsGoodsLeftModalPDFBtn.addEventListener('click', () => {
   auth.currentReportType = 'pdf';
   reportLink.classList.add('disabled');
+  reportLinkBt.disabled = true;
+  reportLinkGoogleBt.disabled = true;
+  reportLinkBt.style.opacity = 0.2;
+  reportLinkGoogleBt.style.opacity = 0.2;
+
   reportLinkGoogle.classList.add('disabled');
   getReportLink();
 });
@@ -120,13 +166,17 @@ reportsGoodsLeftModalPDFBtn.addEventListener('click', () => {
 reportsGoodsLeftModalExcelBtn.addEventListener('click', () => {
   auth.currentReportType = 'excel';
   reportLink.classList.add('disabled');
+  reportLinkBt.disabled = true;
+  reportLinkGoogleBt.disabled = true;
+  reportLinkBt.style.opacity = 0.2;
+  reportLinkGoogleBt.style.opacity = 0.2;
   reportLinkGoogle.classList.add('disabled');
   getReportLink();
 });
 
-reportsGroupMainSwitch.addEventListener('change', (evt) => {
+reportsGroupMainSwitch.addEventListener('click', (evt) => {
   document.querySelectorAll('.report-groups-switch').forEach((switchElement) => {
-    switchElement.checked = evt.target.checked;
+    switchElement.checked = !switchElement.checked;
   });
   console.log(evt.target.checked);
 });
@@ -141,6 +191,11 @@ const onSuccessGoodsLeftLoad = (goodData) => {
 
 const onReportsGoodsLeftClick = () => {
   reportLink.classList.add('disabled');
+  reportLinkBt.disabled = true;
+  reportLinkGoogleBt.disabled = true;
+  reportLinkBt.style.opacity = 0.2;
+  reportLinkGoogleBt.style.opacity = 0.2;
+
   reportLinkGoogle.classList.add('disabled');
   xhr.request = {
     metod: 'POST',
@@ -161,6 +216,11 @@ const onPDFLoadSuccessTurn = (data) => {
   reportLinkTurn.classList.remove('disabled');
   reportLinkTurnGoogle.classList.remove('disabled');
   reportLinkTurnGoogle.href = `https://docs.google.com/viewer?url=${data.data}&embedded=false`;
+
+  reportLinkTurnBt.disabled = false;
+  reportLinkTurnGoogleBt.disabled = false;
+  reportLinkTurnBt.style.opacity = 1;
+  reportLinkTurnGoogleBt.style.opacity = 1;
 
 };
 
@@ -193,6 +253,11 @@ reportsGoodsTurnModalPDFBtn.addEventListener('click', () => {
   auth.currentReportType = 'pdf';
   reportLinkTurn.classList.add('disabled');
   reportLinkTurnGoogle.classList.add('disabled');
+
+  reportLinkTurnBt.disabled = true;
+  reportLinkGoogleBt.disabled = true;
+  reportLinkTurnBt.style.opacity = 0.2;
+  reportLinkGoogleBt.style.opacity = 0.2;
   getReportLinkTurn();
 });
 
@@ -200,12 +265,17 @@ reportsGoodsTurnModalExcelBtn.addEventListener('click', () => {
   auth.currentReportType = 'excel';
   reportLinkTurn.classList.add('disabled');
   reportLinkTurnGoogle.classList.add('disabled');
+
+  reportLinkTurnBt.disabled = true;
+  reportLinkTurnGoogleBt.disabled = true;
+  reportLinkTurnBt.style.opacity = 0.2;
+  reportLinkTurnGoogleBt.style.opacity = 0.2;
   getReportLinkTurn();
 });
 
-reportsGroupMainSwitchTurn.addEventListener('change', (evt) => {
+reportsGroupMainSwitchTurn.addEventListener('click', (evt) => {
   reportsGoodsTurnModalBody.querySelectorAll('.report-groups-switch').forEach((switchElement) => {
-    switchElement.checked = evt.target.checked;
+    switchElement.checked = !switchElement.checked;
   });
   console.log(evt.target.checked);
 });
@@ -215,6 +285,11 @@ const onSuccessGoodsTurnLoad = (goodData) => {
   $(reportsGoodsTurnModal).modal('show');
   reportLinkTurn.classList.add('disabled');
   reportLinkTurnGoogle.classList.add('disabled');
+
+  reportLinkTurnBt.disabled = true;
+  reportLinkTurnGoogleBt.disabled = true;
+  reportLinkTurnBt.style.opacity = 0.2;
+  reportLinkTurnGoogleBt.style.opacity = 0.2;
   reportsGoodsTurnModalStock.value = reportsStocks.value;
 
   groupsList.drawReports(goodData.data, reportsGoodsTurnModalBody, null);
@@ -238,6 +313,12 @@ reportsGoodsTurn.addEventListener('click', onReportsGoodsTurnClick);
 const onPDFLoadSuccessProfit = (data) => {
   reportLinkProfit.classList.remove('disabled');
   reportLinkProfitGoogle.classList.remove('disabled');
+
+  reportLinkProfitBt.disabled = false;
+  reportLinkProfitGoogleBt.disabled = false;
+  reportLinkProfitBt.style.opacity = 1;
+  reportLinkProfitGoogleBt.style.opacity = 1;
+
   reportLinkProfit.href = data.data;
   reportLinkProfitGoogle.href = `https://docs.google.com/viewer?url=${data.data}&embedded=false`;
 };
@@ -266,6 +347,11 @@ reportsGoodsProfitModalPDFBtn.addEventListener('click', () => {
   auth.currentReportType = 'pdf';
   reportLinkProfit.classList.add('disabled');
   reportLinkProfitGoogle.classList.add('disabled');
+  reportLinkProfitBt.disabled = true;
+  reportLinkProfitGoogleBt.disabled = true;
+  reportLinkProfitBt.style.opacity = 0.2;
+  reportLinkProfitGoogleBt.style.opacity = 0.2;
+
   getReportLinkProfit();
 });
 
@@ -273,6 +359,11 @@ reportsGoodsProfitModalExcelBtn.addEventListener('click', () => {
   auth.currentReportType = 'excel';
   reportLinkProfit.classList.add('disabled');
   reportLinkProfitGoogle.classList.add('disabled');
+
+  reportLinkProfitBt.disabled = true;
+  reportLinkProfitGoogleBt.disabled = true;
+  reportLinkProfitBt.style.opacity = 0.2;
+  reportLinkProfitGoogleBt.style.opacity = 0.2;
   getReportLinkProfit();
 });
 
@@ -283,6 +374,10 @@ const onReportsProfitClick = () => {
   reportsGoodsProfitModalStock.value = reportsStocks.value;
   reportLinkProfit.classList.add('disabled');
   reportLinkProfitGoogle.classList.add('disabled');
+  reportLinkProfitBt.disabled = true;
+  reportLinkProfitGoogleBt.disabled = true;
+  reportLinkProfitBt.style.opacity = 0.2;
+  reportLinkProfitGoogleBt.style.opacity = 0.2;
   reportProfitFrom.value = new Date().toISOString().slice(0, 8) + '01';
   reportProfitTo.value = new Date().toISOString().slice(0, 10);
 };
@@ -305,12 +400,16 @@ reportsGoodsProfitModalStock.addEventListener('change', onChangeStockModal);
 
 const onSuccessReportsLoad = (reportsData) => {
   console.log(reportsData);
-  let dashboard = {
-    money: reportsData.data.balance_money,
-    form: reportsData.data.today_count_forms,
-    proceeds: reportsData.data.today_total_proceeds,
-    profit: reportsData.data.today_total_profit,
+
+  let dashboardToday = {
     purchase: reportsData.data.today_total_purchase,
+    proceeds: reportsData.data.today_total_proceeds,
+    form: reportsData.data.today_count_forms
+  };
+
+  let dashboardAtTheMoment = {
+    goodsInMoney: reportsData.data.balance_goods_in_money,
+    money: reportsData.data.balance_money
   };
 
   if (auth.currentStockId === 'all') {
@@ -328,7 +427,8 @@ const onSuccessReportsLoad = (reportsData) => {
     }
   }
 
-  reportsDashboard.innerHTML = Object.entries(dashboard).map((dash) => getDashboardItem(dash)).join('');
+  reportsDashboardToday.innerHTML = Object.entries(dashboardToday).map((dash) => getDashboardItemToday(dash)).join('');
+  reportsDashboardAtTheMoment.innerHTML = Object.entries(dashboardAtTheMoment).map((dash) => getDashboardItemAtTheMoment(dash)).join('');
 
 };
 

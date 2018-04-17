@@ -95,7 +95,8 @@ const getPurchaseGoods = (nomenklature, callback) => {
     tr.scope = 'row';
 
     if (position.newRow) {
-      tr.classList.add('table-danger');
+
+      tr.classList.add('purchase-last-row');
     }
 
     tr.innerHTML = markup.rightColumnGoodsPurchase(position.id, index,
@@ -153,7 +154,7 @@ const getSaleGoods = (nomenklature, callback) => {
     tr.scope = 'row';
 
     if (position.newRow) {
-      tr.classList.add('table-success');
+      tr.classList.add('sale-last-row');
     }
 
     if (position.discount) {

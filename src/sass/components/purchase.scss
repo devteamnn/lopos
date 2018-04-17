@@ -1,0 +1,82 @@
+.operations-purchase-main-table-header{
+	background-color: #94E0DD;
+	height: 40px;
+	
+}
+
+
+.operations-purchase-column-title {
+  display: flex;
+  justify-content: space-between;
+}
+
+.operations-purchase-main-table-header th{
+  
+  height: 20px;
+  padding: 4px;
+  border-width: 0px;
+  background-color: #94E0DD;
+
+  border: 0px solid gray;
+ /* color: #ffffff;
+  */color: #000000;
+ }
+
+.operations-purchase-main-table-header th:first-child {
+
+   border-radius: 6px 0 0 0;
+   padding-left: 10px;
+
+}
+.operations-purchase-main-table-header th:last-child {
+
+   border-radius: 0 6px 0 0;
+   padding-right: 10px;
+}
+
+.operations-purchase-main-table-body td{
+	
+	height: 30px;
+	padding: 4px;
+	  border: 0px solid gray;
+
+}
+.operations-purchase-main-table-body th{
+	
+	height: 30px;
+	padding: 4px;
+	border: 0px solid gray;
+}
+
+.operations-purchase-main-table-body td:nth-child(5) {
+	
+	background-color: #FFECB3;
+
+}
+
+.operations-purchase-main-table-body td:nth-child(3) {
+	min-width: 80px;
+}
+.operations-purchase-main-table-body td:nth-child(9) {
+	background-color: #FFFAE9;
+}
+.operations-purchase-main-table-body td:nth-child(10) {
+	background-color: #FFECB3;
+}
+.purchase-last-row{
+	background-color: #ECF9FA;
+}
+
+.operation-inventory-right-body td{
+	
+	height: 30px;
+	padding: 4px;
+	  border: 0px solid gray;
+
+}
+.operation-inventory-right-body th{
+	
+	height: 30px;
+	padding: 4px;
+	border: 0px solid gray;
+}

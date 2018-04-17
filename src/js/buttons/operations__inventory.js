@@ -9,7 +9,7 @@ import operationsTradeAdd from './operations--good-add.js';
 import goodCard from './catalog__goods.js';
 import markupTools from './../markup/tools.js';
 
-const searchBarcodeForm = document.querySelector('#operation-inventory-search-barcode-form');
+const searchBarcodeForm = document.querySelector('#operations-inventory-search-barcode-form');
 const searchBarcodeFormBarcode = document.querySelector('#operations-inventory-search-barcode');
 
 const searchForm = document.querySelector('#operation-inventory-search');
@@ -82,7 +82,9 @@ const focusBarcode = () => {
     });
 
     if (perm !== 'none') {
-      searchBarcodeFormBarcode.focus();
+      setTimeout(() => {
+        searchBarcodeFormBarcode.focus();
+      }, 500);
     }
   }
 };
@@ -270,7 +272,6 @@ const getGoodsCallback = (data) => {
 
 const getDataCallback = (data) => {
   dataStore = data;
-  console.dir(dataStore);
   appHeader.setStocksList(dataStore.all_stocks);
   // appHeader.setKontragentList(dataStore.all_kontr_agents);
   leftColumn.drawGroups(dataStore.all_groups, clickGroupsCallback);
@@ -303,7 +304,7 @@ const addHandlers = () => {
     serverTools.getDataFromServer(stor.data.currentStock, getDataCallback);
   });
 
-  document.querySelector('#operation-inventory-clear-but').addEventListener('click', () => {
+  document.querySelector('#operations-inventory-clear-but').addEventListener('click', () => {
     leftColumn.drawGroups(dataStore.all_groups, clickGroupsCallback, clichButtonBackCallback);
     rightColumn.clear();
     inventoryFormSubmit.disabled = true;
@@ -328,7 +329,6 @@ const addHandlers = () => {
 
   inventoryForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
-    console.log('!!!!');
     sendInventoryForm();
   });
 

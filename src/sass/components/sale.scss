@@ -1,0 +1,59 @@
+.operations-sale-right-header{
+	
+  background-color: #94E0DD;
+
+  
+}
+.operations-sale-right-header th{
+	
+	height: 20px;
+	padding: 4px;
+	border-width: 0px;
+  background-color: #94E0DD;
+
+  border: 0px solid gray;
+ /* color: #ffffff;
+  */color: #000000;
+ 
+
+}
+.operations-sale-right-header th:first-child {
+
+   border-radius: 6px 0 0 0;
+   padding-left: 10px;
+
+}
+
+.operations-sale-right-header th:last-child {
+
+   border-radius: 0 6px 0 0;
+
+   padding-right: 10px;
+}
+
+
+
+.operations-sale-right-body td{
+	
+	height: 30px;
+	padding: 4px;
+	  border: 0px solid gray;
+
+}
+.operations-sale-right-body th{
+	
+	height: 30px;
+	padding: 4px;
+	  border: 0px solid gray;
+
+}
+
+
+.operations-sale-right-body td:nth-child(5) {
+	
+	background-color: #FFECB3;
+
+}
+.sale-last-row{
+	background-color: #ECF9FA;
+}

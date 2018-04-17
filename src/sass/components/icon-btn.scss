@@ -3,35 +3,61 @@
   opacity: 0.3;
 }
 
+.bg_backgorund_red{
+  background-color: #DD001F;
+}
 .icon-btn {
-  width: 42px;
-  height: 42px;
+  width: 40px;
+  height: 40px;
   border: none;
   margin-left: 5px;
   cursor: pointer;
+  border-radius: 20px;
 }
 
 .icon-btn:disabled {
   opacity: 0.3;
 }
 
+
+.icon-btn__unlink {
+  background-image: url("../img/icons8-unlink.png");
+  /*background-color: #DD001F;*/
+
+  background-size: cover;
+    width: 30px;
+  height: 30px;
+}
+
+ 
 .icon-btn__check--green {
   background-image: url("../img/icons8-checked-96.png");
+  background-color: #89DCD8;
   background-size: cover;
 }
 
 .icon-btn__check--white {
   background-image: url(../img/icons8-checked-48.png);
+  background-color: #89DCD8;
   background-size: cover;
 }
 
 .icon-btn__add {
   background-image: url(../img/plus-math-50.png);
+  background-color: #89DCD8;
   background-size: cover;
 }
+.icon-btn__edit_small{
+  background-image: url(../img/icons8-edit-50.png);
+  background-color: #89DCD8;
+  background-size: cover;
+  width: 30px;
+  height: 30px;
 
+}
 .icon-btn__edit {
   background-image: url(../img/icons8-edit-50.png);
+  background-color: #89DCD8;
   background-size: cover;
 }
 .icon-btn__edit--black {
@@ -43,6 +69,8 @@
 
 .icon-btn__delete {
   background-image: url(../img/trash-100.png);
+  
+  background-color: #89DCD8;
   background-size: cover;
 }
 
@@ -50,6 +78,7 @@
   background-image: url(../img/trash-red.png);
   background-color: #fff;
   background-size: cover;
+  
 }
 .icon-btn__settings {
   background-image: url(../img/menu_s.png);
@@ -74,10 +103,13 @@
 
 .icon-btn__set-password {
   background-image: url(../img/icons8-set-password.png);
+
+  background-color: #89DCD8;
   background-size: cover;
 }
 
 .icon-btn__lock-user {
+  background-color: #89DCD8;
   background-image: url(../img/icons8-lock-user.png);
   background-size: cover;
 }
@@ -85,7 +117,18 @@
 .icon-btn__return {
   background-image: url(../img/icons8-left-100.png);
   background-size: cover;
+  background-color: #DD001F;
   margin-right: 5px;
+}
+
+.icon-btn__return_modal {
+  background-image: url(../img/icons8-left-100.png);
+  background-size: cover;
+  background-color: #DD001F;
+  margin-right: 5px;
+  padding-right: 5px;
+  margin-top: 5px;
+  margin-left: 0px;
 }
 
 .icon-btn__copy {
@@ -149,5 +192,38 @@
 
 .icon-btn__sort:hover {
   background-color: darksalmon;
+}
+
+
+.icon-btn__widescreen{
+  background-image: url(../img/icon_full_screen.png);
+  background-size: contain;
+  background-color: transparent;
+   background-repeat: no-repeat;
+  margin-right: 10px;
+  border-radius: 0px;
+  width: 42px;
+  height: 42px;
+
+
+}
+
+
+
+
+.icon-logo {
+  background-image: url(../img/logo_menu.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-color: #DD001F;
+  color: #ffffff;
+  text-align: right;
+
+ /* background-color: sandybrown;
+  */margin-right: 10px;
+ /* border-radius: 20px;
+  */
+  height: 40px;
+  width: 100px;
 }
 

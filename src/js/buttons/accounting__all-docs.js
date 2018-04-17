@@ -1,6 +1,6 @@
 import xhr from '../tools/xhr.js';
 import auth from '../tools/storage.js';
-const START_YEAR = 2015;
+const START_YEAR = 2017;
 import bills from './universal-bills-list.js';
 // import goods from './universal-goods-list.js';
 // import uValid from './universal-validity-micro.js';
@@ -21,6 +21,7 @@ const docsBalanceBtn = document.querySelector('#docs-balance-btn');
 const docsReturnBtn = document.querySelector('#docs-return-btn');
 const billCard = document.querySelector('#bill-card');
 
+const billCardTotal = document.querySelector('#bill-card-total');
 const billCardType = document.querySelector('#bill-card-type');
 const billCardStock = document.querySelector('#bill-card-stock');
 const billCardId = document.querySelector('#bill-card-id');
@@ -35,6 +36,9 @@ const balanceCard = document.querySelector('#balance-act-card');
 const balanceCardStock = document.querySelector('#balance-act-card-stock');
 const balanceCardId = document.querySelector('#balance-act-card-id');
 const balanceCardUser = document.querySelector('#balance-act-card-user');
+const balanceCardKontragentUser = document.querySelector('#bill-card-kontragent-name');
+
+
 const balanceCardTime = document.querySelector('#balance-act-card-time');
 const balanceCardTotal = document.querySelector('#balance-act-total');
 const balanceCardReason = document.querySelector('#balance-act-reason');
@@ -44,14 +48,15 @@ const balanceDeleteBtn = document.querySelector('#balance-act-delete-btn');
 // ############################## РАЗМЕТКА ТОВАРОВ #############
 const getGoodString = (item, index) => {
   return `
-  <div class="goods-string"">
-    <div>
-      <span class="reference-row-number">${index + 1}</span> <span>№ ${item.good}</span>
-    </div>
-    <div>
-      ${Number(item.count).toFixed(2)} x ${Number(item.price).toFixed(2)} = ${Number(item.count).toFixed(2) * Number(item.price).toFixed(2)}
-    </div>
-  </div>`;
+    <div class="reference-header">
+        <div class="reference-column-7">${index + 1}</div>
+        <div class="reference-column-7">${item.good}</div>
+        <div class="reference-column-7">${Number(item.count).toFixed(2)}</div>
+        <div class="reference-column-7">x</div>
+        <div class="reference-column-7">${Number(item.price).toFixed(2)}</div>
+        <div class="reference-column-7">=</div>
+        <div class="reference-column-7">${Number(item.count).toFixed(2) * Number(item.price).toFixed(2)}</div>
+    </div>`;
 };
 
 // ############################## ОБРАБОТЧИКИ КЛИКОВ ПРИ ВЫВОДЕ ЗА ДЕНЬ#############
@@ -59,15 +64,25 @@ const getGoodString = (item, index) => {
 
 const onSuccessBillGet = (answer) => {
   console.log(answer);
-  let {id, operator_name: operatorName, /* status, */ stock_name: stockName, time, type, content: goodsContent} = answer.data;
+  let {id, total, operator_name: operatorName, /* status, */ka_name: kaname, stock_name: stockName, time, type, content: goodsContent} = answer.data;
   // billStatus = status;
   billCardStock.innerHTML = stockName;
-  billCardType.src = 'img/' + bills.BillTypes['type' + type] + '.png';
+  billCardType.innerHTML = bills.BillTypesName[type];
   billCardId.innerHTML = '№' + id;
-  billCardTime.innerHTML = '|| ' + new Date(+(time + '000')).toLocaleString();
-  billCardUser.title = operatorName;
-
-  billCardGoods.innerHTML = '';
+  billCardTime.innerHTML = new Date(+(time + '000')).toLocaleString();
+  billCardUser.innerHTML = operatorName;
+  balanceCardKontragentUser.innerHTML = kaname;
+  billCardTotal.innerHTML = total;
+  billCardGoods.innerHTML = `
+        <div class="reference-header">
+            <div class="reference-column-7">№</div>
+            <div class="reference-column-7">Наименование:</div>
+            <div class="reference-column-7">Кол-во</div>
+            <div class="reference-column-7"></div>
+            <div class="reference-column-7">Цена</div>
+            <div class="reference-column-7"></div>
+            <div class="reference-column-7">Сумма</div>
+        </div>`;
   goodsContent.forEach((good, index) => billCardGoods.insertAdjacentHTML('beforeend', getGoodString(good, index)));
   if (+type === 0 || +type === 2) {
     billDeliveryBtn.classList.remove('d-none');
@@ -196,7 +211,7 @@ const onSuccessBalanceGet = (answer) => {
   balanceCardReason.innerHTML = reasonName;
   balanceCardComment.innerHTML = comment;
   balanceCardId.innerHTML = '№' + id;
-  balanceCardTime.innerHTML = '|| ' + new Date(+(time + '000')).toLocaleString();
+  balanceCardTime.innerHTML = new Date(+(time + '000')).toLocaleString();
   balanceCardUser.title = operatorName;
 
   $(balanceCard).modal('show');
@@ -294,21 +309,47 @@ const onSuccessBillsGet = (billsData) => {
   if (billsData.data.length > 0) {
 
     if (billsData.data[0].month_number) {
+      docsBody.innerHTML = `
+      <div class="alldocs-header">
+        <div class="alldocs-4-column"></div>
+        <div class="alldocs-4-column">Дата</div>
+        <div class="alldocs-4-column">Кол-во документов</div>
+        <div class="alldocs-4-column">Сумма</div>
+      </div>`;
       bills.drawYear(billsData.data, docsBody, onYearClick);
 
     } else if (billsData.data[0].day_number) {
+      docsBody.innerHTML = `
+      <div class="alldocs-header">
+        <div class="alldocs-4-column"></div>
+        <div class="alldocs-4-column">Дата</div>
+        <div class="alldocs-4-column">Кол-во документов</div>
+        <div class="alldocs-4-column">Сумма</div>
+      </div>`;
       bills.drawMonth(billsData.data, docsBody, onMonthClick);
 
     } else if ((billsData.data[0].stock_name || billsData.data[0].stock_name === 'null') && auth.allDocsOperationType === 'naklad') {
+      docsBody.innerHTML = `
+      <div class="alldocs-header">
+        <div class="alldocs-3-column"></div>
+        <div class="alldocs-3-column">Дата</div>
+        <div class="alldocs-3-column">Сумма</div>
+      </div>`;
       billsData.data.sort((a, b) => +b.id - +a.id);
       bills.drawDay(billsData.data, docsBody, onBillClick);
 
       lastId = billsData.data[billsData.data.length - 1].id;
       prevData = billsData.data.slice(0);
 
-      docsBody.insertAdjacentHTML('beforeend', '<button type="button" class="btn btn-primary">Загрузить еще</button>');
+      docsBody.insertAdjacentHTML('beforeend', '<button type="button" class="btn btn-primary" style="margin-top:10px">Загрузить еще</button>');
       docsBody.lastChild.addEventListener('click', onClickLoadMore);
     } else if ((billsData.data[0].stock_name || billsData.data[0].stock_name === 'null') && auth.allDocsOperationType === 'balance') {
+      docsBody.innerHTML = `
+      <div class="alldocs-header">
+        <div class="alldocs-3-column"></div>
+        <div class="alldocs-3-column">Дата</div>
+        <div class="alldocs-3-column">Сумма</div>
+      </div>`;
       // billsData.data.sort((a, b) => +b.id - +a.id);
       // bills.drawDay(billsData.data, docsBody, onBillClick);
 
@@ -323,7 +364,7 @@ const onSuccessBillsGet = (billsData) => {
     }
 
   } else {
-    docsBody.innerHTML = (auth.allDocsOperationType === 'naklad') ? 'Накладных нет' : 'Балансовых операций нет';
+    docsBody.innerHTML = (auth.allDocsOperationType === 'naklad') ? '<div class="docs-empty-container"><img src="../img/empty_state_docs.png" alt="Накладных не обнаружено" class="docs-empty-img"></div>' : '<div class="docs-empty-container"><img src="../img/empty_state_docs.png" alt="Балансовых операций не обнаружено" class="docs-empty-img"></div>';
   }
 };
 const getDocs = (year, month, day, type) => {

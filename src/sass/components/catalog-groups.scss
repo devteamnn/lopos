@@ -1,0 +1,88 @@
+
+
+.catalog-groups-header:nth-child(odd){ 
+
+  background-color: #ECF9FA;
+}
+.catalog-groups-header:nth-child(even){ /* Задаем стили для четных рядов таблицы */
+  background-color: #ffffff;
+}
+
+
+
+.catalog-groups-header {
+  display: flex;
+  justify-content: space-between;
+  height: 30px;
+    background-color: #ECF9FA;
+}
+
+.catalog-groups-column {
+  width: auto;
+  width: 20%;
+
+  border: 0px solid gray;
+  border-spacing: 0; 
+  
+  margin-left: -1px;
+  padding: 2px;
+
+}
+.catalog-groups-header:first-child {
+  font-weight: 700;
+  background-color: #94E0DD;
+
+  color: #000;
+  border-radius: 6px 6px 0 0;
+
+  text-align: left;
+
+}
+
+
+
+.catalog-groups-header:first-child:hover{
+
+  background-color: #94E0DD;
+
+}
+
+
+.catalog-groups-header:hover {
+  background-color: #99C6C9;
+}
+
+.catalog-groups-column:nth-child(1) {
+  width: 10%;
+  text-align: center;
+}
+.catalog-groups-column:nth-child(2) {
+  width: 90%;
+}
+.catalog-groups-column:nth-child(3) {
+  text-align: right;
+
+}
+.catalog-groups-column:nth-child(4) {
+  text-align: right;
+}
+
+.catalog-groups-column:nth-child(4) button {
+  width: 24px;
+  height: 24px;
+}
+.catalog-groups-column:nth-child(5) {
+  width: 10%;
+  padding: 0;
+  text-align: center;
+}
+/*
+.catalog-groups-header tbody tr:nth-child(even) {
+    background: #f5f5f5;  
+    box-shadow: 0 1px 0 rgba(255,255,255,.8) inset;        
+}
+*/
+.catalog-groups-column button {
+  background-color: #fff;
+  padding: 0;
+}

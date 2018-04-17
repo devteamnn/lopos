@@ -1,0 +1,56 @@
+
+.user-status {
+  height: 24px;
+  width: 24px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.user-permissions {
+}
+
+.user-permissions-string {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid gray;
+}
+
+.user-permissions-string > span {
+  display: inline-block;
+  width: 300px;
+  margin-right: auto;
+}
+
+.user-permissions-string > div {
+  display: flex;
+  justify-content: space-between;
+  width: 50px;
+  text-align: left;
+}
+
+.user-permissions-string > input {
+}
+
+.user-permissions-switch {
+  width: 15px;
+  height: 15px;
+  margin-left: 5px;
+}
+
+.user-permissions-stock {
+  display: inline-block;
+  border-radius: 8px;
+  margin: 5px;
+  padding: 5px;
+  cursor: pointer;
+  background-color: #89DCD8;
+  color: #fff;
+  opacity: 1;
+}
+
+.user_label_big{
+
+width: 120px;
+height: 72px;
+
+}

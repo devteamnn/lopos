@@ -1,0 +1,157 @@
+
+.reports-dashboard {
+  display: flex;
+  justify-content: space-between;
+}
+
+.reports-dashboard-at-the_moment{
+   display: flex;
+  justify-content: space-between; 
+}
+
+
+.reports-dashboard-today{
+  display: flex;
+  justify-content: space-between;
+}
+
+
+.dashboard-item-today {
+  display: flex;
+  border: 1px solid #94E0DD;
+  width: 32%;
+  border-radius: 6px 6px 6px 6px;
+
+  background-color: #ECF9FA;
+
+}
+.dashboard-item-at-the-moment {
+  display: flex;
+  border: 1px solid #94E0DD;
+  width: 48%;
+  border-radius: 6px 6px 6px 6px;
+
+  background-color: #ECF9FA;
+
+}
+.dashboard-status {
+  height: 32px;
+  width: 32px;
+  background-color: #28a745;
+  border-radius: 50%;
+  margin: 15px;
+}
+
+.dashboard_icon{
+
+  height: 44px;
+  width: 44px;
+  margin-top: 8px;
+  margin-left: 8px;
+  margin-right: 8px;
+}
+.dashboard-item-block_info{
+
+   width: 100%;
+  justify-content: space-between;
+
+  margin-right: 10px;
+
+ }
+
+.dashboard-item-value{
+  text-align: right;
+  width: 100%;
+  margin-right: 20px;
+  height: 40px;
+}
+/*
+//https://webcareer.ru/animirovannoe-uvelichenie-chisel-na-jquery.html
+ПОдключить анимацию чисел в дашборде
+можно взять этот вариант.
+
+
+
+
+*/
+
+.report-goods-left-modal-footer {
+  display: flex;
+  justify-content: space-between;
+   margin-left: 4px;
+}
+
+#report-goods-left-modal-setup {
+  padding-left: 20px;
+  padding-right: 10px;
+}
+
+.report-setup-header {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 25px;
+  margin-bottom: 15px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+.goods-left-setup-header{
+
+  margin-left: 20px;
+
+}
+.report-calendar {
+  margin-left: 34px;
+  margin-right: 50px;
+  margin-bottom: 10px;
+}
+
+.report-calendar h5{
+  margin-left: -14px;
+}
+
+.report-row{
+  padding: 10px;
+  margin-bottom: 2px;
+  height: 44px;
+  border: 1px solid #94E0DD;
+
+  border-radius: 6px 6px 6px 6px;
+}
+.report-row:hover{
+  
+ background-color: #94E0DD;
+}
+
+#list-reports-body h4 {
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+
+.report-goods-left{
+ background-color: #ECF9FA;
+}
+
+.reports-links:nth-child(odd){ 
+
+  background-color: #ECF9FA;
+}
+.reports-links:nth-child(even){ /* Задаем стили для четных рядов таблицы */
+  background-color: #ffffff;
+}
+
+/*модальные окна*/
+
+.goods-left-setup-string {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid gray;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.goods-left-setup-string > span {
+  display: inline-block;
+  width: 300px;
+  margin-right: auto;
+}

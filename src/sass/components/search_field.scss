@@ -1,0 +1,123 @@
+.search-container {
+  display: flex;
+  align-items: center;
+
+}
+.search-short-field{
+  width: 80px;
+}
+
+.search-container input{
+
+  border-width: 1px;
+  padding: 8px ;
+  border-radius: 4px;
+
+  margin-right: 4px;
+  background-image: url('../img/icons8-search_gray.png');
+  background-size: 20px 20px;
+  background-position: right;
+  background-repeat: no-repeat;
+
+}
+
+.search-container-in-modal input{
+
+  border-width: 1px;
+
+  border-radius: 4px;
+  margin-top: 18px;
+
+  margin-right: 4px;
+  background-image: url('../img/icons8-search_gray.png');
+  background-size: 20px 20px;
+  background-position: right;
+  background-repeat: no-repeat;
+
+  height: 36px;
+  float:right;
+}
+
+
+.search-header{
+  background-color: #C3EDEB;
+
+  height: 50px;
+}
+
+
+
+.search-card-barcode-btn{
+  background-image: url(../img/icons8-barcode-100.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-color: #DD001F;
+  color: #000000;
+  text-align: right;
+
+  width: 44px;
+  height: 44px;
+  border-radius: 6px;
+  margin-top: 8px;
+  margin-left: 8px;
+
+}
+
+
+
+.search-tag-bt{
+  background-color: #DD001F;
+  border-radius:  6px 0  0 6px ;
+}
+.search-clean-tag-bt{
+  background-image: url(../img/icon8-clean-tag-2.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-color: #DD001F;
+  color: #000000;
+  text-align: right;
+
+  width: 44px;
+  height: 44px;
+  border-radius: 0 6px 6px 0;
+  margin-top: 8px;
+  margin-left: -10px;
+
+}
+
+.search-btn-main{
+  background-image: url(../img/icons8-search-26.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  border-radius: 0 6px 6px 0;
+
+  width: 38px;
+  height: 38px;
+  margin-left: -8px;
+}
+
+
+#list-search-card-body-checked-keywords{
+  margin: 0px;
+}
+#operations-purchase-search-barcode{
+
+  text-align: center;
+  border-width: 1px;
+  margin-right: -4px;
+  border-radius: 6px 0  0 6px ;
+  min-width: 40px;
+  height: 46px;
+  
+}
+
+#operations-sale-search-barcode{
+  
+  text-align: center;
+  border-width: 1px;
+  margin-right: -4px;
+  border-radius: 6px 0  0 6px ;
+  min-width: 40px;
+  height: 46px;  
+  max-width: 136px;
+}

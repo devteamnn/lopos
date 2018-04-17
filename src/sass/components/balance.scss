@@ -1,0 +1,15 @@
+
+
+
+.balance-set-form {
+  display: flex;
+  justify-content: space-between;
+}
+
+.balance-set-form div:first-child {
+  width: 30%;
+}
+
+.balance-set-form div:last-child {
+  width: 60%;
+}

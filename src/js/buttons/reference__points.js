@@ -40,10 +40,10 @@ disableCheckEditButtons();
 listPointsBody.addEventListener('change', function (evt) {
   console.log(evt);
   if (selectedString) {
-    selectedString.classList.remove('bg-light');
+    selectedString.classList.remove('bg-light-selected');
   }
   selectedString = (evt.target.labels) ? evt.target.labels[0] : evt.target;
-  selectedString.classList.add('bg-light');
+  selectedString.classList.add('bg-light-selected');
   auth.currentStockId = selectedString.dataset.stockId;
   enableCheckEditButtons();
 });

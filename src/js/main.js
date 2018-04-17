@@ -24,6 +24,7 @@ import reportsButton from './buttons/accounting__reports.js';
 
 
 // import goodsButtonFormEdit from './buttons/catalog__goods--edit.js';
+
 import cardsButton from './buttons/catalog__cards.js';
 import searchButton from './buttons/catalog__search.js';
 import operationPurchase from './buttons/operations__purchase.js';
@@ -116,6 +117,25 @@ const start = () => {
     mainWindow.init();
   }
 };
+
+// ========== ВЫХОД ==========
+const wideScreenBtn = document.querySelector('#widescreen-mode-btn');
+
+const onWideScreenBtnClick = () => {
+  const screenWidth = document.body.clientWidth;
+  if (!wideScreenBtn.classList.contains('icon-btn__widescreen--active') && screenWidth > 1300) {
+    wideScreenBtn.classList.add('icon-btn__widescreen--active');
+    app.style.maxWidth = (screenWidth - 50) + 'px';
+  } else if (wideScreenBtn.classList.contains('icon-btn__widescreen--active') && screenWidth > 1300) {
+    app.style.maxWidth = '1140px';
+    console.log(document.body.clientWidth);
+    wideScreenBtn.classList.remove('icon-btn__widescreen--active');
+  }
+  console.log((wideScreenBtn.classList.contains('icon-btn__widescreen--active') && screenWidth > 1300));
+};
+
+wideScreenBtn.addEventListener('click', onWideScreenBtnClick);
+// ==========  ==========
 
 // ========== ВЫХОД ==========
 const stop = () => {

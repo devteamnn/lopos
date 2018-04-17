@@ -24,11 +24,12 @@ export default {
 
     */
     return `
-    <input type="radio" id="${item.id}" data-stock-id="${item.id}" name="contact" value="email" class="d-none">
-
+    
     <label class="reference-header" for="${item.id}" data-stock-id="${item.id}" data-stock-name="${item.name}">
         <div class="reference-column">${index + 1}</div>
         <div class="reference-column">${item.name}${currentStockFlag}</div>
+
+        <input type="radio" id="${item.id}" data-stock-id="${item.id}" name="contact" value="email" class="d-none">
     </label>
 `;
 

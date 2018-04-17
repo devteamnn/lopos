@@ -21,12 +21,12 @@ const getStock = (allStocks, currentValue) => {
       if (!auth.currentStockId) {
         checkedStock = (item.id === auth.data.currentStock) ? item.id : checkedStock;
       } else {
-        checkedStock = auth.currentStockId;
+        checkedStock = (auth.currentStockId === 'all') ? 1 : auth.currentStockId;
       }
       return `
-      <input type="radio" id="stock-${item.id}" name="stock" value="email" class="d-none">
-      <label style="padding-left: 34px;" for="stock-${item.id}"  class="d-flex justify-content-between align-items-center reference-string" data-stock-id="${item.id}" data-stock-name="${item.name}" data-stock-t2="${item.values[2][0]}">
-        <div class="row w-100 h-100">
+  
+      <label style="padding-left: 34px;" for="stock-${item.id}"  class="d-flex justify-content-between align-items-center reference-string good-card-stock-row" data-stock-id="${item.id}" data-stock-name="${item.name}" data-stock-t2="${item.values[2][0]}">
+        <div class="row w-100 h-20">
           <div class="col-8">${item.name}</div>
           <div class="col-4 d-flex justify-content-between">
             <div class="w-100 text-center">${item.values[3][0]}</div>
@@ -34,6 +34,7 @@ const getStock = (allStocks, currentValue) => {
             <div class="w-100 text-center">${item.values[4][0]}</div>
           </div>
           </div>
+          <input type="radio" id="stock-${item.id}" name="stock" value="email" class="d-none">
         </label>`;
     }).join(''));
     console.log(allStocks);
@@ -41,15 +42,18 @@ const getStock = (allStocks, currentValue) => {
 
   if (allStocks.length > 1) {
     goodsStock.insertAdjacentHTML('beforeend', `
-      <div class="row border">
-        <div class="col-8 border">Итого</div>
-        <div class="col-4 text-center">
-          ${totalCount}
-        </div>
+      <div class="row w-100 h-20 " style="padding-left:24px;">
+       <div class="col-8" style="padding-left:14px;"><h4>Итого:</h4></div>
+          <div class="col-4 d-flex justify-content-between">
+            <div class="w-100 text-center"> </div>
+            <div class="w-100 text-center">${totalCount}</div>
+            <div class="w-100 text-center"> </div>
+          </div>
       </div>`);
   }
 
   // переписать на storage
+  console.log(checkedStock);
   if (checkedStock) {
     goodsStock.querySelector(`#stock-${checkedStock}`).checked = true;
     auth.currentStockId = checkedStock;

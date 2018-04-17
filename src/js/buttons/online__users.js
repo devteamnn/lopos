@@ -63,15 +63,19 @@ const markup = {
 
     return `
     <div class="reference-header" data-user-id="${item.id}">
-      <div class="reference-column">
-          <img class="rounded-circle" src="img/user-male-filled-32.png" title="${item.name}" style="background-color: #${item.color};" alt="${item.name}">
-      </div>
-      <div class="reference-column">
+      <div class="reference-column-3"> 
+       <div style="background-color: #${item.color};   border-radius: 10px 10px 10px 10px;" width="60" >
+          <img  src="img/user-male-filled-32.png" style="margin-left:1px; title="${item.name}"  width="24" height="24" alt="${item.name}">
+          <span style="margin-right:2px; color:#ffffff;">${item.id}</span>
+        </div>
+        
+        </div>
+      <div class="reference-column-3">
         <div class="online-user">
           ${item.name}
         </div>
       </div>
-      <div class="reference-column"><div class="user-status" style="background-color: #${(item.status === '0') ? 'dc3545' : '28a745'}"></div></div>
+      <div class="reference-column-3"><div class="user-status" style="background-color: #${(item.status === '0') ? 'dc3545' : '28a745'}"></div></div>
     </div>`;
 
   },
@@ -79,9 +83,9 @@ const markup = {
   drawDataInContainer(users, container, handler) {
     container.innerHTML = `
       <div class="reference-header">
-          <div class="reference-column"></div>
-          <div class="reference-column">Пользователь</div>
-          <div class="reference-column">Статус</div>
+          <div class="reference-column-3"></div>
+          <div class="reference-column-3">Пользователь</div>
+          <div class="reference-column-3">Статус</div>
       </div>
     `;
     users.forEach((user, index) => {
@@ -264,12 +268,11 @@ usersReturnBtn.addEventListener('click', () => {
 const screenNamesStock = Object.keys(permissionsStock);
 
 const drawAccessForStock = (accessList) => `
-      <div class="user-permissions-string">
-        <span>${permissionsModule.permissionEngToRus[accessList[0]]}</span>
-        <div>
-          <input class="form-check-input position-static user-permissions-switch" type="checkbox" value="${permissionsStock[accessList[0]]}" ${accessList[1]}>
-        </div>
-      </div>`;
+      <tr>
+         <td><span>${permissionsModule.permissionEngToRus[accessList[0]]}</span></td>
+          <td align=center> <input class="form-check-input position-static user-permissions-switch" type="checkbox" value="${permissionsStock[accessList[0]]}" ${accessList[1]}></td>
+             
+      </tr>`;
 
 const getScreens = (permissionList, stockName) => {
   let screens = screenNamesStock.map((screen) => {
@@ -336,24 +339,33 @@ const onSuccessUserInfoLoad = (userData) => {
       onUserClick();
       console.log('screens-->', screens);
 
-      userStockPermissions.innerHTML = screens.map(drawAccessForStock).join('');
+      const preHeaderTableStock = ' <table class="user_table_property"> <tr class="user_table_header"><td>Действие</td><td class="user_table_property_w_40" >Просмотр</td></tr>';
+      const BodyTableStock = screens.map(drawAccessForStock).join('');
+      const postFooterTableStock = '</table>';
+      userStockPermissions.innerHTML = preHeaderTableStock + BodyTableStock + postFooterTableStock;
     });
   });
 
-  userOtherPermissions.innerHTML = Object.keys(permissionsOther).map((screen) => {
+  const preHeaderTableStock = ' <table class="user_table_property"> <tr class="user_table_header"><td>Действие</td><td  class="user_table_property_w_40" >Просмотр</td>     </tr>';
+  const BodyTableStock = getScreens(permissionList, auth.currentStockId).map(drawAccessForStock).join('');
+  const postFooterTableStock = '</table>';
+  userStockPermissions.innerHTML = preHeaderTableStock + BodyTableStock + postFooterTableStock;
+
+  document.querySelector(`#stock-${auth.currentStockId}`).classList.add('bg_backgorund_red');
+
+
+  const preHeaderTableOther = ' <table class="user_table_property"> <tr class="user_table_header"><td>Действие</td><td class="user_table_property_w_40" >Просмотр</td><td class="user_table_property_w_40" >Действие</td>     </tr>';
+  const BodyTableOther = Object.keys(permissionsOther).map((screen) => {
     return `
-    <div class="user-permissions-string">
-      <span>${permissionsModule.permissionEngToRus[screen]}</span>
-      <div>
-        <input class="form-check-input position-static user-permissions-switch" type="checkbox" value="${permissionsOther[screen][0]}" ${permissionList.other.includes(permissionsOther[screen][0].toString()) ? 'checked' : ''}>
-        <input class="form-check-input position-static user-permissions-switch ${(permissionsOther[screen][1] === '') ? 'd-none' : ''}" type="checkbox" value="${permissionsOther[screen][1]}" ${permissionList.other.includes(permissionsOther[screen][1].toString()) ? 'checked' : ''}>
-      </div>
-    </div>`;
+    <tr>
+      <td><span>${permissionsModule.permissionEngToRus[screen]}</span></td>
+      <td><input class="form-check-input position-static user-permissions-switch" type="checkbox" value="${permissionsOther[screen][0]}" ${permissionList.other.includes(permissionsOther[screen][0].toString()) ? 'checked' : ''}></td>
+      <td><input class="form-check-input position-static user-permissions-switch ${(permissionsOther[screen][1] === '') ? 'd-none' : ''}" type="checkbox" value="${permissionsOther[screen][1]}" ${permissionList.other.includes(permissionsOther[screen][1].toString()) ? 'checked' : ''}></td>
+    </tr>`;
   }).join('');
-
-
-  userStockPermissions.innerHTML = getScreens(permissionList, auth.currentStockId).map(drawAccessForStock).join('');
-  document.querySelector(`#stock-${auth.currentStockId}`).classList.add('bg-success');
+  const postFooterTableOther = '</table>';
+  userOtherPermissions.innerHTML = preHeaderTableOther + BodyTableOther + postFooterTableOther;
+ // document.querySelector(`#stock-${auth.currentStockId}`).classList.add('bg_backgorund_red');
 
   if (+auth.currentUserId === 1) {
     userStockList.innerHTML = '';

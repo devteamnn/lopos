@@ -47,8 +47,11 @@ export default {
     cardHeader[1] = (cardHeader[1]) ? cardHeader[1] : '';
     return `
     <div class="reference-header" data-link="${imgName}" ${(imgName === 'admission' || imgName === 'sale') ? `data-naklad=${item.ha_naklad_id_fk}` : ''} ${(imgName === 'expenses' || imgName === 'revenue') ? `data-balance=${item.ha_balance_act_id_fk}` : ''}>
-      <div class="reference-column">
-        <img class="mr-3 rounded-circle p-1" src="img/user-male-filled-32.png" title="${item.ha_operator_name}" style="background-color: #${getIconColor}" width="30" alt="${item.ha_operator_name}">
+      <div class="reference-column-3">
+        <div style="background-color: #${getIconColor};   border-radius: 10px 10px 10px 10px;" width="60" >
+          <img  src="img/user-male-filled-32.png" style="margin-left:1px; title="${item.ha_operator_name}"  width="24" height="24" alt="${item.ha_operator_name}">
+          <span style="margin-right:2px; color:#ffffff;">${item.ha_operator_id}</span>
+        </div>
       </div>
       <div class="reference-column">
 
@@ -61,10 +64,10 @@ export default {
 
       </div>
       <div class="reference-column">
-          <div class="badge text-right text-muted float-right">${new Date(+(item.ha_time + '000')).toLocaleString()}</div>
+          <div >${new Date(+(item.ha_time + '000')).toLocaleString()}</div>
       </div>
       <div class="reference-column">
-          <div class="badge text-right text-muted float-right">${(imgName === 'admission' || imgName === 'sale' || imgName === 'expenses' || imgName === 'revenue') ? '>' : ''}</div>
+          <div>${(imgName === 'admission' || imgName === 'sale' || imgName === 'expenses' || imgName === 'revenue') ? '<img src="img/icons8-preview.png">' : ''}</div>
       </div>
     </div>`;
 

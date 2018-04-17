@@ -5,7 +5,7 @@
 }
 
 .manufacture-card-column {
-  border: 1px solid gray;
+  border: 0px solid gray;
   width: 33%;
 }
 
@@ -22,3 +22,122 @@
 .manufacture-nomenklature-card--muted::after {
   content: 'Добавлено';
 }
+
+
+.manufacture-header {
+	width: 100%;
+  	margin-bottom: 15px; 
+  	display: flex;
+  	justify-content: space-between;
+  	margin: 0;
+  	margin-right: 1px;
+  background-color: #94E0DD;
+  
+
+  
+  border: 0px solid gray;
+ /* color: #ffffff;
+  */color: #000000;
+  border-radius: 6px 6px 0 0;
+}
+
+
+.manufacture-header img {
+  width: 44px;
+  height: 44px;
+}
+
+
+.manufacture-header h2 {
+  margin-left: 5px;
+}
+
+.manufacture-header:hover {
+  background-color: #C3EDEB;
+}
+/* Зебра в таблице
+*/
+
+.manufacture-header:nth-child(odd){ 
+
+  background-color: #ECF9FA;
+}
+.manufacture-header:nth-child(even){ /* Задаем стили для четных рядов таблицы */
+  background-color: #ffffff;
+}
+
+
+
+.manufacture-header:first-child {
+ // outline: 1px solid black;
+  margin-right: 1px;
+  background-color: #94E0DD;
+  font-weight: 600;
+  
+
+  
+  border: 0px solid gray;
+ /* color: #ffffff;
+  */color: #000000;
+  border-radius: 6px 6px 0 0;
+}
+.manufacture-column {
+  width: auto;
+
+  text-align: left;
+
+  border: 0px solid gray;
+}
+
+
+.manufacture-4-column:nth-child(1) {
+  width: 6%;
+  max-width: 25px;
+
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+
+.manufacture-4-column:nth-child(2) {
+  text-align: left; 
+
+  width: 54%;
+}
+.manufacture-4-column:nth-child(3) {
+
+    width: 20%;
+    text-align: right;
+}
+.manufacture-4-column:nth-child(4) {
+ margin-left: 4px;
+ margin-right: 4px;
+ width: 20%;
+ max-width: 80px;
+}
+
+
+.manufacture-3-column:nth-child(1) {
+  width: 6%;
+  max-width: 25px;
+  text-align: center;
+
+}
+
+
+.manufacture-3-column:nth-child(2) {
+ 
+  text-align: left;
+ 
+ 
+	width: 74%;
+}
+.manufacture-3-column:nth-child(3) {
+
+    width: 20%;
+    text-align: right;
+     margin-right: 4px;
+}
+
+

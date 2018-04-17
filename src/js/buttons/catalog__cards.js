@@ -58,7 +58,7 @@ const drawGoods = (data) => {
   cardResourcesGroupModalReturnBtn.classList.remove('invisible');
   cardResourcesSearchInput.addEventListener('input', onGoodsSearch);
   cardResourcesSearchInput.removeEventListener('input', onGroupsSearch);
-  goodsList.draw(data, cardResourcesGroupModalBody, onGoodClick, 'string');
+  goodsList.draw(data, cardResourcesGroupModalBody, onGoodClick, 'search');
 };
 
 const onGroupClick = () => {
@@ -148,13 +148,28 @@ let cardData = [];
 
 const onSuccessCardResourcesLoad = (cardResourcesData) => {
   console.log(cardResourcesData);
-  cardResourcesResources.innerHTML = '';
-  cardResourcesProduct.innerHTML = '';
+  let numberResources = 1;
+  let numberProduct = 1;
+  cardResourcesResources.innerHTML = `
+    <div class="reference-header">
+        <div class="reference-column">№</div>
+        <div class="reference-column">Товар</div>
+        <div class="reference-column">Кол</div>
+    </div>
+  `;
+  cardResourcesProduct.innerHTML = `
+    <div class="reference-header">
+        <div class="reference-column">№</div>
+        <div class="reference-column">Товар</div>
+        <div class="reference-column">Кол</div>
+    </div>
+  `;
   cardResourcesOldCost.innerHTML = (+cardResourcesData.data.old_cost) ? cardResourcesData.data.old_cost : '';
   cardResourcesNewPrice.innerHTML = (+cardResourcesData.data.new_price) ? cardResourcesData.data.new_price : '';
   cardName.innerHTML = cardResourcesData.data.name;
 
   if (cardResourcesData.data.resours.length) {
+
     cardResourcesData.data.resours.forEach((item) => {
 
       const onResourcesGoodClick = (good) => {
@@ -168,13 +183,15 @@ const onSuccessCardResourcesLoad = (cardResourcesData) => {
       };
       console.log(item.value < 0);
       if (item.value < 0) {
-        cardResourcesResources.insertAdjacentHTML('beforeend', cardsMarkup.getResourceElement(item));
+        cardResourcesResources.insertAdjacentHTML('beforeend', cardsMarkup.getResourceElement(item, numberResources));
         cardResourcesResources.lastChild.addEventListener('click', onResourcesGoodClick);
+        numberResources++;
       } else {
         console.log('hi');
         console.log(cardsMarkup.getResourceElement(item));
-        cardResourcesProduct.insertAdjacentHTML('beforeend', cardsMarkup.getResourceElement(item));
+        cardResourcesProduct.insertAdjacentHTML('beforeend', cardsMarkup.getResourceElement(item, numberProduct));
         cardResourcesProduct.lastChild.addEventListener('click', onResourcesGoodClick);
+        numberProduct++;
       }
       console.log(cardResourcesProduct);
     });
