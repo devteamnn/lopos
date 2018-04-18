@@ -1,3 +1,6 @@
+import auth from '../tools/storage.js';
+import allDocs from '../buttons/accounting__all-docs.js';
+
 const listContractorsCardBody = document.querySelector('#list-contractors-card-body');
 /*
 const BillTypes = {
@@ -27,7 +30,7 @@ export default {
     return `
      <div class="reference-header" data-link="${item.id}" data-naklad=${item.id}  >
       <div class="reference-column-3">
-        
+
       </div>
       <div class="reference-column">
 
@@ -50,7 +53,12 @@ export default {
   },
 
   drawDataInContainer(buyersCardData) {
-    console.log(buyersCardData);
+
+    const listContractorsCardBodyClickHandler = function (evt) {
+      auth.currentBillId = evt.currentTarget.dataset.naklad;
+      allDocs.onBillClick();
+    };
+
     if (buyersCardData) {
       listContractorsCardBody.innerHTML = `
         <div class="reference-header">
@@ -59,7 +67,10 @@ export default {
             <div class="reference-column">Время</div>
             <div class="reference-column">Просм.</div>
         </div>`;
-      buyersCardData.forEach((item) => listContractorsCardBody.insertAdjacentHTML('beforeend', this.getElement(item)));
+      buyersCardData.forEach((item) => {
+        listContractorsCardBody.insertAdjacentHTML('beforeend', this.getElement(item));
+        listContractorsCardBody.lastElementChild.addEventListener('click', listContractorsCardBodyClickHandler);
+      });
     } else {
       listContractorsCardBody.insertAdjacentHTML('beforeend', '<p class="border">Накладных нет</p>');
 
