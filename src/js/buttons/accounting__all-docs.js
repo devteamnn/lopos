@@ -30,6 +30,7 @@ const billCardUser = document.querySelector('#bill-card-user');
 const billCardGoods = document.querySelector('#bill-card-goods');
 const billDeliveryBtn = document.querySelector('#bill-delivery-btn');
 const billDeleteBtn = document.querySelector('#bill-delete-btn');
+const billMakePdfBtn = document.querySelector('#bill-pdf-btn');
 
 const balanceCard = document.querySelector('#balance-act-card');
 
@@ -126,6 +127,24 @@ billDeleteBtn.addEventListener('click', function () {
     submitCallback: setRequestToDeleteBill
   };
 
+});
+
+// ############################## ФОРМИРОВАНИЕ PDF #############
+const onSuccessBillMakePdf = (answer) => {
+  window.open(answer.data);
+};
+
+const setRequestToMakePdfBill = () => {
+  xhr.request = {
+    metod: 'POST',
+    url: `lopos_directory/${auth.data.directory}/operator/${auth.data.operatorId}/business/${auth.data.currentBusiness}/naklad/${auth.currentBillId}/export/pdf`,
+    data: `token=${auth.data.token}`,
+    callbackSuccess: onSuccessBillMakePdf,
+  };
+};
+
+billMakePdfBtn.addEventListener('click', function () {
+  setRequestToMakePdfBill();
 });
 
 // ############################## ЗАВЕРШЕНИЕ ДОСТАВКИ #############
