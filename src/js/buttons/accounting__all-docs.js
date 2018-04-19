@@ -46,6 +46,9 @@ const balanceCardReason = document.querySelector('#balance-act-reason');
 const balanceCardComment = document.querySelector('#balance-act-comment');
 const balanceDeleteBtn = document.querySelector('#balance-act-delete-btn');
 
+const downloadPdfLink = document.querySelector('#bill-download-link');
+const downloadPdfBtn = document.querySelector('#bill-download-btn');
+
 // ############################## РАЗМЕТКА ТОВАРОВ #############
 const getGoodString = (item, index) => {
   return `
@@ -64,6 +67,11 @@ const getGoodString = (item, index) => {
 // let billStatus = '';
 
 const onSuccessBillGet = (answer) => {
+  const billCardHideHandler = () => {
+    downloadPdfBtn.classList.add('d-none');
+    $(billCard).unbind('hide.bs.modal', billCardHideHandler);
+  };
+
   console.log(answer);
   let {id, total, operator_name: operatorName, /* status, */ka_name: kaname, stock_name: stockName, time, type, content: goodsContent} = answer.data;
   // billStatus = status;
@@ -90,6 +98,7 @@ const onSuccessBillGet = (answer) => {
   } else {
     billDeliveryBtn.classList.add('d-none');
   }
+  $(billCard).on('hide.bs.modal', billCardHideHandler);
   $(billCard).modal('show');
 
 };
@@ -131,7 +140,8 @@ billDeleteBtn.addEventListener('click', function () {
 
 // ############################## ФОРМИРОВАНИЕ PDF #############
 const onSuccessBillMakePdf = (answer) => {
-  window.open(answer.data);
+  downloadPdfLink.href = answer.data;
+  downloadPdfBtn.classList.remove('d-none');
 };
 
 const setRequestToMakePdfBill = () => {
