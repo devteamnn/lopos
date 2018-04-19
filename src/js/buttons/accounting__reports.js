@@ -124,7 +124,6 @@ const onPDFLoadSuccess = (data) => {
 };
 
 const getReportLink = () => {
-  console.log('stock-->', auth.currentStockId);
 
   let params = [];
   let listOfGroups = [];
@@ -141,12 +140,14 @@ const getReportLink = () => {
     }
   });
 
-  console.log('parameters-->', params);
-  console.log('listOfGroups-->', listOfGroups);
+  let date = new Date();
+  let timeZoneOffset = date.getTimezoneOffset();
+  timeZoneOffset *= 60;
+
   xhr.request = {
     metod: 'POST',
     url: `lopos_directory/${auth.data.directory}/operator/${auth.data.operatorId}/business/${auth.data.currentBusiness}/report/remains/export/${auth.currentReportType}`,
-    data: `token=${auth.data.token}&parameters=[${params}]&list_of_groups=[${listOfGroups}]${(auth.currentStockId === 'all' ? '' : '&stock=' + auth.currentStockId)}`,
+    data: `token=${auth.data.token}&parameters=[${params}]&list_of_groups=[${listOfGroups}]${(auth.currentStockId === 'all' ? '' : '&stock=' + auth.currentStockId)}&timezone=${timeZoneOffset}`,
     callbackSuccess: onPDFLoadSuccess
   };
 };
@@ -241,10 +242,14 @@ const getReportLinkTurn = () => {
     }
   });
 
+  let date = new Date();
+  let timeZoneOffset = date.getTimezoneOffset();
+  timeZoneOffset *= 60;
+
   xhr.request = {
     metod: 'POST',
     url: `lopos_directory/${auth.data.directory}/operator/${auth.data.operatorId}/business/${auth.data.currentBusiness}/report/turnover/export/${auth.currentReportType}`,
-    data: `token=${auth.data.token}&parameters=[${params}]&list_of_groups=[${listOfGroups}&time_start=${Date.parse(reportTurnFrom.value) / 1000}&time_end=${Date.parse(reportTurnTo.value) / 1000}${(auth.currentStockId === 'all' ? '' : '&stock=' + auth.currentStockId)}`,
+    data: `token=${auth.data.token}&parameters=[${params}]&list_of_groups=[${listOfGroups}&time_start=${Date.parse(reportTurnFrom.value) / 1000}&time_end=${Date.parse(reportTurnTo.value) / 1000}${(auth.currentStockId === 'all' ? '' : '&stock=' + auth.currentStockId)}&timezone=${timeZoneOffset}`,
     callbackSuccess: onPDFLoadSuccessTurn
   };
 };
@@ -333,12 +338,14 @@ const getReportLinkProfit = () => {
     }
   });
 
-  console.log('parameters-->', params);
+  let date = new Date();
+  let timeZoneOffset = date.getTimezoneOffset();
+  timeZoneOffset *= 60;
 
   xhr.request = {
     metod: 'POST',
     url: `lopos_directory/${auth.data.directory}/operator/${auth.data.operatorId}/business/${auth.data.currentBusiness}/report/profit/export/${auth.currentReportType}`,
-    data: `token=${auth.data.token}&parameters=[${params}]&ime_start=${Date.parse(reportProfitFrom.value) / 1000}&time_end=${Date.parse(reportProfitTo.value) / 1000}${(auth.currentStockId === 'all' ? '' : '&stock=' + auth.currentStockId)}`,
+    data: `token=${auth.data.token}&parameters=[${params}]&ime_start=${Date.parse(reportProfitFrom.value) / 1000}&time_end=${Date.parse(reportProfitTo.value) / 1000}${(auth.currentStockId === 'all' ? '' : '&stock=' + auth.currentStockId)}&timezone=${timeZoneOffset}`,
     callbackSuccess: onPDFLoadSuccessProfit
   };
 };

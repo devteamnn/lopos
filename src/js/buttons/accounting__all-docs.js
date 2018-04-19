@@ -145,10 +145,14 @@ const onSuccessBillMakePdf = (answer) => {
 };
 
 const setRequestToMakePdfBill = () => {
+  let date = new Date();
+  let timeZoneOffset = date.getTimezoneOffset();
+  timeZoneOffset *= 60;
+
   xhr.request = {
     metod: 'POST',
     url: `lopos_directory/${auth.data.directory}/operator/${auth.data.operatorId}/business/${auth.data.currentBusiness}/naklad/${auth.currentBillId}/export/pdf`,
-    data: `token=${auth.data.token}`,
+    data: `token=${auth.data.token}&timezone=${timeZoneOffset}`,
     callbackSuccess: onSuccessBillMakePdf,
   };
 };
