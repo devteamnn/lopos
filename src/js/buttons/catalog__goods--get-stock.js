@@ -24,7 +24,7 @@ const getStock = (allStocks, currentValue) => {
         checkedStock = (auth.currentStockId === 'all') ? 1 : auth.currentStockId;
       }
       return `
-  
+
       <label style="padding-left: 34px;" for="stock-${item.id}"  class="d-flex justify-content-between align-items-center reference-string good-card-stock-row" data-stock-id="${item.id}" data-stock-name="${item.name}" data-stock-t2="${item.values[2][0]}">
         <div class="row w-100 h-20">
           <div class="col-8">${item.name}</div>
@@ -57,8 +57,19 @@ const getStock = (allStocks, currentValue) => {
   if (checkedStock) {
     goodsStock.querySelector(`#stock-${checkedStock}`).checked = true;
     auth.currentStockId = checkedStock;
-    auth.currentStockName = goodsStock.querySelector(`#stock-${checkedStock}`).nextElementSibling.dataset.stockName;
-    auth.currentStockQuantityT2 = goodsStock.querySelector(`#stock-${checkedStock}`).nextElementSibling.dataset.stockT2;
+
+    let tmpStock = goodsStock.querySelector(`#stock-${checkedStock}`);
+
+    if (tmpStock.nextElementSibling) {
+      auth.currentStockName = tmpStock.nextElementSibling.dataset.stockName;
+    }
+
+    let tmpStock2 = goodsStock.querySelector(`#stock-${checkedStock}`);
+
+    if (tmpStock2.nextElementSibling) {
+      auth.currentStockQuantityT2 = tmpStock2.nextElementSibling.dataset.stockT2;
+    }
+
   } else if (goodsStock.firstChild.id) {
     goodsStock.firstChild.checked = true;
     auth.currentStockId = goodsStock.firstChild.id.split('-')[1];

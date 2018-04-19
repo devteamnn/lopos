@@ -35,7 +35,7 @@ const initVar = (remModal) => {
   priceBlock = form.querySelector('#goods-card-price-block');
   purchase = form.querySelector('#goods-card-price-purchase');
   sell = form.querySelector('#goods-card-price-sell');
-  percent = form.querySelector('#goods-card-price-extra');
+  percent = form.querySelector('#goods-card-markup');
   barcode = form.querySelector('#goods-card-barcode');
   barcode = form.querySelector('#goods-card-barcode');
 
@@ -160,7 +160,7 @@ const callbackXhrImgLoadSuccess = (response) => {
 const submitForm = () => {
   const stor = dataStorage.data;
 
-  let postData = `token=${stor.token}&purchase_price=${purchase.value}&selling_price=${sell.value}`;
+  let postData = `token=${stor.token}&purchase_price=${purchase.value}&selling_price=${sell.value}&markup=${percent.value}`;
   let urlApp = appUrl2.replace('{{dir}}', stor.directory);
   urlApp = urlApp.replace('{{oper}}', stor.operatorId);
   urlApp = urlApp.replace('{{busId}}', stor.currentBusiness);
@@ -176,16 +176,31 @@ const submitForm = () => {
 };
 
 const calcPr = () => {
-  return tools.calcPercent(purchase.value, sell.value) + '%';
+  return tools.calcPercent(purchase.value, sell.value);
 };
 
 const calcPrice = (evt) => {
-  if (!evt.target.type === 'text') {
+  // if (!evt.target.type === 'text') {
+  //   return false;
+  // }
+  if (!formTools.validElement(evt.target)) {
+    evt.stopPropagation();
     return false;
   }
-  if (formTools.validElement(evt.target)) {
-    percent.innerHTML = calcPr();
+  percent.value = calcPr();
+  return true;
+};
+
+const calcSl = () => {
+  return tools.calcPrice(purchase.value, percent.value);
+};
+
+const calcSell = (evt) => {
+  if (!formTools.validElement(evt.target)) {
+    evt.stopPropagation();
+    return false;
   }
+  sell.value = calcSl();
   return true;
 };
 
@@ -194,7 +209,7 @@ export default {
   start(remModal) {
     console.log('Card-Edit-START!');
     initVar(remModal);
-    percent.innerHTML = calcPr();
+    percent.value = calcPr();
 
     inputInitValues = [];
     inputInitValues[0] = name.value;
@@ -204,7 +219,8 @@ export default {
 
     formTools.work(modal, submitForm);
 
-    priceBlock.addEventListener('change', calcPrice);
+    priceBlock.addEventListener('input', calcPrice);
+    percent.addEventListener('input', calcSell);
   },
 
   stop() {

@@ -18,7 +18,7 @@ const goodsCardImage = document.querySelector('#goods-card-image');
 const goodsCardImageUpload = document.querySelector('#goods-card-image-upload');
 const goodsCardPurchase = document.querySelector('#goods-card-price-purchase');
 const goodsCardSell = document.querySelector('#goods-card-price-sell');
-const goodsCardExtra = document.querySelector('#goods-card-price-extra');
+// const goodsCardExtra = document.querySelector('#goods-card-price-extra');
 const goodsStock = document.querySelector('#goods-stock-body');
 const goodsCardKeywordsModal = document.querySelector('#goods-card-keywords');
 
@@ -335,7 +335,7 @@ const onSuccessGoodsLoad = (loadedGood) => {
   goodsCardBarcode.value = barcode;
   goodsCardPurchase.value = purchasePrice;
   goodsCardSell.value = sellingPrice;
-  goodsCardExtra.innerHTML = ((+sellingPrice - +purchasePrice) / (+purchasePrice / 100)).toFixed(2) + '%';
+  // goodsCardExtra.innerHTML = ((+sellingPrice - +purchasePrice) / (+purchasePrice / 100)).toFixed(2) + '%';
   goodsCardGroup.innerHTML = allGroups.map((item) => `<option value="${item.id}" ${(item.id === groupId ? 'selected' : '')}>${item.name}</option>`).join('');
   goodsCardImage.title = name;
   goodsCardImage.alt = name;
