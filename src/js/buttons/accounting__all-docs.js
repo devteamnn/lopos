@@ -72,7 +72,6 @@ const onSuccessBillGet = (answer) => {
     $(billCard).unbind('hide.bs.modal', billCardHideHandler);
   };
 
-  console.log(answer);
   let {id, total, operator_name: operatorName, /* status, */ka_name: kaname, stock_name: stockName, time, type, content: goodsContent} = answer.data;
   // billStatus = status;
   billCardStock.innerHTML = stockName;
@@ -106,8 +105,6 @@ const onSuccessBillGet = (answer) => {
 
 // ############################## УДАЛЕНИЕ НАКЛАДНОЙ #############
 const onSuccessBillDelete = (answer) => {
-  console.log(answer);
-
   // onListEnterprisesCardReturnBtn();
   $(billCard).modal('hide');
   getDocs(docsYear.value, docsMonth.value, docsDay.value);
@@ -163,8 +160,6 @@ billMakePdfBtn.addEventListener('click', function () {
 
 // ############################## ЗАВЕРШЕНИЕ ДОСТАВКИ #############
 const onSuccessBillDelivery = (answer) => {
-  console.log(answer);
-
   $(billCard).modal('hide');
   getDocs(docsYear.value, docsMonth.value, docsDay.value);
 
@@ -205,8 +200,6 @@ const onBillClick = () => {
 };
 // ############################## УДАЛЕНИЕ БАЛАНСОВОЙ ОПЕРАЦИИ #############
 const onSuccessBalanceDelete = (answer) => {
-  console.log(answer);
-
   $(balanceCard).modal('hide');
   getDocs(docsYear.value, docsMonth.value, docsDay.value);
 
@@ -237,7 +230,6 @@ balanceDeleteBtn.addEventListener('click', function () {
 });
 
 const onSuccessBalanceGet = (answer) => {
-  console.log(answer);
   let {id, comment, reason_name: reasonName, operator_name: operatorName, stock_name: stockName, time, value} = answer.data;
   balanceCardStock.innerHTML = stockName;
   balanceCardTotal.innerHTML = value;
@@ -252,7 +244,6 @@ const onSuccessBalanceGet = (answer) => {
 };
 
 const onBalanceActClick = () => {
-  console.log('hi');
   xhr.request = {
     metod: 'POST',
     url: `lopos_directory/${auth.data.directory}/operator/${auth.data.operatorId}/business/${auth.data.currentBusiness}/balance_act/${auth.currentBillId}/info`,
@@ -268,9 +259,6 @@ let lastId = '';
 let prevData = [];
 
 const onSuccessLoadMore = (billsData) => {
-  console.log(new Date(+(billsData)).toLocaleString());
-  console.log(billsData);
-
   // docsBody.innerHTML = '';
   if (docsBody.lastChild.tagName === 'BUTTON') {
     docsBody.lastChild.remove();
@@ -294,7 +282,6 @@ const onSuccessLoadMore = (billsData) => {
 };
 
 const onClickLoadMore = (evt) => {
-  console.log(lastId);
   evt.target.setAttribute('disabled', 'disabled');
   xhr.request = {
     metod: 'POST',
@@ -315,23 +302,17 @@ docsReturnBtn.addEventListener('click', () => {
 });
 
 const onYearClick = (bill) => {
-  console.log(bill.month_number - 1);
   docsMonth.value = bill.month_number - 1;
-  console.log(docsYear.value, docsMonth.value, docsDay.value);
   getDocs(docsYear.value, docsMonth.value, docsDay.value);
 };
 
 const onMonthClick = (bill) => {
-  console.log(bill.day_number);
-  console.log(docsYear.value, docsMonth.value, docsDay.value);
   drawDates(docsYear.value, docsMonth.value, 'all');
   docsDay.value = bill.day_number;
   getDocs(docsYear.value, docsMonth.value, docsDay.value);
 };
 
 const onSuccessBillsGet = (billsData) => {
-  console.log(billsData);
-
   if (docsMonth.value === 'all') {
     docsReturnBtn.setAttribute('disabled', 'disabled');
   } else {
@@ -465,7 +446,6 @@ docsBalanceBtn.addEventListener('click', () => {
 
 
 const onSuccessStocksLoad = (docsData) => {
-  console.log(docsData);
   docsStocks.innerHTML = docsData.data.map((item) => `<option value="${item.id}">${item.name}</option>`).join('');
   if (docsData.data.length > 1) {
     docsStocks.innerHTML += '<option value="all" selected>Все склады</option';

@@ -112,8 +112,6 @@ const sendData = (data, callback, discId) => {
     'callbackSuccess': getDataXhrCallbackSuccess
   };
 
-  console.dir(xhrResp);
-
   xhr.request = xhrResp;
 };
 

@@ -74,19 +74,16 @@ export default {
   },
 
   addCardToContainer(cardMarkupItem) {
-    console.log(cardMarkupItem);
     listLogBody.insertAdjacentHTML('beforeend', cardMarkupItem);
     if (listLogBody.lastChild.dataset.link === 'admission' || listLogBody.lastChild.dataset.link === 'sale') {
       let billId = listLogBody.lastChild.dataset.naklad;
       listLogBody.lastChild.addEventListener('click', () => {
-        console.log(billId);
         auth.currentBillId = billId;
         docs.onBillClick();
       });
     } else if (listLogBody.lastChild.dataset.link === 'expenses' || listLogBody.lastChild.dataset.link === 'revenue') {
       let billId = listLogBody.lastChild.dataset.balance;
       listLogBody.lastChild.addEventListener('click', () => {
-        console.log(billId);
         auth.currentBillId = billId;
         docs.onBalanceActClick();
       });
