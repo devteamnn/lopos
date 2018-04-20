@@ -22,28 +22,7 @@ const initVar = (remModal) => {
 };
 
 const callbackXhrSuccess = (response) => {
-  switch (response.status) {
-  case 270:
-    $(modal).modal('hide');
-    markup.informationtModal = {
-      'title': 'MESSAGE: ',
-      'message': response.message,
-      'isMess': true
-    };
-    break;
-  case 400:
-    markup.informationtModal = {
-      'title': 'ERROR: ',
-      'message': messages.mes400
-    };
-    break;
-  case 271:
-    markup.informationtModal = {
-      'title': 'ERROR: ',
-      'message': response.messages
-    };
-    break;
-  }
+  $(modal).modal('hide');
 };
 
 const callbackXhrError = (xhr) => {
