@@ -15,16 +15,6 @@ let position = 0;
 const count = 200;
 const drawSet = count / 4;
 
-
-// отрисовка порции карточек
-listLogBody.innerHTML = `
-    <div class="reference-header">
-        <div class="reference-column-3"></div>
-        <div class="reference-column">Операция</div>
-        <div class="reference-column">Время</div>
-        <div class="reference-column">Просм.</div>
-    </div>
-`;
 const drawCardSet = () => {
   logCardNodes.splice(0, drawSet).forEach(logMarkup.addCardToContainer);
 };
@@ -34,8 +24,8 @@ const createCardNodes = (cardData) => cardData.forEach((item, index) => logCardN
 
 // успех загрузки
 const onSuccessLogLoad = (logResponse) => {
+
   let loadedLog = logResponse.data;
-  console.log(loadedLog);
 
   loaderWait.classList.add('d-none');
   if (loadedLog.length) {
@@ -61,10 +51,12 @@ const onErrorLogLoad = () => {
 
 // отправка запроса на новую порцию
 const getLog = () => {
-  console.log('get.log');
+
   if (logCardNodes.length === 0) {
+
     loaderWait.classList.remove('d-none');
     window.removeEventListener('scroll', onMouseScroll);
+
     xhr.request = {
       metod: 'POST',
       url: `lopos_directory/${auth.data.directory}/update_log/${Date.now()}/story`,
@@ -98,10 +90,24 @@ const onMouseScroll = (evt) => {
 
 };
 
+const listLogClickHandler = () => {
+  listLogBody.innerHTML = `
+    <div class="reference-header">
+        <div class="reference-column-3"></div>
+        <div class="reference-column">Операция</div>
+        <div class="reference-column">Время</div>
+        <div class="reference-column">Просм.</div>
+    </div>`;
+
+  position = 0;
+  logCardNodes = [];
+  getLog();
+};
+
 export default {
 
   start() {
-    listLog.addEventListener('click', getLog);
+    listLog.addEventListener('click', listLogClickHandler);
   },
 
   stop() {
