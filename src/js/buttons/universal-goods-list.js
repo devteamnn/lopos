@@ -29,7 +29,7 @@ const markup = {
     return `
     <div class="card goods-tile-card" data-good-id="${item.id}">
       <img class="card-img-top" src="${getImg(item.img_url)}" alt="${item.name}" title="${item.name}">
-      <div class="card-body ${(Number(item.count)) ? 'goods-tile-title' : ''}">
+      <div class="card-body ${(Number(item.count)) ? 'goods-tile-title' : 'd-none'}">
         <p class="card-text">${(Number(item.count)) ? Number(item.count).toFixed(2) : ''}</p>
       </div>
     </div>`;
