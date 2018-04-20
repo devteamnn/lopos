@@ -1,12 +1,9 @@
 import dataStorage from './../tools/storage.js';
-import markup from './../markup/tools.js';
 import formTools from './../tools/form-tools.js';
 import goodsCard from './catalog__goods.js';
 import search from './catalog__search.js';
 
 let appUrl;
-let messages;
-
 let form;
 let field1;
 let modal;
@@ -19,56 +16,26 @@ const initVar = (remModal) => {
   field1 = form.querySelector('*[data-valid="field1"]');
 
   appUrl = window.appSettings[form.dataset.formname].UrlApi;
-  messages = window.appSettings[form.dataset.formname].messages;
-
 };
 
 const callbackXhrSuccess = (response) => {
-  switch (response.status) {
-  case 200:
-    $(modal).modal('hide');
-    formTools.reset();
+  $(modal).modal('hide');
+  formTools.reset();
 
-// чОрное колдовство с автооткрытием карточки при одном найденном варианте
-    if (response.data.length === 1) {
-      $(modal).on('hidden.bs.modal', function (e) {
-        dataStorage.currentGoodId = response.data[0].id;
-        goodsCard.fill();
-        response.data = 0;
-      });
-    } else if (response.data.length > 1) {
-      search.drawResult(response.data);
-    }
-
-    break;
-  case 400:
-    $(modal).modal('hide');
-    formTools.reset();
-    markup.informationtModal = {
-      'title': 'Error',
-      'message': messages.mes400
-    };
-    break;
-  case 271:
-    $(modal).modal('hide');
-    formTools.reset();
-    markup.informationtModal = {
-      'title': 'Error',
-      'message': response.message
-    };
-    break;
+  if (response.data.length === 1) {
+    $(modal).on('hidden.bs.modal', function (e) {
+      dataStorage.currentGoodId = response.data[0].id;
+      goodsCard.fill();
+      response.data = 0;
+    });
+  } else if (response.data.length > 1) {
+    search.drawResult(response.data);
   }
 };
 
 const callbackXhrError = (xhr) => {
-
   $(modal).modal('hide');
   formTools.reset();
-
-  markup.informationtModal = {
-    'title': 'ОШИБКА СВЯЗИ',
-    'message': `Ошибка ${xhr.status}: ${xhr.statusText}`
-  };
 };
 
 const submitFormAdd = () => {

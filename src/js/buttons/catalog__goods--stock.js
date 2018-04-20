@@ -1,10 +1,7 @@
 import dataStorage from './../tools/storage.js';
-import markup from './../markup/tools.js';
 import formTools from './../tools/form-tools.js';
 
 let appUrl;
-let messages;
-
 let form;
 let amount;
 let modal;
@@ -13,41 +10,16 @@ const initVar = (remModal) => {
   modal = remModal;
   form = modal.querySelector('*[data-formName]');
   amount = form.querySelector('*[data-valid="amount"]');
-
   appUrl = window.appSettings[form.dataset.formname].UrlApi;
-  messages = window.appSettings[form.dataset.formname].messages;
-
 };
 
 const callbackXhrSuccess = (response) => {
-  switch (response.status) {
-  case 200:
-    $(modal).modal('hide');
-    break;
-  case 400:
-    markup.informationtModal = {
-      'title': 'Error',
-      'message': messages.mes400
-    };
-    break;
-  case 271:
-    markup.informationtModal = {
-      'title': 'Error',
-      'message': response.messages
-    };
-    break;
-  }
+  $(modal).modal('hide');
 };
 
 const callbackXhrError = (xhr) => {
-
   $(modal).modal('hide');
   formTools.reset();
-
-  markup.informationtModal = {
-    'title': 'ОШИБКА СВЯЗИ',
-    'message': `Ошибка ${xhr.status}: ${xhr.statusText}`
-  };
 };
 
 const submitForm = () => {

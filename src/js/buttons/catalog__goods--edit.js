@@ -1,9 +1,7 @@
 import dataStorage from './../tools/storage.js';
 import markup from './../markup/tools.js';
-// import catalogGroupsGoods from './catalog__groups-goods.js';
 import formTools from './../tools/form-tools.js';
 import tools from './../tools/tools.js';
-// import catalogGroups from './catalog__groups.js';
 import catalogGoods from './catalog__goods.js';
 
 let modal;
@@ -21,7 +19,6 @@ let sell;
 let percent;
 let barcode;
 let priceBlock;
-
 let inputInitValues;
 
 
@@ -94,7 +91,6 @@ const callbackXhrSuccess = () => {
   } else {
     $('#goods-card').modal('hide');
     formTools.reset();
-    // catalogGroups.getGoodsForGroup();
     catalogGoods.redraw();
   }
 };
@@ -110,7 +106,6 @@ const callbackXhrSuccess2 = (response) => {
     } else {
       $('#goods-card').modal('hide');
       formTools.reset();
-      // catalogGroups.getGoodsForGroup();
       catalogGoods.redraw();
     }
     break;
@@ -139,7 +134,6 @@ const callbackXhrImgLoadSuccess = (response) => {
 
     $('#goods-card').modal('hide');
     formTools.reset();
-    // catalogGroups.getGoodsForGroup();
     catalogGoods.redraw();
     break;
   case 400:
@@ -180,9 +174,6 @@ const calcPr = () => {
 };
 
 const calcPrice = (evt) => {
-  // if (!evt.target.type === 'text') {
-  //   return false;
-  // }
   if (!formTools.validElement(evt.target)) {
     evt.stopPropagation();
     return false;
@@ -207,7 +198,6 @@ const calcSell = (evt) => {
 export default {
 
   start(remModal) {
-    console.log('Card-Edit-START!');
     initVar(remModal);
     percent.value = calcPr();
 

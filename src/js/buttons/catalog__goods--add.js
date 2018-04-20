@@ -1,12 +1,9 @@
 import dataStorage from './../tools/storage.js';
-import markup from './../markup/tools.js';
 import formTools from './../tools/form-tools.js';
 import catalogGroups from './catalog__groups.js';
 import tools from './../tools/tools.js';
 
 let appUrl;
-let messages;
-
 let form;
 let name;
 let modal;
@@ -26,49 +23,19 @@ const initVar = (remModal) => {
   percent = form.querySelector('*[data-valid="percent"]');
   price = form.querySelector('*[data-valid="price"]');
   barcode = form.querySelector('*[data-valid="barcode"]');
-
   priceBlock = form.querySelector('#group-goods-price');
-
   appUrl = window.appSettings[form.dataset.formname].UrlApi;
-  messages = window.appSettings[form.dataset.formname].messages;
-
 };
 
 const callbackXhrSuccess = (response) => {
-  switch (response.status) {
-  case 200:
-    $(modal).modal('hide');
-    formTools.reset();
-    catalogGroups.getGoodsForGroup();
-    break;
-  case 400:
-    $(modal).modal('hide');
-    formTools.reset();
-    markup.informationtModal = {
-      'title': 'Error',
-      'message': messages.mes400
-    };
-    break;
-  case 271:
-    $(modal).modal('hide');
-    formTools.reset();
-    markup.informationtModal = {
-      'title': 'Error',
-      'message': response.messages
-    };
-    break;
-  }
+  $(modal).modal('hide');
+  formTools.reset();
+  catalogGroups.getGoodsForGroup();
 };
 
 const callbackXhrError = (xhr) => {
-
   $(modal).modal('hide');
   formTools.reset();
-
-  markup.informationtModal = {
-    'title': 'ОШИБКА СВЯЗИ',
-    'message': `Ошибка ${xhr.status}: ${xhr.statusText}`
-  };
 };
 
 const submitForm = () => {

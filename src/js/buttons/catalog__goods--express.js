@@ -1,10 +1,7 @@
 import dataStorage from './../tools/storage.js';
-import markup from './../markup/tools.js';
 import formTools from './../tools/form-tools.js';
 
 let appUrl;
-let messages;
-
 let form;
 let price;
 let amount;
@@ -15,10 +12,7 @@ const initVar = (remModal) => {
   form = modal.querySelector('*[data-formName]');
   price = form.querySelector('*[data-valid="price"]');
   amount = form.querySelector('*[data-valid="amount"]');
-
   appUrl = window.appSettings[form.dataset.formname].UrlApi;
-  messages = window.appSettings[form.dataset.formname].messages;
-
 };
 
 const callbackXhrSuccess = (response) => {
@@ -26,14 +20,8 @@ const callbackXhrSuccess = (response) => {
 };
 
 const callbackXhrError = (xhr) => {
-
   $(modal).modal('hide');
   formTools.reset();
-
-  markup.informationtModal = {
-    'title': 'ОШИБКА СВЯЗИ',
-    'message': `Ошибка ${xhr.status}: ${xhr.statusText}`
-  };
 };
 
 const submitForm = () => {
