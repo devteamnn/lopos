@@ -194,9 +194,59 @@ manufactureColumnBody.addEventListener('click', onManufactureColumnBodyClick);
 
 // #################### ОБРАБАТЫВАЕМ КЛИКИ ПО СПИСКУ КАРТОЧКЕ В МОДАЛЬНОМ ОКНЕ #############
 $(nomenklatureCardModal).on('hidden.bs.modal', () => {
-  selectedNomenklatureCards = [].map.call(document.querySelectorAll('.manufacture-nomenklature-card--muted'), (item) => Object.assign(loadedNomenklatureCards[item.dataset.cardIndex], {
-    k: 1
-  }));
+  // selectedNomenklatureCards = [].map.call(document.querySelectorAll('.manufacture-nomenklature-card--muted'), (item) => Object.assign(loadedNomenklatureCards[item.dataset.cardIndex], {
+  //   k: 1
+  // }));
+  // if (selectedNomenklatureCards.length !== 0) {
+  //   manufactureColumnBody.innerHTML = '';
+  //   cardsMarkup.drawDataInContainer(selectedNomenklatureCards, manufactureColumnBody);
+  //   manufactureMaterialCheck.classList.add('d-none');
+  //   drawGoodsToColumns();
+  // }
+
+  if (!selectedNomenklatureCards.length) {
+    console.log('new');
+    selectedNomenklatureCards = [].map.call(document.querySelectorAll('.manufacture-nomenklature-card--muted'), (item) => Object.assign(loadedNomenklatureCards[item.dataset.cardIndex], {
+      k: 1
+    }));
+    console.dir(selectedNomenklatureCards);
+
+  } else {
+    console.log('no new');
+
+    selectedNomenklatureCards.forEach((item) => {
+      item.del = true;
+    });
+
+    let selectCards = document.querySelectorAll('.manufacture-nomenklature-card--muted');
+
+    if (selectCards) {
+      selectCards.forEach((item) => {
+
+        let newCard = true;
+
+        for (let i = 0; i < selectedNomenklatureCards.length; i++) {
+          if (selectedNomenklatureCards[i].id === item.dataset['cardId']) {
+            selectedNomenklatureCards[i].del = false;
+            newCard = false;
+          }
+        }
+
+        if (newCard) {
+          selectedNomenklatureCards.push(Object.assign(loadedNomenklatureCards[item.dataset.cardIndex], {
+            k: 1}));
+        }
+
+        console.log('удаляем отмеченные');
+      });
+    } else {
+      console.log('удаляем все карты');
+    }
+
+    console.dir(selectedNomenklatureCards);
+
+  }
+
   if (selectedNomenklatureCards.length !== 0) {
     manufactureColumnBody.innerHTML = '';
     cardsMarkup.drawDataInContainer(selectedNomenklatureCards, manufactureColumnBody);
@@ -258,6 +308,7 @@ const onSuccessManufactureLoad = (manufactureData) => {
 
 
 const getManufacture = () => {
+  selectedNomenklatureCards = '';
 
   manufactureColumnBody.innerHTML = '';
   materialColumnBody.innerHTML = '';

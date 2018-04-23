@@ -99,14 +99,19 @@ export default {
   set runUniversalModalMicro(setup) {
     const requestHandler = (evt) => {
       evt.preventDefault();
-      setup.submitCallback(modalUniversalAddName.value);
+      modalUniversalMicroForm.removeEventListener('submit', requestHandler);
       modalUniversalAddForm.removeEventListener('submit', requestHandler);
+      setup.submitCallback(modalUniversalAddName.value);
+    };
+
+    const showHandler = () => {
+      $(modalUniversalMicro).trigger('focus');
+      $(modalUniversalMicro).unbind('shown', showHandler);
     };
 
     $(modalUniversalMicro).modal('show');
-    $(modalUniversalMicro).on('shown.bs.modal', function () {
-      $(modalUniversalMicro).trigger('focus');
-    });
+    $(modalUniversalMicro).on('shown.bs.modal', showHandler);
+
     modalUniversalMicroLabel.innerHTML = setup.title;
     modalUniversalMicroNameLabel.innerHTML = setup.inputLabel;
     modalUniversalMicroName.setAttribute('placeholder', setup.inputPlaceholder);

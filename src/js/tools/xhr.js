@@ -25,6 +25,10 @@ export default {
     const parseRespCodes = (response) => {
       switch (response.status) {
       case 200:
+        console.log('------- xhr responce -------');
+        console.dir(response.data);
+        console.log('----------------------------');
+
         parameters.callbackSuccess(response);
         break;
       case 270:
@@ -94,6 +98,12 @@ export default {
     xhr.addEventListener('timeout', xhrTimeoutHandler);
 
     xhr.timeout = window.appSettings.xhrSettings.timeout;
+
+    console.log('------- xhr request -------');
+    console.log(window.appSettings.xhrSettings.urlApi + parameters.url);
+    console.log(parameters.data);
+    console.log('---------------------------');
+
     xhr.open(parameters.metod, window.appSettings.xhrSettings.urlApi + parameters.url, true);
     xhr.send(parameters.data);
     // };
