@@ -21,6 +21,25 @@ const nomenklatureCardModalBody = document.querySelector('#select-nomenklature-c
 let loadedNomenklatureCards = '';
 let selectedNomenklatureCards = '';
 let currentGoods = [];
+let currentStringElement = '';
+
+const delCard = (cards) => {
+  let newRows = [];
+
+  cards.forEach((el) => {
+    if (!el.del) {
+      newRows.push(el);
+    }
+  });
+
+  return newRows.slice();
+};
+
+const drawCard = () => {
+  manufactureColumnBody.innerHTML = '';
+  cardsMarkup.drawDataInContainer(selectedNomenklatureCards, manufactureColumnBody);
+  drawGoodsToColumns();
+};
 // #################### РАЗМЕТКА ДЛЯ ПОМЕЩЕНИЯ ТОВАРОВ В КОЛОНКИ ######################
 
 const getMaterialString = (id, name, good, index, value, classDanger) => {
@@ -150,8 +169,52 @@ manufactureCountBtn.addEventListener('click', onManufactureCountBtnClick);
 
 // #################### ОБРАБАТЫВАЕМ КЛИКИ ПО СПИСКУ В ПЕРВОЙ КОЛОНКЕ ######################
 
+const submitCallback = (numCardCnt) => {
+  // if (/^\-?\d+$/.test(document.querySelector('#universal-modal-micro-name').value)) {
+
+  // if (uValid.check([document.querySelector('#universal-modal-micro-name')], ['universal-modal-micro-name'])) {
+  //   if (+document.querySelector('#universal-modal-micro-name').value === 0) {
+  //     selectedNomenklatureCards.splice([currentStringElement.dataset.cardIndex], 1);
+  //     document.querySelectorAll('.manufacture-nomenklature-card--muted')[currentStringElement.dataset.cardIndex].classList.remove('manufacture-nomenklature-card--muted');
+  //   } else {
+  //     selectedNomenklatureCards[currentStringElement.dataset.cardIndex].k = document.querySelector('#universal-modal-micro-name').value;
+  //   }
+
+  if (numCardCnt === '0') {
+
+    selectedNomenklatureCards.forEach((card) => {
+
+      if (card.id === currentStringElement.dataset.cardId) {
+        card.del = true;
+        nomenklatureCardModalBody.querySelector(`*[data-card-id="${card.id}"]`).
+          classList.remove('manufacture-nomenklature-card--muted');
+
+      } else {
+        card.del = false;
+      }
+    });
+
+    selectedNomenklatureCards = delCard(selectedNomenklatureCards);
+
+  } else {
+    selectedNomenklatureCards.forEach((card) => {
+
+      if (card.id === currentStringElement.dataset.cardId) {
+        card.k = numCardCnt;
+      }
+    });
+  }
+
+  drawCard();
+  manufactureMakeBtn.setAttribute('disabled', 'disabled');
+  document.querySelector('#universal-modal-micro-valid').innerHTML = '';
+  $('#universal-modal-micro').modal('hide');
+
+  // }
+};
+
 const onManufactureColumnBodyClick = (evt) => {
-  let currentStringElement = evt.target;
+  currentStringElement = evt.target;
   while (!currentStringElement.dataset.cardId) {
     currentStringElement = currentStringElement.parentNode;
   }
@@ -161,103 +224,62 @@ const onManufactureColumnBodyClick = (evt) => {
     inputLabel: 'Коэффициент',
     inputPlaceholder: 'введите коэффициент',
     submitBtnName: 'Изменить',
-    submitCallback() {
-      // if (/^\-?\d+$/.test(document.querySelector('#universal-modal-micro-name').value)) {
-      if (uValid.check([document.querySelector('#universal-modal-micro-name')], ['universal-modal-micro-name'])) {
-        if (+document.querySelector('#universal-modal-micro-name').value === 0) {
-          selectedNomenklatureCards.splice([currentStringElement.dataset.cardIndex], 1);
-          document.querySelectorAll('.manufacture-nomenklature-card--muted')[currentStringElement.dataset.cardIndex].classList.remove('manufacture-nomenklature-card--muted');
-        } else {
-          selectedNomenklatureCards[currentStringElement.dataset.cardIndex].k = document.querySelector('#universal-modal-micro-name').value;
-        }
-
-        manufactureColumnBody.innerHTML = '';
-        cardsMarkup.drawDataInContainer(selectedNomenklatureCards, manufactureColumnBody);
-        drawGoodsToColumns();
-        manufactureMakeBtn.setAttribute('disabled', 'disabled');
-        document.querySelector('#universal-modal-micro-valid').innerHTML = '';
-        $('#universal-modal-micro').modal('hide');
-
-      }
-      /*
-      } else {
-        document.querySelector('#universal-modal-micro-valid').innerHTML = 'Целое число';
-      }
-      */
-    },
+    submitCallback
   };
 
 };
 
 manufactureColumnBody.addEventListener('click', onManufactureColumnBodyClick);
 
-
 // #################### ОБРАБАТЫВАЕМ КЛИКИ ПО СПИСКУ КАРТОЧКЕ В МОДАЛЬНОМ ОКНЕ #############
 $(nomenklatureCardModal).on('hidden.bs.modal', () => {
-  // selectedNomenklatureCards = [].map.call(document.querySelectorAll('.manufacture-nomenklature-card--muted'), (item) => Object.assign(loadedNomenklatureCards[item.dataset.cardIndex], {
-  //   k: 1
-  // }));
-  // if (selectedNomenklatureCards.length !== 0) {
-  //   manufactureColumnBody.innerHTML = '';
-  //   cardsMarkup.drawDataInContainer(selectedNomenklatureCards, manufactureColumnBody);
-  //   manufactureMaterialCheck.classList.add('d-none');
-  //   drawGoodsToColumns();
-  // }
 
   if (!selectedNomenklatureCards.length) {
-    console.log('new');
     selectedNomenklatureCards = [].map.call(document.querySelectorAll('.manufacture-nomenklature-card--muted'), (item) => Object.assign(loadedNomenklatureCards[item.dataset.cardIndex], {
       k: 1
     }));
-    console.dir(selectedNomenklatureCards);
 
   } else {
-    console.log('no new');
-
     selectedNomenklatureCards.forEach((item) => {
       item.del = true;
     });
 
     let selectCards = document.querySelectorAll('.manufacture-nomenklature-card--muted');
 
-    if (selectCards) {
+    if (selectCards.length !== 0) {
       selectCards.forEach((item) => {
-
         let newCard = true;
 
         for (let i = 0; i < selectedNomenklatureCards.length; i++) {
           if (selectedNomenklatureCards[i].id === item.dataset['cardId']) {
             selectedNomenklatureCards[i].del = false;
             newCard = false;
+            break;
           }
         }
 
         if (newCard) {
           selectedNomenklatureCards.push(Object.assign(loadedNomenklatureCards[item.dataset.cardIndex], {
-            k: 1}));
+            k: 1,
+            del: false
+          }));
         }
-
-        console.log('удаляем отмеченные');
       });
+
+      selectedNomenklatureCards = delCard(selectedNomenklatureCards);
+
     } else {
-      console.log('удаляем все карты');
+      selectedNomenklatureCards = [];
     }
-
-    console.dir(selectedNomenklatureCards);
-
   }
 
-  if (selectedNomenklatureCards.length !== 0) {
-    manufactureColumnBody.innerHTML = '';
-    cardsMarkup.drawDataInContainer(selectedNomenklatureCards, manufactureColumnBody);
-    manufactureMaterialCheck.classList.add('d-none');
-    drawGoodsToColumns();
-  }
+  drawCard();
+  manufactureMaterialCheck.classList.add('d-none');
 });
 
 
 const onListCardBodyClick = (evt) => {
-  let currentStringElement = evt.target;
+  currentStringElement = evt.target;
   while (!currentStringElement.dataset.cardId) {
     currentStringElement = currentStringElement.parentNode;
   }
@@ -324,7 +346,6 @@ const getManufacture = () => {
 };
 
 $('#universal-modal-micro').on('shown.bs.modal', function () {
-  console.log('hi');
   $('#universal-modal-micro-name').trigger('focus');
 });
 

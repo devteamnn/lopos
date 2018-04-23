@@ -101,7 +101,7 @@ export default {
       evt.preventDefault();
       modalUniversalMicroForm.removeEventListener('submit', requestHandler);
       modalUniversalAddForm.removeEventListener('submit', requestHandler);
-      setup.submitCallback(modalUniversalAddName.value);
+      setup.submitCallback(modalUniversalMicroName.value);
     };
 
     const showHandler = () => {
