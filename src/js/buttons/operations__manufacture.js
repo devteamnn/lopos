@@ -1,6 +1,5 @@
 import xhr from '../tools/xhr.js';
 import auth from '../tools/storage.js';
-import uValid from './universal-validity-micro.js';
 import toolsMarkup from '../markup/tools.js';
 import cardsMarkup from '../markup/catalog-cards-manufacture.js';
 import cardsMarkupModal from '../markup/catalog-cards.js';
@@ -99,7 +98,6 @@ const drawGoodsToColumns = () => {
         }
       });
     }
-
   });
 };
 // #################### КНОПКА ВЫПОЛНИТЬ ####################
@@ -170,15 +168,6 @@ manufactureCountBtn.addEventListener('click', onManufactureCountBtnClick);
 // #################### ОБРАБАТЫВАЕМ КЛИКИ ПО СПИСКУ В ПЕРВОЙ КОЛОНКЕ ######################
 
 const submitCallback = (numCardCnt) => {
-  // if (/^\-?\d+$/.test(document.querySelector('#universal-modal-micro-name').value)) {
-
-  // if (uValid.check([document.querySelector('#universal-modal-micro-name')], ['universal-modal-micro-name'])) {
-  //   if (+document.querySelector('#universal-modal-micro-name').value === 0) {
-  //     selectedNomenklatureCards.splice([currentStringElement.dataset.cardIndex], 1);
-  //     document.querySelectorAll('.manufacture-nomenklature-card--muted')[currentStringElement.dataset.cardIndex].classList.remove('manufacture-nomenklature-card--muted');
-  //   } else {
-  //     selectedNomenklatureCards[currentStringElement.dataset.cardIndex].k = document.querySelector('#universal-modal-micro-name').value;
-  //   }
 
   if (numCardCnt === '0') {
 
@@ -188,7 +177,6 @@ const submitCallback = (numCardCnt) => {
         card.del = true;
         nomenklatureCardModalBody.querySelector(`*[data-card-id="${card.id}"]`).
           classList.remove('manufacture-nomenklature-card--muted');
-
       } else {
         card.del = false;
       }
@@ -198,7 +186,6 @@ const submitCallback = (numCardCnt) => {
 
   } else {
     selectedNomenklatureCards.forEach((card) => {
-
       if (card.id === currentStringElement.dataset.cardId) {
         card.k = numCardCnt;
       }
@@ -209,24 +196,27 @@ const submitCallback = (numCardCnt) => {
   manufactureMakeBtn.setAttribute('disabled', 'disabled');
   document.querySelector('#universal-modal-micro-valid').innerHTML = '';
   $('#universal-modal-micro').modal('hide');
-
-  // }
 };
 
 const onManufactureColumnBodyClick = (evt) => {
-  currentStringElement = evt.target;
-  while (!currentStringElement.dataset.cardId) {
-    currentStringElement = currentStringElement.parentNode;
+
+  if (selectedNomenklatureCards.length !== 0) {
+    currentStringElement = evt.target;
+
+    while (!currentStringElement.dataset.cardId) {
+      if (currentStringElement.parentNode) {
+        currentStringElement = currentStringElement.parentNode;
+      }
+    }
+
+    toolsMarkup.runUniversalModalMicro = {
+      title: 'Укажите коэффициент',
+      inputLabel: 'Коэффициент',
+      inputPlaceholder: 'введите коэффициент',
+      submitBtnName: 'Изменить',
+      submitCallback
+    };
   }
-
-  toolsMarkup.runUniversalModalMicro = {
-    title: 'Укажите коэффициент',
-    inputLabel: 'Коэффициент',
-    inputPlaceholder: 'введите коэффициент',
-    submitBtnName: 'Изменить',
-    submitCallback
-  };
-
 };
 
 manufactureColumnBody.addEventListener('click', onManufactureColumnBodyClick);
@@ -243,7 +233,6 @@ $(nomenklatureCardModal).on('hidden.bs.modal', () => {
     selectedNomenklatureCards.forEach((item) => {
       item.del = true;
     });
-
     let selectCards = document.querySelectorAll('.manufacture-nomenklature-card--muted');
 
     if (selectCards.length !== 0) {
@@ -276,7 +265,6 @@ $(nomenklatureCardModal).on('hidden.bs.modal', () => {
   drawCard();
   manufactureMaterialCheck.classList.add('d-none');
 });
-
 
 const onListCardBodyClick = (evt) => {
   currentStringElement = evt.target;
@@ -328,7 +316,6 @@ const onSuccessManufactureLoad = (manufactureData) => {
   currentGoods = [];
 };
 
-
 const getManufacture = () => {
   selectedNomenklatureCards = '';
 
@@ -348,7 +335,6 @@ const getManufacture = () => {
 $('#universal-modal-micro').on('shown.bs.modal', function () {
   $('#universal-modal-micro-name').trigger('focus');
 });
-
 
 export default {
 
