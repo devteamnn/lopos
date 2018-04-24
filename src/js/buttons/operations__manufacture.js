@@ -1,8 +1,8 @@
 import xhr from '../tools/xhr.js';
 import auth from '../tools/storage.js';
-import toolsMarkup from '../markup/tools.js';
 import cardsMarkup from '../markup/catalog-cards-manufacture.js';
 import cardsMarkupModal from '../markup/catalog-cards.js';
+import quantityEditModal from './operations__manufacture--edit-quantity.js';
 
 const manufactureList = document.querySelector('#list-manufacture-list');
 const manufactureStocks = document.querySelector('#manufacture-stocks');
@@ -16,6 +16,8 @@ const goodColumnBody = document.querySelector('#manufacture-card-good');
 
 const nomenklatureCardModal = document.querySelector('#select-nomenklature-card');
 const nomenklatureCardModalBody = document.querySelector('#select-nomenklature-card-body');
+
+const manufactureAmountModal = document.querySelector('#manufacture-amount-edit');
 
 let loadedNomenklatureCards = '';
 let selectedNomenklatureCards = '';
@@ -170,9 +172,7 @@ manufactureCountBtn.addEventListener('click', onManufactureCountBtnClick);
 const submitCallback = (numCardCnt) => {
 
   if (numCardCnt === '0') {
-
     selectedNomenklatureCards.forEach((card) => {
-
       if (card.id === currentStringElement.dataset.cardId) {
         card.del = true;
         nomenklatureCardModalBody.querySelector(`*[data-card-id="${card.id}"]`).
@@ -208,14 +208,7 @@ const onManufactureColumnBodyClick = (evt) => {
         currentStringElement = currentStringElement.parentNode;
       }
     }
-
-    toolsMarkup.runUniversalModalMicro = {
-      title: 'Укажите коэффициент',
-      inputLabel: 'Коэффициент',
-      inputPlaceholder: 'введите коэффициент',
-      submitBtnName: 'Изменить',
-      submitCallback
-    };
+    quantityEditModal.start(manufactureAmountModal, submitCallback);
   }
 };
 
