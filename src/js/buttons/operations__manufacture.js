@@ -90,13 +90,22 @@ const drawGoodsToColumns = () => {
   selectedNomenklatureCards.forEach((card) => {
     if (card.content) {
       card.content.forEach((good) => {
-        currentGoods.push(good);
+        currentGoods.push(Object.assign({}, good));
+        currentGoods[currentGoods.length - 1].value *= card.k;
+
         if (good.value < 0) {
           materialNumber++;
-          materialColumnBody.insertAdjacentHTML('beforeend', getMaterialString(good.id, good.name, good.good, materialNumber, good.value * card.k, ''));
+          materialColumnBody.insertAdjacentHTML('beforeend',
+            getMaterialString(currentGoods[currentGoods.length - 1].id,
+              currentGoods[currentGoods.length - 1].name,
+              currentGoods[currentGoods.length - 1].good,
+              materialNumber, currentGoods[currentGoods.length - 1].value, ''));
         } else {
           goodNumber++;
-          goodColumnBody.insertAdjacentHTML('beforeend', getGoodString(good.id, good.name, '', goodNumber, good.value * card.k, ''));
+          goodColumnBody.insertAdjacentHTML('beforeend',
+            getGoodString(currentGoods[currentGoods.length - 1].id,
+              currentGoods[currentGoods.length - 1].name, '', goodNumber,
+              currentGoods[currentGoods.length - 1].value, ''));
         }
       });
     }
@@ -194,8 +203,7 @@ const submitCallback = (numCardCnt) => {
 
   drawCard();
   manufactureMakeBtn.setAttribute('disabled', 'disabled');
-  document.querySelector('#universal-modal-micro-valid').innerHTML = '';
-  $('#universal-modal-micro').modal('hide');
+  manufactureMaterialCheck.classList.add('d-none');
 };
 
 const onManufactureColumnBodyClick = (evt) => {
@@ -324,10 +332,6 @@ const getManufacture = () => {
     callbackSuccess: onSuccessManufactureLoad,
   };
 };
-
-$('#universal-modal-micro').on('shown.bs.modal', function () {
-  $('#universal-modal-micro-name').trigger('focus');
-});
 
 export default {
 
