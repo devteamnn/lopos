@@ -1,9 +1,8 @@
 import xhr from '../tools/xhr.js';
 import auth from '../tools/storage.js';
-import uValid from './universal-validity-micro.js';
-import toolsMarkup from '../markup/tools.js';
 import cardsMarkup from '../markup/catalog-cards-manufacture.js';
 import cardsMarkupModal from '../markup/catalog-cards.js';
+import quantityEditModal from './operations__manufacture--edit-quantity.js';
 
 const manufactureList = document.querySelector('#list-manufacture-list');
 const manufactureStocks = document.querySelector('#manufacture-stocks');
@@ -18,9 +17,30 @@ const goodColumnBody = document.querySelector('#manufacture-card-good');
 const nomenklatureCardModal = document.querySelector('#select-nomenklature-card');
 const nomenklatureCardModalBody = document.querySelector('#select-nomenklature-card-body');
 
+const manufactureAmountModal = document.querySelector('#manufacture-amount-edit');
+
 let loadedNomenklatureCards = '';
 let selectedNomenklatureCards = '';
 let currentGoods = [];
+let currentStringElement = '';
+
+const delCard = (cards) => {
+  let newRows = [];
+
+  cards.forEach((el) => {
+    if (!el.del) {
+      newRows.push(el);
+    }
+  });
+
+  return newRows.slice();
+};
+
+const drawCard = () => {
+  manufactureColumnBody.innerHTML = '';
+  cardsMarkup.drawDataInContainer(selectedNomenklatureCards, manufactureColumnBody);
+  drawGoodsToColumns();
+};
 // #################### РАЗМЕТКА ДЛЯ ПОМЕЩЕНИЯ ТОВАРОВ В КОЛОНКИ ######################
 
 const getMaterialString = (id, name, good, index, value, classDanger) => {
@@ -70,17 +90,25 @@ const drawGoodsToColumns = () => {
   selectedNomenklatureCards.forEach((card) => {
     if (card.content) {
       card.content.forEach((good) => {
-        currentGoods.push(good);
+        currentGoods.push(Object.assign({}, good));
+        currentGoods[currentGoods.length - 1].value *= card.k;
+
         if (good.value < 0) {
           materialNumber++;
-          materialColumnBody.insertAdjacentHTML('beforeend', getMaterialString(good.id, good.name, good.good, materialNumber, good.value * card.k, ''));
+          materialColumnBody.insertAdjacentHTML('beforeend',
+            getMaterialString(currentGoods[currentGoods.length - 1].id,
+              currentGoods[currentGoods.length - 1].name,
+              currentGoods[currentGoods.length - 1].good,
+              materialNumber, currentGoods[currentGoods.length - 1].value, ''));
         } else {
           goodNumber++;
-          goodColumnBody.insertAdjacentHTML('beforeend', getGoodString(good.id, good.name, '', goodNumber, good.value * card.k, ''));
+          goodColumnBody.insertAdjacentHTML('beforeend',
+            getGoodString(currentGoods[currentGoods.length - 1].id,
+              currentGoods[currentGoods.length - 1].name, '', goodNumber,
+              currentGoods[currentGoods.length - 1].value, ''));
         }
       });
     }
-
   });
 };
 // #################### КНОПКА ВЫПОЛНИТЬ ####################
@@ -150,64 +178,97 @@ manufactureCountBtn.addEventListener('click', onManufactureCountBtnClick);
 
 // #################### ОБРАБАТЫВАЕМ КЛИКИ ПО СПИСКУ В ПЕРВОЙ КОЛОНКЕ ######################
 
-const onManufactureColumnBodyClick = (evt) => {
-  let currentStringElement = evt.target;
-  while (!currentStringElement.dataset.cardId) {
-    currentStringElement = currentStringElement.parentNode;
+const submitCallback = (numCardCnt) => {
+
+  if (numCardCnt === '0') {
+    selectedNomenklatureCards.forEach((card) => {
+      if (card.id === currentStringElement.dataset.cardId) {
+        card.del = true;
+        nomenklatureCardModalBody.querySelector(`*[data-card-id="${card.id}"]`).
+          classList.remove('manufacture-nomenklature-card--muted');
+      } else {
+        card.del = false;
+      }
+    });
+
+    selectedNomenklatureCards = delCard(selectedNomenklatureCards);
+
+  } else {
+    selectedNomenklatureCards.forEach((card) => {
+      if (card.id === currentStringElement.dataset.cardId) {
+        card.k = numCardCnt;
+      }
+    });
   }
 
-  toolsMarkup.runUniversalModalMicro = {
-    title: 'Укажите коэффициент',
-    inputLabel: 'Коэффициент',
-    inputPlaceholder: 'введите коэффициент',
-    submitBtnName: 'Изменить',
-    submitCallback() {
-      // if (/^\-?\d+$/.test(document.querySelector('#universal-modal-micro-name').value)) {
-      if (uValid.check([document.querySelector('#universal-modal-micro-name')], ['universal-modal-micro-name'])) {
-        if (+document.querySelector('#universal-modal-micro-name').value === 0) {
-          selectedNomenklatureCards.splice([currentStringElement.dataset.cardIndex], 1);
-          document.querySelectorAll('.manufacture-nomenklature-card--muted')[currentStringElement.dataset.cardIndex].classList.remove('manufacture-nomenklature-card--muted');
-        } else {
-          selectedNomenklatureCards[currentStringElement.dataset.cardIndex].k = document.querySelector('#universal-modal-micro-name').value;
-        }
+  drawCard();
+  manufactureMakeBtn.setAttribute('disabled', 'disabled');
+  manufactureMaterialCheck.classList.add('d-none');
+};
 
-        manufactureColumnBody.innerHTML = '';
-        cardsMarkup.drawDataInContainer(selectedNomenklatureCards, manufactureColumnBody);
-        drawGoodsToColumns();
-        manufactureMakeBtn.setAttribute('disabled', 'disabled');
-        document.querySelector('#universal-modal-micro-valid').innerHTML = '';
-        $('#universal-modal-micro').modal('hide');
+const onManufactureColumnBodyClick = (evt) => {
 
+  if (selectedNomenklatureCards.length !== 0) {
+    currentStringElement = evt.target;
+
+    while (!currentStringElement.dataset.cardId) {
+      if (currentStringElement.parentNode) {
+        currentStringElement = currentStringElement.parentNode;
       }
-      /*
-      } else {
-        document.querySelector('#universal-modal-micro-valid').innerHTML = 'Целое число';
-      }
-      */
-    },
-  };
-
+    }
+    quantityEditModal.start(manufactureAmountModal, submitCallback);
+  }
 };
 
 manufactureColumnBody.addEventListener('click', onManufactureColumnBodyClick);
 
-
 // #################### ОБРАБАТЫВАЕМ КЛИКИ ПО СПИСКУ КАРТОЧКЕ В МОДАЛЬНОМ ОКНЕ #############
 $(nomenklatureCardModal).on('hidden.bs.modal', () => {
-  selectedNomenklatureCards = [].map.call(document.querySelectorAll('.manufacture-nomenklature-card--muted'), (item) => Object.assign(loadedNomenklatureCards[item.dataset.cardIndex], {
-    k: 1
-  }));
-  if (selectedNomenklatureCards.length !== 0) {
-    manufactureColumnBody.innerHTML = '';
-    cardsMarkup.drawDataInContainer(selectedNomenklatureCards, manufactureColumnBody);
-    manufactureMaterialCheck.classList.add('d-none');
-    drawGoodsToColumns();
+
+  if (!selectedNomenklatureCards.length) {
+    selectedNomenklatureCards = [].map.call(document.querySelectorAll('.manufacture-nomenklature-card--muted'), (item) => Object.assign(loadedNomenklatureCards[item.dataset.cardIndex], {
+      k: 1
+    }));
+
+  } else {
+    selectedNomenklatureCards.forEach((item) => {
+      item.del = true;
+    });
+    let selectCards = document.querySelectorAll('.manufacture-nomenklature-card--muted');
+
+    if (selectCards.length !== 0) {
+      selectCards.forEach((item) => {
+        let newCard = true;
+
+        for (let i = 0; i < selectedNomenklatureCards.length; i++) {
+          if (selectedNomenklatureCards[i].id === item.dataset['cardId']) {
+            selectedNomenklatureCards[i].del = false;
+            newCard = false;
+            break;
+          }
+        }
+
+        if (newCard) {
+          selectedNomenklatureCards.push(Object.assign(loadedNomenklatureCards[item.dataset.cardIndex], {
+            k: 1,
+            del: false
+          }));
+        }
+      });
+
+      selectedNomenklatureCards = delCard(selectedNomenklatureCards);
+
+    } else {
+      selectedNomenklatureCards = [];
+    }
   }
+
+  drawCard();
+  manufactureMaterialCheck.classList.add('d-none');
 });
 
-
 const onListCardBodyClick = (evt) => {
-  let currentStringElement = evt.target;
+  currentStringElement = evt.target;
   while (!currentStringElement.dataset.cardId) {
     currentStringElement = currentStringElement.parentNode;
   }
@@ -256,8 +317,8 @@ const onSuccessManufactureLoad = (manufactureData) => {
   currentGoods = [];
 };
 
-
 const getManufacture = () => {
+  selectedNomenklatureCards = '';
 
   manufactureColumnBody.innerHTML = '';
   materialColumnBody.innerHTML = '';
@@ -271,12 +332,6 @@ const getManufacture = () => {
     callbackSuccess: onSuccessManufactureLoad,
   };
 };
-
-$('#universal-modal-micro').on('shown.bs.modal', function () {
-  console.log('hi');
-  $('#universal-modal-micro-name').trigger('focus');
-});
-
 
 export default {
 

@@ -94,6 +94,7 @@ export default {
     xhr.addEventListener('timeout', xhrTimeoutHandler);
 
     xhr.timeout = window.appSettings.xhrSettings.timeout;
+
     xhr.open(parameters.metod, window.appSettings.xhrSettings.urlApi + parameters.url, true);
     xhr.send(parameters.data);
     // };

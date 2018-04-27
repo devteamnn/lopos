@@ -338,6 +338,17 @@ window.appSettings = {
       'currMarkup': /(^-?\d*$)|(^-?\d*\.\d*$)/,
       'sellPrice': /(^$)|(^\d+$)|(^\d+[.]\d{1,2}$)/,
       'sellSum': /(^$)|(^\d+$)|(^\d+[.]\d{1,2}$)/,
+    }
+  },
+
+  // ОПЕРАЦИИ ПРОИЗВОДСТВО
+  // Редактирование коэффициента
+  'manufactureAmountEdit': {
+    'validPatterns': {
+      'amount': /(^\d*$)|(\d*\.\d*$)/,
     },
+    'validMessage': {
+      'amount': 'Числовое поле:<br>( X или X.X )',
+    }
   }
 };
