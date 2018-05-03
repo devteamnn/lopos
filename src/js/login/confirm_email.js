@@ -9,34 +9,21 @@ const urlApi = window.appSettings.confirmEmailUrlApi;
 let callbackXhrSuccess = function (response) {
   mainWindow.hideProgress('emailConfirmButtonSubmit', 'confirmProgress');
 
-  if (response.status === 200) {
-    if (response.data.status === '0') {
-
-      markTools.informationtModal = {
-        'title': 'ОШИБКА: ',
-        'message': window.appSettings.messages.responseStatus.res0
-      };
-
-    } else {
-      dataStorage.data = response.data;
-      document.dispatchEvent(new Event('loginSuccess'));
-    }
-  } else {
+  if (response.data.status === '0') {
 
     markTools.informationtModal = {
       'title': 'ОШИБКА: ',
-      'message': response.message
+      'message': window.appSettings.messages.responseStatus.res0
     };
+
+  } else {
+    dataStorage.data = response.data;
+    document.dispatchEvent(new Event('loginSuccess'));
   }
 };
 
 let callbackXhrError = function (response) {
   mainWindow.hideProgress('emailConfirmButtonSubmit', 'confirmProgress');
-
-  markTools.informationtModal = {
-    'title': 'ОШИБКА: ',
-    'message': window.appSettings.messages.xhrError
-  };
 };
 
 let validateForm = function (kod) {

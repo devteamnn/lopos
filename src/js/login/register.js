@@ -8,25 +8,16 @@ const regUrlApi = window.appSettings.registerUrlApi;
 let callbackXhrSuccess = function (response) {
 
   mainWindow.hideProgress('registerButtonSubmit', 'registerProgress');
-  switch (response.status) {
-
-  case 200:
-    markup.informationtModal = {
-      'title': 'MESSAGE: ',
-      'message': response.message,
-      'isMess': true
-    };
-    mainWindow.confirmEmail();
-    break;
-  case 400:
-    mainWindow.setAlert(response.message, 'error');
-    break;
-  }
+  markup.informationtModal = {
+    'title': 'MESSAGE: ',
+    'message': response.message,
+    'isMess': true
+  };
+  mainWindow.confirmEmail();
 };
 
 let callbackXhrError = function (response) {
   mainWindow.hideProgress('registerButtonSubmit', 'registerProgress');
-  mainWindow.setAlert(window.appSettings.messages.xhrError, 'error');
 };
 
 let validateName = function (name) {

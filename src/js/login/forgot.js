@@ -26,11 +26,6 @@ let callbackXhrSuccess = function (response) {
 
 let callbackXhrError = function (response) {
   mainWindow.hideProgress('forgotButtonSubmit', 'forgotProgress');
-
-  markTools.informationtModal = {
-    'title': 'ОШИБКА: ',
-    'message': window.appSettings.messages.xhrError
-  };
 };
 
 let validateForm = function (email) {

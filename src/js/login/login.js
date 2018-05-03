@@ -12,24 +12,17 @@ let callbackXhrSuccess = function (response) {
   form.addCaptchaCount();
   mainWindow.hideProgress('loginButtonSubmit', 'loginProgress');
 
-  if (response.status === 200) {
-    if (response.data.status === '0') {
+  if (response.data.status === '0') {
 
-      markTools.informationtModal = {
-        'title': 'ОШИБКА: ',
-        'message': window.appSettings.messages.responseStatus.res0
-      };
-
-    } else {
-      dataStorage.data = response.data;
-      dataStorage.permissions = response.data.list_of_permissions;
-      document.dispatchEvent(new Event('loginSuccess'));
-    }
-  } else {
     markTools.informationtModal = {
       'title': 'ОШИБКА: ',
-      'message': response.message
+      'message': window.appSettings.messages.responseStatus.res0
     };
+
+  } else {
+    dataStorage.data = response.data;
+    dataStorage.permissions = response.data.list_of_permissions;
+    document.dispatchEvent(new Event('loginSuccess'));
   }
 };
 
